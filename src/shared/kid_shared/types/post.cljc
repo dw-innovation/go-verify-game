@@ -46,5 +46,7 @@
 
 (defn gen-random [] (merge
                      (gen/generate (s/gen ::post-text))
-                     {:function! '(fn []
-                                    (js/alert "hi, this function was sent from the server over websockets"))}))
+                     ;; {:function! '(fn [v]
+                     ;;                (println v)
+                     ;;                (println "hi, this function was sent from the server over websockets"))}
+                     ))

@@ -4,42 +4,43 @@
             [kid-game.business :as business]
             [kid-game.utils.log :as log]
             [kid-shared.types.post :as posts]
+            [kid-game.utils.core :refer [timestamp-now new-uuid]]
             [cljs.js :refer [empty-state eval js-eval]]
             [cljs.core.async :as async :include-macros true]))
 
-(defn <input> []
-  (let [title (atom nil)
-        description (atom nil)
-        fake-news? (atom false)
-        submit-post (fn []
-                      (business/post-text-post! :title @title
-                                                :description @description
-                                                :fake-news? @fake-news?)
-                      (reset! title nil)
-                      (reset! description nil))]
-    (fn []
-      [:div {:class "post-add"}
-       [:form
-        {:on-submit (fn [x]
-                      (.preventDefault x)
-                      (submit-post))}
-        [:input {:type "text"
-                 :value @title
-                 :placeholder "post title"
-                 :on-change #(reset! title (-> % .-target .-value))}]
-        [:input {:type "text"
-                 :value @description
-                 :placeholder "post description"
-                 :on-change #(reset! description (-> % .-target .-value))}]
-        [:br]
-        [:input {:type "checkbox"
-                 :id "fake-news"
-                 :name "fake-news"
-                 :value @fake-news?
-                 :on-change #(reset! fake-news? (-> % .-target .-checked))}]
-        [:label {:for "fake-news"} "fake news!"]
-        [:button {:type "submit"} "new post"]
-        [:hr]]])))
+(defn <input> [] [:div])
+  ;; (let [title (atom nil)
+  ;;       description (atom nil)
+  ;;       fake-news? (atom false)
+  ;;       submit-post (fn []
+  ;;                     (business/post-text-post! :title @title
+  ;;                                               :description @description
+  ;;                                               :fake-news? @fake-news?)
+  ;;                     (reset! title nil)
+  ;;                     (reset! description nil))]
+  ;;   (fn []
+  ;;     [:div {:class "post-add"}
+  ;;      [:form
+  ;;       {:on-submit (fn [x]
+  ;;                     (.preventDefault x)
+  ;;                     (submit-post))}
+  ;;       [:input {:type "text"
+  ;;                :value @title
+  ;;                :placeholder "post title"
+  ;;                :on-change #(reset! title (-> % .-target .-value))}]
+  ;;       [:input {:type "text"
+  ;;                :value @description
+  ;;                :placeholder "post description"
+  ;;                :on-change #(reset! description (-> % .-target .-value))}]
+  ;;       [:br]
+  ;;       [:input {:type "checkbox"
+  ;;                :id "fake-news"
+  ;;                :name "fake-news"
+  ;;                :value @fake-news?
+  ;;                :on-change #(reset! fake-news? (-> % .-target .-checked))}]
+  ;;       [:label {:for "fake-news"} "fake news!"]
+  ;;       [:button {:type "submit"} "new post"]
+  ;;       [:hr]]])))
 
 (declare <post>)
 
@@ -96,33 +97,38 @@
     ; TODO unhook this interval once 0
     ; or maybe keep it like this, so that you could get a "time-boost"
     ; by pumping up time-left
-    (js/setInterval reduce-time! interval)
-    (if (p :function!)
-      (do
-        (log/debug "0000000000000000")
-        (log/debug (type (p :function!)))
-        (log/debug (str (p :function!)))
-        (log/debug (str (evaluate (p :function!))))
-        ((evaluate (p :function!)))))
+    ; (js/setInterval reduce-time! interval)
     (fn []
-      [:div {:class "post-text"}
-       [<progress> @time-left (:time p)]
-       ; [:div (if (:fake-news? p) "fake" "real")]
+      [:div
        [:div {:class "post-user"}
         [:small {:class "posted-by-text"} "posted by "]
         [<author> author]]
-       [:small "title"]
-       [:div {:class "post-title"} title]
-       [:small "description"]
-       [:div {:class "post-description"} description]
-       ; [:small @time-left]
-       [:br]
-       [:br]
-       ; (if fake-news? [:p "faaaaaakkkeeeeee"])
-       (if (active?)
-         [:div {:class "post-actions"}
-          [:button {:on-click repost!} "re-post"]])
-       ])))
+       [:div {:class "post-text"
+              :style {:background-color "white"
+                      :padding "1rem"}}
+        [<progress> @time-left (:time p)]
+        ;; [:div (if (:fake-news? p) "fake" "real")]
+        [:small "title"]
+        [:div {:class "post-title"} title]
+        ;; [:small "description"]
+        [:div {:class "post-description"
+               :style {:font-size "1.5rem"}} description]
+        [:br]
+        (if (:image p) [:img {:src (:image p)
+                              :style {:width "50%"}}])
+
+        [:div {:class "post-actions"
+               :style {:position "absolute" :right 0 :margin-top "-30px" :margin-right "20px"}}
+         [:button {:on-click repost!} "re-post"]]
+        [:br]
+        ]
+       [:div {:class "meta"
+              :style {:padding "1rem"}}
+        [:div {:style {:color "grey"}} (:subtext p)]
+        [:div {:style {:color "grey"}} (if (:fake-news? p) "(is fake)" "(is real)")]
+        [:br]
+        [:br]
+        ]])))
 
 (defn <type-re-post> [{:as p
                 author :by
@@ -147,8 +153,9 @@
       [<type-text> p])))
 
 (defn <post> [p]
-  ^{:key (:id p)} [:div {:class "post"}
-                   [match-post p]])
+  ^{:key (new-uuid)}
+  [:div {:class "post"}
+   [match-post p]])
 
 (defn <container> []
   [:div {:class "post-container"}

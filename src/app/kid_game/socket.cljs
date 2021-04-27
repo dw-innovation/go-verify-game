@@ -40,7 +40,9 @@
       (log/warn "your message is invalid!")
       (log/warn (str (:type msg)))
       (log/warn (str (:body msg)))
-      (log/warn (str (messages/explain-message msg))))))
+      (log/warn (str (messages/explain-message msg)))
+      (log/warn "sending anyways lol")
+      (async/put! send-chan msg))))
 ; legacy
 (def send-msg send)
 

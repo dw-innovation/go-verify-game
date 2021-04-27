@@ -5,7 +5,9 @@
             [kid-game.business :as business]
             [kid-game.components.chat.core :as <chat>]
             [kid-game.components.posts.core :as <posts>]
-            [cljs.core.async :as async :include-macros true]))
+            [kid-game.example-activities :as ex]
+            [cljs.core.async :as async :include-macros true]
+            [kid-game.utils.log :as log]))
 
 (def log js/console.log)
 
@@ -45,6 +47,13 @@
     :login [<login>]
     :chat [<game>]))
 
-(reagent/render-component
- [<app>]
- (. js/document (getElementById "app")))
+; render the html component, if it exists
+(defn maybe-bind-element [div-id <component>]
+  (if-let [el (. js/document (getElementById div-id))]
+    (do
+      (log/debug "mounting component on #" div-id)
+      (reagent/render-component [<component>] el))
+    (log/warn "#" div-id "not found, skipping")))
+
+(maybe-bind-element "app" <app>)
+(maybe-bind-element "examples" ex/<examples>)

@@ -15,7 +15,6 @@
 
 (defn log [& xs] (dorun (map pp/pprint xs)))
 
-
 (defn handle-message [client-id message client-ws-ch room]
   (log "received message" message)
   (go
@@ -86,8 +85,12 @@
                       (async/close! ws-ch))))))))
 
 (defroutes app
-  (GET "/testing" [] "hhhh")
+  ; get a websocket connection:
   (GET "/:room/ws" [room] connections-handler) ; the websocket connection
-  (GET "/:room" [room] (resp/resource-response "index.html" {:root "public"}))
+  ;; (GET "/test" []
+  ;;      (resp/resource-response "test-activities.html" {:root "public"}))
+  ; get the app for a particular room
+  (GET "/:room" [room]
+       (resp/resource-response "index.html" {:root "public"}))
   (route/resources "/")
   (route/not-found "<h1>Page not found</h1>"))

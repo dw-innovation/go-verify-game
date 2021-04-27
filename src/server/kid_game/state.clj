@@ -28,16 +28,16 @@
          ((fn [x] (log "created room!" x) x))
          (assoc-in @state [:rooms id])
          (reset! state))
+
     ;; attach a posting loop to the room
     ;; TODO exit this go loop, too
     (async/go-loop []
-      (log "poster go loop!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-      (async/<! (async/timeout 20000)) ; do this loop every x seconds
-      (log "posting a new generated post!!")
-      (log id)
+      (async/<! (async/timeout 15000)) ; do this loop every x seconds
+      (log ">>>>>>>>>>>>>>>>>  server post in room" id)
       (async/>! channel {:type ::messages/post-new
-                         :body (poster/gen-random-post)})
+                         :body (rand-nth poster/examples)})
       (recur)))
+
   ; after room has been created, return what you just got
   (get-room id))
 

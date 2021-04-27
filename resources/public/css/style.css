@@ -3,6 +3,7 @@
 body {
   margin: 0px;
   padding: 0px;
+  font-size: 16px !important;
 }
 
 .post-container {
@@ -85,9 +86,6 @@ body {
 .post {
     margin: 1rem;
     padding: 1rem;
-    border: 1px solid rgba(0,0,0,.2);
-    border-radius: 1rem;
-    background-color: white;
 }
 .post-title {
     font-size: 1.8rem;
@@ -98,9 +96,7 @@ body {
 }
 .post-author {
     display: flex;
-    border: 1px solid rgba(0,0,0,.1);
     padding: 1rem;
-    border-radius: 1rem;
 }
 .post-author-image {
     width: 50px;
