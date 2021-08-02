@@ -2,6 +2,7 @@
   (:require [kid-shared.types.shared :as shared]
             [kid-shared.types.user :as user]
             [clojure.spec.test.alpha :as spec-test]
+            [clojure.test.check :as check]
             [clojure.spec.gen.alpha :as gen]
             [clojure.spec.alpha :as s]))
 

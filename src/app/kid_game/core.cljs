@@ -6,6 +6,9 @@
             [kid-game.components.chat.core :as <chat>]
             [kid-game.components.posts.core :as <posts>]
             [kid-game.example-activities :as ex]
+            [lodash :as lodash]
+            ["./react_components/compiled/intro.js" :as intro]
+            [moment]
             [cljs.core.async :as async :include-macros true]
             [kid-game.utils.log :as log]))
 
@@ -18,8 +21,10 @@
                  (business/use-new-player! :name @v)
                  (socket/setup-websockets!))]
     (fn []
-      [:div {:class "login-container"}
-       [:div {:class "login"}
+      [:div.login-container
+       [:div.login
+        [:h1 "Login"]
+        [(reagent/adapt-react-class intro/default) {}]
         [:form
          {:on-submit (fn [x] (.preventDefault x) (log-in))}
          [:input {:type "text"
@@ -31,7 +36,7 @@
                    :class "button-primary"} "Start chatting"]]]])))
 
 (defn <game> []
-  [:div {:class "content-container"}
+  [:div.content-container
    [<chat>/<container>]
    [<posts>/<container>]
    [:header "hello"]
@@ -57,3 +62,7 @@
 
 (maybe-bind-element "app" <app>)
 (maybe-bind-element "examples" ex/<examples>)
+
+(js/console.log "Here are the things we have loaded!")
+(js/console.log lodash/_.map)
+(js/console.log intro)

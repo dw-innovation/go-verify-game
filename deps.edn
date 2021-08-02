@@ -1,0 +1,58 @@
+;;
+;;    a basic deps edn file,
+;;      for the kid game, to replace leiningen
+;;
+;;      this file handles all of the clojure/server dependencies.
+;;        frontend app, js is handled in shadow-cljs.edn
+;;
+;;
+;;
+{:deps {org.clojure/clojure {:mvn/version "1.10.0"}
+        org.clojure/core.async {:mvn/version "0.4.490"}
+        org.clojure/test.check {:mvn/version "0.10.0"}
+        ;; the following should be qualified differently, but they are working
+        ;; fine for now
+        compojure {:mvn/version "1.6.1"}
+        reagent {:mvn/version "0.8.1"}
+        medley {:mvn/version "1.1.0"}
+        http-kit {:mvn/version "2.4.0-alpha2"}
+        jarohen/chord {:mvn/version "0.8.1"}
+        ;; … Clojure dependencies …
+        }
+
+ ;; include both the server, the static resources,
+ ;; and the things we share between client and server
+ :paths ["src/server"
+         "resources"
+         "src/shared"]
+
+ ;; this part is a little bit tricky to me.
+ ;;   you can use the command line to run the server, using
+ ;;   `clj -M:run` - which runs the script run, launching the main
+ ;;                  function into an http server
+ :aliases {:run {:main-opts ["-m" "kid-game.main" "3449"]}
+           ;; :test {:extra-paths ["test/clj"]
+           ;;       :extra-deps {lambdaisland/kaocha {:mvn/version "0.0-266"}}}
+           ;;
+           ;;   the nrepl, which you can run with
+           ;;     `clj -M:nrepl` -> this starts up an nrepl that you can connect to with cider!
+           ;;       you will see the output in the terminal where you started it
+           :nrepl {:extra-deps {nrepl/nrepl {:mvn/version "0.8.3"}}
+                   ;; when you start the repl, load the DEV/user.clj file, which will start the application
+                   ;; this happens because clojure automatically drops you in the 'user' namespace, and
+                   ;; anything from there get's excecuted
+                   :extra-paths ["dev"]
+                   :main-opts ["-m" "nrepl.cmdline"
+                               "-b" "0.0.0.0"
+                               "-p" "12345"]}
+           :uberjar {:extra-deps {uberdeps {:mvn/version "0.1.4"}}
+                     :jvm-opts []
+                     :main-opts  ["-m" "uberdeps.uberjar" "--target" "target/kid-game-standalone.jar"]}
+           ;;   you can also define other 'scripts' here, like letting us know
+           ;;     which packages are outdated using `clj -M:outdated`
+           :outdated {:extra-deps {olical/depot {:mvn/version "1.4.0"}}
+                      :main-opts ["-m" "depot.outdated.main"]}}}
+
+;; connecting with CIDER:
+;;   note, see buffer ` *nrepl-server ...*` for logging output from server
+;;     notice the space at the front!

@@ -13,3 +13,7 @@ pom.xml
 .nrepl-port
 log
 .rebel_readline_history
+node_modules
+.shadow-cljs/*
+.cpcache/*
+.lsp/*

@@ -5,8 +5,15 @@
             [kid-game.utils.log :as log]
             [kid-shared.types.post :as posts]
             [kid-game.utils.core :refer [timestamp-now new-uuid]]
+            ; [component-test]
+            [lodash]
+            [moment]
             [cljs.js :refer [empty-state eval js-eval]]
             [cljs.core.async :as async :include-macros true]))
+
+(js/console.log "bbbbbbbbbbbbbbbbbbbbb")
+(js/console.log lodash/_.map)
+(js/console.log  moment)
 
 (defn <input> [] [:div])
   ;; (let [title (atom nil)

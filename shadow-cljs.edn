@@ -1,0 +1,28 @@
+;; a la https://www.manueluberti.eu/programming/2018/11/14/deps-shadow-cljs/
+;;
+;;  here is the configuration for the shadow-js frontend!!
+;;  which directories should we watch for js changes?
+{:source-paths ["src/app" "src/shared"]
+ ;; the port of our nrepl, that emacs or other code editors can connect to
+ :nrepl {:port 8777
+         :middleware [refactor-nrepl.middleware/wrap-refactor]}
+ ;; clojurescript dependencies
+ :dependencies [[cider/cider-nrepl "0.18.0"] ; make an nrepl
+                [refactor-nrepl "2.4.0"] ; allows emacs to connect
+                [org.clojure/test.check "0.10.0"]
+                [jarohen/chord "0.8.1"] ; handle's websockets fantastically
+                [reagent "0.8.1"]] ; react, but better
+ ;; dofferent builds of the game
+ :builds {:dev {:target :browser
+                ;; where to place the compiled files
+                :output-dir "resources/public/js/compiled"
+                ;; the path the frontend will try to get the
+                ;; stuff, like sourcemaps, at
+                :asset-path "/js/compiled"
+                ;; looks like multiple modules are possibel
+                :modules {:main {:entries [kid-game.core]}}}
+          ;; the release version, built with
+          ;;   $(npm bin)/shadow-cljs release app
+          :app {:target :browser
+                :output-dir "resources/public/js/compiled"
+                :modules {:main {:entries [kid-game.core]}}}}}

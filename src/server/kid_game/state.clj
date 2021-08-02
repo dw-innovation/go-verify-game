@@ -17,6 +17,12 @@
 (defn get-rooms-list [] (vals (get-rooms)))
 (defn get-room [id] ((get-rooms) id))
 
+(defn post-to-channel [channel id]
+  (async/go
+    (log "::::::::::::::::::::::::::::::::::::  server post in room" id)
+    (async/>! channel {:type ::messages/post-new
+                       :body (rand-nth poster/examples)})))
+
 (defn create-room [id]
   (let [channel (new-room-channel)
         mult (async/mult channel)]
@@ -33,9 +39,7 @@
     ;; TODO exit this go loop, too
     (async/go-loop []
       (async/<! (async/timeout 15000)) ; do this loop every x seconds
-      (log ">>>>>>>>>>>>>>>>>  server post in room" id)
-      (async/>! channel {:type ::messages/post-new
-                         :body (rand-nth poster/examples)})
+      (post-to-channel channel id)
       (recur)))
 
   ; after room has been created, return what you just got

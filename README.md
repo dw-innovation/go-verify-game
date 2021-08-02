@@ -5,35 +5,43 @@
 
 ### requirements
 
-this application needs `leiningen` and `java` and `clojure` installed.
+this application needs `java` and `clojure` installed.
 
-### spinning up dev env
+### Development
 
-in terminal:
+This application relies on two separate parts, the `app` (a clojurescript project) that is the frontend of the website, and the `server`, which is a clojure project.
 
-``` sh
-lein figwgeel
+#### Frontend
+
+to start the frontend for development, use `npm run watch`
+
+The `app` is hosted and compiled by `shadow-cljs`, where you can see the configuration in `shadow-cljs.edn`.  Javascript libraries can be added in package.json, and then used in clojurescript as well.
+
+We also have JS interop, along with JS React interop working.  Please see the files in `src/app/kid_game/react_components/raw` to see the js files.  They are converted with babel in the watch script.
+
+This is how js files can be imported into ClojureScript:
+
+``` javascript
+ [lodash :as lodash]
+ ["./react_components/compiled/intro.js" :as intro]
+ [moment]
 ```
 
-in emacs: 
+Imported react elements can be included in reagent hiccup as:
 
-``` sh
-M-x cider-jack-in-clj&cljs
+``` javascript
+        [(reagent/adapt-react-class intro/default) {}]
 ```
 
-both start a server accessible at `localhost:3449`
+you can *connect to the frontend repl* by using your code editor to connect to the repl on `nrepl://localhost:8777`
 
-### build for production
 
-``` sh
-make build-prod
-```
+#### Backend
 
-this generates an `uberjar` in `target/kid-game-standalone.jar`, that can be run with
+to start the backend as is, do `clj -M:run`.  to start it as an **interactive repl** do `clj -M:nrepl` -- you can then use your editor to connect to this nrepl on `nrepl://localhost:12345`
 
-``` sh
-make run-prod
-```
+This repl is started by Clojure CLI, and loads `dev/user.clj` by default.  You should see the `async` logs in this terminal window you started.  If you use `cider-jack-in` (which I do not suggest) then you can see the `async` output in a buffer called ` *nrepl server*` (notice the space at the beginning.)
+
 
 
 ## Architecture
