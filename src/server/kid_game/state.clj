@@ -2,9 +2,8 @@
 (ns kid-game.state
   (:require
    [clojure.pprint :as pp]
-   [kid-shared.types.poster :as poster]
-   [kid-shared.types.messages :as messages]
    [clojure.core.async :as async]
+   [kid-shared.post-generator :as postgen]
    [medley.core :refer [random-uuid]]))
 
 (defn log [& xs] (dorun (map pp/pprint xs)))
@@ -17,12 +16,6 @@
 (defn get-rooms-list [] (vals (get-rooms)))
 (defn get-room [id] ((get-rooms) id))
 
-(defn post-to-channel [channel id]
-  (async/go
-    (log "::::::::::::::::::::::::::::::::::::  server post in room" id)
-    (async/>! channel {:type ::messages/post-new
-                       :body (rand-nth poster/examples)})))
-
 (defn create-room [id]
   (let [channel (new-room-channel)
         mult (async/mult channel)]
@@ -30,17 +23,11 @@
     (->> {:id id
           :channel channel
           :mult mult
+          :posters (postgen/attach-default-room-poster channel)
           :users {}}
          ((fn [x] (log "created room!" x) x))
          (assoc-in @state [:rooms id])
-         (reset! state))
-
-    ;; attach a posting loop to the room
-    ;; TODO exit this go loop, too
-    (async/go-loop []
-      (async/<! (async/timeout 15000)) ; do this loop every x seconds
-      (post-to-channel channel id)
-      (recur)))
+         (reset! state)))
 
   ; after room has been created, return what you just got
   (get-room id))

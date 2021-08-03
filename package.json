@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "watch": "babel ./src/app/kid_game/react_components/raw --out-dir ./src/app/kid_game/react_components/compiled --watch & shadow-cljs watch dev"
+    "watch": "babel ./src/app/kid_game/react_components/raw --out-dir ./src/app/kid_game/react_components/compiled --watch & shadow-cljs watch :dev",
+    "repl": "shadow-cljs cljs-repl :dev"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
