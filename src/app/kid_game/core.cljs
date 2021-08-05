@@ -19,7 +19,7 @@
         log-in (fn []
                  (state/open-chat)
                  (business/use-new-player! :name @v)
-                 (socket/setup-websockets!))]
+                 (socket/setup-socket!))]
     (fn []
       [:div.login-container
        [:div.login
@@ -41,7 +41,7 @@
    [<posts>/<container>]
    [:header "hello"]
    [:div {:class "header"}
-    [:h6 "KID game: room: " [:b socket/room]
+    [:h6 "KID game: room: " [:b (socket/get-room)]
      ": player: "
      [:b (:name (state/get-player))]
      ": points: "

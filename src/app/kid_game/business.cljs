@@ -54,6 +54,5 @@
                             :to nil ; a chat only from is group chat
                             :content content)))
 
-
 (defn win-points! [points] (state/win-points points))
 (defn loose-points! [points] (state/loose-points points))

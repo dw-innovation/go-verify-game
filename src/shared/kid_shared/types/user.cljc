@@ -3,7 +3,7 @@
             [kid-game.utils.core :refer [new-uuid timestamp-now]]
             [kid-shared.types.shared :as shared]))
 
-(s/def ::role #{:manipulator :media :investigator})
+(s/def ::role #{:manipulator :media :investigator :neutral})
 
 (s/def ::name string?)
 

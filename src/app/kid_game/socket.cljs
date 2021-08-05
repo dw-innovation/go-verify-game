@@ -3,31 +3,31 @@
             [chord.client :refer [ws-ch]]
             [clojure.spec.alpha :as s]
             [kid-game.state :as state]
+            [kid-game.messaging :as messaging]
+            [kid-shared.generator :as postgen]
             [kid-game.utils.log :as log]
             [kid-shared.types.messages :as messages]
             [cljs.core.async :as async :refer [<! >! put!] :include-macros true]))
 
 (log/debug "+++++++++++ welcome to the KID game.. starting server +++++++++=")
-; assume that the server is the same as whatever served us this frontend app
-(def host js/window.location.hostname)
-(def port js/window.location.port)
-(def path js/window.location.pathname)
-; TODO look for some kind of path library
-(def room (second (.split path "/"))) ; second because split puts blank before starting slash
-
-(log/debug ":host" host
-           ":port" port
-           ":room" room)
-
-(def ws-url (str "ws://" host ":" port "/" room "/ws"))
 
 (enable-console-print!)
 
-(log/debug "sending and receiving messages to websocket url:" ws-url)
+;; The channel that this application will send messages to:
+(defonce send-channel (async/chan))
+;; the channel that this application will listen for messages on:
+(defonce receive-channel (async/chan))
 
-(defonce send-chan (async/chan))
+(defn listen-to-receive-channel! []
+  (async/go-loop []
+    (if-let [msg (<! receive-channel)] ; the server that may have sent a real message
+      (do
+        (log/debug "got new message!!!!!!!!!!")
+        (messaging/handle-message! msg)
+        (recur))
+      (println "receive channel got bad message"))))
 
-;; Websocket Routines (Processes)
+(listen-to-receive-channel!)
 
 ;; puts the messages on the send-chan
 (defn send
@@ -35,58 +35,94 @@
   (if (messages/valid-message? msg)
     (do
       (log/debug "sending message: " msg)
-      (async/put! send-chan msg))
+      (async/put! send-channel msg))
     (do
       (log/warn "your message is invalid!")
       (log/warn (str (:type msg)))
       (log/warn (str (:body msg)))
       (log/warn (str (messages/explain-message msg)))
       (log/warn "sending anyways lol")
-      (async/put! send-chan msg))))
-; legacy
-(def send-msg send)
+      (async/put! send-channel msg))))
 
 ; listens to the send-chan and forwards them to the server for
 ; distribution
-(defn start-process-forward-messages
+(defn connect-server-send
   [svr-chan]
   (async/go-loop []
-    (log/debug "send msgs init:")
-    (when-let [msg (<! send-chan)] ; listen to send-chan
+    (when-let [msg (<! send-channel)] ; listen to send-chan
       (log/debug msg)
-      (log/debug "msgs in msgs")
       (>! svr-chan msg) ; forward to server-chan
       (recur))))
 
-; listens to the server-channel and handles the messages
-(defn start-process-receive-messages
-  [svr-chan]
+;; connects a server websocket channel to our send and receive channels
+(defn connect-server-receive
+  [server-channel]
   (async/go-loop []
-    (if-let [{:keys [type body]} ; get the messages type and body of
-             (:message (<! svr-chan))] ; the server that may have sent a real message
+    ;; server sends wrapped in {:message}, extract that here
+    (if-let [message (:message (<! server-channel))]
       (do
-        (log/debug "got new message!!!!!!!!!!")
-        (log/debug (str type)) (log/debug (str body))
-        (case type
-          ::messages/user-init (state/set-users body)
-          ::messages/chat-new (state/add-chat body)
-          ::messages/user-new (state/add-user body)
-          ::messages/user-left (state/remove-user body)
-          ::messages/post-new (state/add-post body)
-          ; default
-          (log/debug "the server sent a valid message that we did not handle!!"))
+        (log/debug "received new server message" message)
+        (async/>! receive-channel message)
         (recur))
       ; TODO actually close the websocket
       (println "Websocket closed"))))
 
-(defn setup-websockets! []
+
+(defn get-websocket-url []
+  ;; assume that the server is the same as whatever served us this frontend app
+  (let [host js/window.location.hostname
+        port js/window.location.port
+        path js/window.location.pathname
+        room (second (.split path "/"))
+        ws-url (str "ws://" host ":" port "/" room "/ws")]
+    (log/debug "created location"
+               ":host" host
+               ":port" port
+               ":room" room)
+    ws-url))
+
+(defn get-room []
+  (let [path js/window.location.pathname
+        room (second (.split path "/"))]
+    room))
+
+;; tries to set up the websockets, returns true on success, false on failure
+(defn try-setup-websockets! []
   (async/go
-    (let [{:keys [ws-channel error]} (<! (ws-ch ws-url))]
-      (log/debug error)
+    (let [url (get-websocket-url)
+          {:keys [ws-channel error]} (<! (ws-ch url))]
       (if error
-        (log/debug "Something went wrong with the websocket")
-        (do
-          (send-msg {:type ::messages/user-new
-                     :body (state/get-player)})
-          (start-process-forward-messages ws-channel)
-          (start-process-receive-messages ws-channel))))))
+        (do (log/debug "Something went wrong with the websocket"
+                       error)
+            false)
+        (do (log/debug "successfully sending and receiving messages to websocket url:"
+                       url)
+            (connect-server-send ws-channel)
+            (connect-server-receive ws-channel)
+            true)))))
+
+(defn setup-local-connection! []
+  ;; attatch the posting alg to the receive channel,
+  ;; this is what the server would usually do, but we are allowing it to run locally
+  (postgen/attach-default-room-poster receive-channel)
+  ;; connect the send channel directly to the receive channel
+  ;; to emulate server pass-through
+  (log/debug "connecting send channel to the receive channel")
+  (async/go-loop []
+    ;; whenever we receive a message
+    (when-let [msg (<! send-channel)] ; listen to send-chan - when we receive a msg,
+      (>! receive-channel msg) ; forward to server-chan
+      (recur))))
+
+(defn setup-socket! []
+  (async/go
+    ;; first, set up either a websocket or a local connection,
+    ;; depending on if the websocket url actually works
+    (if-let [success? (<! (try-setup-websockets!))]
+      (do (log/debug "setup was successful")
+          (log/debug success?))
+      (do (log/debug "no websocket connection, trying local")
+          (setup-local-connection!)))
+    ;; then, send our user to that connection, in some way
+    (send {:type ::messages/user-new
+           :body (state/get-player)})))
