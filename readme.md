@@ -5,6 +5,13 @@ This repository contains the code to run multiple versions of the KID game - a s
 
 The game is a standalone clojurescript frontend application, that _can_ connect to a clojure/jar backend if you want to enable chat and mutiplayer.
 
+# For Content Editors:
+
+please checkout [the relevant directory](./src/kid_shared/posts)
+
+
+# For Developers
+
 ## Quickstart
 
 ### requirements
