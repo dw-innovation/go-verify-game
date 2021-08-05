@@ -7,7 +7,7 @@ The game is a standalone clojurescript frontend application, that _can_ connect 
 
 # For Content Editors:
 
-please checkout [the relevant directory](./src/kid_shared/posts)
+please checkout [the relevant directory](./src/shared/kid_shared/posts)
 
 
 # For Developers
