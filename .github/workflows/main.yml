@@ -1,0 +1,74 @@
+name: Build and Deploy CI/CD
+
+## use github workflows to only deploy the frontend app to amazon s3
+
+# decide when this script even runs:
+
+on:
+  push:
+    # whenever someone pushes to main or master, build and deploy that
+    branches: [ main, master ]
+    # whenever someone adds a new tag, build and deploy that as well
+    tags:
+      - "v*"
+  pull_request:
+    # when someone opens a pull request targeting main or master
+    # , then build and deploy that
+    branches: [ main, master ]
+
+jobs:
+  deploy:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # check out this git repo
+    - name: Checkout
+      uses: actions/checkout@v1
+
+      # extract our branch name
+      # from https://stackoverflow.com/questions/58033366/how-to-get-current-branch-within-github-actions
+      #   we can extrac the branch name this way.  for a PR, we want ${{ github.head_ref }}
+      #   but, for plain master, we will need this.  this can be accessed with:
+      #   ${{ steps.extract_branch.outputs.branch }}
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+
+      # get the tag name if it exists
+      # from https://stackoverflow.com/questions/58177786/get-the-current-pushed-tag-in-github-actions
+    - name: Extract tag name
+      id: extract_tag_name
+      shell: bash
+      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-central-1
+
+      # set up our build environment, and build our
+      # app
+    - name: Use Node
+      uses: actions/setup-node@v1
+    - run: npm install
+    - run: npm run build
+
+      # throw our built app on to s3
+    - name: Deploy static site to S3 bucket
+      # > in yaml means ignore line breaks
+      #         if we are a tag, use the tag name for
+      #         our directory name
+      #         otherwise, the branch name we want to merge in to maste
+      #         otherwise, the branch name we extracted earlier
+      run: >
+        aws s3 sync ./resources/public
+        s3://kid-game/${{
+          steps.extract_tag_name.outputs.tag
+          || github.head_ref
+          || steps.extract_branch.outputs.branch
+          }} --delete

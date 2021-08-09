@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "watch": "babel ./src/app/kid_game/react_components/raw --out-dir ./src/app/kid_game/react_components/compiled --watch & shadow-cljs watch :dev",
+    "build": "babel ./src/app/kid_game/react_components/raw --out-dir ./src/app/kid_game/react_components/compiled --watch & shadow-cljs compile :dev",
     "repl": "shadow-cljs cljs-repl :dev"
   },
   "devDependencies": {
