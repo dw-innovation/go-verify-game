@@ -1,53 +1,14 @@
-(ns kid-game.components.posts.core
-  (:require [reagent.core :as reagent :refer [atom]]
+(ns kid-game.components.timeline.core
+  (:require [reagent.core :as r]
             [kid-game.state :as state]
             [kid-game.business :as business]
             [kid-game.utils.log :as log]
             [kid-shared.types.post :as posts]
             [kid-game.utils.core :refer [timestamp-now new-uuid]]
-            ; [component-test]
             [lodash]
             [moment]
             [cljs.js :refer [empty-state eval js-eval]]
             [cljs.core.async :as async :include-macros true]))
-
-(js/console.log "bbbbbbbbbbbbbbbbbbbbb")
-(js/console.log lodash/_.map)
-(js/console.log  moment)
-
-(defn <input> [] [:div])
-  ;; (let [title (atom nil)
-  ;;       description (atom nil)
-  ;;       fake-news? (atom false)
-  ;;       submit-post (fn []
-  ;;                     (business/post-text-post! :title @title
-  ;;                                               :description @description
-  ;;                                               :fake-news? @fake-news?)
-  ;;                     (reset! title nil)
-  ;;                     (reset! description nil))]
-  ;;   (fn []
-  ;;     [:div {:class "post-add"}
-  ;;      [:form
-  ;;       {:on-submit (fn [x]
-  ;;                     (.preventDefault x)
-  ;;                     (submit-post))}
-  ;;       [:input {:type "text"
-  ;;                :value @title
-  ;;                :placeholder "post title"
-  ;;                :on-change #(reset! title (-> % .-target .-value))}]
-  ;;       [:input {:type "text"
-  ;;                :value @description
-  ;;                :placeholder "post description"
-  ;;                :on-change #(reset! description (-> % .-target .-value))}]
-  ;;       [:br]
-  ;;       [:input {:type "checkbox"
-  ;;                :id "fake-news"
-  ;;                :name "fake-news"
-  ;;                :value @fake-news?
-  ;;                :on-change #(reset! fake-news? (-> % .-target .-checked))}]
-  ;;       [:label {:for "fake-news"} "fake news!"]
-  ;;       [:button {:type "submit"} "new post"]
-  ;;       [:hr]]])))
 
 (declare <post>)
 
@@ -77,17 +38,20 @@
         (fn [result] (:value result))))
 
 (defn <type-text> [{title :title
-                  description :description
-                  fake-news? :fake-news?
-                  {:as author author-name :name} :by
-                  time :time
-                  :as p}]
-  (let [time-left (atom time)
-        finished? (atom false)
+                    description :description
+                    fake-news? :fake-news?
+                    {:as author author-name :name} :by
+                    time-limit :time-limit
+                    :as p}]
+  (let [time-left (r/atom time-limit)
+        finished? (r/atom false)
         finished! (fn []
                     (reset! finished? true)
                     (reset! time-left 0))
-        active? (fn [] (or (< 0 @time-left) @finished?))
+        ;; a post can be considered 'active' in a variety of cases
+        active? (fn [] (or @finished? ; we have explicitly finished the post at some point
+                           ;; or we had a time limit, and it ran out
+                           (not (and time-limit (>= 0 @time-left)))))
         interval 100
         reduce-time! (fn []
                        (reset! time-left (if (< 0 @time-left)
@@ -101,19 +65,20 @@
                     (business/loose-points! @time-left)
                     (business/win-points! @time-left))
                   (finished!))]
-    ; TODO unhook this interval once 0
-    ; or maybe keep it like this, so that you could get a "time-boost"
-    ; by pumping up time-left
-    ; (js/setInterval reduce-time! interval)
+    ;; create a loop that reduces the time
+    (async/go-loop []
+      (when (> @time-left 0) (do (reduce-time!) ; call the function to deprecate time
+                                 (async/<! (async/timeout interval)) ; wait for the interval
+                                 (recur)))) ; do it again
     (fn []
-      [:div
+      [:div {:class ["post" "post-text" (if (active?) "active" "inactive")]}
        [:div {:class "post-user"}
         [:small {:class "posted-by-text"} "posted by "]
         [<author> author]]
        [:div {:class "post-text"
               :style {:background-color "white"
                       :padding "1rem"}}
-        [<progress> @time-left (:time p)]
+        (when time-limit [<progress> @time-left time-limit])
         ;; [:div (if (:fake-news? p) "fake" "real")]
         [:small "title"]
         [:div {:class "post-title"} title]
@@ -124,8 +89,7 @@
         (if (:image p) [:img {:src (:image p)
                               :style {:width "50%"}}])
 
-        [:div {:class "post-actions"
-               :style {:position "absolute" :right 0 :margin-top "-30px" :margin-right "20px"}}
+        [:div {:class "post-actions"}
          [:button {:on-click repost!} "re-post"]]
         [:br]
         ]
@@ -164,7 +128,11 @@
   [:div {:class "post"}
    [match-post p]])
 
+(defn <header> []
+  [:div {:class ["panel-header" "timeline-header"]}
+   [:div "Bleeper Network"]])
+
 (defn <container> []
-  [:div {:class "post-container"}
-   [<input>]
+  [:div.timeline-container
+   [<header>]
    (map <post> (state/posts))])

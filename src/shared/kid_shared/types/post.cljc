@@ -8,7 +8,7 @@
 
 (s/def ::title string?)
 (s/def ::description string?)
-(s/def ::time pos-int?)
+(s/def ::time-limit pos-int?)
 (s/def ::fake-news? boolean?)
 (s/def ::by ::user/user)
 
@@ -20,7 +20,7 @@
                                     ::shared/id
                                     ::shared/created
                                     ::title
-                                    ::time
+                                    ::time-limit
                                     ::fake-news?
                                     ::by
                                     ::description]))
@@ -30,7 +30,7 @@
                                   ::shared/id
                                   ::by
                                   ::comment
-                                  ::time
+                                  ::time-limit
                                   ::post]))
 
 (s/def ::post-default (s/keys :req-un [:post-default/type

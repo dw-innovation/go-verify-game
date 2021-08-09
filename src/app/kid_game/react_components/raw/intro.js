@@ -4,7 +4,7 @@ import * as React from "react";
 
 class Author extends React.Component {
 	render() {
-		return (<div>"react interop!" -- look! at me, i'm cool</div>);
+		return (<div>Welcome, what is your name?</div>);
 	}
 }
 

@@ -2,7 +2,7 @@
 
 (def migrant-1 {:type :post-text
                 :id :migrant-1
-                :time 300
+                :time-limit 300
                 :title ""
                 :description "So-called 'climate refugees' from Copenhagen are trashing Liguria! Here's a picture from the suburbs of Genova taken yesterday. This is an outrage!"
                 :subtext "Reverse image search reveals that picture was actually taken in Florida after Hurricane Michael."
@@ -12,7 +12,7 @@
 
 (def climate-1 {:type :post-text
                 :id :climate-1
-                :time 300
+                :time-limit 300
                 :title ""
                 :description "Vegan diet will be mandatory in Germany as of next month!"
                 :subtext "Google search will reveal Svenja Schulze never said anything like this.
@@ -23,7 +23,7 @@ Simple image analytics/forensics will reveal the 'vegan' logo on her shirt is ph
 
 (def climate-3 {:type :post-text
                 :id :climate-3
-                :time 300
+                :time-limit 300
                 :title ""
                 :description "Just got this satellite image from @ESA. This is what our continent looks like now. Thanks to climate change and rising sea levels. Hate to say I told you so!"
                 :subtext "ESA account check reveals the image is real

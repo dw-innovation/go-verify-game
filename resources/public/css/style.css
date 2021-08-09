@@ -6,50 +6,61 @@ body {
   font-size: 16px !important;
 }
 
-.post-container {
-    background: #eee;
-    height: 100vh;
-    padding: 1rem;
+.game-container {
+    display: flex;
+    overflow: hidden;
 }
 
-.content-container {
-    display: grid;
-    width: 100vw;
-    height: 100vh;
-    grid-template-rows: 23px 1fr;
-    grid-template-columns: 400px 1fr;
-    grid-template-areas:
-        "header header"
-        "chat-container post-container"
-}
+.game-panel { transition: width .4s ease-in-out,
+                          box-shadow .4s ease-in-out,
+                          filter .4s ease-in-out;
+              margin-top: 3rem;
+              filter: blur(1px)
+                      brightness(.8); }
+.game-panel.active { box-shadow: 5px 5px 30px 10px rgba(0,0,0,.3);
+                     filter: blur(0px)
+                             brightness(1);}
 
-.chat-container {
-    display: grid;
-    width: 400px;
-    height: 100vh;
-    grid-template-rows: 1fr;
-    grid-template-columns: 200px 1fr;
-    grid-template-areas:
-                    "sidebar history"
-}
+.game-timeline { background: #eee;
+                height: 100vh;
+                overflow-y: scroll; }
+.game-verification-hub { heigh: 100vh;
+                         background: #fff;
+                         overflow-y: scroll;}
+
+.game-timeline { width: 33vw;
+                 z-index: 1;
+                 position: relative; }
+.game-timeline.active { width: 66vw;
+                        z-index: 2; }
+.game-timeline-inner { width: 66vw; }
+
+.game-verification-hub { width: 33vw; z-index: 1; position: relative; }
+.game-verification-hub.active { width: 66vw; z-index: 2; }
+.game-verification-hub-inner { width: 66vw; }
 
 .header {
+    z-index: 4;
     grid-area: header;
     background-color: blue;
     color: white;
     padding-left: 2rem;
     position: fixed;
-    height: 2rem;
+    height: 3rem;
     width: 100%;
 }
 
-.sidebar {
-    grid-area: sidebar;
-    background-color: whitesmoke;
-    height: calc(100vh-200px);
-    overflow-y: scroll;
-    padding: 1rem;
-    padding-top: 2rem;
+.panel-header { width: 100%;
+                padding: 1rem;
+                z-index: 7;
+                position: sticky;
+                top: 0rem; }
+.timeline-header { background-color: teal;}
+.verification-hub-header { background-color: orange;}
+
+
+.post.inactive {
+    opacity: .3;
 }
 
 .history {

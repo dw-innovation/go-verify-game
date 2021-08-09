@@ -47,7 +47,7 @@ var Author = /*#__PURE__*/function (_React$Component) {
   _createClass(Author, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement("div", null, "\"react interop!\" -- look! at me, i'm cool");
+      return /*#__PURE__*/React.createElement("div", null, "Welcome, what is your name?");
     }
   }]);
 

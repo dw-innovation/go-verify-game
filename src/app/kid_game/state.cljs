@@ -16,22 +16,27 @@
 ;;
 
 (defonce app-state (atom {:text "Hello world!"
-                          :active-panel :login
+                          ;; either login, timeline, or verification-hub
+                          :active-panel :login ; start on the login page
                           :user {}}))
 
 (defonce points (atom 0))
 (defonce msg-list (atom []))
 (defonce users (atom {}))
-(defonce post-list (atom [{:title "test post"
+(defonce post-list (atom [{:title "Welcome to the timeline!"
                            :type :post-text
                            :id "test"
-                           :description "test-description"}]))
+                           :description "wait a second and you will start to see posts coming in"}]))
 
 ;;
 ;; state manipulator functions
 ;;
+(defn open-timeline [] (swap! app-state assoc :active-panel :timeline))
+(defn open-verification-hub [] (swap! app-state assoc :active-panel :verification-hub))
 
-(defn open-chat [] (swap! app-state assoc :active-panel :chat))
+(defn open-game [] (open-timeline))
+
+(defn panel [] (:active-panel @app-state))
 
 ;; set the app to work with a new user
 (defn set-player [user]

@@ -4,7 +4,7 @@
             [kid-game.state :as state]
             [kid-game.business :as business]
             [kid-game.components.chat.core :as <chat>]
-            [kid-game.components.posts.core :as <posts>]
+            [kid-game.components.timeline.core :as <timeline>]
             [cljs.core.async :as async :include-macros true]
             [kid-game.utils.log :as log]))
 
@@ -63,7 +63,7 @@
    :fake-news? false
    :image "path-to-image"
    :status :start
-   :time 30
+   :time-limit 30
    :comments {"not true" :negative
               "so true" :positive}})
 

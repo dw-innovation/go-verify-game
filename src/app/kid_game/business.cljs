@@ -19,13 +19,18 @@
         :role :investigator}
        (state/set-player)))
 
+(defn new-session! [player-name]
+  (state/open-game)
+  (use-new-player! :name player-name)
+  (socket/setup-socket!))
+
 (defn post-text-post! [& {:keys [title description fake-news?]}]
   (socket/send {:type ::messages/post-new
                 :body {:type :post-text
                        :id (new-uuid)
                        :created (timestamp-now)
                        :title title
-                       :time 300
+                       :time-limit 300
                        :fake-news? fake-news?
                        :by (state/get-player)
                        :description description}}))
@@ -35,7 +40,7 @@
                 :body {:type :re-post
                        :id (new-uuid)
                        :created (timestamp-now)
-                       :time 300
+                       :time-limit 300
                        :by (state/get-player)
                        :comment comment
                        :post post}}))
