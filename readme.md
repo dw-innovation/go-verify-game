@@ -14,6 +14,12 @@ please checkout [the relevant directory](./src/shared/kid_shared/posts)
 
 ## Quickstart
 
+### Deployment
+
+master branch, tags, and open pull requests get deployed through github actions to s3.  you should be able to see it at: https://kid-game.s3.eu-central-1.amazonaws.com/master/index.html
+
+Note: only the frontend version of the game will be seen at this url.  to run a realtime server, you're on your own :)
+
 ### requirements
 
 this application needs `java`, `npm` and `clojure` installed.
