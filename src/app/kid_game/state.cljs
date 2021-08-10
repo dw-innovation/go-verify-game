@@ -112,21 +112,18 @@
   (first (s/select [(s/filterer #(= (:id %) (:id post))) s/FIRST]
                    @post-list)))
 
+(defn attatch-post-timer [post]
+  (async/go-loop []
+    (let [p (get-post post)
+          time-left (or (:time-left p) (:time-limit post) 0)]
+      (when (> time-left 0) (do (-> (assoc p :time-left (dec time-left)) ; deprecate time left and save
+                                    (update-post))
+                                (async/<! (async/timeout 100)) ; wait for the interval
+                                (recur))))))
+
 (defn add-post [post]
   ;; TODO validate that it's an actual valid post
   ;; add the post to the state
   (swap! post-list conj post)
   ;; attatch a time decreaser to the post, but only if time limiet
-  (when (:time-limit post)
-    ;; create a loop that reduces the time
-    (async/go-loop []
-      (let [p (get-post post)
-            time-left (or (:time-left p) (:time-limit post))]
-        (when (> time-left 0) (do (-> (assoc p :time-left (dec time-left)) ; deprecate time left and save
-                                      (update-post))
-                                  (async/<! (async/timeout 100)) ; wait for the interval
-                                  (recur))))) ; do it again
-
-    )
-
-  )
+  (when (:time-limit post) (attatch-post-timer post)))
