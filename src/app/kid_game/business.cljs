@@ -24,6 +24,11 @@
   (use-new-player! :name player-name)
   (socket/setup-socket!))
 
+(defn investigate! [post]
+  (println "here")
+  (state/open-verification-hub)
+  (println @state/app-state))
+
 (defn post-text-post! [& {:keys [title description fake-news?]}]
   (socket/send {:type ::messages/post-new
                 :body {:type :post-text

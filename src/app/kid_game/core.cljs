@@ -24,15 +24,17 @@
 (defn <game> []
   [:div.game-container
    [<header>]
+
    [:div {:class ["game-panel" "game-timeline" (when (= (state/panel) :timeline) "active")]
-          :on-click state/open-timeline}
+          :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
     [:div.game-timeline-inner
-    [<timeline>/<container>]]]
+     [<timeline>/<container>]]]
+
    [:div {:class ["game-panel" "game-verification-hub" (when (= (state/panel) :verification-hub) "active")]
           ;; catch a fall through click action
-          :on-click state/open-verification-hub}
+          :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
     [:div.game-verification-hub-inner
-    [<verification-hub>/<container>]]]])
+     [<verification-hub>/<container>]]]])
 
 (defn <app> []
   (case (:active-panel @state/app-state)

@@ -18,9 +18,13 @@
    [:div {:class "progress-inner"
           :style {:width (str (* 100 (/ amnt total)) "%")}}]])
 
+(defn <post-progress> [{time-left :time-left
+                        time-limit :time-limit}]
+  [<progress> time-left time-limit])
+
 (defn <author> [{:as author
-                         name :name
-                         image :image}]
+                 name :name
+                 image :image}]
   [:div {:class "post-author"}
    [:div {:class "post-author-image"}
               (if image [:img {:src image}])]
@@ -37,40 +41,29 @@
          :context    :expr}
         (fn [result] (:value result))))
 
-(defn <type-text> [{title :title
+(defn <type-text> [;; destructure the post
+                   {:as p
+                    title :title
                     description :description
                     fake-news? :fake-news?
+                    ;; destructure the author:
                     {:as author author-name :name} :by
-                    time-limit :time-limit
-                    :as p}]
-  (let [time-left (r/atom time-limit)
-        finished? (r/atom false)
-        finished! (fn []
-                    (reset! finished? true)
-                    (reset! time-left 0))
+                    time-limit :time-limit}]
+  (let [
         ;; a post can be considered 'active' in a variety of cases
-        active? (fn [] (or @finished? ; we have explicitly finished the post at some point
+        active? (fn []
                            ;; or we had a time limit, and it ran out
-                           (not (and time-limit (>= 0 @time-left)))))
-        interval 100
-        reduce-time! (fn []
-                       (reset! time-left (if (< 0 @time-left)
-                                           (dec @time-left)
-                                           0)))
+                           (not (and time-limit (>= 0 (:time-left p)))))
+        investigate! (fn [] (println "clicked investigate")
+                       (business/investigate! p))
+        block! (fn [])
         ; choices
         repost! (fn []
                   (business/post-re-post! :comment "comment about post"
                                           :post p)
                   (if fake-news?
-                    (business/loose-points! @time-left)
-                    (business/win-points! @time-left))
-                  (finished!))]
-    ;; create a loop that reduces the time
-    (async/go-loop []
-      (when (> @time-left 0) (do (reduce-time!) ; call the function to deprecate time
-                                 (async/<! (async/timeout interval)) ; wait for the interval
-                                 (recur)))) ; do it again
-    (fn []
+                    (business/loose-points! (:time-left p))
+                    (business/win-points! (:time-left p))))]
       [:div {:class ["post" "post-text" (if (active?) "active" "inactive")]}
        [:div {:class "post-user"}
         [:small {:class "posted-by-text"} "posted by "]
@@ -78,7 +71,7 @@
        [:div {:class "post-text"
               :style {:background-color "white"
                       :padding "1rem"}}
-        (when time-limit [<progress> @time-left time-limit])
+        (when time-limit [<post-progress> p])
         ;; [:div (if (:fake-news? p) "fake" "real")]
         [:small "title"]
         [:div {:class "post-title"} title]
@@ -88,9 +81,14 @@
         [:br]
         (if (:image p) [:img {:src (:image p)
                               :style {:width "50%"}}])
-
         [:div {:class "post-actions"}
-         [:button {:on-click repost!} "re-post"]]
+         [:button {:on-click repost!} "re-post"]
+         [:button {:on-click block!} "block"]
+         [:button {:on-click (fn [ev] ;; stop propagation because there is a global
+                               ;; click to open panel, and we are specifically opening the other one
+                               (.stopPropagation ev)
+                               (investigate!))}
+          "investigate"]]
         [:br]
         ]
        [:div {:class "meta"
@@ -99,7 +97,7 @@
         [:div {:style {:color "grey"}} (if (:fake-news? p) "(is fake)" "(is real)")]
         [:br]
         [:br]
-        ]])))
+        ]]))
 
 (defn <type-re-post> [{:as p
                 author :by
@@ -124,7 +122,7 @@
       [<type-text> p])))
 
 (defn <post> [p]
-  ^{:key (new-uuid)}
+  ^{:key (:id p)}
   [:div {:class "post"}
    [match-post p]])
 
@@ -135,4 +133,5 @@
 (defn <container> []
   [:div.timeline-container
    [<header>]
+   [:button {:on-click #(business/investigate! {})} "investigate"]
    (map <post> (state/posts))])

@@ -4,20 +4,22 @@
 
 (def default-story
   [
-   2
-   {:type :post-text
-    :description "first random post"
-    :by posters/rita-moonberg}
-   4
-   {:type :post-text
-    :description "second random post"
-    :by posters/zeit}
-   4
+   1
    posts/climate-3
-   15
-   posts/migrant-1
-   2
-   {:type :post-text
-    :description "hello!  some random post"
-    :by posters/freiheit378}
+   ;; 2
+   ;; {:type :post-text
+   ;;  :description "first random post"
+   ;;  :by posters/rita-moonberg}
+   ;; 4
+   ;; {:type :post-text
+   ;;  :description "second random post"
+   ;;  :by posters/zeit}
+   ;; 4
+   ;; posts/climate-3
+   ;; 15
+   ;; posts/migrant-1
+   ;; 2
+   ;; {:type :post-text
+   ;;  :description "hello!  some random post"
+   ;;  :by posters/freiheit378}
    ])

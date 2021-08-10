@@ -43,6 +43,7 @@
                     ::re-post ::re-post
                     ::post-text ::post-text))
 
+
 (gen/generate (s/gen ::post-text))
 
 (defn gen-random [] (merge

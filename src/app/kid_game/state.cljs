@@ -1,5 +1,6 @@
 (ns kid-game.state
   (:require [reagent.core :as reagent :refer [atom]]
+            [com.rpl.specter :as s]
             [kid-shared.types.user :as user]
             [kid-shared.types.chat :as chat]
             [kid-game.utils.log :as log]
@@ -31,8 +32,13 @@
 ;;
 ;; state manipulator functions
 ;;
-(defn open-timeline [] (swap! app-state assoc :active-panel :timeline))
-(defn open-verification-hub [] (swap! app-state assoc :active-panel :verification-hub))
+(defn open-timeline []
+  (log/debug "opening the timeline")
+  (swap! app-state assoc :active-panel :timeline))
+
+(defn open-verification-hub []
+  (log/debug "opening verification hub")
+  (swap! app-state assoc :active-panel :verification-hub))
 
 (defn open-game [] (open-timeline))
 
@@ -84,6 +90,43 @@
   (log/debug "lost points " ps)
   (log/debug "total points " @points))
 
+;;
+;;  posts
+;;    the state actions that have to do with the posts
+;;
+;;
+;;
+
 (defn posts [] (reverse @post-list))
 
-(defn add-post [post] (swap! post-list conj post))
+(defn update-post [post]
+  (->>
+   ;; use specter to update the post at the path where the ids are the same
+   (s/setval [(s/filterer #(= (:id %) (:id post))) s/FIRST]
+             post @post-list)
+   ;; update the post state
+   (reset! post-list)))
+
+(defn get-post [post] ;; get a full post by something post-like (min of {:id 'something'})
+  ;; use specter to update the post at the path where the ids are the same
+  (first (s/select [(s/filterer #(= (:id %) (:id post))) s/FIRST]
+                   @post-list)))
+
+(defn add-post [post]
+  ;; TODO validate that it's an actual valid post
+  ;; add the post to the state
+  (swap! post-list conj post)
+  ;; attatch a time decreaser to the post, but only if time limiet
+  (when (:time-limit post)
+    ;; create a loop that reduces the time
+    (async/go-loop []
+      (let [p (get-post post)
+            time-left (or (:time-left p) (:time-limit post))]
+        (when (> time-left 0) (do (-> (assoc p :time-left (dec time-left)) ; deprecate time left and save
+                                      (update-post))
+                                  (async/<! (async/timeout 100)) ; wait for the interval
+                                  (recur))))) ; do it again
+
+    )
+
+  )

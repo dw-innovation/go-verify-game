@@ -32,7 +32,9 @@ RIS reveals the image is real
  "
                 :image "img/climate-3.jpg"
                 :fake-news? false
-                :by {:name "@rita_moonberg"}})
+                :by {:name "@rita_moonberg"}
+                :activities [{:component 'activities/test
+                              :data "hello"}]})
 
 (def simple [{:type :post-text
               :description "Just got my delivery on rice grown in the New Baltic Sea, next to the New Rostock wind farms, yum! I <3 Megacorp eco grub!

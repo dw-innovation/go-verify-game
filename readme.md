@@ -20,7 +20,7 @@ master branch, tags, and open pull requests get deployed through github actions 
 
 Note: only the frontend version of the game will be seen at this url.  to run a realtime server, you're on your own :)
 
-### requirements
+### Requirements
 
 this application needs `java`, `npm` and `clojure` installed.
 
@@ -30,7 +30,7 @@ The frontend application can be started with `npm run watch`, which starts a sha
 
 You can connect to the running process with a repl by running `npm run repl`, or connecting through CIDER in emacs with `cider-connect-cljs`
 
-### Start with a backend
+### Start with a backend (no need for this round)
 
 To start with a backend, you will also want to start the frontend, like above.  However, this time the server will serve the frontend package and you will access it at a different URL.
 
@@ -41,16 +41,18 @@ clj -M:repl
 
 The server will then serve the frontend package on `localhost:3449`, which is connected to the backend.
 
+Note: in this case, the backend also _serves_ the bundled js frontend
+
 
 ## Development
 
-This application relies on two separate parts, the `app` (a clojurescript project) that is the frontend of the website, and the `server`, which is a clojure project.
+This application relies on two separate parts, the `app` (a clojurescript project) that is the frontend of the website, and the `server`, which is a clojure project.  `cljc` files, which can be shared between the app and the server, are stored in the shared directory
 
 #### Frontend
 
 The `app` is hosted and compiled by `shadow-cljs`, where you can see the configuration in `shadow-cljs.edn`.  Javascript libraries can be added in package.json, and then used in clojurescript as well.
 
-###### JS Interop
+##### JS Interop
 
 We also have JS interop, along with JS React interop working.  Please see the files in `src/app/kid_game/react_components/raw` to see the js files.  They are converted with babel in the watch script.
 
@@ -67,6 +69,8 @@ Imported react elements can be included in reagent hiccup as:
 ``` javascript
         [(reagent/adapt-react-class intro/default) {}]
 ```
+
+where `intro/default` is your imported react element from above
 
 you can *connect to the frontend repl* by using your code editor to connect to the repl on `nrepl://localhost:8777`
 
