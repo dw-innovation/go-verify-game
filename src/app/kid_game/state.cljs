@@ -29,6 +29,8 @@
                            :id "test"
                            :description "wait a second and you will start to see posts coming in"}]))
 
+(defonce verification-hub-state (atom {}))
+
 ;;
 ;; state manipulator functions
 ;;
@@ -36,9 +38,13 @@
   (log/debug "opening the timeline")
   (swap! app-state assoc :active-panel :timeline))
 
-(defn open-verification-hub []
-  (log/debug "opening verification hub")
-  (swap! app-state assoc :active-panel :verification-hub))
+(defn open-verification-hub
+  ([post]
+   (log/debug "opening verification hub")
+   (swap! verification-hub-state assoc :post post)
+   (swap! app-state assoc :active-panel :verification-hub))
+  ([]
+   (swap! app-state assoc :active-panel :verification-hub)))
 
 (defn open-game [] (open-timeline))
 
@@ -111,6 +117,9 @@
   ;; use specter to update the post at the path where the ids are the same
   (first (s/select [(s/filterer #(= (:id %) (:id post))) s/FIRST]
                    @post-list)))
+
+(defn disable-post! [post]
+  (update-post (assoc post :disabled true)))
 
 (defn attatch-post-timer [post]
   (async/go-loop []

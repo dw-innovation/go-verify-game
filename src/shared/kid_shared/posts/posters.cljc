@@ -9,25 +9,31 @@
 ;;
 
 (def deutsche-welle (user/create {:name "Deutsche Welle"
+                                  :handle "@dw"
                                   :role :media
                                   :image images/dw-logo}))
 
 (def reuters (user/create {:name "Reuters"
+                           :handle "@reuters"
                            :role :media
                            :image images/reuters-logo}))
 
 (def zeit (user/create {:name "Zeit.de"
+                        :handle "@zeit.de"
                         :role :media}))
 
 (def freiheit378 (user/create {:name "Freiheit378"
+                               :handle "@freiheit378"
                                :role :manipulator
                                :image images/freiheit-logo}))
 
-(def eu-innovation (user/create {:name "eu-innovation"
+(def eu-innovation (user/create {:name "EUI consortium"
+                                 :handle "@eu-innovation"
                                  :role :media
                                  :image images/freiheit-logo}))
 
-(def rita-moonberg (user/create {:name "rita-moonberg"
+(def rita-moonberg (user/create {:name "Rita Moonberg"
+                                 :handle "@rita"
                                  :role :media
                                  :image images/freiheit-logo}))
 (def posters [deutsche-welle

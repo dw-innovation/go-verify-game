@@ -24,10 +24,6 @@
   (use-new-player! :name player-name)
   (socket/setup-socket!))
 
-(defn investigate! [post]
-  (println "here")
-  (state/open-verification-hub)
-  (println @state/app-state))
 
 (defn post-text-post! [& {:keys [title description fake-news?]}]
   (socket/send {:type ::messages/post-new
@@ -40,7 +36,27 @@
                        :by (state/get-player)
                        :description description}}))
 
-(defn post-re-post! [& {:keys [comment post]}]
+(defn win-points! [points] (state/win-points points))
+(defn loose-points! [points] (state/loose-points points))
+
+(defn post-investigate! [post]
+  (println "here")
+  (state/open-verification-hub post))
+
+(defn post-block! [post]
+  (let [fake-news? (:fake-news? post)
+        time-left (or (:time-left post) 20)]
+    (if (:fake-news? post) (win-points! time-left)
+                           (loose-points! time-left)))
+  (state/disable-post! post))
+
+
+(defn post-share! [& {:keys [comment post]}]
+  (let [fake-news? (:fake-news? post)
+        time-left (or (:time-left post) 20)]
+    (if (:fake-news? post) (loose-points! time-left)
+                           (win-points! time-left)))
+  (state/disable-post! post)
   (socket/send {:type ::messages/post-new
                 :body {:type :re-post
                        :id (new-uuid)
@@ -64,5 +80,3 @@
                             :to nil ; a chat only from is group chat
                             :content content)))
 
-(defn win-points! [points] (state/win-points points))
-(defn loose-points! [points] (state/loose-points points))

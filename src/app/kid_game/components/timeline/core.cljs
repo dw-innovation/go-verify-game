@@ -22,14 +22,25 @@
                         time-limit :time-limit}]
   [<progress> time-left time-limit])
 
+
+(defn <author-image> [{:as author
+                       image :image
+                       name :name}]
+   [:div {:class "post-author-image"}
+    (when image [:img {:src image
+                       :alt (str name " profile image")}])])
+
+(defn <author-name> [{:as author name :name
+                      handle :handle}]
+  [:div {:class "post-author-name"}
+   [:span.name name] [:span.handle handle]])
+
 (defn <author> [{:as author
                  name :name
                  image :image}]
   [:div {:class "post-author"}
-   [:div {:class "post-author-image"}
-              (if image [:img {:src image}])]
-   [:div {:class "post-author-name"}
-    [:b name]]])
+   [<author-image> author]
+   [<author-name> author]])
 
 
 
@@ -49,55 +60,33 @@
                     ;; destructure the author:
                     {:as author author-name :name} :by
                     time-limit :time-limit}]
-  (let [
-        ;; a post can be considered 'active' in a variety of cases
-        active? (fn []
-                           ;; or we had a time limit, and it ran out
-                           (not (and time-limit (>= 0 (:time-left p)))))
-        investigate! (fn [] (println "clicked investigate")
-                       (business/investigate! p))
-        block! (fn [])
-        ; choices
-        repost! (fn []
-                  (business/post-re-post! :comment "comment about post"
-                                          :post p)
-                  (if fake-news?
-                    (business/loose-points! (:time-left p))
-                    (business/win-points! (:time-left p))))]
-      [:div {:class ["post" "post-text" (if (active?) "active" "inactive")]}
-       [:div {:class "post-user"}
-        [:small {:class "posted-by-text"} "posted by "]
-        [<author> author]]
-       [:div {:class "post-text"
-              :style {:background-color "white"
-                      :padding "1rem"}}
-        (when time-limit [<post-progress> p])
-        ;; [:div (if (:fake-news? p) "fake" "real")]
-        [:small "title"]
-        [:div {:class "post-title"} title]
-        ;; [:small "description"]
-        [:div {:class "post-description"
-               :style {:font-size "1.5rem"}} description]
-        [:br]
-        (if (:image p) [:img {:src (:image p)
-                              :style {:width "50%"}}])
-        [:div {:class "post-actions"}
-         [:button {:on-click repost!} "re-post"]
-         [:button {:on-click block!} "block"]
-         [:button {:on-click (fn [ev] ;; stop propagation because there is a global
-                               ;; click to open panel, and we are specifically opening the other one
-                               (.stopPropagation ev)
-                               (investigate!))}
-          "investigate"]]
-        [:br]
-        ]
-       [:div {:class "meta"
-              :style {:padding "1rem"}}
-        [:div {:style {:color "grey"}} (:subtext p)]
-        [:div {:style {:color "grey"}} (if (:fake-news? p) "(is fake)" "(is real)")]
-        [:br]
-        [:br]
-        ]]))
+  (let [;; a post can be considered 'active' in a variety of cases
+        active? (and (if time-limit (> (:time-left p) 0) true)
+                     (not (:disabled p)))
+        investigate! (fn [] (business/post-investigate! p))
+        block! (fn [] (business/post-block! p))
+        share! (fn [] (business/post-share! :comment "comment about post"
+                                            :post p))]
+    [:div {:class ["post" "post-type-text" (if active? "active" "inactive")]}
+     [:div.post-left-column
+      [<author-image> author]]
+     [:div.post-right-column
+      [<author-name> author]
+     [:div {:class "post-text"}
+      [:div.post-title title]
+      [:div.post-description description]
+      (when (:image p) [:img.post-image {:src (:image p)}])
+      [:div {:class "post-actions"}
+       [:button {:on-click share!} "share"]
+       [:button {:on-click block!} "block"]
+       [:button {:on-click (fn [ev] ;; stop propagation because there is a global
+                             ;; click to open panel, and we are specifically opening the other one
+                             (.stopPropagation ev)
+                             (investigate!))}
+        "investigate"]]
+      (when time-limit [<post-progress> p])
+      ]
+     ]]))
 
 (defn <type-re-post> [{:as p
                 author :by
@@ -122,8 +111,8 @@
       [<type-text> p])))
 
 (defn <post> [p]
-  ^{:key (:id p)}
-  [:div {:class "post"}
+  ^{:key (:id p)} ;; important to keep track of rendering
+  [:div {:class "post-in-list"}
    [match-post p]])
 
 (defn <header> []
@@ -133,5 +122,4 @@
 (defn <container> []
   [:div.timeline-container
    [<header>]
-   [:button {:on-click #(business/investigate! {})} "investigate"]
    (map <post> (state/posts))])

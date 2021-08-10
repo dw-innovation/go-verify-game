@@ -1,9 +1,12 @@
 /* some style */
+html {
+    font-size: 14px;
+}
 
 body {
   margin: 0px;
   padding: 0px;
-  font-size: 16px !important;
+  font-family: "Sans"
 }
 
 .game-container {
@@ -94,39 +97,31 @@ body {
     justify-self: center;
 }
 
-.post {
+.post-in-list {
     margin: 1rem;
-    padding: 1rem;
 }
-.post-title {
-    font-size: 1.8rem;
-    font-weight: bold;
-}
-.post-add {
-    padding: 1rem;
-}
-.post-author {
-    display: flex;
-    padding: 1rem;
-}
+.post { display: flex;
+        flex-direction: row;
+        background-color: white;
+        border-top: 3px solid #ddd; }
+.post-left-column { width: 4rem;
+                    padding: 1rem; }
+.post-right-column { padding: 1rem 1rem 1rem 0rem;  }
+
 .post-author-image {
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 2rem;
     overflow: hidden;
     background-color: grey;
 }
 .post-author-image img {
-    width: 50px;
-    height: 50px;
+    width: 6rem;
+    height: 6rem;
 }
-.post-author-name {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding-left: 1rem;
-    font-size: 2rem;
+.post-image {
+    width: 100%;
+    border-radius: 2rem;
 }
 .posted-by-text {
     color: lightgray;
@@ -136,6 +131,9 @@ body {
     color: lightgray;
     font-size: 1rem;
 }
+.post-author-name .name { font-weight: bold; }
+.post-author-name .handle { color: lightgray;
+                            padding-left: 1rem; }
 
 
 

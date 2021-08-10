@@ -1,4 +1,5 @@
-(ns kid-shared.posts.posts)
+(ns kid-shared.posts.posts
+  (:require [kid-shared.posts.posters :as posters]))
 
 (def migrant-1 {:type :post-text
                 :id :migrant-1
@@ -32,8 +33,8 @@ RIS reveals the image is real
  "
                 :image "img/climate-3.jpg"
                 :fake-news? false
-                :by {:name "@rita_moonberg"}
-                :activities [{:component 'activities/test
+                :by posters/rita-moonberg
+                :activities [{:component "activities/<test>"
                               :data "hello"}]})
 
 (def simple [{:type :post-text

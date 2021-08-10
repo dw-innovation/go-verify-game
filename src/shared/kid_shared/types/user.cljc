@@ -6,10 +6,12 @@
 (s/def ::role #{:manipulator :media :investigator :neutral})
 
 (s/def ::name string?)
+(s/def ::handle string?)
 
 (s/def ::user (s/keys :req-un [::shared/id
                                ::shared/created
                                ::name
+                               ::handle
                                ::role]))
 
 (s/def ::user-map (s/map-of ::shared/id ::user))
