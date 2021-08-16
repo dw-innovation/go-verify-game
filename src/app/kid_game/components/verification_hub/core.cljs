@@ -2,6 +2,7 @@
   (:require [reagent.core :as r]
             [kid-game.state :as state]
             [kid-game.components.verification-hub.activities.core :as activities]
+            [kid-game.components.timeline.core :as timeline]
             [kid-game.business :as business]))
 
 
@@ -15,6 +16,8 @@
 (defn <investigate-post> [post]
   (let [activities (:activities post)]
     [:div "investigating: " (:id post)
+     [:div.hub-post
+      [timeline/match-post post]]
      ;; a post might have activities in it or it might not,
      ;; for now, just flat list them out, verification hub to come
      (for [activity activities]
@@ -26,7 +29,8 @@
 
 
 (defn <container> []
-  (let [post (:post @state/verification-hub-state)]
+  (let [post (state/get-post ;; get it from the state again, because the verification hub post is a /copy/
+              (:post @state/verification-hub-state))]
     [:div
      [<header>]
      (if post

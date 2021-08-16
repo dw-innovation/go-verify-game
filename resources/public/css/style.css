@@ -1,3 +1,24 @@
+:root {
+    --color-black: #222;
+    --color-grey: #ddd;
+  --color-grey-light: #eee;
+  --color-green: teal;
+  --color-blue: blue;
+  --color-blue-light: lightblue;
+  --color-orange: orange;
+  --color-red: red;
+  --color-white: #fefefe;
+  --color-timeline-primary: var(--color-green);
+  --color-timeline-secondary: var(--color-blue-light);
+  --color-hub-primary: var(--color-orange);
+  --color-hub-secondary: var(--color-blue-light);
+
+  --spacing: 1rem;
+  --spacing-half: .5rem;
+  --spacing-double: 2rem;
+  --spacing-quadruple: 4rem;
+}
+
 /* some style */
 html {
     font-size: 14px;
@@ -17,18 +38,18 @@ body {
 .game-panel { transition: width .4s ease-in-out,
                           box-shadow .4s ease-in-out,
                           filter .4s ease-in-out;
-              margin-top: 3rem;
               filter: blur(1px)
-                      brightness(.8); }
+                      brightness(.8);
+              overflow-x: hidden; }
 .game-panel.active { box-shadow: 5px 5px 30px 10px rgba(0,0,0,.3);
                      filter: blur(0px)
                              brightness(1);}
 
-.game-timeline { background: #eee;
+.game-timeline { background: var(--color-grey-light);
                 height: 100vh;
                 overflow-y: scroll; }
 .game-verification-hub { heigh: 100vh;
-                         background: #fff;
+                         background: var(--color-white);
                          overflow-y: scroll;}
 
 .game-timeline { width: 33vw;
@@ -36,30 +57,20 @@ body {
                  position: relative; }
 .game-timeline.active { width: 66vw;
                         z-index: 2; }
-.game-timeline-inner { width: 66vw; }
+.game-timeline-inner { }
 
 .game-verification-hub { width: 33vw; z-index: 1; position: relative; }
 .game-verification-hub.active { width: 66vw; z-index: 2; }
 .game-verification-hub-inner { width: 66vw; }
 
-.header {
-    z-index: 4;
-    grid-area: header;
-    background-color: blue;
-    color: white;
-    padding-left: 2rem;
-    position: fixed;
-    height: 3rem;
-    width: 100%;
-}
 
 .panel-header { width: 100%;
-                padding: 1rem;
+                padding: var(--spacing);
                 z-index: 7;
                 position: sticky;
                 top: 0rem; }
-.timeline-header { background-color: teal;}
-.verification-hub-header { background-color: orange;}
+.timeline-header { background-color: var(--color-timeline-primary);}
+.verification-hub-header { background-color: var(--color-hub-primary);}
 
 
 .post.inactive {
@@ -68,15 +79,15 @@ body {
 
 .history {
     grid-area: history;
-    background-color: white;
+    background-color: var(--color-white);
     max-height: calc(100vh-200px);
     overflow-y: hidden;
-    padding-top: 2rem;
+    padding-top: var(--spacing-double);
 }
 
 .text-input {
     grid-area: text-input;
-    background-color: whitesmoke;
+    background-color: var(--color-grey-light);
     width: 100%;
 }
 
@@ -98,42 +109,52 @@ body {
 }
 
 .post-in-list {
-    margin: 1rem;
+    max-width: 50rem;
+    min-width: 35rem;
+    margin: var(--spacing) auto;
 }
 .post { display: flex;
         flex-direction: row;
-        background-color: white;
-        border-top: 3px solid #ddd; }
-.post-left-column { width: 4rem;
-                    padding: 1rem; }
-.post-right-column { padding: 1rem 1rem 1rem 0rem;  }
+        background-color: var(--color-white);
+        border-top: 3px solid var(--color-grey); }
+.post-left-column { width: var(--spacing-quadruple);
+                    padding: var(--spacing); }
+.post-right-column { padding: var(--spacing)
+                              var(--spacing)
+                              var(--spacing)
+                              0rem;  }
 
 .post-author-image {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 2rem;
+    width: var(--spacing-quadruple);
+    height: var(--spacing-quadruple);
+    border-radius: var(--spacing-double);
     overflow: hidden;
-    background-color: grey;
+    background-color: var(--color-grey)
 }
 .post-author-image img {
-    width: 6rem;
-    height: 6rem;
+    width: var(--spacing-quadruple);
+    height: var(--spacing-quadruple)
 }
 .post-image {
     width: 100%;
-    border-radius: 2rem;
+    border-radius: var(--spacing);
+    margin-top: var(--spacing);
+    margin-bottom: var(--spacing);
+}
+.post-description {
+    margin-top: var(--spacing);
 }
 .posted-by-text {
-    color: lightgray;
-    font-size: 1rem;
+    color: var(--color-grey-light);
+    font-size: var(--spacing);
 }
 .post-text small{
-    color: lightgray;
-    font-size: 1rem;
+    color: var(--color-grey-light);
+    font-size: var(--spacing);
 }
 .post-author-name .name { font-weight: bold; }
-.post-author-name .handle { color: lightgray;
-                            padding-left: 1rem; }
+.post-author-name .handle { color: var(--color-grey-light);
+                            padding-left: var(--spacing); }
 
 
 
@@ -141,13 +162,13 @@ body {
 
 .progress-bar {
     width: 100%;
-    background-color: lightgray;
-    height: .4rem;
+    background-color: var(--color-grey-light);
+    height: var(--spacing-half);
     position:relative;
 }
 .progress-inner {
-    background-color: blue;
-    height: .4rem;
+    background-color: var(--color-timeline-secondary);
+    height: var(--spacing-half);
 }
 
 
@@ -159,9 +180,9 @@ body {
 }
 .chat .messages {
     flex: 1;
-    padding-top: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-top: var(--spacing);
+    padding-left: var(--spacing);
+    padding-right: var(--spacing);
     overflow-y: scroll;
 }
 .chat .input {
@@ -170,16 +191,16 @@ body {
 .chat .input .send-button {
     position: absolute;
     right: 0;
-    padding-left: .4rem;
-    padding-right: .4rem;
-    background: lightblue;
+    padding-left: var(--spacing-half);
+    padding-right: var(--spacing-half);
+    background: var(--color-blue-light);
 }
 
 .chat-select {
     border: 1px solid rgba(0,0,0,.3);
     background-color: rgba(255,255,255,.5);
-    margin: 1rem;
-    padding: 1rem;
+    margin: var(--spacing);
+    padding: var(--spacing);
     cursor: pointer;
     position: relative;
 }
@@ -187,14 +208,14 @@ body {
 .chat-select.chat-unseen:after {
     border: 1px solid red;
     content: "!";
-    border-radius: .5rem;
-    width: 1rem;
-    height: 1rem;
+    border-radius: var(--spacing-half);
+    width: var(--spacing);
+    height: var(--spacing);
     position: absolute;
     background: red;
     left: 0;
     top: 0;
-    font-size: 1rem;
+    font-size: var(--spacing);
     text-align: center;
     line-height: 1;
     color: white;
@@ -204,11 +225,9 @@ body {
 }
 .chat-title {
     font-weight: bold;
-    font-size: 1.4rem;
 }
 .latest-message {
     opacity: .4;
-    font-size: .8rem;
 }
 
 .notifications {
@@ -218,6 +237,24 @@ body {
 }
 .notification {
     background-color: white;
-    padding: 1rem;
-    margin: .5rem;
+    padding: var(--spacing);
+    margin: var(--spacing-half);
+}
+
+
+
+button {
+    background-color: transparent;
+    border: 2px solid var(--color-blue);
+    color: var(--color-blue);
+    padding: var(--spacing-half) var(--spacing);
+    border-radius: var(--spacing);
+    cursor: pointer;
+}
+
+.hub-post {
+    background-color: var(--color-grey);
+}
+.hub-post > .post {
+    transform: scale(.5) translate(-25%,-25%);
 }

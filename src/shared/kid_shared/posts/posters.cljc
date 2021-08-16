@@ -36,6 +36,17 @@
                                  :handle "@rita"
                                  :role :media
                                  :image images/freiheit-logo}))
+
+(def rainer-werner (user/create {:name "Rainer Werner"
+                                 :handle "@rainguy2000"
+                                 :role :media
+                                 :image images/freiheit-logo}))
+
+(def tktktktktk (user/create {:name "Anonimus"
+                                 :handle "@tktktktktk"
+                                 :role :media
+                                 :image images/freiheit-logo}))
+
 (def posters [deutsche-welle
               reuters
               zeit

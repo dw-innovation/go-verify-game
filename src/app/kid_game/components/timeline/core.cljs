@@ -76,15 +76,16 @@
       [:div.post-title title]
       [:div.post-description description]
       (when (:image p) [:img.post-image {:src (:image p)}])
-      [:div {:class "post-actions"}
-       [:button {:on-click share!} "share"]
-       [:button {:on-click block!} "block"]
-       [:button {:on-click (fn [ev] ;; stop propagation because there is a global
-                             ;; click to open panel, and we are specifically opening the other one
-                             (.stopPropagation ev)
-                             (investigate!))}
-        "investigate"]]
-      (when time-limit [<post-progress> p])
+      (when active?
+        [:div {:class "post-actions"}
+         [:button {:on-click share!} "share"]
+         [:button {:on-click block!} "block"]
+         [:button {:on-click (fn [ev] ;; stop propagation because there is a global
+                               ;; click to open panel, and we are specifically opening the other one
+                               (.stopPropagation ev)
+                               (investigate!))}
+          "investigate"]])
+      (when (and time-limit active?) [<post-progress> p])
       ]
      ]]))
 
@@ -92,12 +93,13 @@
                 author :by
                 comment :comment
                 original-post :post}]
-  [:div {:class "re-post"}
-   [:div {:class "post-user"}
-    [:small {:class "posted-by-text"} "re-posted by "]
-    [<author> author]]
-   [:div {:class "post-commebt"} comment]
-   [:div {:class "post-sub-post"} (<post> original-post)]])
+  [:div {:class ["post" "post-type-re-post"]}
+ [:div.post-left-column
+      [<author-image> author]]
+     [:div.post-right-column
+      [<author-name> author]
+   [:div {:class "post-description"} comment]
+   [:div {:class "post-sub-post"} (<post> original-post)]]])
 
 (defn match-post [p]
   (case (:type p)

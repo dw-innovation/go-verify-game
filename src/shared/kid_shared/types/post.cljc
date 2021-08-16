@@ -6,7 +6,6 @@
             [clojure.spec.gen.alpha :as gen]
             [clojure.spec.alpha :as s]))
 
-(s/def ::title string?)
 (s/def ::description string?)
 (s/def ::time-limit pos-int?)
 (s/def ::fake-news? boolean?)
@@ -19,7 +18,6 @@
 (s/def ::post-text (s/keys :req-un [:post-text/type
                                     ::shared/id
                                     ::shared/created
-                                    ::title
                                     ::time-limit
                                     ::fake-news?
                                     ::by

@@ -1,9 +1,12 @@
 (ns kid-game.core
   (:require [reagent.core :as r]
+            [kid-shared.posts.stories :as stories]
+            [kid-shared.generator :as gen]
             [kid-game.socket :as socket]
             [kid-game.state :as state]
             [kid-game.business :as business]
             [kid-game.components.chat.core :as <chat>]
+            [kid-game.components.meta :as <meta>]
             [kid-game.components.timeline.core :as <timeline>]
             [kid-game.components.verification-hub.core :as <verification-hub>]
             [kid-game.components.login.core :as <login>]
@@ -13,13 +16,6 @@
             [cljs.core.async :as async :include-macros true]
             [kid-game.utils.log :as log]))
 
-(defn <header> []
-[:div {:class "header"}
-    [:h6 "KID game: room: " [:b (socket/get-room)]
-     ": player: "
-     [:b (:name (state/get-player))]
-     ": points: "
-     [:b (state/get-player-points)]]])
 
 (defn <notifications> []
   [:div.notifications
@@ -31,7 +27,8 @@
 (defn <game> []
   [:div.game-container
    [<notifications>]
-   [<header>]
+
+   [:div.game-panel.active [<meta>/<meta>]]
 
    [:div {:class ["game-panel" "game-timeline" (when (= (state/panel) :timeline) "active")]
           :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}

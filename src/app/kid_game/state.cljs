@@ -105,7 +105,7 @@
 ;;
 ;;
 
-(defn posts [] (reverse @post-list))
+(defn posts [] @post-list)
 
 (defn update-post [post]
   (->>
@@ -134,8 +134,12 @@
 
 (defn add-post [post]
   ;; TODO validate that it's an actual valid post
-  ;; add the post to the state
-  (swap! post-list conj post)
+  ;; remove the post if it is already in the state
+  (let [posts (-> (remove #(= (:id post) (:id %)) @post-list)
+                  ;; add the new post
+                  (conj post))]
+    ;; update the state
+    (reset! post-list posts))
   ;; attatch a time decreaser to the post, but only if time limiet
   (when (:time-limit post) (attatch-post-timer post)))
 
