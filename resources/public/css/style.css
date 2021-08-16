@@ -112,7 +112,32 @@ body {
     max-width: 50rem;
     min-width: 35rem;
     margin: var(--spacing) auto;
+
+    overflow-y: hidden;
 }
+
+.item {
+}
+.item-enter {
+    transform:scaleY(0);
+    max-height: 0;
+}
+.item-enter-active {
+    transform: scaleY(1);
+    max-height: 400rem;
+  transition-delay: 1s;
+  transition: all 1s ease-in;
+}
+.item-exit {
+  opacity: 1;
+}
+.item-exit-active {
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+
+
+
 .post { display: flex;
         flex-direction: row;
         background-color: var(--color-white);

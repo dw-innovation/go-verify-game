@@ -7,6 +7,7 @@
             [kid-game.utils.core :refer [timestamp-now new-uuid]]
             [lodash]
             [moment]
+            [react-transition-group]
             [cljs.js :refer [empty-state eval js-eval]]
             [cljs.core.async :as async :include-macros true]))
 
@@ -114,14 +115,43 @@
 
 (defn <post> [p]
   ^{:key (:id p)} ;; important to keep track of rendering
-  [:div {:class "post-in-list"}
-   [match-post p]])
+   [match-post p])
 
 (defn <header> []
   [:div {:class ["panel-header" "timeline-header"]}
    [:div "Bleeper Network"]])
 
+(println "aaaaaaaaaaaaaaaaaaaaa")
+(println "aaaaaaaaaaaaaaaaaaaaa")
+(println "aaaaaaaaaaaaaaaaaaaaa")
+(println "aaaaaaaaaaaaaaaaaaaaa")
+(println "aaaaaaaaaaaaaaaaaaaaa")
+(println "aaaaaaaaaaaaaaaaaaaaa")
+(println "aaaaaaaaaaaaaaaaaaaaa")
+(println react-transition-group)
+(println (.-CSSTransition react-transition-group))
+(js/console.log react-transition-group/CSSTransition)
+
+(def css-transition-group
+  (r/adapt-react-class react-transition-group/TransitionGroup))
+
+(def css-transition
+  (r/adapt-react-class react-transition-group/CSSTransition))
+
+
+
 (defn <container> []
   [:div.timeline-container
    [<header>]
-   (map <post> (state/posts))])
+
+   [css-transition-group {:class "hhhhh"}
+    (map-indexed (fn [index post]
+    [css-transition {:timeout 2000
+                     :key (:id post)
+                     :class-names "item"}
+
+                   ^{:key (:id post)} ;; important to keep track of rendering
+                   [:div.post-in-list
+                    [<post> post]]])
+                 (state/posts))
+    ]])
