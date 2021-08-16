@@ -210,3 +210,14 @@ body {
     opacity: .4;
     font-size: .8rem;
 }
+
+.notifications {
+    position: fixed;
+    z-index: 466;
+    bottom: 0;
+}
+.notification {
+    background-color: white;
+    padding: 1rem;
+    margin: .5rem;
+}

@@ -21,8 +21,16 @@
      ": points: "
      [:b (state/get-player-points)]]])
 
+(defn <notifications> []
+  [:div.notifications
+   (for [n @state/notifications]
+     (when (:active n)
+       [:div {:class ["notification" (:type n)]}
+        (:text n)]))])
+
 (defn <game> []
   [:div.game-container
+   [<notifications>]
    [<header>]
 
    [:div {:class ["game-panel" "game-timeline" (when (= (state/panel) :timeline) "active")]

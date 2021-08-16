@@ -23,6 +23,7 @@
 
 (defonce points (atom 0))
 (defonce msg-list (atom []))
+(defonce notifications (atom []))
 (defonce users (atom {}))
 (defonce post-list (atom [{:title "Welcome to the timeline!"
                            :type :post-text
@@ -99,6 +100,7 @@
 ;;
 ;;  posts
 ;;    the state actions that have to do with the posts
+;;    IDENTITY of a post is its ID
 ;;
 ;;
 ;;
@@ -136,3 +138,39 @@
   (swap! post-list conj post)
   ;; attatch a time decreaser to the post, but only if time limiet
   (when (:time-limit post) (attatch-post-timer post)))
+
+;;
+;;
+;;   notifications
+;;     IDENTITY of a notification is it's timestamp,
+;;     which is used to reference it
+;;
+;;
+
+(defn get-notification [n] ;; get a full notification by something notification-like (min of {:time 1122})
+  ;; use specter to update the post at the path where the timestanps are the same
+  (first (s/select [(s/filterer #(= (:time %) (:time n))) s/FIRST]
+                   @notifications)))
+
+(defn update-notification [n]
+  (->> ;; use specter to update the post at the path where the ids are the same
+        (s/setval [(s/filterer #(= (:time %) (:time n))) s/FIRST]
+                  n @notifications)
+        ;; update the post state
+        (reset! notifications)))
+
+(defn disable-notification [n]
+  (update-notification (assoc n :active false)))
+
+(defn add-notification [{:as n, typ :type, text :text}]
+  ;; create the norification, adding to it the internal tracking information we need
+  (let [new-n {:type typ
+               :active true ; the UI will show the notification as long as it is active
+               :text text
+               ;; add the timestamp on adding to state
+               :time (utils/timestamp-now)}]
+    ;; add the new notification to the state
+    (swap! notifications conj new-n)
+    ;; in 2 seconds, disable that newly created notification:
+    (async/go (async/<! (async/timeout 3000))
+              (disable-notification new-n))))

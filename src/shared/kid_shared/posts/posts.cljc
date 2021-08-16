@@ -34,7 +34,7 @@ RIS reveals the image is real
                 :image "img/climate-3.jpg"
                 :fake-news? false
                 :by posters/rita-moonberg
-                :activities [{:component "activities/<test>"
+                :activities [{:component :test
                               :data "hello"}]})
 
 (def simple [{:type :post-text
