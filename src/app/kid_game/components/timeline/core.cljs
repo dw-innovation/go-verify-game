@@ -11,6 +11,16 @@
             [cljs.js :refer [empty-state eval js-eval]]
             [cljs.core.async :as async :include-macros true]))
 
+
+;; documentation for css transition group seems kind of tricky but is here:
+;; https://reactcommunity.org/react-transition-group/
+(def css-transition-group
+  (r/adapt-react-class react-transition-group/TransitionGroup))
+
+(def css-transition
+  (r/adapt-react-class react-transition-group/CSSTransition))
+
+
 (declare <post>)
 
 (defn <progress> [amnt total]
@@ -43,51 +53,60 @@
    [<author-image> author]
    [<author-name> author]])
 
-
-
-(defn evaluate [form]
-  (eval (empty-state)
-        form
-        {:eval       js-eval
-         :source-map true
-         :context    :expr}
-        (fn [result] (:value result))))
+;; will center the elements in a post overlay
+(defn <post-overlay> [element]
+  [:div.post-overlay
+   [:div.post-overlay-inner element]])
 
 (defn <type-text> [;; destructure the post
                    {:as p
                     title :title
                     description :description
+                    ;; fake-news? either true or false
                     fake-news? :fake-news?
+                    ;; game-state is either :live, :shared, :blocked, or :timed-out
+                    game-state :game-state
                     ;; destructure the author:
                     {:as author author-name :name} :by
                     time-limit :time-limit}]
-  (let [;; a post can be considered 'active' in a variety of cases
-        active? (and (if time-limit (> (:time-left p) 0) true)
-                     (not (:disabled p)))
-        investigate! (fn [] (business/post-investigate! p))
+  (let [investigate! (fn [] (business/post-investigate! p))
         block! (fn [] (business/post-block! p))
         share! (fn [] (business/post-share! :comment "comment about post"
                                             :post p))]
-    [:div {:class ["post" "post-type-text" (if active? "active" "inactive")]}
-     [:div.post-left-column
-      [<author-image> author]]
-     [:div.post-right-column
-      [<author-name> author]
-     [:div {:class "post-text"}
-      [:div.post-title title]
-      [:div.post-description description]
-      (when (:image p) [:img.post-image {:src (:image p)}])
-      (when active?
-        [:div {:class "post-actions"}
-         [:button {:on-click share!} "share"]
-         [:button {:on-click block!} "block"]
-         [:button {:on-click (fn [ev] ;; stop propagation because there is a global
-                               ;; click to open panel, and we are specifically opening the other one
-                               (.stopPropagation ev)
-                               (investigate!))}
-          "investigate"]])
-      (when (and time-limit active?) [<post-progress> p])
-      ]
+    [:div {:class ["post" "post-type-text" game-state]}
+     [:div.post-inner
+      [:div.post-left-column
+       [<author-image> author]]
+      [:div.post-right-column
+       [<author-name> author]
+       [:div {:class "post-text"}
+        [:small (:game-state p)]
+        [:div.post-description description]]
+       (when (:image p) [:img.post-image {:src (:image p)}])
+       (when (= game-state :live)
+         [:div {:class "post-actions"}
+          [:button {:on-click share!} "share"]
+          [:button {:on-click block!} "block"]
+          [:button {:on-click (fn [ev] ;; stop propagation because there is a global
+                                ;; click to open panel, and we are specifically opening the other one
+                                (.stopPropagation ev)
+                                (investigate!))}
+           "investigate"]])
+       (when (= game-state :live) [<post-progress> p])
+       ]
+      (case game-state
+        :live nil
+        :timed-out (if fake-news?
+                     [<post-overlay> [:span "✗ This post went viral, and you did not react to it.  It was nonsense content"]]
+                     [<post-overlay> [:span "🗸 You ran out of time to react to this post, it was legit content."]])
+        :shared (if fake-news?
+                     [<post-overlay> [:span "✗ You shared nonsense content"]]
+                     [<post-overlay> [:span "🗸 You shared legit content"]])
+        :blocked (if fake-news?
+                     [<post-overlay> [:span "🗸 You blocked nonsense content"]]
+                     [<post-overlay> [:span "✗ You blocked legit content"]])
+        nil
+        )
      ]]))
 
 (defn <type-re-post> [{:as p
@@ -95,12 +114,13 @@
                 comment :comment
                 original-post :post}]
   [:div {:class ["post" "post-type-re-post"]}
- [:div.post-left-column
-      [<author-image> author]]
-     [:div.post-right-column
-      [<author-name> author]
-   [:div {:class "post-description"} comment]
-   [:div {:class "post-sub-post"} (<post> original-post)]]])
+   [:div.post-inner
+    [:div.post-left-column
+     [<author-image> author]]
+    [:div.post-right-column
+     [<author-name> author]
+     [:div {:class "post-description"} comment]
+     [:div {:class "post-sub-post"} (<post> original-post)]]]])
 
 (defn match-post [p]
   (case (:type p)
@@ -121,37 +141,19 @@
   [:div {:class ["panel-header" "timeline-header"]}
    [:div "Bleeper Network"]])
 
-(println "aaaaaaaaaaaaaaaaaaaaa")
-(println "aaaaaaaaaaaaaaaaaaaaa")
-(println "aaaaaaaaaaaaaaaaaaaaa")
-(println "aaaaaaaaaaaaaaaaaaaaa")
-(println "aaaaaaaaaaaaaaaaaaaaa")
-(println "aaaaaaaaaaaaaaaaaaaaa")
-(println "aaaaaaaaaaaaaaaaaaaaa")
-(println react-transition-group)
-(println (.-CSSTransition react-transition-group))
-(js/console.log react-transition-group/CSSTransition)
-
-(def css-transition-group
-  (r/adapt-react-class react-transition-group/TransitionGroup))
-
-(def css-transition
-  (r/adapt-react-class react-transition-group/CSSTransition))
-
 
 
 (defn <container> []
   [:div.timeline-container
    [<header>]
-
-   [css-transition-group {:class "hhhhh"}
+   ;; documentation for css transition group seems kind of tricky but is here:
+   ;; https://reactcommunity.org/react-transition-group/
+   [css-transition-group {:class "timeline-posts"}
     (map-indexed (fn [index post]
-    [css-transition {:timeout 2000
-                     :key (:id post)
-                     :class-names "item"}
-
-                   ^{:key (:id post)} ;; important to keep track of rendering
-                   [:div.post-in-list
-                    [<post> post]]])
-                 (state/posts))
-    ]])
+                   [css-transition {:timeout 2000
+                                    :key (:id post)
+                                    :class-names "transition-item"}
+                    ^{:key (:id post)} ;; important to keep track of rendering
+                    [:div.post-in-list
+                     [<post> post]]])
+                 (state/posts))]])

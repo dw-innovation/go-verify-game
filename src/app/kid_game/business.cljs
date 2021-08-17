@@ -46,25 +46,39 @@
 (defn post-block! [post]
   (let [fake-news? (:fake-news? post)
         time-left (or (:time-left post) 20)]
-    (if (:fake-news? post) (win-points! time-left)
-                           (loose-points! time-left)))
-  (state/disable-post! post))
+    (if (:fake-news? post) (do
+                             (state/add-notification {:type :info
+                                                      :text (str "won " time-left " points")})
+                             (win-points! time-left))
+                            (do
+                             (state/add-notification {:type :info
+                                                      :text (str "lost " time-left " points")})
+                             (loose-points! time-left))))
+  (state/post-transition-state! post :blocked))
 
 
 (defn post-share! [& {:keys [comment post]}]
   (let [fake-news? (:fake-news? post)
         time-left (or (:time-left post) 20)]
-    (if (:fake-news? post) (loose-points! time-left)
-                           (win-points! time-left)))
-  (state/disable-post! post)
-  (socket/send {:type ::messages/post-new
-                :body {:type :re-post
-                       :id (new-uuid)
-                       :created (timestamp-now)
-                       :time-limit 300
-                       :by (state/get-player)
-                       :comment comment
-                       :post post}}))
+    (if (:fake-news? post) (do
+                             (state/add-notification {:type :info
+                                                      :text (str "lost " time-left " points")})
+                             (loose-points! time-left))
+        (do
+                             (state/add-notification {:type :info
+                                                      :text (str "won " time-left " points")})
+
+          (win-points! time-left)))
+  (state/post-transition-state! post :shared))
+  ;; (socket/send {:type ::messages/post-new
+  ;;               :body {:type :re-post
+  ;;                      :id (new-uuid)
+  ;;                      :created (timestamp-now)
+  ;;                      :time-limit 300
+  ;;                      :by (state/get-player)
+  ;;                      :comment comment
+  ;;                      :post post}})
+  )
 
 ; user, string -> state update
 (defn chat-send! [& {:keys [to content]}]

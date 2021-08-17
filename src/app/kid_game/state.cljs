@@ -123,14 +123,20 @@
 (defn disable-post! [post]
   (update-post (assoc post :disabled true)))
 
+(defn post-transition-state! [post game-state]
+  (when (not (contains? #{:timed-out :shared :blocked :live} game-state))
+    (log/error "this post can't transition to the state"))
+  (update-post (assoc post :game-state game-state)))
+
 (defn attatch-post-timer [post]
   (async/go-loop []
     (let [p (get-post post)
           time-left (or (:time-left p) (:time-limit post) 0)]
-      (when (> time-left 0) (do (-> (assoc p :time-left (dec time-left)) ; deprecate time left and save
-                                    (update-post))
+      (if (> time-left 0) (do (-> (assoc p :time-left (dec time-left)) ; deprecate time left and save
+                                  (update-post))
                                 (async/<! (async/timeout 100)) ; wait for the interval
-                                (recur))))))
+                                (recur))
+          (post-transition-state! p :timed-out)))))
 
 (defn add-post [post]
   ;; TODO validate that it's an actual valid post
@@ -141,7 +147,12 @@
     ;; update the state
     (reset! post-list posts))
   ;; attatch a time decreaser to the post, but only if time limiet
-  (when (:time-limit post) (attatch-post-timer post)))
+  (when (:time-limit post)
+    ;; if it has a time limit, then it is a 'playable' post
+    ;; so we give it a game state
+    (post-transition-state! post :live)
+    ;; we also attatch an async loop to start counting down
+    (attatch-post-timer post)))
 
 ;;
 ;;
