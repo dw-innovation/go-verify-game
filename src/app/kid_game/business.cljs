@@ -45,31 +45,38 @@
 
 (defn post-block! [post]
   (let [fake-news? (:fake-news? post)
-        time-left (or (:time-left post) 20)]
-    (if (:fake-news? post) (do
-                             (state/add-notification {:type :info
-                                                      :text (str "won " time-left " points")})
-                             (win-points! time-left))
-                            (do
-                             (state/add-notification {:type :info
-                                                      :text (str "lost " time-left " points")})
-                             (loose-points! time-left))))
+        time-left (or (:time-left post) 20)
+        points time-left]
+    (if (:fake-news? post)
+      (do (state/add-notification {:type :info
+                                   :text (str "won " points " points")})
+          (state/update-post (assoc post :points-result points))
+          (win-points! time-left))
+      (do (state/add-notification {:type :info
+                                   :text (str "lost " points " points")})
+
+          (state/update-post (assoc post :points-result (- points)))
+          (loose-points! time-left))))
+  (state/stop-post-timer! post)
   (state/post-transition-state! post :blocked))
 
 
 (defn post-share! [& {:keys [comment post]}]
   (let [fake-news? (:fake-news? post)
-        time-left (or (:time-left post) 20)]
-    (if (:fake-news? post) (do
-                             (state/add-notification {:type :info
-                                                      :text (str "lost " time-left " points")})
-                             (loose-points! time-left))
-        (do
-                             (state/add-notification {:type :info
-                                                      :text (str "won " time-left " points")})
+        time-left (or (:time-left post) 20)
+        points time-left]
+    (if (:fake-news? post)
+      (do (state/add-notification {:type :info
+                                   :text (str "lost " time-left " points")})
 
+          (state/update-post (assoc post :points-result points))
+          (loose-points! time-left))
+      (do (state/add-notification {:type :info
+                                   :text (str "won " points " points")})
+          (state/update-post (assoc post :points-result (- points)))
           (win-points! time-left)))
-  (state/post-transition-state! post :shared))
+    (state/stop-post-timer! post)
+    (state/post-transition-state! post :shared))
   ;; (socket/send {:type ::messages/post-new
   ;;               :body {:type :re-post
   ;;                      :id (new-uuid)

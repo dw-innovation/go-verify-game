@@ -54,9 +54,35 @@
    [<author-name> author]])
 
 ;; will center the elements in a post overlay
-(defn <post-overlay> [element]
+(defn <post-overlay> [{:as p
+                       fake-news? :fake-news?
+                       game-state :game-state
+                       points-result :points-result}]
   [:div.post-overlay
-   [:div.post-overlay-inner element]])
+   [:div.post-overlay-inner
+    (case game-state
+      :live nil
+      :timed-out (if fake-news?
+                   [:div.overlay-message.failure
+                    "✗ This post went viral, and you did not react to it.  It was nonsense content"]
+                   [:div.overlay-message.success
+                    "🗸 You ran out of time to react to this post, it was legit content."])
+      :shared (if fake-news?
+                [:div.overlay-message.failure
+                 "✗ You shared nonsense content"]
+                [:div.overlay-message.success
+                 "🗸 You shared legit content"])
+      :blocked (if fake-news?
+                 [:div.overlay-message.success
+                  "🗸 You blocked nonsense content"]
+                 [:div.overlay-message.failure
+                  "✗ You blocked legit content"])
+      nil)
+    (when points-result (let [lost? (neg? points-result)
+                              points (js/Math.abs points-result)]
+                          [:div "You " (if lost? "lost " "won ") points " points"]))
+
+    ]])
 
 (defn <type-text> [;; destructure the post
                    {:as p
@@ -96,17 +122,10 @@
        ]
       (case game-state
         :live nil
-        :timed-out (if fake-news?
-                     [<post-overlay> [:span "✗ This post went viral, and you did not react to it.  It was nonsense content"]]
-                     [<post-overlay> [:span "🗸 You ran out of time to react to this post, it was legit content."]])
-        :shared (if fake-news?
-                     [<post-overlay> [:span "✗ You shared nonsense content"]]
-                     [<post-overlay> [:span "🗸 You shared legit content"]])
-        :blocked (if fake-news?
-                     [<post-overlay> [:span "🗸 You blocked nonsense content"]]
-                     [<post-overlay> [:span "✗ You blocked legit content"]])
-        nil
-        )
+        :shared [<post-overlay> p]
+        :blocked [<post-overlay> p]
+        :timed-out [<post-overlay> p]
+        nil)
      ]]))
 
 (defn <type-re-post> [{:as p

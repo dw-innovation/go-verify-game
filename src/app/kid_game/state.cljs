@@ -107,18 +107,19 @@
 
 (defn posts [] @post-list)
 
-(defn update-post [post]
-  (->>
-   ;; use specter to update the post at the path where the ids are the same
-   (s/setval [(s/filterer #(= (:id %) (:id post))) s/FIRST]
-             post @post-list)
-   ;; update the post state
-   (reset! post-list)))
-
 (defn get-post [post] ;; get a full post by something post-like (min of {:id 'something'})
   ;; use specter to update the post at the path where the ids are the same
   (first (s/select [(s/filterer #(= (:id %) (:id post))) s/FIRST]
                    @post-list)))
+(defn update-post [post]
+  (let [p (get-post post)
+        updated-post (merge p post)]
+    (->>
+     ;; use specter to update the post at the path where the ids are the same
+     (s/setval [(s/filterer #(= (:id %) (:id post))) s/FIRST]
+               updated-post @post-list)
+     ;; update the post state
+     (reset! post-list))))
 
 (defn disable-post! [post]
   (update-post (assoc post :disabled true)))
@@ -129,14 +130,27 @@
   (update-post (assoc post :game-state game-state)))
 
 (defn attatch-post-timer [post]
-  (async/go-loop []
-    (let [p (get-post post)
-          time-left (or (:time-left p) (:time-limit post) 0)]
-      (if (> time-left 0) (do (-> (assoc p :time-left (dec time-left)) ; deprecate time left and save
-                                  (update-post))
-                                (async/<! (async/timeout 100)) ; wait for the interval
-                                (recur))
-          (post-transition-state! p :timed-out)))))
+  (let [p (get-post post)
+        exit-channel (async/chan)]
+    ;; give the post an anonymous function that can stop the timer associated with it
+    (update-post (assoc p :stop-timer! (fn [] (async/put! exit-channel "exit message"))))
+    ;; start the countdown loop
+    (async/go-loop []
+      (let [p (get-post post)
+            time-left (or (:time-left p) (:time-limit post) 0)]
+        (async/alt!
+          exit-channel ([] (println "stopping post timer"))
+          (async/timeout 100) ([]
+                               (if (> time-left 0) (do (-> (assoc p :time-left (dec time-left)) ; deprecate time left and save
+                                                           (update-post))
+                                                       (recur))
+                                   (post-transition-state! p :timed-out))))))))
+
+;; only works if the timer has already been attatched
+(defn stop-post-timer! [post]
+  (if (fn? (:stop-timer! post))
+    ((:stop-timer! post))
+    (log/warn "post does not have a stopping function!")))
 
 (defn add-post [post]
   ;; TODO validate that it's an actual valid post

@@ -135,6 +135,12 @@ body { margin: 0px;
     font-size: 2rem;
     padding: var(--spacing-double);
 }
+.overlay-message.success {
+    background-color: var(--color-green);
+}
+.overlay-message.failure {
+    background-color: var(--color-red);
+}
 
 .post-left-column { width: var(--spacing-quadruple);
                     padding: var(--spacing); }
