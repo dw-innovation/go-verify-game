@@ -152,7 +152,7 @@
     (map-indexed (fn [index post]
                    [css-transition {:timeout 2000
                                     :key (:id post)
-                                    :class-names "transition-item"}
+                                    :class-names "post-transition"}
                     ^{:key (:id post)} ;; important to keep track of rendering
                     [:div.post-in-list
                      [<post> post]]])
