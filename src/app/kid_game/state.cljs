@@ -187,5 +187,5 @@
     ;; add the new notification to the state
     (swap! notifications conj new-n)
     ;; in 2 seconds, disable that newly created notification:
-    (async/go (async/<! (async/timeout 3000))
+    (async/go (async/<! (async/timeout 6000))
               (disable-notification new-n))))

@@ -224,9 +224,9 @@ body { margin: 0px;
 
 .notifications { position: fixed;
                  z-index: 466;
-                 bottom: 0; }
+                 top: 0; }
 .notification { background-color: white;
-                border: 2px solid var(--color-orange);
+                border: 6px solid var(--color-orange);
                 padding: var(--spacing);
                 margin: var(--spacing-half); }
 
