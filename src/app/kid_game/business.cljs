@@ -1,11 +1,12 @@
 (ns kid-game.business
-  (:require [kid-game.socket :as socket]
-            [kid-game.state :as state]
+  (:require [kid-game.state :as state]
             [kid-game.utils.log :as log]
             [kid-game.utils.core :refer [timestamp-now new-uuid]]
             [kid-shared.types.messages :as messages]
+            [kid-game.messaging :as messaging]
             [kid-shared.types.post :as posts]
             [kid-shared.types.chat :as chat]
+            [kid-game.socket :as socket]
             [cljs.core.async :as async :include-macros true]))
 
 ;;
@@ -22,7 +23,7 @@
 (defn new-session! [player-name]
   (state/open-game)
   (use-new-player! :name player-name)
-  (socket/setup-socket!))
+  (socket/setup-socket! (state/get-player)))
 
 
 (defn post-text-post! [& {:keys [title description fake-news?]}]
@@ -39,6 +40,48 @@
 (defn win-points! [points] (state/win-points points))
 (defn loose-points! [points] (state/loose-points points))
 
+;; attatches a timer to a post, which will deprecate the post's time in the state
+;; periodically.  additionally this function registers post :stop-timer! which
+;; contains an anonymous function to kill this timer
+(defn attatch-post-timer! [post]
+  (let [p (state/get-post post)
+        exit-channel (async/chan)]
+    ;; give the post an anonymous function that can stop the timer associated with it
+    (state/update-post p :stop-timer! (fn [] (async/put! exit-channel "exit message")))
+    ;; start the countdown loop
+    (async/go-loop []
+      (let [p (state/get-post post) ; get a fresh post on every loop
+            ;; get the time left or instantiate the time left
+            time-left (or (:time-left p) (:time-limit post) 0)]
+        ;; either receive message on exit channel to end loop, or ping that timeout every 100ms
+        (async/alt!
+          exit-channel ([] (println "stopping post timer"))
+          (async/timeout 100) ([]
+                               (if (> time-left 0)
+                                 ;; update the post's time left and keep the loop going
+                                 (do (state/update-post p :time-left (dec time-left))
+                                     (recur))
+                                 ;; otherwise, transition the post's state to timed-out
+                                 (state/post-transition-state! p :timed-out))))))))
+
+;; only works if the timer has already been attatched
+(defn stop-post-timer! [post]
+  (if (fn? (:stop-timer! post)) ; is there a function at the expected key?
+    ((:stop-timer! post)) ; then run it!
+    (log/warn "post does not have a stopping function!")))
+
+(defn add-post [post]
+  ;; TODO validate that it's an actual valid post
+  (state/add-post post)
+  ;; attatch a time decreaser to the post, but only if time limiet
+  (when (:time-limit post)
+    ;; if it has a time limit, then it is a 'playable' post
+    ;; so we give it a game state
+    (state/post-transition-state! post :live)
+    ;; we also attatch an async loop to start counting down
+    (attatch-post-timer! post)))
+
+
 (defn post-investigate! [post]
   (println "here")
   (state/open-verification-hub post))
@@ -50,14 +93,14 @@
     (if (:fake-news? post)
       (do (state/add-notification {:type :info
                                    :text (str "won " points " points")})
-          (state/update-post (assoc post :points-result points))
+          (state/upsert-post (assoc post :points-result points))
           (win-points! time-left))
       (do (state/add-notification {:type :info
                                    :text (str "lost " points " points")})
 
-          (state/update-post (assoc post :points-result (- points)))
+          (state/upsert-post (assoc post :points-result (- points)))
           (loose-points! time-left))))
-  (state/stop-post-timer! post)
+  (stop-post-timer! post)
   (state/post-transition-state! post :blocked))
 
 
@@ -69,13 +112,13 @@
       (do (state/add-notification {:type :info
                                    :text (str "lost " time-left " points")})
 
-          (state/update-post (assoc post :points-result points))
+          (state/upsert-post (assoc post :points-result points))
           (loose-points! time-left))
       (do (state/add-notification {:type :info
                                    :text (str "won " points " points")})
-          (state/update-post (assoc post :points-result (- points)))
+          (state/upsert-post (assoc post :points-result (- points)))
           (win-points! time-left)))
-    (state/stop-post-timer! post)
+    (stop-post-timer! post)
     (state/post-transition-state! post :shared))
   ;; (socket/send {:type ::messages/post-new
   ;;               :body {:type :re-post
@@ -101,3 +144,33 @@
                             :to nil ; a chat only from is group chat
                             :content content)))
 
+(defn handle-message! [msg]
+  ;; handles an incoming message, and affects the state accordingly.
+  ;; returns true if everything went as expected, and false if something went wrong.
+  ;; TODO should actually throw a variety of errors instead of true falsing
+  ;; a message must have a type and a body
+  (if-let [{:keys [type body]} msg]
+    (do (log/debug "handling message" msg)
+        (case type
+          ::messages/user-init (state/set-users body)
+          ::messages/chat-new (state/add-chat body)
+          ::messages/user-new (state/add-user body)
+          ::messages/user-left (state/remove-user body)
+          ::messages/post-new (add-post body)
+          ; default
+          (log/debug "could not handle the message"))
+        ;; not really true
+        true)
+    (do (log/warn "got a message we don't recognize as a message")
+        false)))
+
+(defn listen-to-receive-channel! []
+  (async/go-loop []
+    (if-let [msg (async/<! messaging/receive-channel)] ; the server that may have sent a real message
+      (do
+        (log/debug "got new message!!!!!!!!!!")
+        (handle-message! msg)
+        (recur))
+      (println "receive channel got bad message"))))
+
+(listen-to-receive-channel!)

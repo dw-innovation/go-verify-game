@@ -102,7 +102,16 @@
 ;;    the state actions that have to do with the posts
 ;;    IDENTITY of a post is its ID
 ;;
+;;  frontend posts are _very similar_ to posts defined in types/post
+;;    we do, however, add a few extra fields to track game lifecycle.
 ;;
+;;    these are:
+;;      post :game-state -> one of #{nil :live :blocked :shared :timed-out}
+;;                          nil usually means the post is not an 'interactive' one
+;;      post :time-left -> the time the post has left to completion, automatically
+;;                         decremented
+;;      post :points-result -> a record of how many points the user won or lost from this post
+;;      post :stop-timer! -> a lambda function, so the post can stop it's own timer
 ;;
 
 (defn posts [] @post-list)
@@ -111,64 +120,48 @@
   ;; use specter to update the post at the path where the ids are the same
   (first (s/select [(s/filterer #(= (:id %) (:id post))) s/FIRST]
                    @post-list)))
-(defn update-post [post]
+
+;; updates a post _by merge_ -> unnaffected fields are kept
+;; if you send this function {:id 2 :time-left 3}, the rest
+;; of the fields, other than time-left will be left alone
+;;   returns post
+(defn upsert-post [post]
   (let [p (get-post post)
         updated-post (merge p post)]
-    (->>
-     ;; use specter to update the post at the path where the ids are the same
-     (s/setval [(s/filterer #(= (:id %) (:id post))) s/FIRST]
-               updated-post @post-list)
-     ;; update the post state
-     (reset! post-list))))
+    (->> (s/setval [(s/filterer #(= (:id %) (:id post))) s/FIRST]
+                   updated-post @post-list)
+         ;; update the post state
+         (reset! post-list))
+    ;; return post
+    updated-post))
 
-(defn disable-post! [post]
-  (update-post (assoc post :disabled true)))
+;; takes a list of field/values and updates the post with only those
+;; use like (update-post p :disabled true :title "new title"), which will _only_ touch and update
+;; disabled in the state
+(defn update-post [post & {:as kv-map}] ;; destructure the rest of the args list to a map
+  (upsert-post (merge {:id (:id post)} ;; add only the post id to the map, for identity's sake
+                      kv-map)))
 
+;; a very simple function to transition the state key, in lieu
+;; of a full FSM
 (defn post-transition-state! [post game-state]
+  ;; check to see if it's a valid state, don't enforce any rules about
+  ;; when state transitions are allowed, the business logic can do that
   (when (not (contains? #{:timed-out :shared :blocked :live} game-state))
     (log/error "this post can't transition to the state"))
-  (update-post (assoc post :game-state game-state)))
-
-(defn attatch-post-timer [post]
-  (let [p (get-post post)
-        exit-channel (async/chan)]
-    ;; give the post an anonymous function that can stop the timer associated with it
-    (update-post (assoc p :stop-timer! (fn [] (async/put! exit-channel "exit message"))))
-    ;; start the countdown loop
-    (async/go-loop []
-      (let [p (get-post post)
-            time-left (or (:time-left p) (:time-limit post) 0)]
-        (async/alt!
-          exit-channel ([] (println "stopping post timer"))
-          (async/timeout 100) ([]
-                               (if (> time-left 0) (do (-> (assoc p :time-left (dec time-left)) ; deprecate time left and save
-                                                           (update-post))
-                                                       (recur))
-                                   (post-transition-state! p :timed-out))))))))
-
-;; only works if the timer has already been attatched
-(defn stop-post-timer! [post]
-  (if (fn? (:stop-timer! post))
-    ((:stop-timer! post))
-    (log/warn "post does not have a stopping function!")))
+  (-> post
+      (assoc :game-state game-state)
+      (upsert-post)))
 
 (defn add-post [post]
-  ;; TODO validate that it's an actual valid post
   ;; remove the post if it is already in the state
   (let [posts (-> (remove #(= (:id post) (:id %)) @post-list)
                   ;; add the new post
                   (conj post))]
     ;; update the state
-    (reset! post-list posts))
-  ;; attatch a time decreaser to the post, but only if time limiet
-  (when (:time-limit post)
-    ;; if it has a time limit, then it is a 'playable' post
-    ;; so we give it a game state
-    (post-transition-state! post :live)
-    ;; we also attatch an async loop to start counting down
-    (attatch-post-timer post)))
+    (reset! post-list posts)))
 
-;;
+
 ;;
 ;;   notifications
 ;;     IDENTITY of a notification is it's timestamp,

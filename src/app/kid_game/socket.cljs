@@ -2,54 +2,35 @@
   (:require [reagent.core :as reagent :refer [atom]]
             [chord.client :refer [ws-ch]]
             [clojure.spec.alpha :as s]
-            [kid-game.state :as state]
-            [kid-game.messaging :as messaging]
             [kid-shared.generator :as postgen]
             [kid-game.utils.log :as log]
             [kid-shared.types.messages :as messages]
+            [kid-game.messaging :as messaging]
             [cljs.core.async :as async :refer [<! >! put!] :include-macros true]))
 
 (log/debug "+++++++++++ welcome to the KID game.. starting server +++++++++=")
 
 (enable-console-print!)
 
-;; The channel that this application will send messages to:
-(defonce send-channel (async/chan))
-;; the channel that this application will listen for messages on:
-(defonce receive-channel (async/chan))
-
-(defn listen-to-receive-channel! []
-  (async/go-loop []
-    (if-let [msg (<! receive-channel)] ; the server that may have sent a real message
-      (do
-        (log/debug "got new message!!!!!!!!!!")
-        (messaging/handle-message! msg)
-        (recur))
-      (println "receive channel got bad message"))))
-
-(listen-to-receive-channel!)
-
 ;; puts the messages on the send-chan
 (defn send
   [msg]
   (if (messages/valid-message? msg)
-    (do
-      (log/debug "sending message: " msg)
-      (async/put! send-channel msg))
-    (do
-      (log/warn "your message is invalid!")
-      (log/warn (str (:type msg)))
-      (log/warn (str (:body msg)))
-      (log/warn (str (messages/explain-message msg)))
-      (log/warn "sending anyways lol")
-      (async/put! send-channel msg))))
+    (do (log/debug "sending message: " msg)
+        (async/put! messaging/send-channel msg))
+    (do (log/warn "your message is invalid!")
+        (log/warn (str (:type msg)))
+        (log/warn (str (:body msg)))
+        (log/warn (str (messages/explain-message msg)))
+        (log/warn "sending anyways lol")
+        (async/put! messaging/send-channel msg))))
 
 ; listens to the send-chan and forwards them to the server for
 ; distribution
 (defn connect-server-send
   [svr-chan]
   (async/go-loop []
-    (when-let [msg (<! send-channel)] ; listen to send-chan
+    (when-let [msg (<! messaging/send-channel)] ; listen to send-chan
       (log/debug msg)
       (>! svr-chan msg) ; forward to server-chan
       (recur))))
@@ -62,7 +43,7 @@
     (if-let [message (:message (<! server-channel))]
       (do
         (log/debug "received new server message" message)
-        (async/>! receive-channel message)
+        (async/>! messaging/receive-channel message)
         (recur))
       ; TODO actually close the websocket
       (println "Websocket closed"))))
@@ -104,17 +85,17 @@
 (defn setup-local-connection! []
   ;; attatch the posting alg to the receive channel,
   ;; this is what the server would usually do, but we are allowing it to run locally
-  (postgen/attach-default-room-poster receive-channel)
+  (postgen/attach-default-room-poster messaging/receive-channel)
   ;; connect the send channel directly to the receive channel
   ;; to emulate server pass-through
   (log/debug "connecting send channel to the receive channel")
   (async/go-loop []
     ;; whenever we receive a message
-    (when-let [msg (<! send-channel)] ; listen to send-chan - when we receive a msg,
-      (>! receive-channel msg) ; forward to server-chan
+    (when-let [msg (<! messaging/send-channel)] ; listen to send-chan - when we receive a msg,
+      (>! messaging/receive-channel msg) ; forward to server-chan
       (recur))))
 
-(defn setup-socket! []
+(defn setup-socket! [player]
   (async/go
     ;; first, set up either a websocket or a local connection,
     ;; depending on if the websocket url actually works
@@ -125,4 +106,4 @@
           (setup-local-connection!)))
     ;; then, send our user to that connection, in some way
     (send {:type ::messages/user-new
-           :body (state/get-player)})))
+           :body player})))
