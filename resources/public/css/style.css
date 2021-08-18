@@ -236,6 +236,16 @@ body { margin: 0px;
                 padding: var(--spacing);
                 margin: var(--spacing-half); }
 
+.notification-transition-enter { transform:scaleY(0);
+                                 max-height: 0; }
+.notification-transition-enter-done { transform: scaleY(1);
+                                        max-height: 400rem;
+                                        transition-delay: 1s;
+                                        transition: all 1s ease-in; }
+.notification-transition-exit { opacity: 1; }
+.notification-transition-exit-done { opacity: 0;
+                                       transition: opacity 1s ease-in; }
+
 
 
 button { background-color: transparent;

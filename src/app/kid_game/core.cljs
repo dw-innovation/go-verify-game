@@ -7,6 +7,7 @@
             [kid-game.business :as business]
             [kid-game.components.chat.core :as <chat>]
             [kid-game.components.meta :as <meta>]
+            [kid-game.components.notifications :as notifications]
             [kid-game.components.timeline.core :as <timeline>]
             [kid-game.components.verification-hub.core :as <verification-hub>]
             [kid-game.components.login.core :as <login>]
@@ -17,16 +18,9 @@
             [kid-game.utils.log :as log]))
 
 
-(defn <notifications> []
-  [:div.notifications
-   (for [n @state/notifications]
-     (when (:active n)
-       [:div {:class ["notification" (:type n)]}
-        (:text n)]))])
-
 (defn <game> []
   [:div.game-container
-   [<notifications>]
+   [notifications/<notifications>]
 
    [:div.game-panel.active [<meta>/<meta>]]
 
