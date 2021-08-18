@@ -1,6 +1,7 @@
 (ns kid-game.components.meta
   (:require [reagent.core :as r]
             [kid-shared.posts.stories :as stories]
+            [kid-shared.posts.posts :as posts]
             [kid-shared.generator :as gen]
             [kid-game.messaging :as messaging]
             [kid-game.state :as state]
@@ -38,5 +39,10 @@
        [:button {:on-click (fn [] (state/add-notification {:type :warning
                                                           :text "bad user! lost points"}) )}
         "trigger warning notification"]
+
+       [:h5 "posts"]
+
+       (for [p posts/all-activity-posts]
+         [:button {:on-click (fn [] (set! js/window.location (str "/?post=" (:id p)) ))} (:id p)])
 
        ])))

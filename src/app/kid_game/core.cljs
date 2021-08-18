@@ -2,6 +2,8 @@
   (:require [reagent.core :as r]
             [kid-shared.posts.stories :as stories]
             [kid-shared.generator :as gen]
+            [kid-shared.posts.posts :as posts]
+            [kid-game.components.verification-hub.activities.core :as activities]
             [kid-game.socket :as socket]
             [kid-game.state :as state]
             [kid-game.business :as business]
@@ -44,10 +46,25 @@
      [<verification-hub>/<container>]]]])
 
 (defn <app> []
-  (case (:active-panel @state/app-state)
-    :login [<login>/<form>]
-    :verification-hub [<game>]
-    :timeline [<game>]))
+  ;; if we explicitly set something at ?post, only load that, only for development, really!
+  ;; if you're confused..... just ignore this!!! and concentrate again at the next comment
+  (let [s js/window.location.search
+        post-id (-> (js/URLSearchParams. s) (.get "post"))]
+    (if post-id
+      (let [post (-> (filter (fn [p] (= post-id (:id p))) posts/all-activity-posts) (first))]
+        (when post [:div.testing-environment
+                    [:div.post-in-list
+                     [<timeline>/<post> (assoc post :game-state :live)]]
+                    (map (fn [activity]
+                        [:div {:style {:max-width "50rem"}}
+                          [activities/get-activity activity]]) (:activities post))
+                    ]))
+      ;; otherwise load the whole game
+      ;; this is the important stuf!!
+      (case (:active-panel @state/app-state)
+        :login [<login>/<form>]
+        :verification-hub [<game>]
+        :timeline [<game>]))))
 
 ; render the html component, if it exists
 (defn maybe-bind-element [div-id <component>]

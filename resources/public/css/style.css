@@ -1,6 +1,7 @@
 
 :root { --color-black: #222;
         --color-grey: #ddd;
+        --color-grey-dark: #666;
         --color-grey-light: #eee;
         --color-green: teal;
         --color-blue: blue;
@@ -57,7 +58,7 @@ body { margin: 0px;
                          position: relative; }
 .game-verification-hub.active { width: 66vw;
                                 z-index: 2; }
-.game-verification-hub-inner { width: 66vw; }
+.game-verification-hub-inner { }
 
 
 .panel-header { width: 100%;
@@ -263,9 +264,91 @@ button { background-color: transparent;
                                translate(-25%,-25%); }
 
 
-.ris-image-results {}
+
+.activity-container { padding: var(--spacing); }
+
+.ris-image-results { overflow: hidden;}
 .ris-image-result { height: 10rem;
                     float: left;
                     margin-right: var(--spacing-half);
                     margin-bottom: var(--spacing-half); }
 .ris-image-result img { height: 100%; width: auto; }
+
+.ris-image-dragger-image { border-radius: var(--spacing); }
+.ris-image-dragger-image img { width: 100%; border-radius: var(--spacing); }
+.drag-target { border: 3px dashed var(--color-grey);
+               width: 100%;
+               height: 100%;
+               border-radius: var(--spacing);
+               display: flex;
+               justify-content: center;
+               align-items: center; }
+
+
+.ris-results-transition-enter { transform:scaleY(0);
+                                 max-height: 0; }
+.ris-results-transition-enter-done { transform: scaleY(1);
+                                        max-height: 400rem;
+                                        transition: all 1s ease-in; }
+.ris-results-transition-exit { opacity: 1; }
+.ris-results-transition-exit-done { opacity: 0;
+                                       transition: opacity 1s ease-in; }
+
+.ris-drag-blocks { display: flex; flex-basis: 0; }
+.ris-drag-block { width: 33%; }
+.ris-drag-block-center { display: flex; align-items: center; justify-content: center; }
+
+
+.ris-search-result { margin-top: var(--spacing); }
+.ris-search-result-url { color: var(--color-grey-dark);
+                         font-size: .8rem; }
+.ris-search-result-title { color: var(--color-blue);
+                           font-size: 1.2rem;
+                           padding-bottom: var(--spacing-half)}
+.ris-search-result-columns { display: flex; }
+.ris-search-result-image { width: 20%;
+                           padding-right: var(--spacing); }
+.ris-search-result-image img {width: 100%;
+                              border-radius: var(--spacing-half);}
+.ris-search-result-details { display: inline; color: var(--color-grey-dark); margin-right: var(--spacing); }
+.ris-search-result-text { display: inline; }
+
+
+
+
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid var(--color-grey);
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: var(--color-grey) transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
