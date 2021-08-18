@@ -12,19 +12,6 @@
 
 (enable-console-print!)
 
-;; puts the messages on the send-chan
-(defn send
-  [msg]
-  (if (messages/valid-message? msg)
-    (do (log/debug "sending message: " msg)
-        (async/put! messaging/send-channel msg))
-    (do (log/warn "your message is invalid!")
-        (log/warn (str (:type msg)))
-        (log/warn (str (:body msg)))
-        (log/warn (str (messages/explain-message msg)))
-        (log/warn "sending anyways lol")
-        (async/put! messaging/send-channel msg))))
-
 ; listens to the send-chan and forwards them to the server for
 ; distribution
 (defn connect-server-send
@@ -105,5 +92,5 @@
       (do (log/debug "no websocket connection, trying local")
           (setup-local-connection!)))
     ;; then, send our user to that connection, in some way
-    (send {:type ::messages/user-new
-           :body player})))
+    (messaging/send {:type ::messages/user-new
+                     :body player})))

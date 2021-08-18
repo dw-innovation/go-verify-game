@@ -25,17 +25,16 @@
   (use-new-player! :name player-name)
   (socket/setup-socket! (state/get-player)))
 
-
 (defn post-text-post! [& {:keys [title description fake-news?]}]
-  (socket/send {:type ::messages/post-new
-                :body {:type :post-text
-                       :id (new-uuid)
-                       :created (timestamp-now)
-                       :title title
-                       :time-limit 300
-                       :fake-news? fake-news?
-                       :by (state/get-player)
-                       :description description}}))
+  (messaging/send {:type ::messages/post-new
+                   :body {:type :post-text
+                          :id (new-uuid)
+                          :created (timestamp-now)
+                          :title title
+                          :time-limit 300
+                          :fake-news? fake-news?
+                          :by (state/get-player)
+                          :description description}}))
 
 (defn win-points! [points] (state/win-points points))
 (defn loose-points! [points] (state/loose-points points))
@@ -132,17 +131,17 @@
 
 ; user, string -> state update
 (defn chat-send! [& {:keys [to content]}]
-  (socket/send (chat/create :from (state/get-player)
-                            :to to
-                            :content content)))
+  (messaging/send (chat/create :from (state/get-player)
+                               :to to
+                               :content content)))
 
 (defn chat-seen! [chat]
   (if-not (chat/seen? chat) (state/seen! chat)))
 
 (defn group-chat-send! [& {:keys [content]}]
-  (socket/send (chat/create :from (state/get-player)
-                            :to nil ; a chat only from is group chat
-                            :content content)))
+  (messaging/send (chat/create :from (state/get-player)
+                               :to nil ; a chat only from is group chat
+                               :content content)))
 
 (defn handle-message! [msg]
   ;; handles an incoming message, and affects the state accordingly.
@@ -152,6 +151,8 @@
   (if-let [{:keys [type body]} msg]
     (do (log/debug "handling message" msg)
         (case type
+          ;; eventually, the following functions should all call local funcs
+          ;; and not delegate to state functions
           ::messages/user-init (state/set-users body)
           ::messages/chat-new (state/add-chat body)
           ::messages/user-new (state/add-user body)
@@ -166,11 +167,10 @@
 
 (defn listen-to-receive-channel! []
   (async/go-loop []
-    (if-let [msg (async/<! messaging/receive-channel)] ; the server that may have sent a real message
-      (do
-        (log/debug "got new message!!!!!!!!!!")
-        (handle-message! msg)
-        (recur))
+    (if-let [msg (async/<! messaging/receive-channel)]
+      (do (log/debug "got new message!!!!!!!!!!")
+          (handle-message! msg)
+          (recur))
       (println "receive channel got bad message"))))
 
 (listen-to-receive-channel!)
