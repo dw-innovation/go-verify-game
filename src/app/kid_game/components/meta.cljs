@@ -25,4 +25,18 @@
          [:div [:button {:on-click (fn [] (gen/gen-run-story messaging/receive-channel story) )} name]]
          )
        [:p "active stories: " (count (gens))]
-       [:button {:on-click (fn [] (gen/kill-all-posters) )} "stop all stories"]])))
+
+       [:button {:on-click (fn [] (gen/kill-all-posters) )} "stop all stories"]
+
+
+       [:h5 "Notifications"]
+
+       [:button {:on-click (fn [] (state/add-notification {:type :info
+                                                           :text "hello!"}) )}
+        "trigger notification"]
+
+       [:button {:on-click (fn [] (state/add-notification {:type :warning
+                                                          :text "bad user! lost points"}) )}
+        "trigger warning notification"]
+
+       ])))

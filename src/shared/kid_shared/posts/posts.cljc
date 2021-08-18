@@ -5,8 +5,19 @@
                                      :id "p1-climate-refugees-copenhagen"
                                      :description "So-called “climate refugees” from Copenhagen are trashing Liguria. Here’s a picture from the suburbs of Genoa taken yesterday -- this is an outrage! "
                                      :time-limit 400
+                                     :fake-news? true
                                      :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/p1-climate-refugees-copenhagen-main.jpg"
-                                     :by posters/rainer-werner})
+                                     :by posters/rainer-werner
+                                     :explanation "The shown photograph was actually from Hurricaine Michael"
+                                     :activities [{:type :reverse-image-simple
+                                                   :data {:main-image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/p1-climate-refugees-copenhagen-main.jpg"
+                                                          :result-images [{:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/31516192358_debc2e274d_w.jpg" }
+                                                                          {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/44873000045_6bfd1caaa5_w.jpg"}
+                                                                          {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/45322467302_313ceb4da3_w.jpg"}
+                                                                          {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/50836367178_c98fb56618_w.jpg"}
+                                                                          {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/50837095881_2c53650400_w.jpg"}
+                                                                          {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/50837182897_94bce499fa_w.jpg"}
+                                                                          ]}}]})
 
 (def migrant-1 {:type :post-text
                 :id :migrant-1
@@ -41,7 +52,7 @@ RIS reveals the image is real
                 :image "img/climate-3.jpg"
                 :fake-news? false
                 :by posters/rita-moonberg
-                :activities [{:component :test
+                :activities [{:type :test
                               :data "hello"}]})
 
 (def simple [{:type :post-text

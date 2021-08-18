@@ -14,8 +14,7 @@
 
 ; listens to the send-chan and forwards them to the server for
 ; distribution
-(defn connect-server-send
-  [svr-chan]
+(defn connect-server-send [svr-chan]
   (async/go-loop []
     (when-let [msg (<! messaging/send-channel)] ; listen to send-chan
       (log/debug msg)

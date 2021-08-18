@@ -10,10 +10,10 @@
 
 ;;
 ;;  data - should not be touched from
-;;    outside world
+;;    outside world,
 ;;
-;;
-;;
+;;    instead,
+;;     use the supplied functions
 ;;
 
 (defonce app-state (atom {:text "Hello world!"
@@ -160,8 +160,6 @@
                   (conj post))]
     ;; update the state
     (reset! post-list posts)))
-
-
 ;;
 ;;   notifications
 ;;     IDENTITY of a notification is it's timestamp,

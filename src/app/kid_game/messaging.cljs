@@ -6,6 +6,7 @@
 
 ;; The channel that this application will send messages to:
 (defonce send-channel (async/chan))
+
 ;; the channel that this application will listen for messages on:
 (defonce receive-channel (async/chan))
 

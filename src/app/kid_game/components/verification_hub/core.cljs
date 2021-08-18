@@ -16,15 +16,12 @@
 (defn <investigate-post> [post]
   (let [activities (:activities post)]
     [:div "investigating: " (:id post)
-     [:div.hub-post
-      [timeline/match-post post]]
+     ;; [:div.hub-post
+     ;;  [timeline/match-post post]]
      ;; a post might have activities in it or it might not,
      ;; for now, just flat list them out, verification hub to come
      (for [activity activities]
-       (let [dynamic-component (-> activity :component activities/get-activity)
-             data (:data activity)]
-         ;; tie the data of the post-activity to the mentioned component
-         [dynamic-component data]))
+       [activities/get-activity activity])
      [:div ]]))
 
 

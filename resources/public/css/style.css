@@ -236,6 +236,9 @@ body { margin: 0px;
                 padding: var(--spacing);
                 margin: var(--spacing-half); }
 
+.notification.info { border: 6px solid var(--color-green); }
+.notification.warning { border: 6px solid var(--color-red); }
+
 .notification-transition-enter { transform:scaleY(0);
                                  max-height: 0; }
 .notification-transition-enter-done { transform: scaleY(1);
@@ -258,3 +261,11 @@ button { background-color: transparent;
 .hub-post { background-color: var(--color-grey); }
 .hub-post > .post { transform: scale(.5)
                                translate(-25%,-25%); }
+
+
+.ris-image-results {}
+.ris-image-result { height: 10rem;
+                    float: left;
+                    margin-right: var(--spacing-half);
+                    margin-bottom: var(--spacing-half); }
+.ris-image-result img { height: 100%; width: auto; }

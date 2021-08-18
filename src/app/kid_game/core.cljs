@@ -22,14 +22,22 @@
   [:div.game-container
    [notifications/<notifications>]
 
-   [:div.game-panel.active [<meta>/<meta>]]
+   ;; this meta panels is for during development
+   [:div.game-panel.active
+    [<meta>/<meta>]]
 
-   [:div {:class ["game-panel" "game-timeline" (when (= (state/panel) :timeline) "active")]
-          :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
+   [:div {:class ["game-panel"
+                  "game-timeline"
+                  (when (= (state/panel) :timeline) "active")]
+          :on-click (fn [ev]
+                      (.stopPropagation ev)
+                      (state/open-timeline))}
     [:div.game-timeline-inner
      [<timeline>/<container>]]]
 
-   [:div {:class ["game-panel" "game-verification-hub" (when (= (state/panel) :verification-hub) "active")]
+   [:div {:class ["game-panel"
+                  "game-verification-hub"
+                  (when (= (state/panel) :verification-hub) "active")]
           ;; catch a fall through click action
           :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
     [:div.game-verification-hub-inner
