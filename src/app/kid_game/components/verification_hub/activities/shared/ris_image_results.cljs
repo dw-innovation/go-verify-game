@@ -9,7 +9,7 @@
        [:div.ris-drag-blocks
         [:div.ris-drag-block-left.ris-drag-block
           (if @done?
-            [:div.drag-target]
+            [:div.drag-target "done!"]
             [:div.ris-image-dragger-image
              [:img {:src img :draggable true}]])]
         [:div.ris-drag-block-center.ris-drag-block

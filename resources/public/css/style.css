@@ -177,6 +177,9 @@ body { margin: 0px;
                 position:relative; }
 .progress-inner { background-color: var(--color-timeline-secondary);
                   height: var(--spacing-half); }
+.progress-inner[percent] {
+    width: calc(0px + attr(percent));
+}
 
 
 
@@ -352,3 +355,6 @@ button { background-color: transparent;
     transform: rotate(360deg);
   }
 }
+
+.activity-container { max-width: 60rem;
+                      margin: 0 auto; }

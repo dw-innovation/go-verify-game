@@ -27,6 +27,7 @@
   ;(log/debug (str (* 100 (/ amnt total)) "%"))
   [:div {:class "progress-bar"}
    [:div {:class "progress-inner"
+          :percent (str (* 100 (/ amnt total)) "%")
           :style {:width (str (* 100 (/ amnt total)) "%")}}]])
 
 (defn <post-progress> [{time-left :time-left

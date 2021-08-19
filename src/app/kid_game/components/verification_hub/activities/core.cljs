@@ -24,6 +24,8 @@
   [:div
    [:h1 "I am a test component hello"]])
 
+;; filled out lovingly by css
+;; TODO alt for screenreaders
 (defn <loading> [] [:div.lds-ring [:div] [:div] [:div] [:div]])
 
 (defn <reverse-image-simple> [{:as data
