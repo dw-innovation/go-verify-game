@@ -2,6 +2,7 @@
   (:require [clojure.spec.alpha :as s]
             [kid-shared.types.user :as user]
             [kid-shared.types.chat :as chat]
+            [kid-shared.types.comment :as comment]
             [kid-shared.types.shared :as shared]
             [kid-shared.types.post :as post]))
 
@@ -33,6 +34,11 @@
 (s/def :post-new/body ::post/post)
 (s/def ::post-new (s/keys :req-un [:post-new/type
                                    :post-new/body]))
+
+(s/def :comment-new/type #{::comment-new})
+(s/def :comment-new/body ::comment/comment)
+(s/def ::comment-new (s/keys :req-un [:comment-new/type
+                                      :comment-new/body]))
 
 (s/def ::message (s/or ::chat-new ::chat-new
                        ::post-new ::post-new

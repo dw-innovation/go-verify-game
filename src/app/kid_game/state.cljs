@@ -160,6 +160,13 @@
                   (conj post))]
     ;; update the state
     (reset! post-list posts)))
+
+(defn add-post-comment [comment]
+  (let [post (get-post {:id (:post-id comment)})
+        comments (or (:comments post) [])]
+    (if post
+      (update-post post :comments (conj comments comment))
+      (log/warn "post id" (:post-id comment) "not found"))))
 ;;
 ;;   notifications
 ;;     IDENTITY of a notification is it's timestamp,

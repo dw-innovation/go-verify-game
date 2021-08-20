@@ -4,6 +4,7 @@
             [kid-game.business :as business]
             [kid-game.utils.log :as log]
             [kid-shared.types.post :as posts]
+            [kid-shared.types.comment :as comment]
             [kid-game.utils.core :refer [timestamp-now new-uuid]]
             [lodash]
             [moment]
@@ -85,6 +86,17 @@
 
     ]])
 
+(defn <comment> [{:as comment
+                  text :text
+                  author :by}]
+  [:div.comment
+   [:div.comment-inner
+    [:div.comment-inner-left
+     [<author-image> author]]
+    [:div.comment-inner-right
+     [:div.comment-author (:name author)]
+     [:div.comment-text text]]]])
+
 (defn <type-text> [;; destructure the post
                    {:as p
                     title :title
@@ -95,12 +107,14 @@
                     game-state :game-state
                     ;; destructure the author:
                     {:as author author-name :name} :by
+                    comments :comments
                     time-limit :time-limit}]
   (let [investigate! (fn [] (business/post-investigate! p))
         block! (fn [] (business/post-block! p))
         share! (fn [] (business/post-share! :comment "comment about post"
                                             :post p))]
     [:div {:class ["post" "post-type-text" game-state]}
+     [:div (:id p)]
      [:div.post-inner
       [:div.post-left-column
        [<author-image> author]]
@@ -120,6 +134,9 @@
                                 (investigate!))}
            "investigate"]])
        (when (= game-state :live) [<post-progress> p])
+       (for [comment comments]
+         ^{:key (comment/id comment)} ;; important to keep track of rendering
+         [<comment> comment])
        ]
       (case game-state
         :live nil

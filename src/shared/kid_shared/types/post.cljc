@@ -17,11 +17,12 @@
 
 (s/def ::post-text (s/keys :req-un [:post-text/type
                                     ::shared/id
-                                    ::shared/created
                                     ::time-limit
-                                    ::fake-news?
                                     ::by
-                                    ::description]))
+                                    ::description]
+                           :opt-un [::shared/created
+                                    ::fake-news?]))
+
 
 (s/def ::re-post (s/keys :req-un [:re-post/type
                                   ::shared/created
@@ -41,6 +42,8 @@
                     ::re-post ::re-post
                     ::post-text ::post-text))
 
+(defn post? [p] (s/valid? ::post p))
+(defn why-not? [p] (s/explain ::post p))
 
 (gen/generate (s/gen ::post-text))
 

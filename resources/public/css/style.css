@@ -358,3 +358,15 @@ button { background-color: transparent;
 
 .activity-container { max-width: 60rem;
                       margin: 0 auto; }
+
+
+
+
+
+.comment {}
+.comment-inner { display: flex;
+                 margin-top: var(--spacing); }
+.comment-inner-left { padding-right: var(--spacing); }
+.comment .post-author-image, .comment .post-author-image img { width: var(--spacing-double);
+                                                               height: var(--spacing-double); }
+.comment-author { font-weight: bold; }

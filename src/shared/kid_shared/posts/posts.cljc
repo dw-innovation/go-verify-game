@@ -1,12 +1,13 @@
 (ns kid-shared.posts.posts
-  (:require [kid-shared.posts.posters :as posters]))
+  (:require [kid-shared.posts.posters :as posters]
+            [kid-shared.types.post :as posts]))
 
 
 (def p1-climate-refugees-copenhagen
   {:type :post-text
    :id "p1-climate-refugees-copenhagen"
    :description "So-called “climate refugees” from Copenhagen are trashing Liguria. Here’s a picture from the suburbs of Genoa taken yesterday -- this is an outrage! "
-   :time-limit 400
+   :time-limit 4000
    :fake-news? true
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/p1-climate-refugees-copenhagen-main.jpg"
    :by posters/rainer-werner

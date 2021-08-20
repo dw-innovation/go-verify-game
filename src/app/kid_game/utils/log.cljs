@@ -3,5 +3,5 @@
             [clojure.spec.alpha :as s]))
 
 (def debug println)
-(def warn js/console.warn)
+(def warn println)
 (def error js/console.error)

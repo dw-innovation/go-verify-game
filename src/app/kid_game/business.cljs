@@ -144,6 +144,7 @@
           ::messages/chat-new (state/add-chat body)
           ::messages/user-new (state/add-user body)
           ::messages/user-left (state/remove-user body)
+          ::messages/comment-new (state/add-post-comment body)
           ::messages/post-new (add-post body)
           ; default
           (log/debug "could not handle the message"))
