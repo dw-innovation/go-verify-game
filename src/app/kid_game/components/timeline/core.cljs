@@ -134,9 +134,14 @@
                                 (investigate!))}
            "investigate"]])
        (when (= game-state :live) [<post-progress> p])
-       (for [comment comments]
-         ^{:key (comment/id comment)} ;; important to keep track of rendering
-         [<comment> comment])
+
+       [css-transition-group {:class "post-comments"}
+        (for [comment comments]
+          [css-transition {:timeout 2000
+                           :key (comment/id comment)
+                           :class-names "post-transition"}
+           ^{:key (comment/id comment)} ;; important to keep track of rendering
+           [<comment> comment]])]
        ]
       (case game-state
         :live nil

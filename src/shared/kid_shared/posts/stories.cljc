@@ -1,6 +1,12 @@
 (ns kid-shared.posts.stories (:require [kid-shared.posts.posters :as posters]
                                               [kid-shared.posts.posts :as posts]))
 
+;; here's the deal about stories.  they are a vector.  they can contain
+;; different data types.  they are played out in order. a number means wait that amount
+;; of seconds.  a map is passed through clojure spec to figure out what it is, then a
+;; new message is created.  another vector is considered a sub-story, and
+;; recursively calls this function.
+
 ;;
 ;;
 ;;  How to construct a story:
