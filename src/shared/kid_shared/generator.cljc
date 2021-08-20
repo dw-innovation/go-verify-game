@@ -74,6 +74,8 @@
                          (comment/comment? story-item) (do (log/debug "story item is a comment")
                                                            (async/>! send-channel {:type ::messages/comment-new
                                                                                    :body story-item}))
+                         (vector? story-item) (do (log/debug "story item is another story, starting generator")
+                                                  (gen-run-story send-channel story-item))
                          :else (log/warn "we don't recognize this as a story item: " story-item))
                        ;; we await 'false to end the channel.  call the exit
                        ;; channel if we found false

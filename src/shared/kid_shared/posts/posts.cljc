@@ -55,11 +55,10 @@ Simple image analytics/forensics will reveal the 'vegan' logo on her shirt is ph
                 :by {:name "@ministerin_schulze"}})
 
 (def climate-3 {:type :post-text
-                :id :climate-3
+                :id "climate-3"
                 :time-limit 300
-                :title ""
                 :description "Just got this satellite image from @ESA. This is what our continent looks like now. Thanks to climate change and rising sea levels. Hate to say I told you so!"
-                :subtext "ESA account check reveals the image is real
+                :explanation "ESA account check reveals the image is real
 Google search reveals the image is real
 RIS reveals the image is real
  "

@@ -22,11 +22,19 @@
                    :text "Too much is too much, when will the EU stop bickering and fix this flooding (pardon the pun) of so-called climate refugees? #notallWelcome"}]
     ;; create a "story" out of those posts.
     ;; you can attatch that story in kid-shared/generator.cljc
-    [2
+    [
+     ;; a number means wait this amount of seconds
+     2
+     ;; a post will create a new post in the timeline
      original
-     2
+     20
+     ;; a comment create's a new comment
      comment-1
-     2
+     ;; a vector, i.e. another story will generate a new story
+     [3 posts/climate-3 5 {:post-id (:id posts/climate-3)
+                           :by posters/tktktktktk
+                           :text "i agree!"}]
+     20
      comment-2]))
 
 

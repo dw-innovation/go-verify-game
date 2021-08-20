@@ -114,14 +114,14 @@
         share! (fn [] (business/post-share! :comment "comment about post"
                                             :post p))]
     [:div {:class ["post" "post-type-text" game-state]}
-     [:div (:id p)]
+     [:div.testing-purposes (:id p)]
+     [:small.testing-purposes (:game-state p)]
      [:div.post-inner
       [:div.post-left-column
        [<author-image> author]]
       [:div.post-right-column
        [<author-name> author]
        [:div {:class "post-text"}
-        [:small (:game-state p)]
         [:div.post-description description]]
        (when (:image p) [:img.post-image {:src (:image p)}])
        (when (= game-state :live)

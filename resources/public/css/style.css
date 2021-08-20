@@ -164,7 +164,7 @@ body { margin: 0px;
 .post-description { margin-top: var(--spacing); }
 
 .post-author-name .name { font-weight: bold; }
-.post-author-name .handle { color: var(--color-grey-light);
+.post-author-name .handle { color: var(--color-grey);
                             padding-left: var(--spacing); }
 
 
@@ -358,6 +358,9 @@ button { background-color: transparent;
 
 .activity-container { max-width: 60rem;
                       margin: 0 auto; }
+
+
+.testing-purposes { color: #eee; }
 
 
 
