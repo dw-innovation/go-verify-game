@@ -51,14 +51,14 @@ body { margin: 0px;
                  position: relative; }
 .game-timeline.active { width: 66vw;
                         z-index: 2; }
-.game-timeline-inner { }
+.game-timeline-inner { min-width: 66vw; }
 
 .game-verification-hub { width: 33vw;
                          z-index: 1;
                          position: relative; }
 .game-verification-hub.active { width: 66vw;
                                 z-index: 2; }
-.game-verification-hub-inner { }
+.game-verification-hub-inner { min-width: 66vw; }
 
 
 .panel-header { width: 100%;
