@@ -24,18 +24,15 @@
 
 (def freiheit378 (user/create {:name "Freiheit378"
                                :handle "@freiheit378"
-                               :role :manipulator
-                               :image images/freiheit-logo}))
+                               :role :manipulator}))
 
 (def eu-innovation (user/create {:name "EUI consortium"
                                  :handle "@eu-innovation"
-                                 :role :media
-                                 :image images/freiheit-logo}))
+                                 :role :media}))
 
 (def rita-moonberg (user/create {:name "Rita Moonberg"
                                  :handle "@rita"
-                                 :role :media
-                                 :image images/freiheit-logo}))
+                                 :role :media}))
 
 (def rainer-werner (user/create {:name "Rainer Werner"
                                  :handle "@rainguy2000"
@@ -45,7 +42,7 @@
 (def tktktktktk (user/create {:name "Anonimus"
                                  :handle "@tktktktktk"
                                  :role :media
-                                 :image images/freiheit-logo}))
+                                 :image images/reuters-logo}))
 
 (def posters [deutsche-welle
               reuters
