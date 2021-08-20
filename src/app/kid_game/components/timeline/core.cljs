@@ -25,11 +25,13 @@
 (declare <post>)
 
 (defn <progress> [amnt total]
+  (let [percent (* 100 (/ amnt total))
+        percent-left (- 100 percent)]
   ;(log/debug (str (* 100 (/ amnt total)) "%"))
   [:div {:class "progress-bar"}
    [:div {:class "progress-inner"
-          :percent (str (* 100 (/ amnt total)) "%")
-          :style {:width (str (* 100 (/ amnt total)) "%")}}]])
+          :style {:width (str percent-left  "%")
+                  }}]]))
 
 (defn <post-progress> [{time-left :time-left
                         time-limit :time-limit}]

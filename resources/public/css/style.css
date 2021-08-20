@@ -172,13 +172,16 @@ body { margin: 0px;
 
 
 .progress-bar { width: 100%;
-                background-color: var(--color-grey-light);
+                background-image: linear-gradient(to right, red, lime);
                 height: var(--spacing-half);
                 position:relative; }
-.progress-inner { background-color: var(--color-timeline-secondary);
-                  height: var(--spacing-half); }
+.progress-inner { background-color: rgba(255,255,255,.9);
+                height: var(--spacing-half);
+                position: absolute;
+                right: 0;
+                   }
 .progress-inner[percent] {
-    width: calc(0px + attr(percent));
+    top: attr(percent);
 }
 
 
