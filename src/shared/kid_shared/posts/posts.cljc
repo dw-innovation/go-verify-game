@@ -34,7 +34,7 @@
                                         ]}}]})
 
 (def migrant-1 {:type :post-text
-                :id :migrant-1
+                :id "migrant-1"
                 :time-limit 300
                 :title ""
                 :description "So-called 'climate refugees' from Copenhagen are trashing Liguria! Here's a picture from the suburbs of Genova taken yesterday. This is an outrage!"
@@ -44,7 +44,7 @@
                 :by {:name "@giovanni_smith"}})
 
 (def climate-1 {:type :post-text
-                :id :climate-1
+                :id "climate-1"
                 :time-limit 300
                 :title ""
                 :description "Vegan diet will be mandatory in Germany as of next month!"
