@@ -124,12 +124,11 @@ body { margin: 0px;
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: rgba(0,0,0,.3);
     display: flex;
     justify-content:center;
     align-items: center;
-    backdrop-filter: blur(2px)
-                     brightness(.8);
+    backdrop-filter: blur(1px)
+                     brightness(.9);
 }
 .post-overlay-inner {
     color: white;
