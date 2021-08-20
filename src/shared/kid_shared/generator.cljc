@@ -65,9 +65,6 @@
                        (cond
                          (number? story-item) (do (log/debug "story item is a number, waiting")
                                                   (async/<! (async/timeout (* 1000 story-item))))
-
-                         (number? story-item) (do (log/debug "story item is a number, waiting")
-                                                  (async/<! (async/timeout (* 1000 story-item))))
                          (posts/post? story-item) (do (log/debug "story item is a post")
                                                       (async/>! send-channel {:type ::messages/post-new
                                                                               :body story-item}))

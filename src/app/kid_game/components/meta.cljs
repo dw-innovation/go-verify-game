@@ -43,6 +43,8 @@
        [:h5 "posts"]
 
        (for [p posts/all-activity-posts]
-         [:button {:on-click (fn [] (set! js/window.location (str "/?post=" (:id p)) ))} (:id p)])
+         [:div
+          [:a {:href (str "?post=" (:id p))}
+           (:id p)]])
 
        ])))
