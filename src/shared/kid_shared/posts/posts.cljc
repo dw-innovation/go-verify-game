@@ -6,7 +6,7 @@
 (def p1-climate-refugees-copenhagen
   {:type :post-text
    :id "p1-climate-refugees-copenhagen"
-   :description "JUST A TEST So-called “climate refugees” from Copenhagen are trashing Liguria. Here’s a picture from the suburbs of Genoa taken yesterday -- this is an outrage! "
+   :description "So-called “climate refugees” from Copenhagen are trashing Liguria. Here’s a picture from the suburbs of Genoa taken yesterday -- this is an outrage! "
    :time-limit 4000
    :fake-news? true
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/p1-climate-refugees-copenhagen-main.jpg"
@@ -37,7 +37,7 @@
                 :id "migrant-1"
                 :time-limit 300
                 :title ""
-                :description "So-called 'climate refugees' from Copenhagen are trashing Liguria! Here's a picture from the suburbs of Genova taken yesterday. This is an outrage!"
+                :description "JUST A TEST So-called 'climate refugees' from Copenhagen are trashing Liguria! Here's a picture from the suburbs of Genova taken yesterday. This is an outrage!"
                 :subtext "Reverse image search reveals that picture was actually taken in Florida after Hurricane Michael."
                 :image "img/migrant-1.jpeg"
                 :fake-news? true
@@ -57,7 +57,7 @@ Simple image analytics/forensics will reveal the 'vegan' logo on her shirt is ph
 (def climate-3 {:type :post-text
                 :id "climate-3"
                 :time-limit 300
-                :description "Just got this satellite image from @ESA. This is what our continent looks like now. Thanks to climate change and rising sea levels. Hate to say I told you so!"
+                :description "TESTING, TESTING Just got this satellite image from @ESA. This is what our continent looks like now. Thanks to climate change and rising sea levels. Hate to say I told you so!"
                 :explanation "ESA account check reveals the image is real
 Google search reveals the image is real
 RIS reveals the image is real
