@@ -69,9 +69,9 @@
       :live nil
       :timed-out (if fake-news?
                    [:div.overlay-message.failure
-                    "✗ This post went viral, and you did not react to it.  It was nonsense content"]
-                   [:div.overlay-message.success
-                    "🗸 You ran out of time to react to this post, it was legit content."])
+                    "✗ You ran out of time to react to this post."]
+                   [:div.overlay-message.failure
+                    "✗ You ran out of time to react to this post."])
       :shared (if fake-news?
                 [:div.overlay-message.failure
                  "✗ You shared nonsense content"]
@@ -97,7 +97,7 @@
     [:div.comment-inner-left
      [<author-image> author]]
     [:div.comment-inner-right
-     [:div.comment-author (:name author)]
+     [:div.comment-author (:name author) [:span.comment-handle (:handle author)]]
      [:div.comment-text text]]]])
 
 (defn <type-text> [;; destructure the post

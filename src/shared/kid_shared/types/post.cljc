@@ -25,12 +25,11 @@
 
 
 (s/def ::re-post (s/keys :req-un [:re-post/type
-                                  ::shared/created
                                   ::shared/id
                                   ::by
                                   ::comment
-                                  ::time-limit
-                                  ::post]))
+                                  ::post]
+                         :opt-un [::shared/created]))
 
 (s/def ::post-default (s/keys :req-un [:post-default/type
                                        ::shared/created

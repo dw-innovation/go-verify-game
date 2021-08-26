@@ -44,6 +44,42 @@
                                  :role :media
                                  :image images/reuters-logo}))
 
+(def j_louis (user/create {:name "John Louis"
+                           :handle "@j_louis"
+                           :role :media}))
+
+(def financial_times (user/create {:name "The Financial Times"
+                                   :handle "@FinancialTimes"
+                                   :role :media}))
+
+(def financiel_times (user/create {:name "The Financial Times"
+                                   :handle "@FinancielTimes"
+                                   :role :media}))
+
+(def economy_economy (user/create {:name "the ECONOMY Blog"
+                                   :handle "@economy_economy"
+                                   :role :media}))
+
+(def european_liberal (user/create {:name "In dubio pro libertate"
+                                    :handle "@european_liberal"
+                                    :role :media}))
+
+(def alicia_ko (user/create {:name "Alicia Kowalski"
+                             :handle "@alicia_ko"
+                             :role :media}))
+
+(def journo-jane (user/create {:name "Janelle Mao"
+                             :handle "@journo-jane"
+                             :role :media}))
+
+(def patriot88 (user/create {:name "I'm a patriot, what are you?"
+                             :handle "@patriot88"
+                             :role :media}))
+
+(def groceries4you (user/create {:name "*Downtown Groceries*"
+                             :handle "@groceries4you"
+                             :role :media}))
+
 (def posters [deutsche-welle
               reuters
               zeit
