@@ -166,7 +166,7 @@ body { margin: 0px;
 .post-author-name .handle { color: var(--color-grey-dark);
                             padding-left: var(--spacing); }
 
-.comment-handle { color: var(--color-grey-dark) }
+.comment-handle { color: var(--color-grey-dark); font-weight: normal; }
 
 
 
