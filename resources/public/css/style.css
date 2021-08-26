@@ -163,8 +163,10 @@ body { margin: 0px;
 .post-description { margin-top: var(--spacing); }
 
 .post-author-name .name { font-weight: bold; }
-.post-author-name .handle { color: var(--color-grey);
+.post-author-name .handle { color: var(--color-grey-dark);
                             padding-left: var(--spacing); }
+
+.comment-handle { color: var(--color-grey-dark) }
 
 
 
