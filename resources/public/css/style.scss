@@ -1,4 +1,5 @@
 @import './node_modules/bulma/bulma.sass';
+@import './node_modules/font-awesome/scss/font-awesome.scss';
 
 :root { --color-black: #222;
         --color-grey: #ddd;
@@ -20,6 +21,19 @@
         --spacing-double: 2rem;
         --spacing-quadruple: 4rem; }
 
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.icon {
+    @extend .fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;}
 
 .game-container { display: flex;
                   overflow: hidden; }
@@ -76,21 +90,6 @@
 .text-input { grid-area: text-input;
               background-color: var(--color-grey-light);
               width: 100%; }
-
-.login-container { display: grid;
-                   width: 100vw;
-                   height: 100vh;
-                   grid-template-rows: 1fr 1fr 1fr;
-                   grid-template-columns: 1fr 1fr 1fr;
-                   grid-template-areas: ". . ."
-                                        ". login ."
-                                        ". . ."; }
-
-.login {
-    grid-area: login;
-    align-self: center;
-    justify-self: center;
-}
 
 .post-in-list { max-width: 50rem;
                 min-width: 35rem;
