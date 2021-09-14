@@ -1,23 +1,20 @@
 ;;
-;;    a basic deps edn file,
-;;      for the kid game, to replace leiningen
+;; a basic deps edn file,
+;; for the kid game, to replace leiningen
 ;;
-;;      this file handles all of the clojure/server dependencies.
-;;        frontend app, js is handled in shadow-cljs.edn
-;;
-;;
-;;
-{:deps {org.clojure/clojure {:mvn/version "1.10.0"}
+;; this file handles all of the clojure/server dependencies.
+;; for the frontend app, see shadow-cljs.edn
+
+{:deps {org.clojure/clojure    {:mvn/version "1.10.0"}
         org.clojure/core.async {:mvn/version "0.4.490"}
         org.clojure/test.check {:mvn/version "0.10.0"}
         ;; the following should be qualified differently, but they are working
         ;; fine for now
-        compojure {:mvn/version "1.6.1"}
-        reagent {:mvn/version "0.8.1"}
-        medley {:mvn/version "1.1.0"}
-        http-kit {:mvn/version "2.4.0-alpha2"}
-        jarohen/chord {:mvn/version "0.8.1"}
-        ;; … Clojure dependencies …
+        compojure      {:mvn/version "1.6.1"}
+        reagent        {:mvn/version "0.8.1"}
+        medley         {:mvn/version "1.1.0"}
+        http-kit       {:mvn/version "2.4.0-alpha2"}
+        jarohen/chord  {:mvn/version "0.8.1"}
         }
 
  ;; include both the server, the static resources,
