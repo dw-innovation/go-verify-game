@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "watch": "babel ./src/app/kid_game/react_components/raw --out-dir ./src/app/kid_game/react_components/compiled --watch & shadow-cljs watch :dev",
+    "watch": "babel ./src/app/kid_game/react_components/raw --out-dir ./src/app/kid_game/react_components/compiled --watch & shadow-cljs watch :dev & npm run css-watch -- --watch",
     "build": "babel ./src/app/kid_game/react_components/raw --out-dir ./src/app/kid_game/react_components/compiled --watch & shadow-cljs compile :dev",
-    "repl": "shadow-cljs cljs-repl :dev"
+    "repl": "shadow-cljs cljs-repl :dev",
+    "css-watch": "node-sass  --omit-source-map-url resources/public/css/style.scss resources/public/css/compiled/style.css"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
@@ -16,9 +17,11 @@
     "shadow-cljs": "2.14.2"
   },
   "dependencies": {
+    "bulma": "^0.9.3",
     "create-react-class": "^15.7.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
+    "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-transition-group": "^4.4.2"

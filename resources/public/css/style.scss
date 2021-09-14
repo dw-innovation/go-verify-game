@@ -1,3 +1,4 @@
+@import './node_modules/bulma/bulma.sass';
 
 :root { --color-black: #222;
         --color-grey: #ddd;
@@ -19,12 +20,6 @@
         --spacing-double: 2rem;
         --spacing-quadruple: 4rem; }
 
-/* some style */
-html { font-size: 14px; }
-
-body { margin: 0px;
-       padding: 0px;
-       font-family: "Sans" }
 
 .game-container { display: flex;
                   overflow: hidden; }
