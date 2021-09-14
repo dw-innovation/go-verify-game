@@ -1,4 +1,6 @@
 /resources/public/js/compiled/**
+/resources/public/css/compiled/**
+/src/app/kid_game/react_components/compiled/**
 figwheel_server.log
 pom.xml
 *jar
@@ -17,4 +19,3 @@ node_modules
 .shadow-cljs/*
 .cpcache/*
 .lsp/*
-/compiled/
