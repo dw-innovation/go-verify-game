@@ -19,3 +19,5 @@ node_modules
 .shadow-cljs/*
 .cpcache/*
 .lsp/*
+.calva/
+.clj-kondo/
