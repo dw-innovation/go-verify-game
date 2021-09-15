@@ -33,53 +33,38 @@ body {
     @extend .fa;
     display: flex;
     justify-content: center;
-    align-items: center;}
+    align-items: center; }
 
-.game-container { display: flex;
-                  overflow: hidden; }
+.game-panel {
+    transition: width .4s ease-in-out,
+                box-shadow .4s ease-in-out,
+                filter .4s ease-in-out;
+    filter: blur(1px)
+            brightness(.8);
+    overflow-x: hidden;
+    &.active {
+	 box-shadow: 5px 5px 30px 10px rgba(0,0,0,.2);
+         filter: blur(0px)
+                 brightness(1);
+    }
+}
 
-.game-panel { transition: width .4s ease-in-out,
-                          box-shadow .4s ease-in-out,
-                          filter .4s ease-in-out;
-              filter: blur(1px)
-                      brightness(.8);
-              overflow-x: hidden; }
-.game-panel.active { box-shadow: 5px 5px 30px 10px rgba(0,0,0,.3);
-                     filter: blur(0px)
-                             brightness(1);}
-
-.game-timeline { background: var(--color-grey-light);
-                height: 100vh;
-                overflow-y: scroll; }
-.game-verification-hub { heigh: 100vh;
-                         background: var(--color-white);
-                         overflow-y: scroll;}
-
-.game-timeline { width: 33vw;
-                 z-index: 1;
-                 position: relative; }
-.game-timeline.active { width: 66vw;
-                        z-index: 2; }
-.game-timeline-inner { min-width: 66vw; }
-
-.game-verification-hub { width: 33vw;
-                         z-index: 1;
-                         position: relative; }
-.game-verification-hub.active { width: 66vw;
-                                z-index: 2; }
-.game-verification-hub-inner { min-width: 66vw; }
-
+.game-timeline,
+.game-verification-hub {
+    height: 100vh;
+    overflow-y: scroll; 
+}
+.game-timeline         { background: var(--color-grey-light); }
+.game-verification-hub { background: var(--color-white); }
 
 .panel-header { width: 100%;
                 padding: var(--spacing);
                 z-index: 7;
                 position: sticky;
-                top: 0rem; }
-.timeline-header { background-color: var(--color-timeline-primary);}
+                top: 0rem;
+		h5 { color: var(--color-white); }}
+.timeline-header         { background-color: var(--color-timeline-primary);}
 .verification-hub-header { background-color: var(--color-hub-primary);}
-
-
-.post.inactive { }
 
 .history { grid-area: history;
            background-color: var(--color-white);

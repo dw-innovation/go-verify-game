@@ -49,7 +49,7 @@
 
 (defn open-game [] (open-timeline))
 
-(defn panel [] (:active-panel @app-state))
+(defn get-panel [] (:active-panel @app-state))
 
 ;; set the app to work with a new user
 (defn set-player [user]

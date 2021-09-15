@@ -183,10 +183,8 @@
    [match-post p])
 
 (defn <header> []
-  [:div {:class ["panel-header" "timeline-header"]}
-   [:div "Bleeper Network"]])
-
-
+  [:div {:class ["panel-header" "timeline-header" ]}
+   [:h5 {:class "title is-5 is-white"} "Your timeline"]])
 
 (defn <container> []
   [:div.timeline-container

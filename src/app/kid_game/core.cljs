@@ -21,26 +21,25 @@
 
 
 (defn <game> []
-  [:div.game-container
+  [:div {:class "game-container columns"}
    [notifications/<notifications>]
 
    ;; this meta panels is for during development
-   [:div.game-panel.active
+   [:div {:class "game-panel active column is-one-quarter"}
     [<meta>/<meta>]]
 
-   [:div {:class ["game-panel"
+   [:div {:class ["game-panel column"
                   "game-timeline"
-                  (when (= (state/panel) :timeline) "active")]
-          :on-click (fn [ev]
-                      (.stopPropagation ev)
-                      (state/open-timeline))}
+                  (cond (= (state/get-panel) :timeline) "is-two-thirds active"
+                        :else                           "is-one-third")]
+          :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
     [:div.game-timeline-inner
      [<timeline>/<container>]]]
 
-   [:div {:class ["game-panel"
+   [:div {:class ["game-panel column"
                   "game-verification-hub"
-                  (when (= (state/panel) :verification-hub) "active")]
-          ;; catch a fall through click action
+                  (cond (= (state/get-panel) :verification-hub) "is-two-thirds active"
+                        :else                                   "is-one-third")]
           :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
     [:div.game-verification-hub-inner
      [<verification-hub>/<container>]]]])
