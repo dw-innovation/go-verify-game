@@ -2,9 +2,9 @@
 @import './node_modules/font-awesome/scss/font-awesome.scss';
 
 :root { --color-black: #222;
-        --color-grey: #ddd;
+        --color-grey: #e2e1e1;
         --color-grey-dark: #666;
-        --color-grey-light: #eee;
+        --color-grey-light: #f7f7f7;
         --color-green: teal;
         --color-blue: blue;
         --color-blue-light: lightblue;
@@ -33,7 +33,9 @@ body {
     @extend .fa;
     display: flex;
     justify-content: center;
-    align-items: center; }
+    align-items: center; 
+    i { font-style: normal;}
+}
 
 .game-panel {
     transition: width .4s ease-in-out,
@@ -76,11 +78,6 @@ body {
               background-color: var(--color-grey-light);
               width: 100%; }
 
-.post-in-list { max-width: 50rem;
-                min-width: 35rem;
-                margin: var(--spacing) auto;
-                overflow-y: hidden; }
-
 .post-transition-enter { transform:scaleY(0);
                          max-height: 0; }
 .post-transition-enter-active { transform: scaleY(1);
@@ -91,12 +88,6 @@ body {
 .post-transition-exit-active { opacity: 0;
                                transition: opacity 1s ease-in; }
 
-.post { background-color: var(--color-white);
-        border-top: 3px solid var(--color-grey);
-        position: relative;}
-.post-inner { display: flex;
-              flex-direction: row;
-               }
 .post-overlay {
     position: absolute;
     top: 0;
@@ -121,35 +112,30 @@ body {
     background-color: var(--color-red);
 }
 
-.post-left-column { width: var(--spacing-quadruple);
-                    padding: var(--spacing); }
-.post-right-column { padding: var(--spacing)
-                              var(--spacing)
-                              var(--spacing)
-                              0rem;  }
-
-.post-author-image { width: var(--spacing-quadruple);
-                     height: var(--spacing-quadruple);
-                     border-radius: var(--spacing-double);
-                     overflow: hidden;
-                     background-color: var(--color-grey); }
-.post-author-image img { width: var(--spacing-quadruple);
-                         height: var(--spacing-quadruple); }
-.post-image { width: 100%;
-              border-radius: var(--spacing);
-              margin-top: var(--spacing);
-              margin-bottom: var(--spacing); }
-.post-description { margin-top: var(--spacing); }
-
-.post-author-name .name { font-weight: bold; }
-.post-author-name .handle { color: var(--color-grey-dark);
-                            padding-left: var(--spacing); }
+.post {
+    max-width: 50rem;
+    min-width: 35rem;
+    margin: var(--spacing) auto;
+    border-top: 2px solid var(--color-grey);
+    .author-image {
+	    width: var(--spacing-quadruple);
+	    height: var(--spacing-quadruple);
+        border-radius: var(--spacing-double);
+        overflow: hidden;
+        background-color: #e6e6e6; 
+        img {
+	        width: var(--spacing-quadruple);
+        }
+    }
+    .author {
+	    .name { margin-top: -30px; }
+    }
+    img.post-media { 
+    	border-radius: var(--spacing-half);
+    }
+}
 
 .comment-handle { color: var(--color-grey-dark); font-weight: normal; }
-
-
-
-
 
 .progress-bar { width: 100%;
                 background-image: linear-gradient(to right, red, lime);
@@ -341,10 +327,6 @@ button { background-color: transparent;
 
 .activity-container { max-width: 60rem;
                       margin: 0 auto; }
-
-
-.testing-purposes { color: #eee; }
-
 
 
 
