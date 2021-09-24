@@ -20,34 +20,31 @@
         [:ul
          [:li "Player: " [:b (:name (state/get-player))]]
          [:li "Score: "  [:b (state/get-player-points)]]]]
-       
+
        [:nav.panel
         [:p.panel-heading "Run a story"]
         (for [[name story] stories/all-stories]
           [:a {:class "panel-block"
-               :on-click (fn [] (gen/gen-run-story messaging/receive-channel story) )}
+               :on-click (fn [] (gen/gen-run-story messaging/receive-channel story))}
            [:span.panel-icon [:i {:class "fa fa-book" :aria-hidden "true"}]]
            [:span name]])]
 
        [:div {:class "tile box is-flex-direction-column"}
         [:p "active stories: " (count (gens))]
         [:button {:class "button is-danger is-light"
-                  :on-click (fn [] (gen/kill-all-posters) )} "stop all stories"]]
+                  :on-click (fn [] (gen/kill-all-posters))} "stop all stories"]]
 
        [:div {:class "tile box is-flex-direction-column"}
         [:p {:class "title is-5"} "Test notifications"]
         [:div.buttons
          [:button {:class "button is-warning is-light"
-                   :on-click (fn [] (state/add-notification {:type :info
-                                                             :text "hello!"}) )}
-          "trigger notification"]
-         
+                   :on-click (fn [] (state/add-notification {:type :success
+                                                             :text "+tktktk points"}))}
+          "test: success notification"]
          [:button {:class "button is-warning is-light"
                    :on-click (fn [] (state/add-notification {:type :warning
-                                                             :text "bad user! lost points"}) )}
-          "trigger warning notification"]]]
-       
-       
+                                                             :text "-tktktk points"}))}
+          "test: warning notification"]]]
 
        [:div {:class "tile box is-flex-direction-column"}
         [:p {:class "title is-5"} "Posts"]

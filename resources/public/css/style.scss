@@ -103,15 +103,16 @@ body {
     min-width: 35rem;
     margin: var(--spacing) auto;
     border-top: 2px solid var(--color-grey);
+    
     .author-image {
 	    width: var(--spacing-quadruple);
 	    height: var(--spacing-quadruple);
-        border-radius: var(--spacing-double);
-        overflow: hidden;
-        background-color: #e6e6e6; 
-        img {
-	        width: var(--spacing-quadruple);
-        }
+      border-radius: var(--spacing-double);
+      overflow: hidden;
+      background-color: #e6e6e6; 
+      img {
+        width: var(--spacing-quadruple);
+      }
     }
     .author {
 	    .name { margin-top: -30px; }
