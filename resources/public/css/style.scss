@@ -78,38 +78,24 @@ body {
               background-color: var(--color-grey-light);
               width: 100%; }
 
-.post-transition-enter { transform:scaleY(0);
-                         max-height: 0; }
-.post-transition-enter-active { transform: scaleY(1);
-                                max-height: 400rem;
-                                transition-delay: 1s;
-                                transition: all 1s ease-in; }
+.post-transition-enter { max-height: 0;
+                         opacity: 0; }
+.post-transition-enter-active { max-height: 400rem;
+                                opacity: 1;
+                                transition-delay: 0.7s;
+                                transition: all 0.5s ease-in; }
 .post-transition-exit { opacity: 1; }
 .post-transition-exit-active { opacity: 0;
-                               transition: opacity 1s ease-in; }
+                               transition: opacity 0.5s ease-in; }
 
-.post-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content:center;
-    align-items: center;
-    backdrop-filter: blur(1px)
-                     brightness(.9);
-}
-.post-overlay-inner {
-    color: white;
-    font-size: 2rem;
-    padding: var(--spacing-double);
-}
-.overlay-message.success {
-    background-color: var(--color-green);
-}
-.overlay-message.failure {
-    background-color: var(--color-red);
+.modal {
+  .modal-background {
+    background-color: rgba(10, 10, 10, 0.16) !important;
+  }
+  .modal-card-body {
+    padding: 4rem 0;
+    border-radius: 6px;
+  }
 }
 
 .post {
@@ -136,21 +122,6 @@ body {
 }
 
 .comment-handle { color: var(--color-grey-dark); font-weight: normal; }
-
-.progress-bar { width: 100%;
-                background-image: linear-gradient(to right, red, lime);
-                height: var(--spacing-half);
-                position:relative; }
-.progress-inner { background-color: rgba(255,255,255,.9);
-                height: var(--spacing-half);
-                position: absolute;
-                right: 0;
-                   }
-.progress-inner[percent] {
-    top: attr(percent number);
-}
-
-
 
 .chat {
     display: flex;
@@ -201,28 +172,25 @@ body {
 .chat-title { font-weight: bold; }
 .latest-message { opacity: .4; }
 
-.notifications { position: fixed;
-                 z-index: 466;
-                 top: 0; }
-.notification { background-color: white;
-                border: 6px solid var(--color-orange);
-                padding: var(--spacing);
-                margin: var(--spacing-half); }
+.notifications {
+  position: fixed;
+  z-index: 466;
+  top: 1rem;
+  left: 1rem;
+  .card {
+    margin: 1rem 0;
+  }
+}
 
-.notification.info { border: 6px solid var(--color-green); }
-.notification.warning { border: 6px solid var(--color-red); }
-
-.notification-transition-enter { transform:scaleY(0);
-                                 max-height: 0; }
-.notification-transition-enter-done { transform: scaleY(1);
-                                        max-height: 400rem;
-                                        transition-delay: 1s;
-                                        transition: all 1s ease-in; }
+.notification-transition-enter { max-height: 0;
+                                 opacity: 0; }
+.notification-transition-enter-done { max-height: 400rem;
+                                      opacity: 1;
+                                      transition-delay: 0.3s;
+                                      transition: all 0.2s ease-in; }
 .notification-transition-exit { opacity: 1; }
 .notification-transition-exit-done { opacity: 0;
                                        transition: opacity 1s ease-in; }
-
-
 
 button { background-color: transparent;
          border: 2px solid var(--color-blue);

@@ -24,7 +24,7 @@
 (declare <post>)
 
 (defn <progress> [amnt total]
-  (let [percent (* 100 (/ amnt total))
+  (let [percent (Math/floor (* 100 (/ amnt total)))
         percent-left (- 100 percent)]
     [:progress {:class "progress is-primary is-small"
                 :value percent
@@ -77,34 +77,40 @@
                                                    (investigate!))}
       [:span.icon [:i {:class "fas fa-search"}]] [:span "investigate"]]]))
 
-;; will center the elements in a post overlay
-(defn <post-overlay> [{:as p
-                       fake-news? :fake-news?
-                       game-state :game-state
+(defn <action-info-content> [result copy points-result]
+  (let [icon (case result :won  "fa-check"
+                   :lost        "fa-ban"
+                   :timeout     "fa-clock-o"
+                   nil)
+        color (case result :won "is-success"
+                    :lost       "is-danger"
+                    :timeout    "is-info"
+                    nil)
+        lost? (case result :lost true
+                    :won false
+                    nil)]
+    [:div {:class (str "notification is-light " color)}
+     [:section
+      [:div.columns.is-centered.is-vcentered
+       [:div.column.is-1
+        [:div {:class (str "icon is-large " color)} [:i {:class (str "fas fa-2x " icon)}]]]
+       [:div.column.is-6 {:class color}
+        [:div copy] (when (not (nil? lost?)) [:b  (if lost? "-" "+") points-result " points"])]]]]))
+
+(defn <post-overlay> [{:as           p
+                       fake-news?    :fake-news?
+                       game-state    :game-state
                        points-result :points-result}]
-  [:div.post-overlay
-   [:div.post-overlay-inner
-    (case game-state
-      :live nil
-      :timed-out (if fake-news?
-                   [:div.overlay-message.failure
-                    "✗ You ran out of time to react to this post."]
-                   [:div.overlay-message.failure
-                    "✗ You ran out of time to react to this post."])
-      :shared (if fake-news?
-                [:div.overlay-message.failure
-                 "✗ You shared nonsense content"]
-                [:div.overlay-message.success
-                 "🗸 You shared legit content"])
-      :blocked (if fake-news?
-                 [:div.overlay-message.success
-                  "🗸 You blocked nonsense content"]
-                 [:div.overlay-message.failure
-                  "✗ You blocked legit content"])
-      nil)
-    (when points-result (let [lost? (neg? points-result)
-                              points (js/Math.abs points-result)]
-                          [:div "You " (if lost? "lost " "won ") points " points"]))]])
+  (case game-state
+    :live nil
+    :timed-out [<action-info-content> :timeout "You ran out of time to react to this post."]
+    :shared (if fake-news?
+              [<action-info-content> :lost "You shared nonsense content" points-result]
+              [<action-info-content> :won "You shared legit content" points-result])
+    :blocked (if fake-news?
+               [<action-info-content> :won "You blocked nonsense content" points-result]
+               [<action-info-content> :lost "You blocked legit content" points-result])
+    nil))
 
 (defn <comment> [{:as comment
                   text :text

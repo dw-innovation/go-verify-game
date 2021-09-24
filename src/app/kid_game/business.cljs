@@ -89,12 +89,12 @@
         time-left (or (:time-left post) 20)
         points time-left]
     (if (:fake-news? post)
-      (do (state/add-notification {:type :info
-                                   :text (str "won " points " points")})
+      (do (state/add-notification {:type :success
+                                   :text (str "+" points " points")})
           (state/update-post post :points-result points)
           (win-points! time-left))
       (do (state/add-notification {:type :warning
-                                   :text (str "lost " points " points")})
+                                   :text (str "-" points " points")})
           (state/update-post post :points-result (- points))
           (loose-points! time-left))))
   (stop-post-timer! post)
@@ -106,11 +106,11 @@
         points time-left]
     (if (:fake-news? post)
       (do (state/add-notification {:type :warning
-                                   :text (str "lost " time-left " points")})
+                                   :text (str "-" time-left " points")})
           (state/update-post post :points-result points)
           (loose-points! time-left))
-      (do (state/add-notification {:type :info
-                                   :text (str "won " points " points")})
+      (do (state/add-notification {:type :success
+                                   :text (str "+" points " points")})
           (state/update-post post :points-result (- points))
           (win-points! time-left)))
     (stop-post-timer! post)
