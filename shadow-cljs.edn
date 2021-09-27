@@ -3,7 +3,9 @@
 
 ;; directories watched for js changes
 {:source-paths ["src/app" "src/shared"]
-
+ :repositories
+   {"central" {:url "https://repo1.maven.org/maven2/"}
+    "clojars" {:url "https://mirrors.ustc.edu.cn/clojars/"}}
  ;; the port of our nrepl, that emacs or other code editors can connect to
  :nrepl {:port 8777
          :middleware [refactor-nrepl.middleware/wrap-refactor]}
