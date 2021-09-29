@@ -7,8 +7,8 @@
 
 
 (defn <header> []
-  [:div {:class ["panel-header" "verification-hub-header"]}
-   [:div "Verification Hub"]])
+  [:div {:class ["panel-header" "verification-hub-header" ]}
+   [:h5 {:class "title is-5 is-white"} "Verification Hub"]])
 
 (defn <default-view> []
   [:div [:h1 "I am the default verification hub view"]])

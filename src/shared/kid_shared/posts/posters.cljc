@@ -40,9 +40,9 @@
                                  :image images/freiheit-logo}))
 
 (def tktktktktk (user/create {:name "Anonimus"
-                                 :handle "@tktktktktk"
-                                 :role :media
-                                 :image images/reuters-logo}))
+                              :handle "@tktktktktk"
+                              :role :media
+                              :image images/reuters-logo}))
 
 (def j_louis (user/create {:name "John Louis"
                            :handle "@j_louis"
@@ -50,11 +50,13 @@
 
 (def financial_times (user/create {:name "The Financial Times"
                                    :handle "@FinancialTimes"
-                                   :role :media}))
+                                   :role :media
+                                   :image images/ft-logo}))
 
 (def financiel_times (user/create {:name "The Financial Times"
                                    :handle "@FinancielTimes"
-                                   :role :media}))
+                                   :role :media
+                                   :image images/ft-logo}))
 
 (def economy_economy (user/create {:name "the ECONOMY Blog"
                                    :handle "@economy_economy"
@@ -69,16 +71,16 @@
                              :role :media}))
 
 (def journo-jane (user/create {:name "Janelle Mao"
-                             :handle "@journo-jane"
-                             :role :media}))
+                               :handle "@journo-jane"
+                               :role :media}))
 
 (def patriot88 (user/create {:name "I'm a patriot, what are you?"
                              :handle "@patriot88"
                              :role :media}))
 
 (def groceries4you (user/create {:name "*Downtown Groceries*"
-                             :handle "@groceries4you"
-                             :role :media}))
+                                 :handle "@groceries4you"
+                                 :role :media}))
 
 (def posters [deutsche-welle
               reuters
