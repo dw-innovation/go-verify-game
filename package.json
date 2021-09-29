@@ -7,7 +7,7 @@
   },
   "scripts": {
     "watch": "babel ./src/app/kid_game/react_components/raw --out-dir ./src/app/kid_game/react_components/compiled --watch & shadow-cljs watch :dev & npm run css-watch -- --watch",
-    "build": "babel ./src/app/kid_game/react_components/raw --out-dir ./src/app/kid_game/react_components/compiled --watch & shadow-cljs compile :dev & npm run css-watch",
+    "build": "babel ./src/app/kid_game/react_components/raw --out-dir ./src/app/kid_game/react_components/compiled --watch & shadow-cljs compile :dev && npm run css-watch",
     "repl": "shadow-cljs cljs-repl :dev",
     "css-watch": "node-sass  --omit-source-map-url resources/public/css/style.scss resources/public/css/compiled/style.css"
   },
