@@ -17,10 +17,10 @@
 
 (s/def ::post-text (s/keys :req-un [:post-text/type
                                     ::shared/id
-                                    ::time-limit
                                     ::by
                                     ::description]
                            :opt-un [::shared/created
+                                    ::time-limit
                                     ::fake-news?]))
 
 
@@ -31,6 +31,7 @@
                                   ::post]
                          :opt-un [::shared/created]))
 
+;; Deprecated
 (s/def ::post-default (s/keys :req-un [:post-default/type
                                        ::shared/created
                                        ::shared/id

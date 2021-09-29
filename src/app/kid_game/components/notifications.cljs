@@ -17,15 +17,17 @@
     (= type :warning)     "has-background-danger-light has-text-danger"
     :else                 "has-background-warning-light has-text-warning"))
 
-(defn <notifications> []
-   ;; documentation for css transition group seems kind of tricky but is here:
-   ;; https://reactcommunity.org/react-transition-group/
-  [css-transition-group {:class "notifications"}
-   (for [n @state/notifications]
-     (when (:active n)
+(defn <notification> [n]
+(when (:active n)
        (let [bg (copy-color (:type n))]
          [css-transition {:timeout     200
                           :key         (:time n)
                           :class-names "notification-transition"}
           ^{:key (:time n)} ;; important to keep track of rendering
-          [:div.card [:div {:class ["card-content " bg]} [:b (:text n)]]]])))])
+          [:div.card [:div {:class ["card-content " bg]} [:b (:text n)]]]])))
+
+(defn <notifications> []
+   ;; documentation for css transition group seems kind of tricky but is here:
+   ;; https://reactcommunity.org/react-transition-group/
+  [css-transition-group {:class "notifications"}
+   (map <notification> @state/notifications)])

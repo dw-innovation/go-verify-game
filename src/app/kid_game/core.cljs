@@ -14,6 +14,7 @@
             [kid-game.components.verification-hub.core :as <verification-hub>]
             [kid-game.components.login.core :as <login>]
             [kid-game.example-activities :as ex]
+            [kid-game.dev-cards :as dev-cards]
             [lodash :as lodash]
             [moment]
             [cljs.core.async :as async :include-macros true]
@@ -44,26 +45,34 @@
     [:div.game-verification-hub-inner
      [<verification-hub>/<container>]]]])
 
+
+(defn <one-post> [post-id]
+  (let [post (-> (filter (fn [p] (= post-id (:id p))) posts/all-activity-posts) (first))]
+    (when post [:div.testing-environment
+                [:div.post-in-list
+                 [<timeline>/<post> (assoc post :game-state :live)]]
+                (map (fn [activity]
+                       [:div {:style {:max-width "50rem"}}
+                        [activities/get-activity activity]]) (:activities post))
+                ])))
+
+(defn <the-game> []
+(case (:active-panel @state/app-state)
+        :login [<login>/<form>]
+        :verification-hub [<game>]
+        :timeline [<game>]))
+
 (defn <app> []
   ;; if we explicitly set something at ?post, only load that, only for development, really!
   ;; if you're confused..... just ignore this!!! and concentrate again at the next comment
   (let [s js/window.location.search
+        p js/window.location.pathname
         post-id (-> (js/URLSearchParams. s) (.get "post"))]
-    (if post-id
-      (let [post (-> (filter (fn [p] (= post-id (:id p))) posts/all-activity-posts) (first))]
-        (when post [:div.testing-environment
-                    [:div.post-in-list
-                     [<timeline>/<post> (assoc post :game-state :live)]]
-                    (map (fn [activity]
-                        [:div {:style {:max-width "50rem"}}
-                          [activities/get-activity activity]]) (:activities post))
-                    ]))
-      ;; otherwise load the whole game
-      ;; this is the important stuf!!
-      (case (:active-panel @state/app-state)
-        :login [<login>/<form>]
-        :verification-hub [<game>]
-        :timeline [<game>]))))
+    (cond
+      (= p "/dev-cards") [dev-cards/<component>]
+      post-id [<one-post> post-id]
+      :default [<the-game>]
+      )))
 
 ; render the html component, if it exists
 (defn maybe-bind-element [div-id <component>]
