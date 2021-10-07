@@ -13,7 +13,6 @@
             [kid-game.components.verification-hub.activities.core :as activities]
             [moment]))
 
-
 (defn <game> []
   [:div {:class "game-container columns"}
    [notifications/<notifications>]
@@ -48,12 +47,12 @@
                        [:div {:style {:max-width "50rem"}}
                         [activities/get-activity activity]]) (:activities post))])))
 
-(defn <the-game> []
+(defn <app> []
   (cond
     (state/has-player?) [<game>]
     :else [<login>/<form>]))
 
-(defn <app> []
+(defn <routes> []
   ;; decide what to render in our app.  This is some junk hand-made routing
   (let [s js/window.location.search ; get the ?var=val&var2=val2 from the url
         p js/window.location.pathname ; get the /path/name from the url
@@ -62,9 +61,9 @@
     (cond
       (= p "/dev-cards") [dev-cards/<main-view>]
       dev? (do (business/new-session! "dev-user")
-               [<the-game>])
+               [<app>])
       post-id [<one-post> post-id]
-      :else [<the-game>])))
+      :else [<app>])))
 
 ; render the html component, if it exists
 (defn maybe-bind-element [div-id <component>]
