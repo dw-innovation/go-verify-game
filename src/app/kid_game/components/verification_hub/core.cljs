@@ -1,28 +1,25 @@
 (ns kid-game.components.verification-hub.core
-  (:require [reagent.core :as r]
-            [kid-game.state :as state]
-            [kid-game.components.verification-hub.activities.core :as activities]
-            [kid-game.components.timeline.core :as timeline]
-            [kid-game.business :as business]))
-
+  (:require [kid-game.state :as state]
+            [kid-game.components.verification-hub.activities.core :as activities]))
 
 (defn <header> []
-  [:div {:class ["panel-header" "verification-hub-header" ]}
+  [:div {:class ["panel-header" "verification-hub-header"]}
    [:h5 {:class "title is-5 is-white"} "Verification Hub"]])
 
 (defn <default-view> []
-  [:div [:h1 "I am the default verification hub view"]])
+  [:div.container [:h4.title.is-4 "I am the default verification hub view"]])
 
 (defn <investigate-post> [post]
   (let [activities (:activities post)]
-    [:div "investigating: " (:id post)
-     ;; [:div.hub-post
-     ;;  [timeline/match-post post]]
+    [:div.container
+     [:div.columns.is-centered
+      [:div.column.is-8.mt-4
+       [:div {:class "notification is-info is-light"}
+        [:b "Currently investigating: "] "post ID #" (:id post)]]]
      ;; a post might have activities in it or it might not,
      ;; for now, just flat list them out, verification hub to come
      (for [activity activities]
-       [activities/get-activity activity])
-     [:div ]]))
+       [activities/get-activity activity])]))
 
 
 (defn <container> []

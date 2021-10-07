@@ -11,7 +11,7 @@
          :middleware [refactor-nrepl.middleware/wrap-refactor]}
 
  ;; clojurescript dependencies
- :dependencies [[cider/cider-nrepl        "0.18.0"] ; make an nrepl
+ :dependencies [[cider/cider-nrepl        "0.22.1"] ; make an nrepl
                 [refactor-nrepl           "2.4.0"]  ; allows emacs to connect
                 [jarohen/chord            "0.8.1"]  ; handle's websockets fantastically
                 [com.rpl/specter          "1.1.3"]  ; nested data structure cruncher

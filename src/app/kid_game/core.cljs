@@ -1,24 +1,17 @@
 (ns kid-game.core
-  (:require [reagent.core :as r]
-            [kid-shared.posts.stories :as stories]
-            [kid-shared.generator :as gen]
-            [kid-shared.posts.posts :as posts]
+  (:require [reagent.core                                         :as r]
+            [kid-game.utils.log                                   :as log]
+            [kid-shared.posts.posts                               :as posts]
+            [kid-game.dev-cards                                   :as dev-cards]
+            [kid-game.components.login.core                       :as <login>]
+            [kid-game.state                                       :as state]
+            [kid-game.business                                    :as business]
+            [kid-game.components.meta                             :as <meta>]
+            [kid-game.components.timeline.core                    :as <timeline>]
+            [kid-game.components.notifications                    :as notifications]
+            [kid-game.components.verification-hub.core            :as <verification-hub>]
             [kid-game.components.verification-hub.activities.core :as activities]
-            [kid-game.socket :as socket]
-            [kid-game.state :as state]
-            [kid-game.business :as business]
-            [kid-game.components.chat.core :as <chat>]
-            [kid-game.components.meta :as <meta>]
-            [kid-game.components.notifications :as notifications]
-            [kid-game.components.timeline.core :as <timeline>]
-            [kid-game.components.verification-hub.core :as <verification-hub>]
-            [kid-game.components.login.core :as <login>]
-            [kid-game.example-activities :as ex]
-            [kid-game.dev-cards :as dev-cards]
-            [lodash :as lodash]
-            [moment]
-            [cljs.core.async :as async :include-macros true]
-            [kid-game.utils.log :as log]))
+            [moment]))
 
 
 (defn <game> []
@@ -32,14 +25,14 @@
    [:div {:class ["game-panel column"
                   "game-timeline"
                   (cond (= (state/get-panel) :timeline) "is-two-thirds active"
-                        :else                           "is-one-third")]
+                        :else                           "is-one-quarter")]
           :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
     [:div.game-timeline-inner
      [<timeline>/<container>]]]
 
    [:div {:class ["game-panel column"
                   "game-verification-hub"
-                  (cond (= (state/get-panel) :verification-hub) "is-two-thirds active"
+                  (cond (= (state/get-panel) :verification-hub) "is-half active"
                         :else                                   "is-one-third")]
           :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
     [:div.game-verification-hub-inner
@@ -53,26 +46,25 @@
                  [<timeline>/<post> (assoc post :game-state :live)]]
                 (map (fn [activity]
                        [:div {:style {:max-width "50rem"}}
-                        [activities/get-activity activity]]) (:activities post))
-                ])))
+                        [activities/get-activity activity]]) (:activities post))])))
 
 (defn <the-game> []
-(case (:active-panel @state/app-state)
-        :login [<login>/<form>]
-        :verification-hub [<game>]
-        :timeline [<game>]))
+  (cond
+    (state/has-player?) [<game>]
+    :else [<login>/<form>]))
 
 (defn <app> []
-  ;; if we explicitly set something at ?post, only load that, only for development, really!
-  ;; if you're confused..... just ignore this!!! and concentrate again at the next comment
-  (let [s js/window.location.search
-        p js/window.location.pathname
-        post-id (-> (js/URLSearchParams. s) (.get "post"))]
+  ;; decide what to render in our app.  This is some junk hand-made routing
+  (let [s js/window.location.search ; get the ?var=val&var2=val2 from the url
+        p js/window.location.pathname ; get the /path/name from the url
+        post-id (-> (js/URLSearchParams. s) (.get "post")) ; extract &post=
+        dev? (-> (js/URLSearchParams. s) (.get "dev"))]
     (cond
-      (= p "/dev-cards") [dev-cards/<component>]
+      (= p "/dev-cards") [dev-cards/<main-view>]
+      dev? (do (business/new-session! "dev-user")
+               [<the-game>])
       post-id [<one-post> post-id]
-      :default [<the-game>]
-      )))
+      :else [<the-game>])))
 
 ; render the html component, if it exists
 (defn maybe-bind-element [div-id <component>]
@@ -83,10 +75,3 @@
     (log/warn "#" div-id "not found, skipping")))
 
 (maybe-bind-element "app" <app>)
-
-;; ignore these for now
-
-(maybe-bind-element "examples" ex/<examples>)
-
-(js/console.log "Here are the things we have loaded! these come from js, check shadow-cljs.edn")
-(js/console.log lodash/_.map)

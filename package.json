@@ -6,7 +6,9 @@
     "node": "~14.17.3"
   },
   "scripts": {
-    "watch": "babel ./src/app/kid_game/react_components/raw --out-dir ./src/app/kid_game/react_components/compiled --watch & shadow-cljs watch :dev & npm run css-watch -- --watch",
+    "watch-app": "babel ./src/app/kid_game/react_components/raw --out-dir ./src/app/kid_game/react_components/compiled --watch",
+    "watch-css": "shadow-cljs watch :dev & npm run css-watch -- --watch",
+    "watch": "npm-run-all --parallel watch-css watch-app",
     "build": "babel ./src/app/kid_game/react_components/raw --out-dir ./src/app/kid_game/react_components/compiled --watch & shadow-cljs compile :dev && npm run css-watch",
     "repl": "shadow-cljs cljs-repl :dev",
     "css-watch": "node-sass  --omit-source-map-url resources/public/css/style.scss resources/public/css/compiled/style.css"
@@ -26,6 +28,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "node-sass": "^6.0.1",
+    "npm-run-all": "^4.1.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-transition-group": "^4.4.2"

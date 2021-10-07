@@ -25,6 +25,8 @@
   (use-new-player! :name player-name)
   (socket/setup-socket! (state/get-player)))
 
+(defn logout [] (state/clear-player))
+
 (defn post-text-post! [& {:keys [title description fake-news?]}]
   (messaging/send {:type ::messages/post-new
                    :body {:type :post-text
@@ -42,7 +44,7 @@
 ;; attatches a timer to a post, which will deprecate the post's time in the state
 ;; periodically.  additionally this function registers post :stop-timer! which
 ;; contains an anonymous function to kill this timer
-(defn attatch-post-timer! [post]
+(defn attach-post-timer! [post]
   (let [p (state/get-post post)
         exit-channel (async/chan)]
     ;; give the post an anonymous function that can stop the timer associated with it
@@ -78,7 +80,7 @@
     ;; so we give it a game state
     (state/post-transition-state! post :live)
     ;; we also attatch an async loop to start counting down
-    (attatch-post-timer! post)))
+    (attach-post-timer! post)))
 
 
 (defn post-investigate! [post]

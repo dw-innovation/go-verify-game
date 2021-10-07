@@ -134,13 +134,10 @@
 
 (defn <type-text> [;; destructure the post
                    {:as p
-                    title :title
                     description :description
-                    fake-news? :fake-news? ; either true or false
                     game-state :game-state ; either :live, :shared, :blocked, or :timed-out
-                    {:as author author-name :name} :by ; destructure the author
-                    comments :comments
-                    time-limit :time-limit}]
+                    author :by
+                    comments :comments}]
   [:div {:class ["post" "post-type-text my-5" game-state]}
    [<debug-tags> p]
    [:div.columns.mr-0

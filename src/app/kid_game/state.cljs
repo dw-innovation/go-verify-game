@@ -57,6 +57,10 @@
 
 (defn get-player [] (:user @app-state))
 
+(defn has-player? [] (:name (:user @app-state)))
+
+(defn clear-player [] (swap! app-state assoc :user nil))
+
 (defn get-users [] @users)
 
 ; prefer storage as a map

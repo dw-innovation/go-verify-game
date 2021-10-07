@@ -1,7 +1,7 @@
 (ns kid-game.components.notifications
   (:require [reagent.core             :as r]
-            [react-transition-group]
-            [kid-game.state           :as state]))
+            [kid-game.state           :as state]
+            [react-transition-group]))
 
 ;; documentation for css transition group seems kind of tricky but is here:
 ;; https://reactcommunity.org/react-transition-group/
@@ -18,13 +18,13 @@
     :else                 "has-background-warning-light has-text-warning"))
 
 (defn <notification> [n]
-(when (:active n)
-       (let [bg (copy-color (:type n))]
-         [css-transition {:timeout     200
-                          :key         (:time n)
-                          :class-names "notification-transition"}
-          ^{:key (:time n)} ;; important to keep track of rendering
-          [:div.card [:div {:class ["card-content " bg]} [:b (:text n)]]]])))
+  (when (:active n)
+    (let [bg (copy-color (:type n))]
+      [css-transition {:timeout     200
+                       :key         (:time n)
+                       :class-names "notification-transition"}
+       ^{:key (:time n)} ;; important to keep track of rendering
+       [:div.card.notification  [:div {:class ["card-content " bg]} [:b (:text n)]]]])))
 
 (defn <notifications> []
    ;; documentation for css transition group seems kind of tricky but is here:

@@ -16,6 +16,8 @@
       [:div
        [:div {:class "tile box"}
         [:h5 {:class "title is-5"} "🛠 Dev info"]]
+       [:div.title.box
+        [:button.button.is-danger.is-light {:on-click #(business/logout)} "<- Logout"]]
        [:div {:class "tile box"}
         [:ul
          [:li "Player: " [:b (:name (state/get-player))]]

@@ -52,12 +52,14 @@
               [:h3.ris-result-header "Pages with matching images:"]
               [image-results/<search-results> result-search]
               [:h3.ris-result-header "Similar images:"]
-              [image-results/<image-results> result-images]]]))
-        ]
+              [image-results/<image-results> result-images]]]))]
        [:hr]
-       [:h3.ris-result-header "Ready to make a call?"]
-       [:button {:on-click (fn [] (state/open-timeline))} "<- Back to the timeline"]
-     ])))
+       [:div.columns.is-centered
+        [:div.column.is-4.has-text-centered
+         [:h5.title.is-5 "Ready to make a call?"]
+         [:button {:class "button"
+                   :on-click (fn [] (state/open-timeline))}
+          [:span.icon.is-small [:i {:class "fa fa-arrow-left"}]] [:span "Back to the timeline"]]]]])))
 
 
 (defn <not-found> [component-name]

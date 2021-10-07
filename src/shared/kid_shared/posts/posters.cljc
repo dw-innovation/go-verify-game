@@ -46,6 +46,7 @@
 
 (def j_louis (user/create {:name "John Louis"
                            :handle "@j_louis"
+                           :image images/j_louis
                            :role :media}))
 
 (def financial_times (user/create {:name "The Financial Times"
