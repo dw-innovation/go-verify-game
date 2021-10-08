@@ -73,4 +73,4 @@
       (r/render-component [<component>] el))
     (log/warn "#" div-id "not found, skipping")))
 
-(maybe-bind-element "app" <app>)
+(maybe-bind-element "app" <routes>)
