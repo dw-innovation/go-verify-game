@@ -53,35 +53,6 @@ The `app` is hosted and compiled by `shadow-cljs`, where you can see the configu
 - `?dev=anything` - loads a dev environment, including a logged in user
 - `/dev-cards` - loads frontend components for frontend work
 
-##### JS Interop
+---
 
-We also have JS interop, along with JS React interop working.  Please see the files in `src/app/kid_game/react_components/raw` to see the js files.  They are converted with babel in the watch script.
-
-This is how js files can be imported into ClojureScript:
-
-``` javascript
- [lodash :as lodash]
- ["./react_components/compiled/intro.js" :as intro]
- [moment]
-```
-
-Imported react elements can be included in reagent hiccup as:
-
-``` javascript
-        [(reagent/adapt-react-class intro/default) {}]
-```
-
-where `intro/default` is your imported react element from above
-
-you can *connect to the frontend repl* by using your code editor to connect to the repl on `nrepl://localhost:8777`
-
-#### Backend
-
-to start the backend as is, do `clj -M:run`.  to start it as an **interactive repl** do `clj -M:nrepl` -- you can then use your editor to connect to this nrepl on `nrepl://localhost:12345`
-
-This repl is started by Clojure CLI, and loads `dev/user.clj` by default.  You should see the `async` logs in this terminal window you started.  If you use `cider-jack-in` (which I do not suggest) then you can see the `async` output in a buffer called ` *nrepl server*` (notice the space at the beginning.)
-
-## Architecture
-### Message-passing architecture
-
-The server only maintains a list of connected clients, and which room they belong to.  It passes messages semi-blindly between the clients.  This means that it checks to make sure the sent message is _valid_, but does no assumptions about content.  The Clients themselves manage this semi-shared state through the message-passing system.
+KID is a project led by [Deutsche Welle Innocation](https://innovation.dw.com/)
