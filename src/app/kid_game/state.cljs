@@ -58,7 +58,7 @@
 (defn get-player [] (:user @app-state))
 
 (defn has-player? []
-  (user/user? (:user @app-state)))
+  (user/valid? (:user @app-state)))
 
 (defn clear-player [] (swap! app-state assoc :user nil))
 

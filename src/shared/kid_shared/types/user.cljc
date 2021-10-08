@@ -30,7 +30,7 @@
 (defn col-to-map [us] (zipmap (map :id us) us))
 (col-to-map [u1 u2])
 
-(defn user? [u] (s/valid? ::user u))
+(defn valid? [u] (s/valid? ::user u))
 
 (defn same? [u1 u2]
   (= (:id u1) (:id u2)))
