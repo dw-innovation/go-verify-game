@@ -60,7 +60,7 @@
         dev? (-> (js/URLSearchParams. s) (.get "dev"))]
     (cond
       (= p "/dev-cards") [dev-cards/<main-view>]
-      dev? (do (business/new-session! "dev-user")
+      dev? (do (and (not (state/has-player?)) (business/new-session! "dev-user"))
                [<app>])
       post-id [<one-post> post-id]
       :else [<app>])))
