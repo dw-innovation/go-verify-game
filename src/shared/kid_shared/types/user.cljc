@@ -11,8 +11,8 @@
 (s/def ::user (s/keys :req-un [::shared/id
                                ::shared/created
                                ::name
-                               ::handle
-                               ::role]))
+                               ::role]
+                      :opt-un [::handle]))
 
 (s/def ::user-map (s/map-of ::shared/id ::user))
 
@@ -29,6 +29,8 @@
 
 (defn col-to-map [us] (zipmap (map :id us) us))
 (col-to-map [u1 u2])
+
+(defn user? [u] (s/valid? ::user u))
 
 (defn same? [u1 u2]
   (= (:id u1) (:id u2)))
