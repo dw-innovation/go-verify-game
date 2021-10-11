@@ -1,4 +1,4 @@
-(ns kid-shared.posts.activities)
+(ns kid-shared.data.activities)
 
 (def ris-hurricaine-michael
   {:type :reverse-image-simple

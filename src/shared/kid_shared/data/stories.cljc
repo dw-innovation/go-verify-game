@@ -1,5 +1,5 @@
-(ns kid-shared.posts.stories (:require [kid-shared.posts.posters :as posters]
-                                              [kid-shared.posts.posts :as posts]))
+(ns kid-shared.data.stories (:require [kid-shared.data.authors :as posters]
+                                              [kid-shared.data.posts :as posts]))
 
 ;; here's the deal about stories.  they are a vector.  they can contain
 ;; different data types.  they are played out in order. a number means wait that amount

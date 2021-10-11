@@ -1,7 +1,7 @@
-(ns kid-shared.posts.posts
-  (:require [kid-shared.posts.posters :as posters]
+(ns kid-shared.data.posts
+  (:require [kid-shared.data.authors :as posters]
             [kid-shared.types.post :as posts]
-            [kid-shared.posts.activities :as activities]))
+            [kid-shared.data.activities :as activities]))
 
 
 (def p1-climate-refugees-copenhagen
