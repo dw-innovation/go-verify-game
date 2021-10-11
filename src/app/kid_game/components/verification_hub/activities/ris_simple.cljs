@@ -5,6 +5,10 @@
             [cljs.core.async :as async :include-macros true]
             [kid-game.state :as state]))
 
+
+;; FIXME: in some cases, this NS must be explicitly imported up the
+;; requirement tree for changed to be picked up. no idea why. see issue #48
+
 ;; documentation for css transition group seems kind of tricky but is here:
 ;; https://reactcommunity.org/react-transition-group/
 (def css-transition-group
