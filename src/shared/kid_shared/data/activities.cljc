@@ -25,6 +25,7 @@
 (def financiel-web-search
   {:type :web-search
    :data {:terms ["Financial Times" "UNHCR" "Climate Refugees"]
+          :loading-time 4000
           :results [{:url "fuzzbeat.com"
                      :title "How European imposter accounts like `Financiel times` agitate against climate refugees."
                      :date "3 days ago"}

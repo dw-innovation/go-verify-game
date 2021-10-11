@@ -152,5 +152,8 @@
      [:div {:style {:overflow "hidden"}}
       [<icons>]]
      [:h4.title.is-4 "Blooble Simulation"]
-     [websearch/<blooble-simulation> "Here are my terms"
-      (-> activities-data/financiel-web-search :data :results)]]]])
+     [websearch/<blooble-simulation>
+      "Here are my terms"
+      (-> activities-data/financiel-web-search :data :results)
+      false
+      nil]]]])

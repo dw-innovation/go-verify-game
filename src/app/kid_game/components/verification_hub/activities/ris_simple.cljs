@@ -16,9 +16,6 @@
 
 (def css-transition
   (r/adapt-react-class react-transition-group/CSSTransition))
-;; filled out lovingly by css
-;; TODO alt for screenreaders
-(defn <loading> [] [:div.lds-ring [:div] [:div] [:div] [:div]])
 
 (defn <reverse-image-simple> [{:as data
                                result-images :result-images
@@ -37,7 +34,7 @@
        [image-results/<dragger> main-image drag-done!]
        [css-transition-group {:class "transition-results"}
         (if @loading?
-          [<loading>]
+          [image-results/<loading>]
           (when @dragged?
             [css-transition {:class-names "ris-results-transition"}
              [:div.ris-results
