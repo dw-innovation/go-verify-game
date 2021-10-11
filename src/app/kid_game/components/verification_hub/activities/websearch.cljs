@@ -1,6 +1,7 @@
 (ns kid-game.components.verification-hub.activities.websearch
   (:require [reagent.core :as r]
             [kid-game.components.shared.icons :as icons]
+            [clojure.string :as string]
             [kid-game.state :as state]))
 
 ;; FIXME: in some cases, this NS must be explicitly imported up the
@@ -8,8 +9,10 @@
 
 (defn <header> []
 [:div.activity-header
-    [:div.activity-icon]
-    [:div.activity-title "Web Search"]])
+ [:div.columns
+ [:div.activity-icon
+  [icons/browser-search]]
+    [:div.activity-title "Web Search"]]])
 
 ;; Activity of type web-search, with it's corresponding dara
 (defn <web-search> [{:as data
@@ -18,6 +21,12 @@
                      results :results}]
   [:div.activity-container.web-search
    [<header>]
-   [icons/blooble-logo]
-   [icons/thomas-color-3]
-   ")_ooofff"])
+   [:div.blooble-simulation
+    [:div.blooble-logo
+     [icons/blooble-logo]]
+    [:div.search-bar
+     [:input {:placeholder (string/join " + " terms)
+              :disabled true}]]
+    [:div.search-button
+     [:button "Blooble Search"]]
+    ]])

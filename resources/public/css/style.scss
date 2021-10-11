@@ -5,16 +5,25 @@
         --color-grey: #e2e1e1;
         --color-grey-dark: #666;
         --color-grey-light: #f7f7f7;
-        --color-green: teal;
-        --color-blue: blue;
+
+        --color-green: #51aa1b;
+        --color-green-light: lightgreen;
+
+        --color-teal: #20a99f;
+        --color-teal-light: #d1eeec;
+
+        --color-blue: #1f77a9;
         --color-blue-light: lightblue;
+
         --color-orange: orange;
-        --color-red: red;
+        --color-red: #d04812;
         --color-white: #fefefe;
-        --color-timeline-primary: var(--color-green);
+
+        --color-timeline-primary: var(--color-blue);
         --color-timeline-secondary: var(--color-blue-light);
-        --color-hub-primary: var(--color-orange);
-        --color-hub-secondary: var(--color-blue-light);
+
+        --color-hub-primary: var(--color-teal);
+        --color-hub-secondary: var(--color-teal-light);
 
         --spacing: 1rem;
         --spacing-half: .5rem;
@@ -204,7 +213,71 @@ button { background-color: transparent;
 
 
 
-.activity-container { padding: var(--spacing); }
+.activity-container {
+  padding: var(--spacing);
+  .activity-header {
+    align-items: center;
+    display:flex;
+    .columns {
+      margin: 0 auto;
+    }
+    .activity-icon {
+      width: var(--spacing-quadruple);
+    }
+    .activity-title {
+      font-size: 2rem;
+      color: var(--color-hub-primary)
+    }
+  }
+}
+
+.blooble-simulation {
+    position: relative;
+    border: 2px solid transparent;
+    border-radius: var(--spacing);
+    background: linear-gradient(#fefefe, var(--color-white));
+    background-clip: padding-box;
+    box-shadow: 0 3px 9px rgba(0,0,0,.1);
+    // this after accomplishes the border gradient, and relies on background clip from above
+    &::after {
+      position: absolute;
+      top: -2px; bottom: -2px;
+      left: -2px; right: -2px;
+      background: linear-gradient(var(--color-grey), var(--color-white));
+      content: '';
+      z-index: -1;
+      border-radius: 16px;
+    }
+    .blooble-logo {
+      max-width: 15rem;
+      margin: 0 auto;
+      margin-top: var(--spacing-double);
+      margin-bottom: var(--spacing);
+    }
+    .search-bar {
+      margin: var(--spacing-double) var(--spacing-double);
+      position: relative;
+      &::before {
+          content: "⌕";
+          top: -18px;
+          left: 5px;
+          font-size: 3rem;
+          width: 20px;
+          height:20px;
+          position: absolute;
+      }
+      input {
+        padding: var(--spacing-half) var(--spacing-double);
+        width: 100%;
+        display: block;
+        border-radius: var(--spacing-double);
+        border: 1px solid var(--color-grey);
+        position: relative;
+        font-size: 1.4rem;
+
+      }
+    }
+}
 
 .ris-image-results { overflow: hidden;}
 .ris-image-result { height: 10rem;
