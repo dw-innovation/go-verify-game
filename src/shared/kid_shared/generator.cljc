@@ -21,20 +21,20 @@
 ;; TODO exit this go loop, too
 ;;
 ;; send-channel -> exit-channel
-(defn gen-every-fifteen [send-channel]
-  (let [exit-channel (async/chan)]
-    (async/go-loop []
-      (async/alt!
-        ;; once every x seconds, do the following action
-        (async/timeout 15000) ([]
-                               (async/>! send-channel {:type ::messages/post-new
-                                                       :body (rand-nth posts-data/examples)})
-                               ;; and then continue the loop
-                               (recur))
-        exit-channel ([msg]
-                      (println "received exit message" msg))))
-    ;; return the exit channel:
-    exit-channel))
+;; (defn gen-every-fifteen [send-channel]
+;;   (let [exit-channel (async/chan)]
+;;     (async/go-loop []
+;;       (async/alt!
+;;         ;; once every x seconds, do the following action
+;;         (async/timeout 15000) ([]
+;;                                (async/>! send-channel {:type ::messages/post-new
+;;                                                        :body (rand-nth posts-data/examples)})
+;;                                ;; and then continue the loop
+;;                                (recur))
+;;         exit-channel ([msg]
+;;                       (println "received exit message" msg))))
+;;     ;; return the exit channel:
+;;     exit-channel))
 
 ;; takes a story, defined as [num, post, comment, [story], num, comment, post, num, post]
 ;; and plays it to a channel, waiting on each num, and then

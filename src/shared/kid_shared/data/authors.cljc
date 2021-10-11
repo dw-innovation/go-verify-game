@@ -35,7 +35,7 @@
                                  :role :media}))
 
 (def rainer-werner (user/create {:name "Rainer Werner"
-                                 :handle "@rainguy2000"
+                                 :handle "@rainer_werner"
                                  :role :media
                                  :image images/freiheit-logo}))
 
