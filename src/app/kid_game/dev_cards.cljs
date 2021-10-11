@@ -1,8 +1,10 @@
 (ns kid-game.dev-cards
   (:require [kid-shared.data.posts            :as posts-data]
+            [kid-shared.data.activities            :as activities-data]
             [kid-game.components.notifications :as notifications]
             [kid-game.components.timeline.core :as timeline]
             [kid-game.components.shared.icons :as icons]
+            [kid-game.components.verification-hub.activities.websearch :as websearch]
             [reagent.core :as r]
             [cljs.core.async                   :as async :include-macros true]))
 
@@ -147,4 +149,8 @@
      [<progress-bars>]
      [:hr]
      [:h4.title.is-4 "Icons"]
-     [<icons>]]]])
+     [:div {:style {:overflow "hidden"}}
+      [<icons>]]
+     [:h4.title.is-4 "Blooble Simulation"]
+     [websearch/<blooble-simulation> "Here are my terms"
+      (-> activities-data/financiel-web-search :data :results)]]]])

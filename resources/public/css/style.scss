@@ -274,8 +274,20 @@ button { background-color: transparent;
         border: 1px solid var(--color-grey);
         position: relative;
         font-size: 1.4rem;
-
       }
+    }
+    .search-button {
+      button {
+        margin: 0 auto;
+        display: block;
+        border-color: var(--color-green);
+        font-size: 1.4rem;
+        color: var(--color-green);
+        border-radius: 1.4rem;
+      }
+    }
+    .search-result {
+      margin: var(--spacing-double);
     }
 }
 
