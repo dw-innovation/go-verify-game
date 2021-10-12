@@ -1,4 +1,4 @@
-(ns kid-game.dev-cards
+(ns kid-game.uikit
   (:require [kid-shared.posts.posts            :as posts-data]
             [kid-game.components.notifications :as notifications]
             [kid-game.components.timeline.core :as timeline]
@@ -67,7 +67,7 @@
         time (if (= status :live) (rand-int 4000) 0)
         exit-channel (attach-post-timer post)]
     (fn []
-       [timeline/<post-progress> @post])))
+      [timeline/<post-progress> @post])))
 
 (defn <progress-bars> []
   [:div
