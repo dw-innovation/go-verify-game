@@ -60,7 +60,7 @@ The `app` is hosted and compiled by `shadow-cljs`, where you can see the configu
 
 `?dev=anything` - loads a dev environment, including a logged in user
 
-`?uikit=xxx` - loads frontend components for frontend work
+`/dev-cards` - loads frontend components for frontend work
 
 
 
