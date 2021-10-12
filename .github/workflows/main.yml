@@ -74,3 +74,9 @@ jobs:
           || github.head_ref
           || steps.extract_branch.outputs.branch
           }} --delete
+
+    - name: Print published preview
+      run: echo "::warning::https://kid-game.s3.eu-central-1.amazonaws.com/${{steps.extract_tag_name.outputs.tag
+          || github.head_ref
+          || steps.extract_branch.outputs.branch
+          }}/index.html"

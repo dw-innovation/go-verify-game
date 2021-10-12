@@ -55,7 +55,7 @@
       (reset! post-atom (assoc @post-atom :game-state :live))
       (reset! post-atom
               (assoc @post-atom
-                     :time-left (let [new-time-left (- time-left 100)]
+                     :time-left (let [new-time-left (- time-left 1)]
                                   (if (< new-time-left 0)
                                     time-limit
                                     new-time-left))))
@@ -64,10 +64,9 @@
 
 (defn progress-bar [status]
   (let [post (r/atom posts-data/p1-climate-refugees-copenhagen)
-        time (if (= status :live) (rand-int 4000) 0)
         exit-channel (attach-post-timer post)]
     (fn []
-       [timeline/<post-progress> @post])))
+      [timeline/<post-progress> @post])))
 
 (defn <progress-bars> []
   [:div

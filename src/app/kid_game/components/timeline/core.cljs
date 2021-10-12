@@ -24,8 +24,7 @@
 (declare <post>)
 
 (defn <progress> [amnt total]
-  (let [percent (Math/floor (* 100 (/ amnt total)))
-        percent-left (- 100 percent)]
+  (let [percent (* 100 (/ amnt total))]
     [:progress {:class "progress is-primary is-small"
                 :value percent
                 :max 100}]))
@@ -171,7 +170,6 @@
 
 (defn match-post [p]
   (case (:type p)
-    :post-default [<type-text> p]
     :post-text    [<type-text> p]
     :re-post      [<type-re-post> p]
     ; post type not found:
