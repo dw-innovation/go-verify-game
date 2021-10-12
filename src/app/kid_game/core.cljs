@@ -2,7 +2,7 @@
   (:require [reagent.core                                         :as r]
             [kid-game.utils.log                                   :as log]
             [kid-shared.posts.posts                               :as posts]
-            [kid-game.dev-cards                                   :as dev-cards]
+            [kid-game.uikit                                       :as uikit]
             [kid-game.components.login.core                       :as <login>]
             [kid-game.state                                       :as state]
             [kid-game.business                                    :as business]
@@ -61,7 +61,7 @@
     (cond
       dev? (do (and (not (state/has-player?)) (business/new-session! "dev-user"))
                [<app>])
-      uikit? [dev-cards/<main-view>]
+      uikit? [uikit/<main-view>]
       post-id [<one-post> post-id]
       :else [<app>])))
 
