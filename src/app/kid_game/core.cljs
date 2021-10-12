@@ -2,7 +2,7 @@
   (:require [reagent.core                                         :as r]
             [kid-game.utils.log                                   :as log]
             [kid-shared.posts.posts                               :as posts]
-            [kid-game.dev-cards                                   :as dev-cards]
+            [kid-game.uikit                                   :as uikit]
             [kid-game.components.login.core                       :as <login>]
             [kid-game.state                                       :as state]
             [kid-game.business                                    :as business]
@@ -59,7 +59,7 @@
         post-id (-> (js/URLSearchParams. s) (.get "post")) ; extract &post=
         dev? (-> (js/URLSearchParams. s) (.get "dev"))]
     (cond
-      (= p "/dev-cards") [dev-cards/<main-view>]
+      (= p "/uikit") [uikit/<main-view>]
       dev? (do (and (not (state/has-player?)) (business/new-session! "dev-user"))
                [<app>])
       post-id [<one-post> post-id]

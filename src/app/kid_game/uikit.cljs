@@ -1,4 +1,4 @@
-(ns kid-game.dev-cards
+(ns kid-game.uikit
   (:require [kid-shared.posts.posts            :as posts-data]
             [kid-game.components.notifications :as notifications]
             [kid-game.components.timeline.core :as timeline]
