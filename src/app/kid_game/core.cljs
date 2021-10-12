@@ -55,13 +55,13 @@
 (defn <routes> []
   ;; decide what to render in our app.  This is some junk hand-made routing
   (let [s js/window.location.search ; get the ?var=val&var2=val2 from the url
-        p js/window.location.pathname ; get the /path/name from the url
-        post-id (-> (js/URLSearchParams. s) (.get "post")) ; extract &post=
-        dev? (-> (js/URLSearchParams. s) (.get "dev"))]
+        post-id    (-> (js/URLSearchParams. s) (.get "post")) ; extract &post=
+        uikit?     (-> (js/URLSearchParams. s) (.get "uikit"))
+        dev?       (-> (js/URLSearchParams. s) (.get "dev"))]
     (cond
-      (= p "/uikit") [uikit/<main-view>]
       dev? (do (and (not (state/has-player?)) (business/new-session! "dev-user"))
                [<app>])
+      uikit? [uikit/<main-view>]
       post-id [<one-post> post-id]
       :else [<app>])))
 
