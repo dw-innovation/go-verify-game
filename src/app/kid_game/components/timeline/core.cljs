@@ -171,7 +171,6 @@
 
 (defn match-post [p]
   (case (:type p)
-    :post-default [<type-text> p]
     :post-text    [<type-text> p]
     :re-post      [<type-re-post> p]
     ; post type not found:
