@@ -1,5 +1,6 @@
 (ns kid-game.components.verification-hub.activities.ris-simple
   (:require [reagent.core :as r]
+            [kid-game.components.shared.icons :as icons]
             [react-transition-group]
             [kid-game.components.verification-hub.activities.shared.ris-image-results :as image-results]
             [cljs.core.async :as async :include-macros true]
@@ -16,9 +17,13 @@
 
 (def css-transition
   (r/adapt-react-class react-transition-group/CSSTransition))
-;; filled out lovingly by css
-;; TODO alt for screenreaders
-(defn <loading> [] [:div.lds-ring [:div] [:div] [:div] [:div]])
+
+(defn <header> []
+[:div.activity-header
+ [:div.columns
+ [:div.activity-icon
+  [icons/recycle-search]]
+    [:div.activity-title "Simple Reverse Image Search"]]])
 
 (defn <reverse-image-simple> [{:as data
                                result-images :result-images
@@ -32,12 +37,12 @@
                                (reset! dragged? true)
                                (reset! loading? false)))]
     (fn []
-      [:div.activity-container
-       [:h3 "Simple Reverse Image Search"]
+      [:div.activity-container.ris-simple
+       [<header>]
        [image-results/<dragger> main-image drag-done!]
        [css-transition-group {:class "transition-results"}
         (if @loading?
-          [<loading>]
+          [image-results/<loading>]
           (when @dragged?
             [css-transition {:class-names "ris-results-transition"}
              [:div.ris-results
@@ -46,9 +51,11 @@
               [:h3.ris-result-header "Similar images:"]
               [image-results/<image-results> result-images]]]))]
        [:hr]
-       [:div.columns.is-centered
-        [:div.column.is-4.has-text-centered
-         [:h5.title.is-5 "Ready to make a call?"]
-         [:button {:class "button"
-                   :on-click (fn [] (state/open-timeline))}
-          [:span.icon.is-small [:i {:class "fa fa-arrow-left"}]] [:span "Back to the timeline"]]]]])))
+       [:div.columns.activity-actions
+        [:div.column.action
+         [:p "Ready to make a call?"]
+         [:button {:on-click (fn [] (state/open-timeline))} "Back to timeline"]]
+        [:div.column.action
+         [:p "Investigate further?"]
+         [:button {:on-click (fn [] (state/open-timeline))} "Back to hub"]]]
+       ])))

@@ -1,6 +1,12 @@
 (ns kid-game.components.verification-hub.activities.shared.ris-image-results
   (:require [reagent.core :as r]
+            [cljs.core.async :as async :include-macros true]
             [kid-game.state :as state]))
+
+
+;; filled out lovingly by css
+;; TODO alt for screenreaders
+(defn <loading> [] [:div.lds-ring [:div] [:div] [:div] [:div]])
 
 (defn <dragger> [img done!]
   (let [done? (r/atom false)]
@@ -42,8 +48,9 @@
      [:div.ris-search-result-url url]
      [:div.ris-search-result-title title]
      [:div.ris-search-result-columns
-      [:div.ris-search-result-image
-       [:img {:src img-src}]]
+      (when img-src
+        [:div.ris-search-result-image
+         [:img {:src img-src}]])
       [:div.ris-searh-result-details
        [:div.ris-search-result-details date]
        [:div.ris-search-result-text text]]]])

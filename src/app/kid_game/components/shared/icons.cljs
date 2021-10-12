@@ -15,7 +15,7 @@
            :id "B"
            :fill "#0086F7"
            :fill-rule "nonzero"}]
-   [:polygon {:id="l"
+   [:polygon {:id "l"
               :fill "#FF4131"
               :fill-rule "nonzero"
               :points "35.95 37 35.95 0 30.25 0 30.25 37"}]
