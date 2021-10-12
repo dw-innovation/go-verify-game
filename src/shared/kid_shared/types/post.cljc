@@ -12,7 +12,6 @@
 (s/def ::by ::user/user)
 
 (s/def :post-text/type #{:post-text})
-(s/def :post-default/type #{:post-default})
 (s/def :re-post/type #{:re-post})
 
 (s/def ::post-text (s/keys :req-un [:post-text/type
@@ -31,15 +30,8 @@
                                   ::post]
                          :opt-un [::shared/created]))
 
-;; Deprecated
-(s/def ::post-default (s/keys :req-un [:post-default/type
-                                       ::shared/created
-                                       ::shared/id
-                                       ::title
-                                       ::description]))
 
-(s/def ::post (s/or ::post-default ::post-default
-                    ::re-post ::re-post
+(s/def ::post (s/or ::re-post ::re-post
                     ::post-text ::post-text))
 
 (defn post? [p] (s/valid? ::post p))
