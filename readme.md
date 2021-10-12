@@ -9,7 +9,7 @@ The game is a standalone ClojureScript frontend application, that _can_ (but doe
 
 # For Content Editors:
 
-Please checkout [the relevant directory](./src/shared/kid_shared/posts)
+please checkout [the relevant directory](./src/shared/kid_shared/data)
 
 ---
 

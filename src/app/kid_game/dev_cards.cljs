@@ -1,5 +1,5 @@
 (ns kid-game.dev-cards
-  (:require [kid-shared.posts.posts            :as posts-data]
+  (:require [kid-shared.data.posts            :as posts-data]
             [kid-game.components.notifications :as notifications]
             [kid-game.components.timeline.core :as timeline]
             [reagent.core :as r]

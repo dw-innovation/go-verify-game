@@ -5,11 +5,11 @@
 (ns kid-shared.generator
   (:require [clojure.spec.alpha :as s]
             [reagent.core :as r]
-            [kid-shared.posts.posts :as posts-data]
+            [kid-shared.data.posts :as posts-data]
             [kid-shared.types.post :as posts]
             [kid-shared.types.comment :as comment]
             [kid-game.utils.log :as log]
-            [kid-shared.posts.stories :as stories]
+            [kid-shared.data.stories :as stories]
             [kid-shared.types.messages :as messages]
             [clojure.core.async :as async]))
 

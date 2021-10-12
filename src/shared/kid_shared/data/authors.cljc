@@ -1,6 +1,6 @@
-(ns kid-shared.posts.posters (:require [kid-shared.types.post :as post]
-                                       [kid-shared.types.user :as user]
-                                       [kid-shared.resources.images :as images]))
+(ns kid-shared.data.authors (:require [kid-shared.types.post :as post]
+                                      [kid-shared.types.user :as user]
+                                      [kid-shared.resources.images :as images]))
 
 ;;
 ;; A datatype meant to be able to post certain news
