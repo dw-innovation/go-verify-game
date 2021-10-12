@@ -30,6 +30,17 @@
         --spacing-double: 2rem;
         --spacing-quadruple: 4rem; }
 
+/* BULMA OVERRIDES */
+
+.column {
+  /* don't see why we should assume padding wanted */
+  /* especially when lot's of things are flat and full width */
+  padding: 0;
+}
+
+
+/* Other styles */
+
 body {
     display: flex;
     justify-content: center;
@@ -107,12 +118,20 @@ body {
 }
 
 .post {
-    max-width: 50rem;
-    min-width: 35rem;
+    width: 35rem;
+    /* constrain post size either to screen (mobile) or to parent container */
+    max-width: calc(min(100vh, 100%));
     margin: var(--spacing) auto;
-    border-top: 2px solid var(--color-grey);
-    
+    border-top: 8px solid var(--color-timeline-primary);
+    background-color: var(--color-white);
+    padding: var(--spacing);
+    .infocolumn {
+      flex: 1;
+      overflow: hidden;
+    }
+
     .author-image {
+      margin: var(--spacing-half);
 	    width: var(--spacing-quadruple);
 	    height: var(--spacing-quadruple);
       border-radius: var(--spacing-double);
@@ -214,7 +233,6 @@ button { background-color: transparent;
 
 
 .activity-container {
-  padding: var(--spacing);
   .activity-header {
     align-items: center;
     display:flex;
@@ -223,15 +241,37 @@ button { background-color: transparent;
     }
     .activity-icon {
       width: var(--spacing-quadruple);
+      margin-right: var(--spacing);
     }
     .activity-title {
       font-size: 2rem;
       color: var(--color-hub-primary)
     }
   }
+  .activity-actions {
+    .action {
+      background-color: var(--color-hub-secondary);
+      text-align: center;
+      padding: var(--spacing-double);
+      button {
+        border-color: var(--color-hub-primary);
+        color: var(--color-hub-primary);
+        text-transform: uppercase;
+        background-color: var(--color-white);
+        margin-top: var(--spacing-half);
+        &::before {
+          content: "< ";
+        }
+      }
+    }
+  }
+  .blooble-simulation {
+    margin: var(--spacing-double);
+  }
 }
 
 .blooble-simulation {
+  padding: var(--spacing);
     position: relative;
     border: 2px solid transparent;
     border-radius: var(--spacing);
@@ -286,8 +326,8 @@ button { background-color: transparent;
         border-radius: 1.4rem;
       }
     }
-    .search-result {
-      margin: var(--spacing-double);
+    .results {
+      padding: var(--spacing-double);
     }
 }
 

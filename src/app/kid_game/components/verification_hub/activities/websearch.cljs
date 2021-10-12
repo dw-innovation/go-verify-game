@@ -30,9 +30,11 @@
    [:div.search-button
     [:button {:on-click click!} "Blooble Search"]]
    (when results
-     (for [res results]
-       [:div.search-result
-        [image-results/<search-result> res]]))
+     [:div.results
+      [:b.results-count (count results) " search results found"]
+      (for [res results]
+        [:div.search-result
+         [image-results/<search-result> res]])])
    (when loading
      [:div.loading-panel
       [image-results/<loading>]])]
@@ -59,4 +61,11 @@
         (if @searched? results nil)
         @loading?
         click!]
+       [:div.columns.activity-actions
+        [:div.column.action
+         [:p "Ready to make a call?"]
+         [:button {:on-click (fn [] (state/open-timeline))} "Back to timeline"]]
+        [:div.column.action
+         [:p "Investigate further?"]
+         [:button {:on-click (fn [] (state/open-timeline))} "Back to hub"]]]
        ])))

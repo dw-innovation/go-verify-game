@@ -141,8 +141,8 @@
   [:div {:class ["post" "post-type-text my-5" game-state]}
    [<debug-tags> p]
    [:div.columns.mr-0
-    [:div {:class "column is-1 p-0"} [<author-image> author]]
-    [:div {:class "column is-11 p-0 pl-3"}
+    [:div.authorcolumn [<author-image> author]]
+    [:div.infocolumn
      [<author-name> author]
      [<post-text> description]
      (when (:image p) [<post-media> (:image p)])
@@ -163,8 +163,8 @@
   [:div {:class ["post" "post-type-re-post"]}
    [<debug-tags> p]
    [:div.columns.mr-0
-    [:div {:class "column is-1 p-0"} [<author-image> author]]
-    [:div {:class "column is-11 p-0 pl-3"}
+    [:div.authorcolumn [<author-image> author]]
+    [:div.infocolumn
      [<author-name> author]
      [<post-text> comment]
      [:div {:class "post-sub-post"} (<post> original-post)]]]])
