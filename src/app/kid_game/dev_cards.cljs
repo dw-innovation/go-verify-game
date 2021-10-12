@@ -68,7 +68,7 @@
         time (if (= status :live) (rand-int 4000) 0)
         exit-channel (attach-post-timer post)]
     (fn []
-       [timeline/<post-progress> @post])))
+      [timeline/<post-progress> @post])))
 
 (defn <progress-bars> []
   [:div
@@ -78,51 +78,62 @@
    (progress-bar :timed-out)])
 
 (defn <icons> []
-  [:div.icons
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/blooble-logo]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/thomas-color-3]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/circle-right-arrow-blue]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/hourglass]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/stop-sign]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/info-circle]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/browser-search]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/image-analysis]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/geolocation]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/recycle-search]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/award]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/crop-circle]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/close-filled]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/close-unfilled]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/x]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/clock]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/check-filled]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/check-unfilled]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/checkmark]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/right-arrow]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/right-arrow-filled]]
-   [:div {:style {:width "100px" :float "left"}}
-    [icons/search]]])
+  [:div
+   [:p [:b "Logos, etc."]]
+   [:div.level-left
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/blooble-logo]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/thomas-color-3]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/image-analysis]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/geolocation]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/recycle-search]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/award]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/stop-sign]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/browser-search]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/hourglass]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/search]]]
+
+   [:p [:b "UI (outline)"]]
+   [:div.level-left
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/info-circle]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/circle-right-arrow-blue]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/crop-circle]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/close-unfilled]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/clock]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/check-unfilled]]]
+
+   [:p.mt-4 [:b "UI (filled)"]]
+   [:div.level-left
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/close-filled]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/check-filled]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/right-arrow-filled]]]
+
+   [:p.mt-4 [:b "UI (clear)"]]
+   [:div.level-left
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/x]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/checkmark]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/right-arrow]]]])
 
 (defn <main-view> []
   [:div.container.game-container
