@@ -64,10 +64,9 @@
 
 (defn progress-bar [status]
   (let [post (r/atom posts-data/p1-climate-refugees-copenhagen)
-        time (if (= status :live) (rand-int 4000) 0)
         exit-channel (attach-post-timer post)]
     (fn []
-       [timeline/<post-progress> @post])))
+      [timeline/<post-progress> @post])))
 
 (defn <progress-bars> []
   [:div
