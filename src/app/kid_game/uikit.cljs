@@ -1,7 +1,10 @@
 (ns kid-game.uikit
-  (:require [kid-shared.posts.posts            :as posts-data]
+  (:require [kid-shared.data.posts            :as posts-data]
+            [kid-shared.data.activities            :as activities-data]
             [kid-game.components.notifications :as notifications]
             [kid-game.components.timeline.core :as timeline]
+            [kid-game.components.shared.icons :as icons]
+            [kid-game.components.verification-hub.activities.websearch :as websearch]
             [reagent.core :as r]
             [cljs.core.async                   :as async :include-macros true]))
 
@@ -75,6 +78,64 @@
    [:p.mt-4 "Timed out:"]
    (progress-bar :timed-out)])
 
+(defn <icons> []
+  [:div
+   [:p [:b "Logos, etc."]]
+   [:div.level-left
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/blooble-logo]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/thomas-color-3]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/image-analysis]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/geolocation]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/recycle-search]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/award]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/stop-sign]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/browser-search]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/hourglass]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/search]]]
+
+   [:p [:b "UI (outline)"]]
+   [:div.level-left
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/info-circle]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/circle-right-arrow-blue]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/crop-circle]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/close-unfilled]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/clock]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/check-unfilled]]]
+
+   [:p.mt-4 [:b "UI (filled)"]]
+   [:div.level-left
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/close-filled]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/check-filled]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/right-arrow-filled]]]
+
+   [:p.mt-4 [:b "UI (clear)"]]
+   [:div.level-left
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/x]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/checkmark]]
+    [:div {:style {:width "100px" :float "left"}}
+     [icons/right-arrow]]]])
+
 (defn <main-view> []
   [:div.container.game-container
    [:div {:class "columns"}
@@ -95,12 +156,14 @@
      [<overlays>]
      [:hr]
      [:h4.title.is-4 "Progress bar"]
-     [<progress-bars>]]]])
-
-
-
-
-
-
-
-
+     [<progress-bars>]
+     [:hr]
+     [:h4.title.is-4 "Icons"]
+     [:div {:style {:overflow "hidden"}}
+      [<icons>]]
+     [:h4.title.is-4 "Blooble Simulation"]
+     [websearch/<blooble-simulation>
+      "Here are my terms"
+      (-> activities-data/financiel-web-search :data :results)
+      false
+      nil]]]])

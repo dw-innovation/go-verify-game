@@ -1,4 +1,4 @@
-(ns kid-shared.posts.activities)
+(ns kid-shared.data.activities)
 
 (def ris-hurricaine-michael
   {:type :reverse-image-simple
@@ -21,6 +21,17 @@
                           {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/50837095881_2c53650400_w.jpg"}
                           {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/50837182897_94bce499fa_w.jpg"}
                           ]}})
+
+(def financiel-web-search
+  {:type :web-search
+   :data {:terms ["Financial Times" "UNHCR" "Climate Refugees"]
+          :loading-time 4000
+          :results [{:url "fuzzbeat.com"
+                     :title "How European imposter accounts like `Financiel times` agitate against climate refugees."
+                     :date "3 days ago"}
+                    {:url "unhcr.org"
+                     :title "High Commissioner Van de Mens confirms North America is currently taking in more climate refugees than Central Europe."
+                     :date "5 days ago"}]}})
 
 
 (def all-activities [ris-hurricaine-michael])

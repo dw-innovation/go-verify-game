@@ -1,8 +1,9 @@
 (ns kid-game.core
   (:require [reagent.core                                         :as r]
+            [reagent.dom :as rd]
             [kid-game.utils.log                                   :as log]
-            [kid-shared.posts.posts                               :as posts]
             [kid-game.uikit                                   :as uikit]
+            [kid-shared.data.posts                               :as posts-data]
             [kid-game.components.login.core                       :as <login>]
             [kid-game.state                                       :as state]
             [kid-game.business                                    :as business]
@@ -11,6 +12,7 @@
             [kid-game.components.notifications                    :as notifications]
             [kid-game.components.verification-hub.core            :as <verification-hub>]
             [kid-game.components.verification-hub.activities.core :as activities]
+            [kid-game.components.verification-hub.activities.websearch]
             [moment]))
 
 (defn <game> []
@@ -39,13 +41,13 @@
 
 
 (defn <one-post> [post-id]
-  (let [post (-> (filter (fn [p] (= post-id (:id p))) posts/all-activity-posts) (first))]
+  (let [post (-> (filter (fn [p] (= post-id (:id p))) posts-data/all-activity-posts) (first))]
     (when post [:div.testing-environment
                 [:div.post-in-list
                  [<timeline>/<post> (assoc post :game-state :live)]]
                 (map (fn [activity]
-                       [:div {:style {:max-width "50rem"}}
-                        [activities/get-activity activity]]) (:activities post))])))
+                       ^{:key (:type activity)} ;; important to keep track of rendering
+                        [activities/get-activity activity]) (:activities post))])))
 
 (defn <app> []
   (cond
@@ -70,7 +72,7 @@
   (if-let [el (. js/document (getElementById div-id))]
     (do
       (log/debug "mounting component on #" div-id)
-      (r/render-component [<component>] el))
+      (rd/render [<component>] el))
     (log/warn "#" div-id "not found, skipping")))
 
 (maybe-bind-element "app" <routes>)

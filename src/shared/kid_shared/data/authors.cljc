@@ -1,6 +1,6 @@
-(ns kid-shared.posts.posters (:require [kid-shared.types.post :as post]
-                                       [kid-shared.types.user :as user]
-                                       [kid-shared.resources.images :as images]))
+(ns kid-shared.data.authors (:require [kid-shared.types.post :as post]
+                                      [kid-shared.types.user :as user]
+                                      [kid-shared.resources.images :as images]))
 
 ;;
 ;; A datatype meant to be able to post certain news
@@ -35,7 +35,7 @@
                                  :role :media}))
 
 (def rainer-werner (user/create {:name "Rainer Werner"
-                                 :handle "@rainguy2000"
+                                 :handle "@rainer_werner"
                                  :role :media
                                  :image images/freiheit-logo}))
 
