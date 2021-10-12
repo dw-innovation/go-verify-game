@@ -24,8 +24,7 @@
 (declare <post>)
 
 (defn <progress> [amnt total]
-  (let [percent (Math/floor (* 100 (/ amnt total)))
-        percent-left (- 100 percent)]
+  (let [percent (* 100 (/ amnt total))]
     [:progress {:class "progress is-primary is-small"
                 :value percent
                 :max 100}]))
