@@ -441,17 +441,17 @@ button { background-color: transparent;
 .cropper {
   .chosen-region {
     fill: yellow;
-    opacity: .3;
+    opacity: .1;
   }
   .drag-region {
     fill: yellow;
-    opacity: .1;
+    opacity: .3;
   }
   .hit-box {
     path {
       fill: transparent;
-      stroke: yellow;
-      stroke-width: 10;
+      stroke: lime;
+      stroke-width: 2;
     }
   }
 }
