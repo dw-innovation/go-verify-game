@@ -165,7 +165,9 @@
               [:h3.ris-result-header "Similar images:"]
               [image-results/<image-results> result-images]]
              ]))]
-[<cropper> data]
+       [:h3.is-3 "Crop the image"]
+       [:p "by clicking and dragging"]
+       [<cropper> data]
        [:hr]
        [:div.columns.activity-actions
         [:div.column.action
