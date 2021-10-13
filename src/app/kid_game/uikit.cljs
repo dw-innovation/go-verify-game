@@ -1,4 +1,4 @@
-(ns kid-game.dev-cards
+(ns kid-game.uikit
   (:require [kid-shared.data.posts            :as posts-data]
             [kid-shared.data.activities            :as activities-data]
             [kid-game.components.notifications :as notifications]

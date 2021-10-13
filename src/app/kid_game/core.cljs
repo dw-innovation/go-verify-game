@@ -2,8 +2,8 @@
   (:require [reagent.core                                         :as r]
             [reagent.dom :as rd]
             [kid-game.utils.log                                   :as log]
+            [kid-game.uikit                                   :as uikit]
             [kid-shared.data.posts                               :as posts-data]
-            [kid-game.dev-cards                                 :as dev-cards]
             [kid-game.components.login.core                       :as <login>]
             [kid-game.state                                       :as state]
             [kid-game.business                                    :as business]
@@ -58,12 +58,12 @@
   ;; decide what to render in our app.  This is some junk hand-made routing
   (let [s js/window.location.search ; get the ?var=val&var2=val2 from the url
         post-id    (-> (js/URLSearchParams. s) (.get "post")) ; extract &post=
-        dev-cards? (-> (js/URLSearchParams. s) (.get "dev-cards"))
+        uikit?     (-> (js/URLSearchParams. s) (.get "uikit"))
         dev?       (-> (js/URLSearchParams. s) (.get "dev"))]
     (cond
       dev? (do (and (not (state/has-player?)) (business/new-session! "dev-user"))
                [<app>])
-      dev-cards? [dev-cards/<main-view>]
+      uikit? [uikit/<main-view>]
       post-id [<one-post> post-id]
       :else [<app>])))
 
