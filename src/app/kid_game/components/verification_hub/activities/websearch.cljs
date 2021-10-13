@@ -41,7 +41,7 @@
    )
 
 ;; Activity of type web-search, with it's corresponding dara
-(defn <web-search> [{:as data
+(defn <main> [{:as data
                      id :id
                      terms :terms
                      loading-time :loading-time ; could be nil

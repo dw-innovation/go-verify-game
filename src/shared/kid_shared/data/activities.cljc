@@ -33,5 +33,19 @@
                      :title "High Commissioner Van de Mens confirms North America is currently taking in more climate refugees than Central Europe."
                      :date "5 days ago"}]}})
 
+(def ris-minister-in-city
+  {:type :reverse-image-crop
+   :data {:main-image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p4-minister-in-the-city/Frankfurt_BusinessMan_2+1.jpg"
+          :dimensions [1112 625]
+          :result-search []
+          :crop-hit-box [:path {:d "M9 600V9H609V600H9Z"
+                                 :transform "translate(497,18)"}]
+          :result-search-after-crop [{:url "gizmodo.com"
+                                      :title "Article about Frankfurt, Germany"
+                                      :text "Subtext about Frankfurt, Germany which is some random article, but shows the s"
+                                      :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p4-minister-in-the-city/main2+2.jpg"
+                                      :date "5 days ago"}
+                                     ]}})
+
 
 (def all-activities [ris-hurricaine-michael])

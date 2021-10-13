@@ -13,6 +13,7 @@
             [kid-game.components.verification-hub.core            :as <verification-hub>]
             [kid-game.components.verification-hub.activities.core :as activities]
             [kid-game.components.verification-hub.activities.websearch]
+            [kid-game.components.verification-hub.activities.ris-crop]
             [moment]))
 
 (defn <game> []

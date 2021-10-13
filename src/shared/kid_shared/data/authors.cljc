@@ -83,6 +83,11 @@
                                  :handle "@groceries4you"
                                  :role :media}))
 
+(def socialist_inquirer (user/create {:name "Socialist Inquirer"
+                                      :handle "@socialist_inquirer"
+                                      :role :media}))
+
+
 (def posters [deutsche-welle
               reuters
               zeit

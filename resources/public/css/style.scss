@@ -434,3 +434,24 @@ button { background-color: transparent;
 .comment .post-author-image, .comment .post-author-image img { width: var(--spacing-double);
                                                                height: var(--spacing-double); }
 .comment-author { font-weight: bold; }
+
+
+
+
+.cropper {
+  .chosen-region {
+    fill: yellow;
+    opacity: .3;
+  }
+  .drag-region {
+    fill: yellow;
+    opacity: .1;
+  }
+  .hit-box {
+    path {
+      fill: transparent;
+      stroke: yellow;
+      stroke-width: 10;
+    }
+  }
+}

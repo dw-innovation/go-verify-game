@@ -54,6 +54,9 @@
    15
    posts/p3-financiel-gdp-repost-2])
 
+(def minister-in-the-city
+  [posts/p4-minister-in-city])
+
 (def a-new-racism
   [climate-refugees-copenhagen
    15

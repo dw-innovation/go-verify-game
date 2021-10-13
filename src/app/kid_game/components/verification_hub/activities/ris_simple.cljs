@@ -25,7 +25,7 @@
   [icons/recycle-search]]
     [:div.activity-title "Simple Reverse Image Search"]]])
 
-(defn <reverse-image-simple> [{:as data
+(defn <main> [{:as data
                                result-images :result-images
                                main-image :main-image
                                result-search :result-search}]
