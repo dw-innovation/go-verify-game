@@ -64,4 +64,5 @@
 
 (def all-stories [["a new racism" a-new-racism]
                   ["climate refugees" climate-refugees-copenhagen]
-                  ["financial times" financial-times]])
+                  ["financial times" financial-times]
+                  ["minister in a strange city" minister-in-the-city]])
