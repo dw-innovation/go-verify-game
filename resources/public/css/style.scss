@@ -459,3 +459,10 @@ button { background-color: transparent;
     }
   }
 }
+
+.devbutton {
+  position: fixed;
+  z-index: 9999999;
+  bottom: 0;
+  left: 0;
+}

@@ -161,19 +161,19 @@
                                (reset! loading? false)
                                (done!)))]
     (fn []
-  [:div.cropping-step.activity-step
-   [image-results/<dragger> drag-img drag-done!]
-   [css-transition-group {:class "transition-results" :timeout 100}
-    (if @loading?
-      [image-results/<loading>]
-      (when @dragged?
-        [css-transition {:class-names "ris-results-transition" :timeout 100}
-         [:div.ris-results
-          [:h3.ris-result-header "Pages with matching images:"]
-          [image-results/<search-results> search-results]
-          [:h3.ris-result-header "Similar images:"]
-          [image-results/<image-results> image-results]]
-         ]))]])))
+      [:div
+       [image-results/<dragger> drag-img drag-done!]
+       [css-transition-group {:class "transition-results" :timeout 100}
+        (if @loading?
+          [image-results/<loading>]
+          (when @dragged?
+            [css-transition {:class-names "ris-results-transition" :timeout 100}
+             [:div.ris-results
+              [:h3.ris-result-header "Pages with matching images (" (count search-results) ")"]
+              [image-results/<search-results> search-results]
+              [:h3.ris-result-header "Similar images (" (count image-results) ")"]
+              [image-results/<image-results> image-results]]
+             ]))]])))
 
 (defn <main> [{:as data
                result-images :result-images
@@ -196,7 +196,7 @@
                          )
         [<cropper> <cropped-svg>] (cropper-components data cropped-correctly! cropped-wrong!)
 
-        make-cropping-step (fn [] (fn [] [:div.cropping-step.activity-step
+        make-cropping-step (fn [] (fn [] [:div
                                           [:h3.is-3 "no results? Crop the image"]
                                           [:p "by clicking and dragging"]
                                           [:div [<cropper>]]]))
@@ -206,9 +206,12 @@
     (fn []
       [:div.activity-container.ris-simple
        [<header>]
-       [<first-drag-step>]
-       [<cropping-step>]
-       [<second-drag-step>]
+       [:div.activity-step
+        [<first-drag-step>]]
+       [:div.activity-step
+        [<cropping-step>]]
+       [:div.activity-step
+        [<second-drag-step>]]
        [:hr]
        [:div.columns.activity-actions
         [:div.column.action
