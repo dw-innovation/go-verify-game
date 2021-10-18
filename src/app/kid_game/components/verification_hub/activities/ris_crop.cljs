@@ -184,7 +184,7 @@
         second-drag-step (r/atom (fn [])) ; the steps rely on eachother so initialize empty
         cropped-correctly? (r/atom false)
         make-second-step (fn [] (fn [c] [:div
-                                         [:h3 "Try searching again"]
+                                         [:h3 "Try searching again, with the cropped image"]
                                          [<drag-step> [c] (if @cropped-correctly? result-search-after-crop []) [] (fn [])]]))
         cropped-correctly! (fn []
                              (reset! cropped-correctly? true)
