@@ -423,7 +423,10 @@ button { background-color: transparent;
 }
 
 .activity-container { max-width: 60rem;
-                      margin: 0 auto; }
+                      margin: 0 auto;
+                      .activity-step {
+                        padding: var(--spacing-double);
+                      }}
 
 
 
