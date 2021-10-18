@@ -57,12 +57,14 @@
 (def minister-in-the-city
   [posts/p4-minister-in-city])
 
-(def a-new-racism
-  [climate-refugees-copenhagen
+(def game-story
+  [minister-in-the-city
+   30
+   climate-refugees-copenhagen
    15
    financial-times])
 
-(def all-stories [["a new racism" a-new-racism]
+(def all-stories [["game-story (all)" game-story]
                   ["climate refugees" climate-refugees-copenhagen]
                   ["financial times" financial-times]
                   ["minister in a strange city" minister-in-the-city]])

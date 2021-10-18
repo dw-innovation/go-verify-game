@@ -3,15 +3,19 @@
             [kid-game.utils.log :as log]
             [kid-game.utils.core :refer [timestamp-now new-uuid]]
             [kid-shared.types.messages :as messages]
-            [kid-game.messaging :as messaging]
+            [kid-game.messaging       :as messaging]
+            [kid-shared.generator     :as gen]
             [kid-shared.types.post :as posts]
             [kid-shared.types.chat :as chat]
+            [kid-shared.data.stories :as stories]
             [kid-game.socket :as socket]
             [cljs.core.async :as async :include-macros true]))
 
 ;;
 ;;  the business logic of the framework
 ;;
+(defn start-all-stories! []
+  (gen/gen-run-story messaging/receive-channel stories/game-story))
 
 (defn use-new-player! [& {:keys [name]}]
   (->> {:id (str (random-uuid))
