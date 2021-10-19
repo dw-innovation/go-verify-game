@@ -30,25 +30,33 @@
         container (r/atom nil) ; a ref to the container
         polygons (r/atom initial-polygons)
         markers (r/atom []) ; an atom to hold a list of the markers where the user has clicked
-        finished! (fn [] (state/add-notification {:type :success
-                                                  :text "Found all the strange things"}))
-        failed! (fn [evt]
-                  (.preventDefault evt)
-                  (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
-                    (reset! markers (conj @markers {:x x :y y :color "red"}))
-                    (println @markers)))
+        is-finished (fn [] (every? :visible? @polygons))
+        finish! (fn [] (state/add-notification {:type :success
+                                                :text "Found all the strange things"}))
+        failed! (fn [evt] (if (not (is-finished))
+                            (do (.preventDefault evt)
+                                (state/add-notification {:type :warn
+                                                         :text "Nothing strange here"})
+                                (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
+                                  (reset! markers (conj @markers {:x x :y y :color "red"}))
+                                  (println @markers)))
+                            (do (state/add-notification {:type :warn
+                                                         :text "Already found all the strange things"}))))
         succeeded! (fn [polygon]
                      (fn [evt]
-                       (.preventDefault evt)
-                       (.stopPropagation evt)
-                       (state/add-notification {:type :success
-                                                :text (:message polygon)})
-                       ;; add a marker where the user successfully clicked:
-                       (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
-                         (reset! markers (conj @markers {:x x :y y :color "green"})))
-                       ;; associate the shape with success
-                       (reset! polygons (map (fn [p] (if (= p polygon) (assoc p :visible? true) p)) @polygons))
-                       (when (every? :visible? @polygons) (finished!))))
+                       (if (not (is-finished))
+                         (do (.preventDefault evt)
+                             (.stopPropagation evt)
+                             (state/add-notification {:type :success
+                                                      :text (:message polygon)})
+                             ;; add a marker where the user successfully clicked:
+                             (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
+                               (reset! markers (conj @markers {:x x :y y :color "green"})))
+                             ;; associate the shape with success
+                             (reset! polygons (map (fn [p] (if (= p polygon) (assoc p :visible? true) p)) @polygons))
+                             (when (is-finished) (finish!)))
+                         (do (state/add-notification {:type :warn
+                                                      :text "Already found all the strange things"})))))
         <polygon> (fn [{visible? :visible?
                         shape :shape
                         :as polygon}]
@@ -63,11 +71,8 @@
        [:svg {:ref #(reset! svg %)
               :viewBox (str "0 0 " width " " height)
               :preserve-aspect-ratio "xMinYMin meet"}
-        [:a {:href "#"
-             :on-click failed!}
-         [:image {:width width
-                  :height height
-                  :href image-url}]
+        [:a {:href "#" :on-click failed!}
+         [:image {:width width :height height :href image-url}]
          (map <polygon> @polygons)
          (map <marker> @markers)]]])))
 
