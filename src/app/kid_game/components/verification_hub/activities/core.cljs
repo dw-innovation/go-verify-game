@@ -5,6 +5,7 @@
             [kid-game.components.verification-hub.activities.ris-simple :as ris-simple]
             [kid-game.components.verification-hub.activities.ris-crop :as ris-crop]
             [kid-game.components.verification-hub.activities.websearch :as websearch]
+            [kid-game.components.verification-hub.activities.polygon-search :as polygon-search]
             [kid-game.business :as business]))
 
 ;; this is the core for all of the activities,
@@ -25,6 +26,7 @@
     :reverse-image-simple [ris-simple/<main> data]
     :reverse-image-crop [ris-crop/<main> data]
     :web-search [websearch/<main> data]
+    :polygon-search [polygon-search/<main> data]
     ; none of the above matched:
     [<not-found> typ]))
 

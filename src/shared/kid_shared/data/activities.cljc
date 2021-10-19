@@ -48,5 +48,22 @@
                                       :date "5 days ago"}
                                      ]}})
 
+(def bulgarian-president-fake-image
+  {:type :polygon-search
+   :data {:main-image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p5-bulgarian-president/ai-president.jpg"
+          :dimensions [1024 1024]
+          :polygons [{:shape [:path {:d "M94 50.5L51.5 96.5L3 50.5L22 3.5L75 11.5L94 50.5Z"
+                                     :transform "translate(436,150.5)"}]
+                      :message "A weird spot indeed."}
+                     {:shape [:path {:d "M127.5 98L68.5 160.5L3.5 90L46 3H114.5L127.5 98Z"
+                                     :transform "translate(579,140)"}]
+                      :message "This strange artifact suggests the picture has been created by an AI."}
+                     {:shape [:path {:d "M87 4.5L95.5 87L6 44.5L87 4.5Z"
+                                     :transform "translate(112,680)"}]
+                      :message "A weird spot indeed."}
+                     {:shape [:path {:d "M290 223.5H4L28.5 114L100.5 26.5L179.5 4L197 105.5L290 223.5Z"
+                                     :transform "translate(26,797)"}]
+                      :message "This strange artifact suggests the picture has been created by an AI."}]}})
+
 
 (def all-activities [ris-hurricaine-michael])
