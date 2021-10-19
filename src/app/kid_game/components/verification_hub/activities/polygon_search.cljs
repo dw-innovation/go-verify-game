@@ -18,10 +18,11 @@
   [:div.activity-title "Image Analysis"]]])
 
 (defn click-image-svg [^String image-url ; the svg background image
+                       ; a vector of polygons {shape message}
                        [{^Vector shape :shape
                          ^String message :message
                          :as polygon}
-                        & rest :as initial-polygons] ; a vector of shapes {shape message}
+                        & rest :as initial-polygons]
                        [width height :as image-dimensions] ; a vector of image dimenstions
                        correct-click! ;a function excecuted on a correct click
                        wrong-click! ; a function excecuted on wrong click
@@ -32,6 +33,8 @@
         polygons (r/atom initial-polygons)
         markers (r/atom []) ; an atom to hold a list of the markers where the user has clicked
         is-finished (fn [] (every? :visible? @polygons))
+        ;; update a polygon in the atom with :visible? true
+        update-found-polygon! (fn [polygon] (reset! polygons (map (fn [p] (if (= p polygon) (assoc p :visible? true) p)) @polygons)))
         failed! (fn [evt] (if (not (is-finished))
                             (do (.preventDefault evt)
                                 (when wrong-click! (wrong-click!)) ; bubble event to parent function
@@ -47,8 +50,7 @@
                              ;; add a marker where the user successfully clicked:
                              (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
                                (reset! markers (conj @markers {:x x :y y :color "green"})))
-                             ;; associate the shape with success
-                             (reset! polygons (map (fn [p] (if (= p polygon) (assoc p :visible? true) p)) @polygons))
+                             (update-found-polygon! polygon)
                              ;; if we already have a finish event to bubble, do it
                              (when (and (is-finished) finish-activity!) (finish-activity!)))
                          (do (state/add-notification {:type :warn
@@ -60,8 +62,7 @@
                                  [:g {:opacity (if visible? 1 0.2)}
                                   shape]]])
         <marker> (fn [{x :x y :y color :color}]
-                   [:rect {:x x :y y :fill color :width 10 :height 10}])
-        ]
+                   [:rect {:x x :y y :fill color :width 10 :height 10}])]
     (fn []
       [:div {:ref #(reset! container %)}
        [:svg {:ref #(reset! svg %)
