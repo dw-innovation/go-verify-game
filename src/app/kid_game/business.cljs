@@ -76,6 +76,9 @@
     (log/warn "post does not have a stopping function!")))
 
 (defn add-post [post]
+  ;; remove the post timer from below if it's already there
+  (let [p (state/get-post post)] ; get the current live version of the post
+    (when p (stop-post-timer! p))) ; if it's there, stop the timer
   ;; TODO validate that it's an actual valid post
   (state/add-post post)
   ;; attatch a time decreaser to the post, but only if time limiet
