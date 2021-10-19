@@ -65,5 +65,19 @@
                                      :transform "translate(26,797)"}]
                       :message "This strange artifact suggests the picture has been created by an AI."}]}})
 
+(def bulgarian-president-web-search
+  {:type :web-search
+   :data {:terms ["Bulgarian President" "EU" "Beret"]
+          :loading-time 4000
+          :results [{:url "factful.eu"
+                     :title "\"Bulgarian president\" viral post is a deepfake."
+                     :date "2 days ago"}
+                    {:url "thejournal.com"
+                     :title "EU separatists: Right-wing tabloid \"@patriotic_news\" creates fake Bulgarian president."
+                     :date "2 days ago"}
+                    {:url "fact-checkers-alliance.org"
+                     :title "\"That's not even the traditional Bulgarian beret\""
+                     :date "1 day ago"}]}})
+
 
 (def all-activities [ris-hurricaine-michael])

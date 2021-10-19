@@ -15,8 +15,7 @@
  [:div.columns
   [:div.activity-icon
    [icons/image-analysis]]
-  [:div.activity-title "Image Analysis"]]
- ])
+  [:div.activity-title "Image Analysis"]]])
 
 (defn click-image-svg [^String image-url ; the svg background image
                        [{^Vector shape :shape
@@ -31,12 +30,10 @@
         container (r/atom nil) ; a ref to the container
         polygons (r/atom initial-polygons)
         markers (r/atom []) ; an atom to hold a list of the markers where the user has clicked
-        finished! (fn [] (println "found all the polygons")
-                    (state/add-notification {:type :success
-                                             :text "Found all the strange things"}))
+        finished! (fn [] (state/add-notification {:type :success
+                                                  :text "Found all the strange things"}))
         failed! (fn [evt]
                   (.preventDefault evt)
-                  (println "failed click!")
                   (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
                     (reset! markers (conj @markers {:x x :y y :color "red"}))
                     (println @markers)))
@@ -44,7 +41,6 @@
                      (fn [evt]
                        (.preventDefault evt)
                        (.stopPropagation evt)
-                       (println "succeeded click!")
                        (state/add-notification {:type :success
                                                 :text (:message polygon)})
                        ;; add a marker where the user successfully clicked:
@@ -73,31 +69,24 @@
                   :height height
                   :href image-url}]
          (map <polygon> @polygons)
-         (map <marker> @markers)
-         ]]]
-      )))
-
+         (map <marker> @markers)]]])))
 
 ;; Activity of type web-search, with it's corresponding dara
 (defn <main> [{:as data
                [x y :as dimensions] :dimensions
                image-url :main-image
-               polygons :polygons
-               }]
+               polygons :polygons}]
  (let []
     (fn []
       [:div.activity-container.image-analysis
        [<header>]
        [:div.activity-step
         [:div.activity-description "Mark the parts of the image that look weird to you.  Place pointer, click, and start finsing polygons."]
-        [click-image-svg image-url polygons dimensions (fn []) (fn [])]
-        ]
-
+        [click-image-svg image-url polygons dimensions (fn []) (fn [])]]
        [:div.columns.activity-actions
         [:div.column.action
          [:p "Ready to make a call?"]
          [:button {:on-click (fn [] (state/open-timeline))} "Back to timeline"]]
         [:div.column.action
          [:p "Investigate further?"]
-         [:button {:on-click (fn [] (state/open-timeline))} "Back to hub"]]]
-       ])))
+         [:button {:on-click (fn [] (state/open-timeline))} "Back to hub"]]]])))

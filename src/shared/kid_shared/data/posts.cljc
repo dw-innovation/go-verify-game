@@ -86,7 +86,8 @@
    :time-limit 1000
    :fake-news? true
    :by authors/patriotic_news
-   :activities [activities/bulgarian-president-fake-image]})
+   :activities [activities/bulgarian-president-fake-image
+                activities/bulgarian-president-web-search]})
 
 
 (def all-activity-posts [p1-climate-refugees-copenhagen
