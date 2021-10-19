@@ -3,7 +3,8 @@
             [kid-game.state :as state]
             [kid-game.utils.log :as log]
             [kid-game.components.verification-hub.activities.ris-simple :as ris-simple]
-            [kid-game.components.verification-hub.activities.websearch :as websearch :refer [<web-search>]]
+            [kid-game.components.verification-hub.activities.ris-crop :as ris-crop]
+            [kid-game.components.verification-hub.activities.websearch :as websearch]
             [kid-game.business :as business]))
 
 ;; this is the core for all of the activities,
@@ -16,13 +17,15 @@
 
 (defn <not-found> [component-name]
   [:div
-   [:h1 "The activity was not found:" component-name]])
+   [:h1 "The activity type was not found:" component-name]])
 
 (defn match [{:as activity typ :type data :data}]
   (case typ
     :test [<test>]
-    :reverse-image-simple [ris-simple/<reverse-image-simple> data]
-    :web-search [<web-search> data]
+    :reverse-image-simple [ris-simple/<main> data]
+    :reverse-image-crop [ris-crop/<main> data]
+    :web-search [websearch/<main> data]
+    ; none of the above matched:
     [<not-found> typ]))
 
 

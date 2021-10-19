@@ -14,13 +14,14 @@
                            :date "15 Feb 2019"
                            :text "Reuters – In light of Hurricane Michael, the Bay County Public Library is helping you salvaged damaged family treasures. ... A former Panama City Police officer was arrested Friday afternoon and has been charged with (...)"}
                           ]
-          :result-images [{:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/31516192358_debc2e274d_w.jpg" }
-                          {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/44873000045_6bfd1caaa5_w.jpg"}
-                          {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/45322467302_313ceb4da3_w.jpg"}
-                          {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/50836367178_c98fb56618_w.jpg"}
-                          {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/50837095881_2c53650400_w.jpg"}
-                          {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/50837182897_94bce499fa_w.jpg"}
-                          ]}})
+          ;; :result-images [{:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/31516192358_debc2e274d_w.jpg" }
+          ;;                 {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/44873000045_6bfd1caaa5_w.jpg"}
+          ;;                 {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/45322467302_313ceb4da3_w.jpg"}
+          ;;                 {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/50836367178_c98fb56618_w.jpg"}
+          ;;                 {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/50837095881_2c53650400_w.jpg"}
+          ;;                 {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/ris-results/50837182897_94bce499fa_w.jpg"}
+          ;;                 ]
+          }})
 
 (def financiel-web-search
   {:type :web-search
@@ -32,6 +33,20 @@
                     {:url "unhcr.org"
                      :title "High Commissioner Van de Mens confirms North America is currently taking in more climate refugees than Central Europe."
                      :date "5 days ago"}]}})
+
+(def ris-minister-in-city
+  {:type :reverse-image-crop
+   :data {:main-image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p4-minister-in-the-city/Frankfurt_BusinessMan_2+1.jpg"
+          :dimensions [1112 625]
+          :result-search []
+          :crop-hit-box [:path {:d "M9 600V9H609V600H9Z"
+                                 :transform "translate(497,18)"}]
+          :result-search-after-crop [{:url "gizmodo.com"
+                                      :title "Article about Frankfurt, Germany"
+                                      :text "Subtext about Frankfurt, Germany which is some random article, but shows the s"
+                                      :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p4-minister-in-the-city/main2+2.jpg"
+                                      :date "5 days ago"}
+                                     ]}})
 
 
 (def all-activities [ris-hurricaine-michael])

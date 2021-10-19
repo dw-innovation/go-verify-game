@@ -25,7 +25,7 @@
   [icons/recycle-search]]
     [:div.activity-title "Simple Reverse Image Search"]]])
 
-(defn <reverse-image-simple> [{:as data
+(defn <main> [{:as data
                                result-images :result-images
                                main-image :main-image
                                result-search :result-search}]
@@ -40,6 +40,7 @@
       [:div.activity-container.ris-simple
        [<header>]
        [image-results/<dragger> main-image drag-done!]
+       [:div.activity-step
        [css-transition-group {:class "transition-results"}
         (if @loading?
           [image-results/<loading>]
@@ -49,7 +50,7 @@
               [:h3.ris-result-header "Pages with matching images:"]
               [image-results/<search-results> result-search]
               [:h3.ris-result-header "Similar images:"]
-              [image-results/<image-results> result-images]]]))]
+              [image-results/<image-results> result-images]]]))]]
        [:hr]
        [:div.columns.activity-actions
         [:div.column.action

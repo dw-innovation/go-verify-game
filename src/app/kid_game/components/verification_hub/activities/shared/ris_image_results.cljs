@@ -8,21 +8,28 @@
 ;; TODO alt for screenreaders
 (defn <loading> [] [:div.lds-ring [:div] [:div] [:div] [:div]])
 
-(defn <dragger> [img done!]
-  (let [done? (r/atom false)]
+(defn <dragger> [img ; either a STRING for img src or an SVG
+                 ; function on success:
+                 done!
+                 reset? ; optional component, resets the status, annoying hack :/
+                        ]
+  (let [done? (r/atom false)
+        drag-component (if (string? img)
+                         [:img {:src img}]
+                         img)]
     (fn []
       [:div.ris-image-dragger
        [:div.ris-drag-blocks
         [:div.ris-drag-block-left.ris-drag-block
           (if @done?
             [:div.drag-target "done!"]
-            [:div.ris-image-dragger-image
-             [:img {:src img :draggable true}]])]
+            [:div.ris-image-dragger-imagea {:draggable true}
+             drag-component])]
         [:div.ris-drag-block-center.ris-drag-block
          [:div.drag-arrow "->"]]
         [:div.ris-drag-block-right.ris-drag-block
          (if @done?
-           [:div.ris-image-dragger-image [:img {:src img}]]
+           [:div.ris-image-dragger-image drag-component]
            [:div.drag-target {:on-drag-over (fn [e] (.preventDefault e))
                               :on-drag-enter (fn [e] (.preventDefault e))
                               :on-drop (fn []

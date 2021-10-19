@@ -68,8 +68,19 @@
    :post p3-financiel-gdp
    :by authors/journo-jane})
 
+(def p4-minister-in-city
+  {:type :post-text
+   :id "p4-minister-in-city"
+   :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p4-minister-in-the-city/Frankfurt_BusinessMan_2+1.jpg"
+   :description "EU Minister of Finance spotted near Megacorp Headquarters in Shanghai. What shady deal is he getting into now?"
+   :time-limit 2000
+   :fake-news? true
+   :by authors/socialist_inquirer
+   :activities [activities/ris-minister-in-city]})
+
 
 (def all-activity-posts [p1-climate-refugees-copenhagen
                          p1-climate-refugees-copenhagen-response
                          p2-financial-gdp
-                         p3-financiel-gdp])
+                         p3-financiel-gdp
+                         p4-minister-in-city])

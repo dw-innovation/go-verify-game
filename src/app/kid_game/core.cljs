@@ -13,15 +13,17 @@
             [kid-game.components.verification-hub.core            :as <verification-hub>]
             [kid-game.components.verification-hub.activities.core :as activities]
             [kid-game.components.verification-hub.activities.websearch]
+            [kid-game.components.verification-hub.activities.ris-crop]
             [moment]))
 
-(defn <game> []
+(defn <game> [& {:keys [dev?]}]
   [:div {:class "game-container columns"}
    [notifications/<notifications>]
 
    ;; this meta panels is for during development
-   [:div {:class "game-panel active column is-one-quarter"}
-    [<meta>/<meta>]]
+   (when dev?
+     [:div {:class "game-panel active column is-one-quarter"}
+      [<meta>/<meta>]])
 
    [:div {:class ["game-panel column"
                   "game-timeline"
@@ -49,10 +51,16 @@
                        ^{:key (:type activity)} ;; important to keep track of rendering
                         [activities/get-activity activity]) (:activities post))])))
 
-(defn <app> []
-  (cond
-    (state/has-player?) [<game>]
-    :else [<login>/<form>]))
+(defn <app> [& {:keys [dev?]}]
+  (let [devv? (r/atom dev?)]
+    (fn []
+      [:div
+       (cond
+         (state/has-player?) [<game> :dev? @devv?]
+         :else [<login>/<form>])
+       [:button.devbutton {:on-click (fn [] (println "boo") (reset! devv? (not @devv?)))}
+        "toggle dev meta"]
+       ])))
 
 (defn <routes> []
   ;; decide what to render in our app.  This is some junk hand-made routing
@@ -62,7 +70,7 @@
         dev?       (-> (js/URLSearchParams. s) (.get "dev"))]
     (cond
       dev? (do (and (not (state/has-player?)) (business/new-session! "dev-user"))
-               [<app>])
+               [<app> :dev? true])
       uikit? [uikit/<main-view>]
       post-id [<one-post> post-id]
       :else [<app>])))

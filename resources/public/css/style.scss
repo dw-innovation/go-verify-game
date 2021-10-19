@@ -60,12 +60,12 @@ body {
     transition: width .4s ease-in-out,
                 box-shadow .4s ease-in-out,
                 filter .4s ease-in-out;
-    filter: blur(1px)
+    filter: // blur(1px)
             brightness(.8);
     overflow-x: hidden;
     &.active {
-	 box-shadow: 5px 5px 30px 10px rgba(0,0,0,.2);
-         filter: blur(0px)
+	     box-shadow: 5px 5px 30px 10px rgba(0,0,0,.2);
+         filter: // blur(0px)
                  brightness(1);
     }
 }
@@ -234,6 +234,8 @@ button { background-color: transparent;
 
 
 .activity-container {
+  max-width: 100%;
+  width: 35rem;
   .activity-header {
     align-items: center;
     display:flex;
@@ -423,7 +425,10 @@ button { background-color: transparent;
 }
 
 .activity-container { max-width: 60rem;
-                      margin: 0 auto; }
+                      margin: 0 auto;
+                      .activity-step {
+                        padding: var(--spacing-double);
+                      }}
 
 
 
@@ -455,4 +460,11 @@ button { background-color: transparent;
       stroke-width: 2;
     }
   }
+}
+
+.devbutton {
+  position: fixed;
+  z-index: 9999999;
+  bottom: 0;
+  left: 0;
 }

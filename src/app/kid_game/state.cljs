@@ -25,10 +25,7 @@
 (defonce msg-list (atom []))
 (defonce notifications (atom []))
 (defonce users (atom {}))
-(defonce post-list (atom [{:title "Welcome to the timeline!"
-                           :type :post-text
-                           :id "test"
-                           :description "wait a second and you will start to see posts coming in"}]))
+(defonce post-list (atom []))
 
 (defonce verification-hub-state (atom {}))
 
