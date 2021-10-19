@@ -25,9 +25,11 @@
   [icons/recycle-search]]
     [:div.activity-title "Reverse Image Search, with Crop"]]])
 
+
+
 (defn get-svg-point [^js/SVGSVGElement svg x y]
   (let [point (.createSVGPoint svg)]
-    (set! (.-x point) x)
+    (set! (.-x point) x) ; mutate the values in js, i see no way around this
     (set! (.-y point) y)
     point))
 
@@ -48,30 +50,31 @@
           y (.-y cursor-point)]
       [x y])))
 
-;; (defn <rectangle2> [[x1 y1]
-;;                     [x2 y2]]
-;;   (let [min-x (min x1 x2)
-;;         min-y (min y1 y2)
-;;         max-x (max x1 x2)
-;;         max-y (max y1 y2)]
-;;     [:rect {:width (- max-x min-x)
-;;             :height (- max-y min-y)
-;;             :transform (str "translate(" min-x "," min-y ")")}]))
-
-;; ; makes a rectangle out of two points!
-(defn <rectangle> [[x1 y1]
-                   [x2 y2]]
+;; takes two points ([x y]) (in any order)
+;; and returns [offset-x offset-y width height] of the resulting rectangle
+(defn extract-rectangle [[x1 y1]
+                         [x2 y2]]
   (let [min-x (min x1 x2)
         min-y (min y1 y2)
         max-x (max x1 x2)
         max-y (max y1 y2)]
-    [:rect {:width (- max-x min-x)
-            :height (- max-y min-y)
-            :transform (str "translate(" min-x "," min-y ")")
+    [min-x min-y (- max-x min-x) (- max-y min-y)]))
+
+;; ; makes a rectangle out of two points!
+(defn <rectangle> [[x1 y1 :as p1]
+                   [x2 y2 :as p2]]
+  (let [[offset-x offset-y width height] (extract-rectangle p1 p2)]
+    [:rect {:width width
+            :height height
+            :transform (str "translate(" offset-x "," offset-y ")")
             }]))
 
-;; note -> this component returns two separate components, that use the same state
-;; returns [svg-cropper cropped-svg]
+;; note -> this component returns not a component, but a vector of components and internal state,
+;; which parent components are welcome to use
+;; returns [svg-cropper   ; component to allow the user to crop an svg
+;;          cropped-svg   ; a component that is the internal cropped area of the image
+;;          correct-crop? ; a _reagent atom_ which contains a bool on if the crop is correctly inside the hit box
+;;          ]
 ;; so one svg get's returned that is the cropped region of the original image
 (defn cropper-components [{:as data
                            url :main-image
@@ -86,6 +89,7 @@
         correct-second? (r/atom false)
         svg (r/atom nil) ; will be a ref to the svg element
         hit-box (r/atom nil) ; will be a ref to the svg element
+        correct-crop? (r/atom false)
         ; handle a click:
         mousedown! (fn [evt] (let [[x y] (get-svg-coordinates @svg evt)]
                                (reset! point-second nil)
@@ -93,8 +97,8 @@
         mouseup! (fn [evt] (let [[x y] (get-svg-coordinates @svg evt)]
                              (reset! point-second [x y])
                              (if @correct-second?
-                               (when succeed! (succeed!))
-                               (when fail! (fail!)))))
+                               (when succeed! (succeed!) (reset! correct-crop? true))
+                               (when fail! (fail!) (reset! correct-crop? false)))))
         mousemove! (fn [evt] (when (and @svg @point-first (not @point-second))
                                (let [[x y] (get-svg-coordinates @svg evt)]
                                  (reset! point-intermediate [x y]))))
@@ -111,45 +115,36 @@
                             (do (reset! correct-second? true)
                                 (reset! correct-first? false))
                             (do (reset! correct-first? false)
-                                (reset! correct-second? false))))]
-    ;; the first component that is returned, the svg that allows the user to crop
-    [(fn []
-      [:div.cropper
-       [:svg {:ref #(reset! svg %)
-              :viewBox (str "0 0 " width " " height)
-              :on-mouse-down mousedown!
-              :on-mouse-up mouseup!
-              :on-mouse-move mousemove!}
-        ; first our backroung image to span across the back of the svg
-        [:image {:width width :heigh height :href url}]
-        ; show the image that we have drawn
-        (when (and @point-first @point-second)
-          [:g.chosen-region
-           [<rectangle> @point-first @point-second]])
-        (when (and @point-first @point-intermediate)
-          [:g.drag-region
-           [<rectangle> @point-first @point-intermediate]])
-
-        ;;[:path {:ref #(reset! hit-box %)
-        ;;        :d "M9 600V9H609V600H9Z"}]
-        [:g.hit-box {:ref #(reset! hit-box %)
-                     :on-mouse-down first-success!
-                     :on-mouse-up second-success!}
-         crop-hit-box]]])
-     ;; the second returned component, a separate SVG of the cropped region
-     (fn []
-       (if (and @point-first @point-second)
-         (let [[x1 y1] @point-first
-               [x2 y2] @point-intermediate
-               min-x (min x1 x2)
-               min-y (min y1 y2)
-               max-x (max x1 x2)
-               max-y (max y1 y2)]
-            [:svg {:viewBox (str min-x " " min-y " " (- max-x min-x) " " (- max-y min-y))}
-             [:image {:width width :heigh height :href url}]])
-         [:svg {:viewBox (str "0 0 " width " " height)}
-          [:image {:width width :heigh height :href url}]]
-         ))]))
+                                (reset! correct-second? false))))
+        <cropper-component> (fn []
+                              [:div.cropper
+                               [:svg {:ref #(reset! svg %)
+                                      :viewBox (str "0 0 " width " " height)
+                                      :on-mouse-down mousedown!
+                                      :on-mouse-up mouseup!
+                                      :on-mouse-move mousemove!}
+                                        ; first our backroung image to span across the back of the svg
+                                [:image {:width width :heigh height :href url}]
+                                        ; show the image that we have drawn
+                                (when (and @point-first @point-second)
+                                  [:g.chosen-region
+                                   [<rectangle> @point-first @point-second]])
+                                (when (and @point-first @point-intermediate)
+                                  [:g.drag-region
+                                   [<rectangle> @point-first @point-intermediate]])
+                                [:g.hit-box {:ref #(reset! hit-box %)
+                                             :on-mouse-down first-success!
+                                             :on-mouse-up second-success!}
+                                 crop-hit-box]]])
+        <cropped-svg> (fn []
+                        (if (and @point-first @point-second)
+                          (let [[offset-x offset-y rectangle-width rectangle-height] (extract-rectangle @point-first @point-second)]
+                            [:svg {:viewBox (str offset-x " " offset-y " " rectangle-width " " rectangle-height)}
+                             [:image {:width width :heigh height :href url}]])
+                          [:svg {:viewBox (str "0 0 " width " " height)}
+                           [:image {:width width :heigh height :href url}]]
+                          ))]
+    [<cropper-component> <cropped-svg> correct-crop?]))
 
 (defn <drag-step> [drag-img search-results image-results done!]
   (let [dragged? (r/atom false)
