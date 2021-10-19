@@ -25,21 +25,19 @@
                        [width height :as image-dimensions] ; a vector of image dimenstions
                        correct-click! ;a function excecuted on a correct click
                        wrong-click! ; a function excecuted on wrong click
+                       finish-activity! ; a function to bubble up the finish event
                         ]
   (let [svg (r/atom nil) ; a ref to the svg
         container (r/atom nil) ; a ref to the container
         polygons (r/atom initial-polygons)
         markers (r/atom []) ; an atom to hold a list of the markers where the user has clicked
         is-finished (fn [] (every? :visible? @polygons))
-        finish! (fn [] (state/add-notification {:type :success
-                                                :text "Found all the strange things"}))
         failed! (fn [evt] (if (not (is-finished))
                             (do (.preventDefault evt)
-                                (state/add-notification {:type :warn
-                                                         :text "Nothing strange here"})
+                                (when wrong-click! (wrong-click!)) ; bubble event to parent function
+
                                 (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
-                                  (reset! markers (conj @markers {:x x :y y :color "red"}))
-                                  (println @markers)))
+                                  (reset! markers (conj @markers {:x x :y y :color "red"}))))
                             (do (state/add-notification {:type :warn
                                                          :text "Already found all the strange things"}))))
         succeeded! (fn [polygon]
@@ -47,14 +45,14 @@
                        (if (not (is-finished))
                          (do (.preventDefault evt)
                              (.stopPropagation evt)
-                             (state/add-notification {:type :success
-                                                      :text (:message polygon)})
+                             (when correct-click! (correct-click! polygon)) ; bubble event to parent function
                              ;; add a marker where the user successfully clicked:
                              (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
                                (reset! markers (conj @markers {:x x :y y :color "green"})))
                              ;; associate the shape with success
                              (reset! polygons (map (fn [p] (if (= p polygon) (assoc p :visible? true) p)) @polygons))
-                             (when (is-finished) (finish!)))
+                             ;; if we already have a finish event to bubble, do it
+                             (when (and (is-finished) finish-activity!) (finish-activity!)))
                          (do (state/add-notification {:type :warn
                                                       :text "Already found all the strange things"})))))
         <polygon> (fn [{visible? :visible?
@@ -87,7 +85,20 @@
        [<header>]
        [:div.activity-step
         [:div.activity-description "Mark the parts of the image that look weird to you.  Place pointer, click, and start finsing polygons."]
-        [click-image-svg image-url polygons dimensions (fn []) (fn [])]]
+        [click-image-svg
+         image-url
+         polygons
+         dimensions
+         ;; correct click
+         (fn [polygon] (state/add-notification {:type :success
+                                                :text (:message polygon)}))
+         ;; failed click
+         (fn [] (state/add-notification {:type :warn
+                                         :text "Nothing strange here"}))
+         ;; found all
+         (fn [] (state/add-notification {:type :success
+                                         :text "Found all the strange things"}))
+         ]]
        [:div.columns.activity-actions
         [:div.column.action
          [:p "Ready to make a call?"]
