@@ -35,7 +35,6 @@
         failed! (fn [evt] (if (not (is-finished))
                             (do (.preventDefault evt)
                                 (when wrong-click! (wrong-click!)) ; bubble event to parent function
-
                                 (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
                                   (reset! markers (conj @markers {:x x :y y :color "red"}))))
                             (do (state/add-notification {:type :warn
@@ -43,8 +42,7 @@
         succeeded! (fn [polygon]
                      (fn [evt]
                        (if (not (is-finished))
-                         (do (.preventDefault evt)
-                             (.stopPropagation evt)
+                         (do (.preventDefault evt) (.stopPropagation evt)
                              (when correct-click! (correct-click! polygon)) ; bubble event to parent function
                              ;; add a marker where the user successfully clicked:
                              (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
