@@ -57,6 +57,9 @@
 (def minister-in-the-city
   [posts/p4-minister-in-city])
 
+(def bulgaria
+  [posts/p5-bulgarian-president])
+
 (def game-story
   [minister-in-the-city
    30
@@ -65,6 +68,7 @@
    financial-times])
 
 (def all-stories [["game-story (all)" game-story]
+                  ["bulgarian president" bulgaria]
                   ["climate refugees" climate-refugees-copenhagen]
                   ["financial times" financial-times]
                   ["minister in a strange city" minister-in-the-city]])

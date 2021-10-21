@@ -12,8 +12,12 @@
             [kid-game.components.notifications                    :as notifications]
             [kid-game.components.verification-hub.core            :as <verification-hub>]
             [kid-game.components.verification-hub.activities.core :as activities]
+            ;; these NS are imported here for dev hot-reloading.  for some reason it does not work without
+            ;; them imported at the top of the tree
             [kid-game.components.verification-hub.activities.websearch]
+            [kid-game.components.verification-hub.activities.polygon-search]
             [kid-game.components.verification-hub.activities.ris-crop]
+            ; end weird import
             [moment]))
 
 (defn <game> [& {:keys [dev?]}]

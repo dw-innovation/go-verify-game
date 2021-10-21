@@ -78,9 +78,21 @@
    :by authors/socialist_inquirer
    :activities [activities/ris-minister-in-city]})
 
+(def p5-bulgarian-president
+  {:type :post-text
+   :id "p5-bulgarian-president"
+   :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p5-bulgarian-president/ai-president.jpg"
+   :description "New Bulgarian president at press conference: \"I've had it with the Union! We'll be an independent nation again, spend 20% of the GDP on our military – and proudly wear the traditional beret!”"
+   :time-limit 1000
+   :fake-news? true
+   :by authors/patriotic_news
+   :activities [activities/bulgarian-president-fake-image
+                activities/bulgarian-president-web-search]})
+
 
 (def all-activity-posts [p1-climate-refugees-copenhagen
                          p1-climate-refugees-copenhagen-response
                          p2-financial-gdp
                          p3-financiel-gdp
-                         p4-minister-in-city])
+                         p4-minister-in-city
+                         p5-bulgarian-president])

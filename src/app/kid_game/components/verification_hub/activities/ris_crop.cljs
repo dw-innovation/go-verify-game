@@ -3,6 +3,7 @@
             [kid-game.components.shared.icons :as icons]
             [react-transition-group]
             [kid-game.components.verification-hub.activities.shared.ris-image-results :as image-results]
+            [kid-game.components.verification-hub.activities.shared.svg-utils :as svg-utils]
             [cljs.core.async :as async :include-macros true]
             [kid-game.state :as state]))
 
@@ -26,29 +27,6 @@
     [:div.activity-title "Reverse Image Search, with Crop"]]])
 
 
-
-(defn get-svg-point [^js/SVGSVGElement svg x y]
-  (let [point (.createSVGPoint svg)]
-    (set! (.-x point) x) ; mutate the values in js, i see no way around this
-    (set! (.-y point) y)
-    point))
-
-(defn scale-svg-point [^js/SVGSVGElement svg
-                       ^js/SVGPoint svg-point]
-  (.matrixTransform svg-point (-> svg (.getScreenCTM) (.inverse))))
-
-;; given an svg DOM node and a js click event, extract the coordinates
-;; relative to the svg's size
-;; return [x y] or nil for failure
-;; this code has been adapted from:
-;; https://github.com/DW-ReCo/react-training-modules/blob/master/src/components/svg-click-image/index.tsx#L42
-(defn get-svg-coordinates [^js/SVGSVGElement svg ; honestly, the typecasting here is just to get past a compiler error
-                           ^js/SyntheticBaseEvent event]
-  (let [point (get-svg-point svg (.-clientX event) (.-clientY event))]
-    (let [cursor-point (scale-svg-point svg point)
-          x (.-x cursor-point)
-          y (.-y cursor-point)]
-      [x y])))
 
 ;; takes two points ([x y]) (in any order)
 ;; and returns [offset-x offset-y width height] of the resulting rectangle
@@ -91,16 +69,16 @@
         hit-box (r/atom nil) ; will be a ref to the svg element
         correct-crop? (r/atom false)
         ; handle a click:
-        mousedown! (fn [evt] (let [[x y] (get-svg-coordinates @svg evt)]
+        mousedown! (fn [evt] (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
                                (reset! point-second nil)
                                (reset! point-first [x y])))
-        mouseup! (fn [evt] (let [[x y] (get-svg-coordinates @svg evt)]
+        mouseup! (fn [evt] (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
                              (reset! point-second [x y])
                              (if @correct-second?
                                (when succeed! (succeed!) (reset! correct-crop? true))
                                (when fail! (fail!) (reset! correct-crop? false)))))
         mousemove! (fn [evt] (when (and @svg @point-first (not @point-second))
-                               (let [[x y] (get-svg-coordinates @svg evt)]
+                               (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
                                  (reset! point-intermediate [x y]))))
         ;; the following controls the switches for when the user did things correctly
         ;; testing to see if the points are in the fills of the path is too hard and janky

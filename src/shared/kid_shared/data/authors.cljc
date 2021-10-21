@@ -87,6 +87,10 @@
                                       :handle "@socialist_inquirer"
                                       :role :media}))
 
+(def patriotic_news (user/create {:name "Patriotic News"
+                                      :handle "@patriotic_news"
+                                      :role :media}))
+
 
 (def posters [deutsche-welle
               reuters
