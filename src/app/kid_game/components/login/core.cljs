@@ -9,9 +9,6 @@
         u (state/get-player)
         log-in #(business/new-session! @v)]
     (fn []
-      ;; if we already have a player, we already have a session, so go to game
-      (if (:id u) (state/open-game))
-      ;; otherwise render the login container
       [:div {:class "hero is-fullheight is-align-content-center is-justify-content-center"}
        [:div {:class "columns is-justify-content-center"}
         [:div {:class "column is-4"}
