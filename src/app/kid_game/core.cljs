@@ -58,13 +58,14 @@
 (defn <app> [& {:keys [dev]}]
   (let [is-dev? (r/atom dev)]
     (fn []
-      [:div
+      ;;[:div
        (cond
          (state/has-player?) [<game> :dev? @is-dev?]
          :else [<login>/<form>])
-       [:button.devbutton {:on-click #(reset! is-dev? (not @is-dev?))}
-        "toggle dev tools"]
-       ])))
+      ;;  [:button.devbutton {:on-click #(reset! is-dev? (not @is-dev?))}
+      ;;   "toggle dev tools"]
+      ;; ]
+    )))
 
 (defn <routes> []
   ;; decide what to render in our app.  This is some junk hand-made routing
