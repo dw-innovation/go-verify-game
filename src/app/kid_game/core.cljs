@@ -55,26 +55,26 @@
                        ^{:key (:type activity)} ;; important to keep track of rendering
                         [activities/get-activity activity]) (:activities post))])))
 
-(defn <app> [& {:keys [dev?]}]
-  (let [devv? (r/atom dev?)]
+(defn <app> [& {:keys [dev]}]
+  (let [is-dev? (r/atom dev)]
     (fn []
       [:div
        (cond
-         (state/has-player?) [<game> :dev? @devv?]
+         (state/has-player?) [<game> :dev? @is-dev?]
          :else [<login>/<form>])
-       [:button.devbutton {:on-click (fn [] (println "boo") (reset! devv? (not @devv?)))}
-        "toggle dev meta"]
+       [:button.devbutton {:on-click #(reset! is-dev? (not @is-dev?))}
+        "toggle dev tools"]
        ])))
 
 (defn <routes> []
   ;; decide what to render in our app.  This is some junk hand-made routing
   (let [s js/window.location.search ; get the ?var=val&var2=val2 from the url
-        post-id    (-> (js/URLSearchParams. s) (.get "post")) ; extract &post=
+        post-id    (-> (js/URLSearchParams. s) (.get "post"))
         uikit?     (-> (js/URLSearchParams. s) (.get "uikit"))
         dev?       (-> (js/URLSearchParams. s) (.get "dev"))]
     (cond
       dev? (do (and (not (state/has-player?)) (business/new-session! "dev-user"))
-               [<app> :dev? true])
+               [<app> :dev true])
       uikit? [uikit/<main-view>]
       post-id [<one-post> post-id]
       :else [<app>])))
