@@ -49,9 +49,9 @@ This application relies on two separate parts, the `app` (a clojurescript projec
 The `app` is hosted and compiled by `shadow-cljs`, where you can see the configuration in `shadow-cljs.edn`.  Javascript libraries can be added in package.json, and then used in clojurescript as well.
 
 ### Routes
-- `?post-id=xxx` - loads an individual post
+- `?post=id` - loads an individual post
 - `?dev=anything` - loads a dev environment, including a logged in user
-- `/dev-cards` - loads frontend components for frontend work
+- `?uikit=anything` - loads frontend components for frontend work
 
 ---
 
