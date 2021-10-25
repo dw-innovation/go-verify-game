@@ -301,38 +301,6 @@ button { background-color: transparent;
       margin-top: var(--spacing-double);
       margin-bottom: var(--spacing);
     }
-    .search-bar {
-      margin: var(--spacing-double) var(--spacing-double);
-      position: relative;
-      &::before {
-          content: "⌕";
-          top: -18px;
-          left: 5px;
-          font-size: 3rem;
-          width: 20px;
-          height:20px;
-          position: absolute;
-      }
-      input {
-        padding: var(--spacing-half) var(--spacing-double);
-        width: 100%;
-        display: block;
-        border-radius: var(--spacing-double);
-        border: 1px solid var(--color-grey);
-        position: relative;
-        font-size: 1.4rem;
-      }
-    }
-    .search-button {
-      button {
-        margin: 0 auto;
-        display: block;
-        border-color: var(--color-green);
-        font-size: 1.4rem;
-        color: var(--color-green);
-        border-radius: 1.4rem;
-      }
-    }
     .results {
       padding: var(--spacing-double);
     }

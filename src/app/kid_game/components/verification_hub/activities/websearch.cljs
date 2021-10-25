@@ -16,19 +16,34 @@
   [icons/browser-search]]
     [:div.activity-title "Web Search"]]])
 
+(defn <blooble-search> [placeholder search!]
+  (let [v (r/atom nil)]
+    [:form
+     {:on-submit (fn [x] (.preventDefault x) (search!))}
+     [:div.field
+      [:div {:class "control has-icons-left has-icons-right"}
+       [:input {:class "input"
+                :type "text"
+                :value @v
+                :placeholder placeholder
+                :disabled true
+                :on-change #(reset! v (-> % .-target .-value))}]
+        [:span {:class "icon is-small is-left"}
+         [:i {:class "fa fa-search"}]]]]
+     [:div.field
+      [:div  {:class "control has-text-centered"}
+       [:button {:class "button is-link"}
+        [:span "Blooble search"]]]]]))
+
 (defn <blooble-simulation> [terms-string ; a string to show in the search bar
                             results ; components to place after the break, or nil
                             loading ; bool, show the loading
-                            click! ; function to run on click
+                            search! ; function to run on click
                             ]
   [:div.blooble-simulation
    [:div.blooble-logo
     [icons/blooble-logo]]
-   [:div.search-bar
-    [:input {:placeholder terms-string
-             :disabled true}]]
-   [:div.search-button
-    [:button {:on-click click!} "Blooble Search"]]
+   [<blooble-search> terms-string search!]
    (when results
      [:div.results
       [:b.results-count (count results) " search results found"]
