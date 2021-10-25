@@ -21,29 +21,30 @@
             [moment]))
 
 (defn <game> [& {:keys [dev?]}]
-  [:div {:class "game-container columns"}
-   [notifications/<notifications>]
+  (let [size (if dev?
+                {:active "is-half active" :inactive "is-one-quarter"}
+                {:active "is-two-thirds active" :inactive "is-one-third"})]
+    [:div {:class "game-container columns"}
+     [notifications/<notifications>]
 
-   ;; this meta panels is for during development
-   (when dev?
-     [:div {:class "game-panel active column is-one-quarter"}
-      [<meta>/<meta>]])
+     ;; this meta panels is for during development
+     (when dev?
+       [:div {:class "game-panel active column is-one-quarter p-5"}
+        [<meta>/<meta>]])
 
-   [:div {:class ["game-panel column"
-                  "game-timeline"
-                  (cond (= (state/get-panel) :timeline) "is-two-thirds active"
-                        :else                           "is-one-quarter")]
-          :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
-    [:div.game-timeline-inner
-     [<timeline>/<container>]]]
+     [:div {:class ["game-panel column"
+                    "game-timeline"
+                    (cond (= (state/get-panel) :timeline) (:active size)
+                          :else                           (:inactive size))]
+            :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
+      [<timeline>/<container>]]
 
-   [:div {:class ["game-panel column"
-                  "game-verification-hub"
-                  (cond (= (state/get-panel) :verification-hub) "is-half active"
-                        :else                                   "is-one-third")]
-          :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
-    [:div.game-verification-hub-inner
-     [<verification-hub>/<container>]]]])
+     [:div {:class ["game-panel column"
+                    "game-verification-hub"
+                    (cond (= (state/get-panel) :verification-hub) (:active size)
+                          :else                                   (:inactive size))]
+            :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
+      [<verification-hub>/<container>]]]))
 
 
 (defn <one-post> [post-id]
