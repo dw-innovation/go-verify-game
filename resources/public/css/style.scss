@@ -443,3 +443,15 @@ button { background-color: transparent;
              stroke-width: 4;}
 
 }
+
+.hub-icon {
+  border: 2px solid var(--color-teal);
+  border-radius: var(--spacing-double);
+  margin: var(--spacing-half);
+  padding: var(--spacing);
+  cursor: pointer;
+  text-align: center;
+  /* evenly space the icons */
+  flex-basis: 100%;
+  width: 0;
+}

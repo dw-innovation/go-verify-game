@@ -18,3 +18,10 @@
 (defn indexes [pred coll]
    (keep-indexed #(when (pred %2) %1) coll))
 
+(defn in?
+  "true if coll contains elm"
+  [coll elm]
+  (some #(= elm %) coll))
+
+(defn find-first [f coll]
+  (first (filter f coll)))
