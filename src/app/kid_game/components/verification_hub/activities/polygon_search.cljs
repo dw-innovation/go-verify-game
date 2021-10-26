@@ -77,7 +77,8 @@
 (defn <main> [{:as data
                [x y :as dimensions] :dimensions
                image-url :main-image
-               polygons :polygons}]
+               polygons :polygons}
+              back!]
  (let []
     (fn []
       [:div.activity-container.image-analysis
@@ -104,4 +105,4 @@
          [:button {:on-click (fn [] (state/open-timeline))} "Back to timeline"]]
         [:div.column.action
          [:p "Investigate further?"]
-         [:button {:on-click (fn [] (state/open-timeline))} "Back to hub"]]]])))
+         [:button {:on-click back!} "Back to hub"]]]])))

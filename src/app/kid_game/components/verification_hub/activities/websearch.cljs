@@ -57,10 +57,11 @@
 
 ;; Activity of type web-search, with it's corresponding dara
 (defn <main> [{:as data
-                     id :id
-                     terms :terms
-                     loading-time :loading-time ; could be nil
-                     results :results}]
+               id :id
+               terms :terms
+               loading-time :loading-time ; could be nil
+               results :results}
+              back!]
  (let [searched? (r/atom false)
        loading? (r/atom false)
        click! (fn []
@@ -82,5 +83,5 @@
          [:button {:on-click (fn [] (state/open-timeline))} "Back to timeline"]]
         [:div.column.action
          [:p "Investigate further?"]
-         [:button {:on-click (fn [] (state/open-timeline))} "Back to hub"]]]
+         [:button {:on-click back!} "Back to hub"]]]
        ])))

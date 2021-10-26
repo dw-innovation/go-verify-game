@@ -20,7 +20,7 @@
         activity (find-first (fn [a] (= (:type a) activity-type)) activities)]
      ;; a post might have activities in it or it might not,
      ;; for now, just flat list them out, verification hub to come
-       [activities/get-activity activity]))
+       [activities/get-activity activity back!]))
 
 (defn <hub-home> [{post :post
                    change-panel! :change-panel!}]
@@ -28,15 +28,15 @@
         available-activities (map :type post-activities)
         choose-activity! (fn [& chosen-activity-typs]
                            (fn []
-                             (println "function!!")
-                             (when (not post) (state/add-notification {:type :warning
-                                                                       :text "Choose a post first"}))
-                             (let [hits (intersection (set chosen-activity-typs)
-                                                      (set available-activities))]
-                               (if (empty? hits)
-                                 (state/add-notification {:type :warning
-                                                          :text "Choose a different activity"})
-                                 (change-panel! (first hits))))))]
+                             (if (not post)
+                               (state/add-notification {:type :warning
+                                                        :text "Choose a post first"})
+                               (let [hits (intersection (set chosen-activity-typs)
+                                                        (set available-activities))]
+                                 (if (empty? hits)
+                                   (state/add-notification {:type :warning
+                                                            :text "Choose a different activity"})
+                                   (change-panel! (first hits)))))))]
       [:div.is-flex.is-justify-content-space-evenly
        [:div.hub-icon
         {:on-click (choose-activity! :web-search)}
@@ -73,4 +73,6 @@
               :hub [<hub-home> {:post post :change-panel! change-panel!}]
               [<investigate-post> {:post post
                                    :activity-type @active-panel
-                                   :back! back-to-hub!}])]]]]))))
+                                   :back! back-to-hub!}])
+            [:div.scores
+             "Score: " 3 "points"]]]]]))))

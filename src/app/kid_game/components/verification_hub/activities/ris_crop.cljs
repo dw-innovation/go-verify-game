@@ -152,7 +152,8 @@
                result-images :result-images
                main-image :main-image
                result-search :result-search
-               result-search-after-crop :result-search-after-crop}]
+               result-search-after-crop :result-search-after-crop}
+              back!]
   (let [cropping-step (r/atom (fn [])) ; the steps rely on eachother so initialize empty
         second-drag-step (r/atom (fn [])) ; the steps rely on eachother so initialize empty
         cropped-correctly? (r/atom false)
@@ -192,5 +193,5 @@
          [:button {:on-click (fn [] (state/open-timeline))} "Back to timeline"]]
         [:div.column.action
          [:p "Investigate further?"]
-         [:button {:on-click (fn [] (state/open-timeline))} "Back to hub"]]]
+         [:button {:on-click back!} "Back to hub"]]]
        ])))

@@ -26,9 +26,10 @@
     [:div.activity-title "Simple Reverse Image Search"]]])
 
 (defn <main> [{:as data
-                               result-images :result-images
-                               main-image :main-image
-                               result-search :result-search}]
+               result-images :result-images
+               main-image :main-image
+               result-search :result-search}
+              back!]
   (let [dragged? (r/atom false)
         loading? (r/atom false)
         drag-done! (fn []
@@ -58,5 +59,5 @@
          [:button {:on-click (fn [] (state/open-timeline))} "Back to timeline"]]
         [:div.column.action
          [:p "Investigate further?"]
-         [:button {:on-click (fn [] (state/open-timeline))} "Back to hub"]]]
+         [:button {:on-click back!} "Back to hub"]]]
        ])))
