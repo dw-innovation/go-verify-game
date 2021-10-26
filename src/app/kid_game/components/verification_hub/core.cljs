@@ -61,7 +61,8 @@
         change-panel! (fn [activity-type] (reset! active-panel activity-type))
         back-to-hub! (fn [] (change-panel! :hub))]
     (fn []
-      (let [post (state/get-post (:post @state/verification-hub-state))]
+      (let [post (state/get-post (:post @state/verification-hub-state))
+            points @state/points]
         [:div
          [<header>]
          [:div.container
@@ -75,4 +76,4 @@
                                    :activity-type @active-panel
                                    :back! back-to-hub!}])
             [:div.scores
-             "Score: " 3 "points"]]]]]))))
+             "Score: " points " points"]]]]]))))
