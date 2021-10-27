@@ -243,21 +243,10 @@ button { background-color: transparent;
   max-width: 100%;
   width: 35rem;
   .activity-actions {
-    .action {
-      background-color: var(--color-hub-secondary);
-      text-align: center;
-      padding: var(--spacing-double);
+    background-color: var(--color-hub-primary);
       button {
-        border-color: var(--color-hub-primary);
-        color: var(--color-hub-primary);
-        text-transform: uppercase;
-        background-color: var(--color-white);
-        margin-top: var(--spacing-half);
-        &::before {
-          content: "< ";
-        }
+         margin-top: var(--spacing-half);
       }
-    }
   }
   .blooble-simulation {
     margin: var(--spacing-double);

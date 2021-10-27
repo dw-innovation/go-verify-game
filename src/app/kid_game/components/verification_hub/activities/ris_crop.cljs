@@ -26,6 +26,19 @@
           :style {:color "var(--color-hub-primary)"}}
     "Reverse Image Search, with Crop"]])
 
+(defn <actions> []
+  [:div.columns.activity-actions.tile.notification.is-success
+   [:div.column.has-text-centered
+    [:p "Ready to make a call?"]
+    [:button {:class "button is-primary is-inverted is-outlined"
+              :on-click (fn [] (state/open-timeline))}
+     [:span.icon [:i {:class "fas fa-newspaper-o"}]] [:span "Back to timeline"]]]
+   [:div.column.has-text-centered
+    [:p "Investigate further?"]
+    [:button {:class "button is-primary is-inverted is-outlined"
+              :on-click (fn [] (state/open-timeline))}
+     [:span.icon [:i {:class "fas fa-search"}]] [:span "Back to hub"]]]])
+
 ;; takes two points ([x y]) (in any order)
 ;; and returns [offset-x offset-y width height] of the resulting rectangle
 (defn extract-rectangle [[x1 y1]
@@ -178,11 +191,4 @@
         [<cropping-step>]]
        [:div.activity-step
         [<second-drag-step>]]
-       [:hr]
-       [:div.columns.activity-actions
-        [:div.column.action
-         [:p "Ready to make a call?"]
-         [:button {:on-click (fn [] (state/open-timeline))} "Back to timeline"]]
-        [:div.column.action
-         [:p "Investigate further?"]
-         [:button {:on-click (fn [] (state/open-timeline))} "Back to hub"]]]])))
+       [<actions>]])))
