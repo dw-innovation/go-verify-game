@@ -242,21 +242,6 @@ button { background-color: transparent;
 .activity-container {
   max-width: 100%;
   width: 35rem;
-  .activity-header {
-    align-items: center;
-    display:flex;
-    .columns {
-      margin: 0 auto;
-    }
-    .activity-icon {
-      width: var(--spacing-quadruple);
-      margin-right: var(--spacing);
-    }
-    .activity-title {
-      font-size: 2rem;
-      color: var(--color-hub-primary)
-    }
-  }
   .activity-actions {
     .action {
       background-color: var(--color-hub-secondary);

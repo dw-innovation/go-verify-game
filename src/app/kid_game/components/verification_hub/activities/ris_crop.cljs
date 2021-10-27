@@ -20,13 +20,11 @@
   (r/adapt-react-class react-transition-group/CSSTransition))
 
 (defn <header> []
-  [:div.activity-header
-   [:div.columns
-    [:div.activity-icon
-     [icons/recycle-search]]
-    [:div.activity-title "Reverse Image Search, with Crop"]]])
-
-
+  [:div {:class "columns is-centered is-vcentered"}
+   [:div {:class "column is-1"} [icons/recycle-search]]
+   [:div {:class "title is-3 pl-5"
+          :style {:color "var(--color-hub-primary)"}}
+    "Reverse Image Search, with Crop"]])
 
 ;; takes two points ([x y]) (in any order)
 ;; and returns [offset-x offset-y width height] of the resulting rectangle
