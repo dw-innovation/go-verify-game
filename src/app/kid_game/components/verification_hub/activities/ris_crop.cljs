@@ -22,9 +22,9 @@
 (defn <header> []
   [:div {:class "columns is-centered is-vcentered"}
    [:div {:class "column is-1"} [icons/recycle-search]]
-   [:div {:class "title is-3 pl-5"
-          :style {:color "var(--color-hub-primary)"}}
-    "Reverse Image Search, with Crop"]])
+   [:div {:class "is-11 pl-5 pt-5"}
+    [:h3.title.is-3 "Reverse image search, with crop"]
+    [:p.subtitle "Try cropping images to yield more search results"]]])
 
 (defn <actions> []
   [:div.columns.activity-actions.tile.notification.is-success

@@ -26,16 +26,17 @@
            [:div.ris-image-dragger-image {:draggable true}
             drag-component])]
         [:div.ris-drag-block-center.ris-drag-block
-         [:div.drag-arrow "->"]]
+         [:span.icon [:i {:class "fas fa-arrow-right"}]]]
         [:div.ris-drag-block-right.ris-drag-block
          (if @done?
            [:div.ris-image-dragger-image drag-component]
-           [:div.drag-target {:on-drag-over (fn [e] (.preventDefault e))
-                              :on-drag-enter (fn [e] (.preventDefault e))
-                              :on-drop (fn []
-                                         (println "mouse up")
-                                         (reset! done? true)
-                                         (done!))} "drag here"])]]])))
+           [:div {:class "drag-target box is-flex is-justify-content-center is-align-items-center"
+                  :on-drag-over (fn [e] (.preventDefault e))
+                  :on-drag-enter (fn [e] (.preventDefault e))
+                  :on-drop (fn []
+                             (println "mouse up")
+                             (reset! done? true)
+                             (done!))} "Drag here"])]]])))
 
 ;; awaits vector of {:src ""}
 (defn <image-results> [imgs]
