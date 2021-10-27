@@ -23,7 +23,8 @@
         [:div.ris-drag-block-left.ris-drag-block
           (if @done?
             [:div.drag-target "done!"]
-            [:div.ris-image-dragger-imagea {:draggable true}
+            [:div.ris-image-dragger-imagea {:draggable true
+                                            :on-drop (fn [evt] (.preventDefault evt))}
              drag-component])]
         [:div.ris-drag-block-center.ris-drag-block
          [:div.drag-arrow "->"]]
@@ -32,8 +33,8 @@
            [:div.ris-image-dragger-image drag-component]
            [:div.drag-target {:on-drag-over (fn [e] (.preventDefault e))
                               :on-drag-enter (fn [e] (.preventDefault e))
-                              :on-drop (fn []
-                                             (println "mouse up")
+                              :on-drop (fn [e]
+                                             (.preventDefault e)
                                              (reset! done? true)
                                              (done!)
                                              )} "drag here"])
