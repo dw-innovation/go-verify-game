@@ -20,10 +20,10 @@
   (r/adapt-react-class react-transition-group/CSSTransition))
 
 (defn <header> []
-[:div.activity-header
- [:div.columns
- [:div.activity-icon
-  [icons/recycle-search]]
+  [:div.activity-header
+   [:div.columns
+    [:div.activity-icon
+     [icons/recycle-search]]
     [:div.activity-title "Reverse Image Search, with Crop"]]])
 
 
@@ -44,8 +44,7 @@
   (let [[offset-x offset-y width height] (extract-rectangle p1 p2)]
     [:rect {:width width
             :height height
-            :transform (str "translate(" offset-x "," offset-y ")")
-            }]))
+            :transform (str "translate(" offset-x "," offset-y ")")}]))
 
 ;; note -> this component returns not a component, but a vector of components and internal state,
 ;; which parent components are welcome to use
@@ -120,8 +119,7 @@
                             [:svg {:viewBox (str offset-x " " offset-y " " rectangle-width " " rectangle-height)}
                              [:image {:width width :heigh height :href url}]])
                           [:svg {:viewBox (str "0 0 " width " " height)}
-                           [:image {:width width :heigh height :href url}]]
-                          ))]
+                           [:image {:width width :heigh height :href url}]]))]
     [<cropper-component> <cropped-svg> correct-crop?]))
 
 (defn <drag-step> [drag-img search-results image-results done!]
@@ -145,8 +143,7 @@
               [:h3.ris-result-header "Pages with matching images (" (count search-results) ")"]
               [image-results/<search-results> search-results]
               [:h3.ris-result-header "Similar images (" (count image-results) ")"]
-              [image-results/<image-results> image-results]]
-             ]))]])))
+              [image-results/<image-results> image-results]]]))]])))
 
 (defn <main> [{:as data
                result-images :result-images
@@ -161,12 +158,10 @@
                                          [<drag-step> [c] (if @cropped-correctly? result-search-after-crop []) [] (fn [])]]))
         cropped-correctly! (fn []
                              (reset! cropped-correctly? true)
-                             (reset! second-drag-step (make-second-step))
-                             )
+                             (reset! second-drag-step (make-second-step)))
         cropped-wrong! (fn []
                          (reset! cropped-correctly? false)
-                         (reset! second-drag-step (make-second-step))
-                         )
+                         (reset! second-drag-step (make-second-step)))
         [<cropper> <cropped-svg>] (cropper-components data cropped-correctly! cropped-wrong!)
 
         make-cropping-step (fn [] (fn [] [:div
@@ -192,5 +187,4 @@
          [:button {:on-click (fn [] (state/open-timeline))} "Back to timeline"]]
         [:div.column.action
          [:p "Investigate further?"]
-         [:button {:on-click (fn [] (state/open-timeline))} "Back to hub"]]]
-       ])))
+         [:button {:on-click (fn [] (state/open-timeline))} "Back to hub"]]]])))
