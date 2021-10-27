@@ -23,7 +23,7 @@
         [:div.ris-drag-block-left.ris-drag-block
          (if @done?
            [:div.drag-target "done!"]
-           [:div.ris-image-dragger-imagea {:draggable true}
+           [:div.ris-image-dragger-image {:draggable true}
             drag-component])]
         [:div.ris-drag-block-center.ris-drag-block
          [:div.drag-arrow "->"]]
