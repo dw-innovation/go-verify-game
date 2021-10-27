@@ -299,14 +299,13 @@ button { background-color: transparent;
   border-radius: var(--spacing-half);
 }
 
-.ris-results-transition-enter { transform:scaleY(0);
-                                 max-height: 0; }
-.ris-results-transition-enter-done { transform: scaleY(1);
-                                        max-height: 400rem;
-                                        transition: all 1s ease-in; }
+.ris-results-transition-enter { opacity: 0; }
+.ris-results-transition-enter-done { opacity: 1;
+                                     transition: all .5s ease-in;
+                                     margin: var(--spacing-double); }
 .ris-results-transition-exit { opacity: 1; }
 .ris-results-transition-exit-done { opacity: 0;
-                                       transition: opacity 1s ease-in; }
+                                    transition: opacity 1s ease-in; }
 
 .ris-drag-blocks { display: flex; flex-basis: 0; }
 .ris-drag-block { width: 33%; }
@@ -369,9 +368,7 @@ button { background-color: transparent;
 
 .activity-container { max-width: 60rem;
                       margin: 0 auto;
-                      .activity-step {
-                        padding: var(--spacing-double);
-                      }}
+                      }
 
 
 

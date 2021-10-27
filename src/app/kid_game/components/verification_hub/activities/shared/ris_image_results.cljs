@@ -22,7 +22,8 @@
        [:div.ris-drag-blocks
         [:div.ris-drag-block-left.ris-drag-block
          (if @done?
-           [:div.drag-target "done!"]
+           [:div {:class "drag-target box is-flex is-justify-content-center is-align-items-center"}
+            [:span.icon [:i {:class "fas fa-file-image-o"}]]]
            [:div.ris-image-dragger-image {:draggable true
                                           :on-drop (fn [evt] (.preventDefault evt))}
             drag-component])]

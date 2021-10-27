@@ -24,10 +24,10 @@
    [:div {:class "column is-1"} [icons/recycle-search]]
    [:div {:class "is-11 pl-5 pt-5"}
     [:h3.title.is-3 "Reverse image search, with crop"]
-    [:p.subtitle "Try cropping images to yield more search results"]]])
+    [:p.subtitle "How cropping images can yield more search results"]]])
 
 (defn <actions> []
-  [:div.columns.activity-actions.tile.notification.is-success
+  [:div.columns.mt-5.activity-actions.tile.notification.is-success
    [:div.column.has-text-centered
     [:p "Ready to make a call?"]
     [:button {:class "button is-primary is-inverted is-outlined"
@@ -147,14 +147,16 @@
        [image-results/<dragger> drag-img drag-done!]
        [css-transition-group {:class "transition-results" :timeout 100}
         (if @loading?
-          [image-results/<loading>]
+          [:div {:class "is-flex is-justify-content-center"} [image-results/<loading>]]
           (when @dragged?
             [css-transition {:class-names "ris-results-transition" :timeout 100}
-             [:div.ris-results
-              [:h3.ris-result-header "Pages with matching images (" (count search-results) ")"]
+             [:div
+              [:h4.title.is-4.mb-2 "Results from your image search"]
+              [:h3.ris-result-header [:b (count search-results)] " page(s) with matching images"]
               [image-results/<search-results> search-results]
-              [:h3.ris-result-header "Similar images (" (count image-results) ")"]
-              [image-results/<image-results> image-results]]]))]])))
+              [:h3.ris-result-header [:b (count image-results)] " similar image(s)"]
+              [image-results/<image-results> image-results]
+              [:hr]]]))]])))
 
 (defn <main> [{:as data
                result-images :result-images
@@ -176,8 +178,8 @@
         [<cropper> <cropped-svg>] (cropper-components data cropped-correctly! cropped-wrong!)
 
         make-cropping-step (fn [] (fn [] [:div
-                                          [:h3.is-3 "no results? Crop the image"]
-                                          [:p "by clicking and dragging"]
+                                          [:h4.title.is-4.mb-0 "Which city skyline is that? "]
+                                          [:p.mb-5 "Drag the cursor in the highlighted box."]
                                           [:div [<cropper>]]]))
         <cropping-step> (fn [] [@cropping-step])
         <first-drag-step> (fn [] [<drag-step> main-image result-search result-images (fn [] (reset! cropping-step (make-cropping-step)))])
