@@ -21,29 +21,30 @@
             [moment]))
 
 (defn <game> [& {:keys [dev?]}]
-  [:div {:class "game-container columns"}
-   [notifications/<notifications>]
+  (let [size (if dev?
+                {:active "is-half active" :inactive "is-one-quarter"}
+                {:active "is-two-thirds active" :inactive "is-one-third"})]
+    [:div {:class "game-container columns"}
+     [notifications/<notifications>]
 
-   ;; this meta panels is for during development
-   (when dev?
-     [:div {:class "game-panel active column is-one-quarter"}
-      [<meta>/<meta>]])
+     ;; this meta panels is for during development
+     (when dev?
+       [:div {:class "game-panel active column is-one-quarter p-5"}
+        [<meta>/<meta>]])
 
-   [:div {:class ["game-panel column"
-                  "game-timeline"
-                  (cond (= (state/get-panel) :timeline) "is-two-thirds active"
-                        :else                           "is-one-quarter")]
-          :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
-    [:div.game-timeline-inner
-     [<timeline>/<container>]]]
+     [:div {:class ["game-panel column"
+                    "game-timeline"
+                    (cond (= (state/get-panel) :timeline) (:active size)
+                          :else                           (:inactive size))]
+            :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
+      [<timeline>/<container>]]
 
-   [:div {:class ["game-panel column"
-                  "game-verification-hub"
-                  (cond (= (state/get-panel) :verification-hub) "is-half active"
-                        :else                                   "is-one-third")]
-          :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
-    [:div.game-verification-hub-inner
-     [<verification-hub>/<container>]]]])
+     [:div {:class ["game-panel column"
+                    "game-verification-hub"
+                    (cond (= (state/get-panel) :verification-hub) (:active size)
+                          :else                                   (:inactive size))]
+            :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
+      [<verification-hub>/<container>]]]))
 
 
 (defn <one-post> [post-id]
@@ -55,26 +56,27 @@
                        ^{:key (:type activity)} ;; important to keep track of rendering
                         [activities/get-activity activity]) (:activities post))])))
 
-(defn <app> [& {:keys [dev?]}]
-  (let [devv? (r/atom dev?)]
+(defn <app> [& {:keys [dev]}]
+  (let [is-dev? (r/atom dev)]
     (fn []
-      [:div
+      ;;[:div
        (cond
-         (state/has-player?) [<game> :dev? @devv?]
+         (state/has-player?) [<game> :dev? @is-dev?]
          :else [<login>/<form>])
-       [:button.devbutton {:on-click (fn [] (println "boo") (reset! devv? (not @devv?)))}
-        "toggle dev meta"]
-       ])))
+      ;;  [:button.devbutton {:on-click #(reset! is-dev? (not @is-dev?))}
+      ;;   "toggle dev tools"]
+      ;; ]
+    )))
 
 (defn <routes> []
   ;; decide what to render in our app.  This is some junk hand-made routing
   (let [s js/window.location.search ; get the ?var=val&var2=val2 from the url
-        post-id    (-> (js/URLSearchParams. s) (.get "post")) ; extract &post=
+        post-id    (-> (js/URLSearchParams. s) (.get "post"))
         uikit?     (-> (js/URLSearchParams. s) (.get "uikit"))
         dev?       (-> (js/URLSearchParams. s) (.get "dev"))]
     (cond
       dev? (do (and (not (state/has-player?)) (business/new-session! "dev-user"))
-               [<app> :dev? true])
+               [<app> :dev true])
       uikit? [uikit/<main-view>]
       post-id [<one-post> post-id]
       :else [<app>])))

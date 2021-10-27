@@ -88,13 +88,13 @@
         lost? (case result :lost true
                     :won false
                     nil)]
-    [:div {:class (str "notification is-light " color)}
+    [:div {:class (str "notification my-5 is-light " color)}
      [:section
       [:div.columns.is-centered.is-vcentered
        [:div.column.is-1
         [:div {:class (str "icon is-large " color)} [:i {:class (str "fas fa-2x " icon)}]]]
-       [:div.column.is-6 {:class color}
-        [:div copy] (when (not (nil? lost?)) [:b  (if lost? "-" "+") points-result " points"])]]]]))
+       [:div.column.is-8.is-offset-1 {:class color}
+        [:div copy] (when (not (nil? lost?)) [:b  (if lost? "-" "+") (.toLocaleString points-result ) " points"])]]]]))
 
 (defn <post-overlay> [{:as           p
                        fake-news?    :fake-news?

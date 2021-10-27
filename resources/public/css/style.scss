@@ -40,12 +40,18 @@
 
 
 /* Other styles */
-
 body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
+    // width: 100vw;
+}
+
+#app {
+    // width: 100%;
+    &.container {
+	max-width: 100%;
+    }
 }
 
 .icon {
@@ -64,9 +70,9 @@ body {
             brightness(.8);
     overflow-x: hidden;
     &.active {
-	     box-shadow: 5px 5px 30px 10px rgba(0,0,0,.2);
-         filter: // blur(0px)
-                 brightness(1);
+	box-shadow: 5px 5px 30px 10px rgba(0,0,0,.2);
+	z-index: 1;
+        filter: brightness(1);
     }
 }
 
