@@ -23,7 +23,8 @@
         [:div.ris-drag-block-left.ris-drag-block
          (if @done?
            [:div.drag-target "done!"]
-           [:div.ris-image-dragger-image {:draggable true}
+           [:div.ris-image-dragger-image {:draggable true
+                                          :on-drop (fn [evt] (.preventDefault evt))}
             drag-component])]
         [:div.ris-drag-block-center.ris-drag-block
          [:span.icon [:i {:class "fas fa-arrow-right"}]]]
@@ -33,8 +34,8 @@
            [:div {:class "drag-target box is-flex is-justify-content-center is-align-items-center"
                   :on-drag-over (fn [e] (.preventDefault e))
                   :on-drag-enter (fn [e] (.preventDefault e))
-                  :on-drop (fn []
-                             (println "mouse up")
+                  :on-drop (fn [e]
+                             (.preventDefault e)
                              (reset! done? true)
                              (done!))} "Drag here"])]]])))
 
