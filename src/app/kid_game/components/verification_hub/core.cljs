@@ -76,4 +76,14 @@
                                    :activity-type @active-panel
                                    :back! back-to-hub!}])
             [:div.scores
-             "Score: " points " points"]]]]]))))
+             "Score: " points " points"]
+            [:div.stats.columns
+             [:div.stat.column
+              [icons/award]
+              [:div (@state/stats :blocked-correctly) " Blocked Correctly"]]
+             [:div.stat.column
+              [icons/stop-sign]
+              [:div (@state/stats :misleading-reposts) " Misleading Reposts"]]
+             [:div.stat.column
+              [icons/hourglass]
+              [:div (@state/stats :missed-deadlines) " Missed Deadlines"]]]]]]]))))
