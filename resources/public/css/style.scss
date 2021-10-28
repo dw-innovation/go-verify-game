@@ -57,7 +57,6 @@
 
 
 /* BULMA OVERRIDES */
-
 .column {
   /* don't see why we should assume padding wanted */
   /* especially when lot's of things are flat and full width */
@@ -271,37 +270,11 @@ button { background-color: transparent;
 .activity-container {
   max-width: 100%;
   width: 35rem;
-  .activity-header {
-    align-items: center;
-    display:flex;
-    .columns {
-      margin: 0 auto;
-    }
-    .activity-icon {
-      width: var(--spacing-quadruple);
-      margin-right: var(--spacing);
-    }
-    .activity-title {
-      font-size: 2rem;
-      color: var(--color-hub-primary)
-    }
-  }
   .activity-actions {
-    .action {
-      background-color: var(--color-hub-secondary);
-      text-align: center;
-      padding: var(--spacing-double);
+    background-color: var(--color-hub-primary);
       button {
-        border-color: var(--color-hub-primary);
-        color: var(--color-hub-primary);
-        text-transform: uppercase;
-        background-color: var(--color-white);
-        margin-top: var(--spacing-half);
-        &::before {
-          content: "< ";
-        }
+         margin-top: var(--spacing-half);
       }
-    }
   }
   .blooble-simulation {
     margin: var(--spacing-double);
@@ -348,25 +321,20 @@ button { background-color: transparent;
                     margin-bottom: var(--spacing-half); }
 .ris-image-result img { height: 100%; width: auto; }
 
-.ris-image-dragger-image { border-radius: var(--spacing); }
-.ris-image-dragger-image img { width: 100%; border-radius: var(--spacing); }
-.drag-target { border: 3px dashed var(--color-grey);
-               width: 100%;
-               height: 100%;
-               border-radius: var(--spacing);
-               display: flex;
-               justify-content: center;
-               align-items: center; }
+.ris-image-dragger-image img { border-radius: var(--spacing-half); }
+.drag-target { 
+  border: 3px dashed var(--color-grey);
+  height: 100%;
+  border-radius: var(--spacing-half);
+}
 
-
-.ris-results-transition-enter { transform:scaleY(0);
-                                 max-height: 0; }
-.ris-results-transition-enter-done { transform: scaleY(1);
-                                        max-height: 400rem;
-                                        transition: all 1s ease-in; }
+.ris-results-transition-enter { opacity: 0; }
+.ris-results-transition-enter-done { opacity: 1;
+                                     transition: all .5s ease-in;
+                                     margin: var(--spacing-double); }
 .ris-results-transition-exit { opacity: 1; }
 .ris-results-transition-exit-done { opacity: 0;
-                                       transition: opacity 1s ease-in; }
+                                    transition: opacity 1s ease-in; }
 
 .ris-drag-blocks { display: flex; flex-basis: 0; }
 .ris-drag-block { width: 33%; }
@@ -429,9 +397,7 @@ button { background-color: transparent;
 
 .activity-container { max-width: 60rem;
                       margin: 0 auto;
-                      .activity-step {
-                        padding: var(--spacing-double);
-                      }}
+                      }
 
 
 

@@ -20,13 +20,24 @@
   (r/adapt-react-class react-transition-group/CSSTransition))
 
 (defn <header> []
-[:div.activity-header
- [:div.columns
- [:div.activity-icon
-  [icons/recycle-search]]
-    [:div.activity-title "Reverse Image Search, with Crop"]]])
+  [:div {:class "columns is-centered is-vcentered"}
+   [:div {:class "column is-1"} [icons/recycle-search]]
+   [:div {:class "is-11 pl-5 pt-5"}
+    [:h3.title.is-3 "Reverse image search, with crop"]
+    [:p.subtitle "How cropping images can yield more search results"]]])
 
-
+(defn <actions> [back!]
+  [:div.columns.mt-5.activity-actions.tile.notification.is-success
+   [:div.column.has-text-centered
+    [:p "Ready to make a call?"]
+    [:button {:class "button is-primary is-inverted is-outlined"
+              :on-click (fn [] (state/open-timeline))}
+     [:span.icon [:i {:class "fas fa-newspaper-o"}]] [:span "Back to timeline"]]]
+   [:div.column.has-text-centered
+    [:p "Investigate further?"]
+    [:button {:class "button is-primary is-inverted is-outlined"
+              :on-click back!}
+     [:span.icon [:i {:class "fas fa-search"}]] [:span "Back to hub"]]]])
 
 ;; takes two points ([x y]) (in any order)
 ;; and returns [offset-x offset-y width height] of the resulting rectangle
@@ -44,8 +55,7 @@
   (let [[offset-x offset-y width height] (extract-rectangle p1 p2)]
     [:rect {:width width
             :height height
-            :transform (str "translate(" offset-x "," offset-y ")")
-            }]))
+            :transform (str "translate(" offset-x "," offset-y ")")}]))
 
 ;; note -> this component returns not a component, but a vector of components and internal state,
 ;; which parent components are welcome to use
@@ -120,8 +130,7 @@
                             [:svg {:viewBox (str offset-x " " offset-y " " rectangle-width " " rectangle-height)}
                              [:image {:width width :heigh height :href url}]])
                           [:svg {:viewBox (str "0 0 " width " " height)}
-                           [:image {:width width :heigh height :href url}]]
-                          ))]
+                           [:image {:width width :heigh height :href url}]]))]
     [<cropper-component> <cropped-svg> correct-crop?]))
 
 (defn <drag-step> [drag-img search-results image-results done!]
@@ -138,15 +147,16 @@
        [image-results/<dragger> drag-img drag-done!]
        [css-transition-group {:class "transition-results" :timeout 100}
         (if @loading?
-          [image-results/<loading>]
+          [:div {:class "is-flex is-justify-content-center"} [image-results/<loading>]]
           (when @dragged?
             [css-transition {:class-names "ris-results-transition" :timeout 100}
-             [:div.ris-results
-              [:h3.ris-result-header "Pages with matching images (" (count search-results) ")"]
+             [:div
+              [:h4.title.is-4.mb-2 "Results from your image search"]
+              [:h3.ris-result-header [:b (count search-results)] " page(s) with matching images"]
               [image-results/<search-results> search-results]
-              [:h3.ris-result-header "Similar images (" (count image-results) ")"]
-              [image-results/<image-results> image-results]]
-             ]))]])))
+              [:h3.ris-result-header [:b (count image-results)] " similar image(s)"]
+              [image-results/<image-results> image-results]
+              [:hr]]]))]])))
 
 (defn <main> [{:as data
                result-images :result-images
@@ -162,17 +172,15 @@
                                          [<drag-step> [c] (if @cropped-correctly? result-search-after-crop []) [] (fn [])]]))
         cropped-correctly! (fn []
                              (reset! cropped-correctly? true)
-                             (reset! second-drag-step (make-second-step))
-                             )
+                             (reset! second-drag-step (make-second-step)))
         cropped-wrong! (fn []
                          (reset! cropped-correctly? false)
-                         (reset! second-drag-step (make-second-step))
-                         )
+                         (reset! second-drag-step (make-second-step)))
         [<cropper> <cropped-svg>] (cropper-components data cropped-correctly! cropped-wrong!)
 
         make-cropping-step (fn [] (fn [] [:div
-                                          [:h3.is-3 "no results? Crop the image"]
-                                          [:p "by clicking and dragging"]
+                                          [:h4.title.is-4.mb-0 "Which city skyline is that? "]
+                                          [:p.mb-5 "Drag the cursor in the highlighted box."]
                                           [:div [<cropper>]]]))
         <cropping-step> (fn [] [@cropping-step])
         <first-drag-step> (fn [] [<drag-step> main-image result-search result-images (fn [] (reset! cropping-step (make-cropping-step)))])
@@ -186,12 +194,5 @@
         [<cropping-step>]]
        [:div.activity-step
         [<second-drag-step>]]
-       [:hr]
-       [:div.columns.activity-actions
-        [:div.column.action
-         [:p "Ready to make a call?"]
-         [:button {:on-click (fn [] (state/open-timeline))} "Back to timeline"]]
-        [:div.column.action
-         [:p "Investigate further?"]
-         [:button {:on-click back!} "Back to hub"]]]
-       ])))
+       [<actions> back!]])))
+
