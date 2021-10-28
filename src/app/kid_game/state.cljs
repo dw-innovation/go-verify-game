@@ -22,6 +22,9 @@
                           :user {}}))
 
 (defonce points (atom 0))
+(defonce stats (atom {:blocked-correctly 0
+                      :missed-deadlines 0
+                      :misleading-reposts 0}))
 (defonce msg-list (atom []))
 (defonce notifications (atom []))
 (defonce users (atom {}))
@@ -98,6 +101,7 @@
   (reset! points (- @points ps))
   (log/debug "lost points " ps)
   (log/debug "total points " @points))
+
 
 ;;
 ;;  posts

@@ -26,7 +26,7 @@
     [:h3.title.is-3 "Reverse image search, with crop"]
     [:p.subtitle "How cropping images can yield more search results"]]])
 
-(defn <actions> []
+(defn <actions> [back!]
   [:div.columns.mt-5.activity-actions.tile.notification.is-success
    [:div.column.has-text-centered
     [:p "Ready to make a call?"]
@@ -36,7 +36,7 @@
    [:div.column.has-text-centered
     [:p "Investigate further?"]
     [:button {:class "button is-primary is-inverted is-outlined"
-              :on-click (fn [] (state/open-timeline))}
+              :on-click back!}
      [:span.icon [:i {:class "fas fa-search"}]] [:span "Back to hub"]]]])
 
 ;; takes two points ([x y]) (in any order)
@@ -50,8 +50,8 @@
     [min-x min-y (- max-x min-x) (- max-y min-y)]))
 
 ;; ; makes a rectangle out of two points!
-(defn <rectangle> [[x1 y1 :as p1]
-                   [x2 y2 :as p2]]
+(defn <rectangle> [[^number x1 ^number y1 :as p1]
+                   [^number x2 ^number y2 :as p2]]
   (let [[offset-x offset-y width height] (extract-rectangle p1 p2)]
     [:rect {:width width
             :height height
@@ -95,10 +95,10 @@
         ;; so we have a little hack here.  first correct click logs a true,
         ;; then the second can act on that.  the evaluation happens in the mouseup! above, where the state
         ;; of the switches is checked.
-        first-success! (fn []
+        first-success! (fn [evt] (.stopPropagation evt)
                          (reset! correct-second? false)
                          (reset! correct-first? true))
-        second-success! (fn []
+        second-success! (fn [evt] (.stopPropagation evt)
                           (if @correct-first?
                             (do (reset! correct-second? true)
                                 (reset! correct-first? false))
@@ -162,7 +162,8 @@
                result-images :result-images
                main-image :main-image
                result-search :result-search
-               result-search-after-crop :result-search-after-crop}]
+               result-search-after-crop :result-search-after-crop}
+              back!]
   (let [cropping-step (r/atom (fn [])) ; the steps rely on eachother so initialize empty
         second-drag-step (r/atom (fn [])) ; the steps rely on eachother so initialize empty
         cropped-correctly? (r/atom false)
@@ -193,4 +194,5 @@
         [<cropping-step>]]
        [:div.activity-step
         [<second-drag-step>]]
-       [<actions>]])))
+       [<actions> back!]])))
+

@@ -67,7 +67,9 @@
                                  (do (state/update-post p :time-left (dec time-left))
                                      (recur))
                                  ;; otherwise, transition the post's state to timed-out
-                                 (state/post-transition-state! p :timed-out))))))))
+                                 ;;
+                                 (do (swap! state/stats assoc-in [:missed-deadlines] (inc (:missed-deadlines @state/stats)))
+                                     (state/post-transition-state! p :timed-out)))))))))
 
 ;; only works if the timer has already been attatched
 (defn stop-post-timer! [post]
@@ -96,10 +98,14 @@
 (defn post-block! [post]
   (let [fake-news? (:fake-news? post)
         time-left (or (:time-left post) 20)
-        points time-left]
+        points time-left
+        {blocked-correctly :blocked-correctly
+         missed-deadlines :missed-deadlines
+         misleading-reposts :misleading-reposts} @state/stats]
     (if (:fake-news? post)
       (do (state/add-notification {:type :success
                                    :text (str "+" points " points")})
+          (swap! state/stats assoc-in [:blocked-correctly] (inc blocked-correctly))
           (state/update-post post :points-result points)
           (win-points! time-left))
       (do (state/add-notification {:type :warning
@@ -112,10 +118,14 @@
 (defn post-share! [& {:keys [comment post]}]
   (let [fake-news? (:fake-news? post)
         time-left (or (:time-left post) 20)
-        points time-left]
+        points time-left
+        {blocked-correctly :blocked-correctly
+         missed-deadlines :missed-deadlines
+         misleading-reposts :misleading-reposts} @state/stats]
     (if (:fake-news? post)
       (do (state/add-notification {:type :warning
                                    :text (str "-" time-left " points")})
+          (swap! state/stats assoc-in [:misleading-reposts] (inc misleading-reposts))
           (state/update-post post :points-result points)
           (loose-points! time-left))
       (do (state/add-notification {:type :success
