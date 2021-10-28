@@ -38,25 +38,26 @@
                                                             :text "Choose a different activity"})
                                    (change-panel! (first hits)))))))]
       [:div.is-flex.is-justify-content-space-evenly
-       [:div.hub-icon
+       [:div.hub-icon.column
         {:on-click (choose-activity! :web-search)}
         [icons/browser-search]
         [:p "Web Search"]]
-       [:div.hub-icon
+       [:div.hub-icon.column
         {:on-click (choose-activity! :reverse-image-simple :reverse-image-crop)}
         [icons/recycle-search]
         [:p "Reverse Image Search"]]
-      [:div.hub-icon
+      [:div.hub-icon.column
         {:on-click (choose-activity! :polygon-search)}
         [icons/image-analysis]
        [:p "Image Analysis"]]
-      [:div.hub-icon
+      [:div.hub-icon.column
         {:on-click (choose-activity! :geolocation)}
         [icons/geolocation]
        [:p "Geolocation"]] ]))
 
-(defn <title> [] [:div.activity-hub-title.has-centered-text.is-centered
-                   [:h3.title.is-3 "Verification Hub"]])
+(defn <title> [] [:div.activity-hub-title.has-centered-text.is-centered.columns
+                  [:div.column.is-centered
+                   [:h3.title.is-3 "Verification Hub"]]])
 
 
 (defn <container> []

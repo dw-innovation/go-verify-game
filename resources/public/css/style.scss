@@ -457,7 +457,6 @@ button { background-color: transparent;
   padding: var(--spacing);
   cursor: pointer;
   text-align: center;
-  /* evenly space the icons */
-  flex-basis: 100%;
-  width: 0;
+  width: 0; // needed to evenly space the columns.  all the
+            // rest of the styles come from bulma attatched to the div.
 }
