@@ -18,9 +18,9 @@
                            back! :back!}]
   (let [activities (:activities post)
         activity (find-first (fn [a] (= (:type a) activity-type)) activities)]
-     ;; a post might have activities in it or it might not,
-     ;; for now, just flat list them out, verification hub to come
-       [activities/get-activity activity back!]))
+    [:div.columns.is-centered
+     [:div.column.is-8.mt-4
+      [activities/get-activity activity back!]]]))
 
 (defn <hub-home> [{post :post
                    change-panel! :change-panel!}]
@@ -53,7 +53,10 @@
       [:div.hub-icon
         {:on-click (choose-activity! :geolocation)}
         [icons/geolocation]
-        [:p "Geolocation"]] ]))
+       [:p "Geolocation"]] ]))
+
+(defn <title> [] [:div.activity-hub-title.has-centered-text.is-centered
+                   [:h3.title.is-3 "Verification Hub"]])
 
 
 (defn <container> []
@@ -65,11 +68,13 @@
             points @state/points]
         [:div
          [<header>]
-         [:div.container
-          [:div.columns.is-centered
-           [:div.column.is-8.mt-4
+
             [:div {:class "notification is-info is-light"}
              [:b "Currently investigating: "] "post ID #" (:id post)]
+
+         [<title>]
+         [:div.thomas]
+         [:div.container
             (case @active-panel
               :hub [<hub-home> {:post post :change-panel! change-panel!}]
               [<investigate-post> {:post post
@@ -86,4 +91,4 @@
               [:div (@state/stats :misleading-reposts) " Misleading Reposts"]]
              [:div.stat.column
               [icons/hourglass]
-              [:div (@state/stats :missed-deadlines) " Missed Deadlines"]]]]]]]))))
+              [:div (@state/stats :missed-deadlines) " Missed Deadlines"]]]]]))))
