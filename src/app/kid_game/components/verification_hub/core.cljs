@@ -37,7 +37,7 @@
 (defn <hub-icon> [{icon :icon
                    title :title
                    on-click! :fn}]
-  [:a.column.p-4.m-2.has-border-teal.br-1.hub-icon
+  [:a.hub-icon
    {:on-click on-click!}
    [icon]
    [:div.has-text-centered.has-text-black title]])

@@ -445,12 +445,7 @@ button { background-color: transparent;
 
 }
 
-.hub-icon {
-  svg { height: 100px; }
-  &:hover{
-    background-color: var(--color-teal-light);
-  }
-}
+
 
 .br-1 {
   border-radius: var(--spacing-half);
@@ -464,6 +459,18 @@ button { background-color: transparent;
 
 .has-border-teal {
   border: 2px solid var(--color-teal);
+}
+
+.hub-icon {
+  @extend .column;
+  @extend .p-4;
+  @extend .m-2;
+  @extend .has-border-teal;
+  @extend .br-1;
+  svg { height: 100px; }
+  &:hover{
+    background-color: var(--color-teal-light);
+  }
 }
 
 
