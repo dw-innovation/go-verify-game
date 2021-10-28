@@ -85,7 +85,7 @@
     [:div {:style {:width "100px" :float "left"}}
      [icons/blooble-logo]]
     [:div {:style {:width "100px" :float "left"}}
-     [icons/thomas-color-3]]
+     [icons/thomas]]
     [:div {:style {:width "100px" :float "left"}}
      [icons/image-analysis]]
     [:div {:style {:width "100px" :float "left"}}

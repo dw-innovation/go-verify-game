@@ -40,7 +40,7 @@
            :fill "#FF4131"
            :fill-rule "nonzero"}]]])
 
-(defn thomas-color-3 []
+(defn thomas []
 [:svg
   {:viewBox "0 0 512 512",
    :width "100%"

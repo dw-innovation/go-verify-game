@@ -22,6 +22,38 @@
      [:div.column.is-8.mt-4
       [activities/get-activity activity back!]]]))
 
+(defn <title> [] [:div.activity-hub-title.has-centered-text.is-centered.columns
+                  [:div.column.is-centered ;; this centering does not work.  help.
+                   [:h3.title.is-3 "Verification Hub"]]])
+
+(defn <thomas> [] [:div.thomas.columns.is-centered
+                   [:div.column.is-4
+                   [:div.thomas-icon
+                    [icons/thomas]]
+                   [:div.hub-description.has-centered-text ;; also, has-centered text not working
+                    [:p "This is " [:b "Thomas"] " a veteran verification duck and your personal tutor"]
+                    [:p "Well, he will help you, and eat you if you die"]]]])
+
+(defn <hub-icon> [{icon :icon
+                   title :title
+                   on-click! :fn}]
+  [:a.column.p-4.m-2.has-border-teal.br-1.hub-icon
+   {:on-click on-click!}
+   [icon]
+   [:div.has-text-centered.has-text-black title]])
+
+(defn <hub-icons> [[{icon :icon
+                    title :title
+                     on-click! :fn} & rest :as actions]]
+  [:div.icons.columns
+   (map <hub-icon> actions)])
+
+(defn <hub-icons-vertical> [[{icon :icon
+                              title :title
+                              on-click! :fn} & rest :as actions]]
+  [:div.icons.rows
+   (map <hub-icon> actions)])
+
 (defn <hub-home> [{post :post
                    change-panel! :change-panel!}]
   (let [post-activities (:activities post)
@@ -36,28 +68,45 @@
                                  (if (empty? hits)
                                    (state/add-notification {:type :warning
                                                             :text "Choose a different activity"})
-                                   (change-panel! (first hits)))))))]
-      [:div.is-flex.is-justify-content-space-evenly
-       [:div.hub-icon.column
-        {:on-click (choose-activity! :web-search)}
-        [icons/browser-search]
-        [:p "Web Search"]]
-       [:div.hub-icon.column
-        {:on-click (choose-activity! :reverse-image-simple :reverse-image-crop)}
-        [icons/recycle-search]
-        [:p "Reverse Image Search"]]
-      [:div.hub-icon.column
-        {:on-click (choose-activity! :polygon-search)}
-        [icons/image-analysis]
-       [:p "Image Analysis"]]
-      [:div.hub-icon.column
-        {:on-click (choose-activity! :geolocation)}
-        [icons/geolocation]
-       [:p "Geolocation"]] ]))
+                                   (change-panel! (first hits)))))))
+        points @state/points
+        {blocked-correctly :blocked-correctly
+         misleading-reposts :misleading-reposts
+         missed-deadlines :missed-deadlines} @state/stats
+        actions [{:icon icons/browser-search
+                  :title "Web Search"
+                  :fn (choose-activity! :web-search)}
+                 {:icon icons/recycle-search
+                  :title "Reverse Image Search"
+                  :fn (choose-activity! :reverse-image-crop)}
+                {:icon icons/image-analysis
+                  :title "Image-analysis"
+                 :fn (choose-activity! :polygon-search)}
+                {:icon icons/geolocation
+                  :title "Geolocation"
+                  :fn (choose-activity! :geolocation)} ]
+        ]
+    [:div
+     [<title>]
+     [<thomas>]
+     [<hub-icons> actions]
 
-(defn <title> [] [:div.activity-hub-title.has-centered-text.is-centered.columns
-                  [:div.column.is-centered
-                   [:h3.title.is-3 "Verification Hub"]]])
+
+     [:div.scores
+      "Score: " [:span.points points] " points"]
+
+     [:div.stats.columns
+      [:div.stat.column
+       [icons/award]
+       [:div blocked-correctly " Blocked Correctly"]]
+      [:div.stat.column
+       [icons/stop-sign]
+       [:div misleading-reposts " Misleading Reposts"]]
+      [:div.stat.column
+       [icons/hourglass]
+       [:div missed-deadlines " Missed Deadlines"]]]]))
+
+
 
 
 (defn <container> []
@@ -73,23 +122,11 @@
             [:div {:class "notification is-info is-light"}
              [:b "Currently investigating: "] "post ID #" (:id post)]
 
-         [<title>]
-         [:div.thomas]
+
          [:div.container
             (case @active-panel
               :hub [<hub-home> {:post post :change-panel! change-panel!}]
               [<investigate-post> {:post post
                                    :activity-type @active-panel
                                    :back! back-to-hub!}])
-            [:div.scores
-             "Score: " points " points"]
-            [:div.stats.columns
-             [:div.stat.column
-              [icons/award]
-              [:div (@state/stats :blocked-correctly) " Blocked Correctly"]]
-             [:div.stat.column
-              [icons/stop-sign]
-              [:div (@state/stats :misleading-reposts) " Misleading Reposts"]]
-             [:div.stat.column
-              [icons/hourglass]
-              [:div (@state/stats :missed-deadlines) " Missed Deadlines"]]]]]))))
+            ]]))))
