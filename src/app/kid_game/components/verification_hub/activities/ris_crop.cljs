@@ -95,10 +95,10 @@
         ;; so we have a little hack here.  first correct click logs a true,
         ;; then the second can act on that.  the evaluation happens in the mouseup! above, where the state
         ;; of the switches is checked.
-        first-success! (fn [evt] (.stopPropagation evt)
+        first-success! (fn [evt]
                          (reset! correct-second? false)
                          (reset! correct-first? true))
-        second-success! (fn [evt] (.stopPropagation evt)
+        second-success! (fn [evt]
                           (if @correct-first?
                             (do (reset! correct-second? true)
                                 (reset! correct-first? false))
