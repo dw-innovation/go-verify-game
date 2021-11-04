@@ -46,7 +46,7 @@
    [:h4.title.is-4 "Thomas recommends you try one of the following"]
    [:p.subtitle "Click on one of the options to start the corresponding activity"]
    [:div.icons.columns.mt-5
-   (map <hub-icon> actions)]])
+    (map <hub-icon> actions)]])
 
 (defn <hub-home> [{post :post
                    change-panel! :change-panel!}]
@@ -73,13 +73,12 @@
                  {:icon icons/recycle-search
                   :title "Reverse image search"
                   :fn (choose-activity! :reverse-image-crop)}
-                {:icon icons/image-analysis
+                 {:icon icons/image-analysis
                   :title "Image analysis"
-                 :fn (choose-activity! :polygon-search)}
-                {:icon icons/geolocation
+                  :fn (choose-activity! :polygon-search)}
+                 {:icon icons/geolocation
                   :title "Geolocation"
-                  :fn (choose-activity! :geolocation)} ]
-        ]
+                  :fn (choose-activity! :geolocation)}]]
     [:div
      [<thomas>]
      [<title>]
@@ -89,8 +88,7 @@
      [:div.scores
       [:div {:class "tile is-parent is-vertical"}
        [:h5 {:class "title has-text-white"} "Your score:"]
-       [:p {:class "subtitle has-text-white"} [:b points] " points"]]
-      ]
+       [:p {:class "subtitle has-text-white"} [:b (.toLocaleString points)] " points"]]]
 
      [:div.stats.columns.is-centered
       [:div.stat.column.is-2.has-text-centered
@@ -113,8 +111,8 @@
         [:div
          [<header>]
          [:div.hub-container
-            (case @active-panel
-              :hub [<hub-home> {:post post :change-panel! change-panel!}]
-              [<investigate-post> {:post post
-                                   :activity-type @active-panel
-                                   :back! back-to-hub!}])]]))))
+          (case @active-panel
+            :hub [<hub-home> {:post post :change-panel! change-panel!}]
+            [<investigate-post> {:post post
+                                 :activity-type @active-panel
+                                 :back! back-to-hub!}])]]))))

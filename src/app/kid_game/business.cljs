@@ -104,12 +104,12 @@
          misleading-reposts :misleading-reposts} @state/stats]
     (if (:fake-news? post)
       (do (state/add-notification {:type :success
-                                   :text (str "+" points " points")})
+                                   :text (str "+" (.toLocaleString points) " points")})
           (swap! state/stats assoc-in [:blocked-correctly] (inc blocked-correctly))
           (state/update-post post :points-result points)
           (win-points! time-left))
       (do (state/add-notification {:type :warning
-                                   :text (str "-" points " points")})
+                                   :text (str "-" (.toLocaleString points) " points")})
           (state/update-post post :points-result (- points))
           (loose-points! time-left))))
   (stop-post-timer! post)
@@ -129,7 +129,7 @@
           (state/update-post post :points-result points)
           (loose-points! time-left))
       (do (state/add-notification {:type :success
-                                   :text (str "+" points " points")})
+                                   :text (str "+" (.toLocaleString points) " points")})
           (state/update-post post :points-result (- points))
           (win-points! time-left)))
     (stop-post-timer! post)
