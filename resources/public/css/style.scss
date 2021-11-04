@@ -43,18 +43,6 @@
   font-size: 4rem;
 }
 
-.scores {
-  @include inverted-hub;
-  @include padded-box;
-  @include big-text;
-}
-
-.stats {
-  .stat {
-    padding: var(--spacing);
-  }
-}
-
 
 /* BULMA OVERRIDES */
 .column {
@@ -468,30 +456,31 @@ button { background-color: transparent;
   max-width: calc(min(100vw, 100%));
   min-width: 50rem;
   margin: 0 auto;
+
+  .hub-icon {
+    @extend .column;
+    @extend .p-2;
+    @extend .m-2;
+    @extend .has-border-teal;
+    @extend .br-1;
+    svg { height: 80px; }
+    &:hover{
+      background-color: var(--color-teal-light);
+    }
+  }
+
+  .scores {
+    @include inverted-hub;
+    @include padded-box;
+    // @include big-text;
+    @extend .mt-5;
+    @extend .mb-5;
+    @extend .br-1;
+  }
+  
+  .stats {
+    .stat {
+      padding: var(--spacing);
+    }
+  }
 }
-
-
-// .verification-hub {
-//   .icons {
-//     @columns
-//     .icon {
-//       @column
-//       @p4
-//       @m2
-//       &.active {
-//         color: red;
-//       }
-//     }
-//   }
-// }
-
-// .sidebar {
-//   .icons {
-//     @level
-//     .icon {
-//       @level-item
-//     }
-//   }
-// }
-//
-

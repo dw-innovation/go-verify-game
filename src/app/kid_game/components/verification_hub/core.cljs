@@ -83,11 +83,14 @@
     [:div
      [<thomas>]
      [<title>]
+     [:hr]
      [<hub-icons> actions]
 
-
      [:div.scores
-      "Score: " [:span.points points] " points"]
+      [:div {:class "tile is-parent is-vertical"}
+       [:h5 {:class "title has-text-white"} "Your score:"]
+       [:p {:class "subtitle has-text-white"} [:b points] " points"]]
+      ]
 
      [:div.stats.columns
       [:div.stat.column
