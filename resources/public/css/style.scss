@@ -461,17 +461,6 @@ button { background-color: transparent;
   border: 2px solid var(--color-teal);
 }
 
-.hub-icon {
-  @extend .column;
-  @extend .p-4;
-  @extend .m-2;
-  @extend .has-border-teal;
-  @extend .br-1;
-  svg { height: 100px; }
-  &:hover{
-    background-color: var(--color-teal-light);
-  }
-}
 
 .hub-container {
   padding: var(--spacing-double);
