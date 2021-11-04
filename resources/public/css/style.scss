@@ -101,7 +101,7 @@ body {
     }
 }
 
-.game-panel > * { width: 66vw; }
+// .game-panel > * { width: 66vw; }
 
 .game-timeline,
 .game-verification-hub {
@@ -471,6 +471,14 @@ button { background-color: transparent;
   &:hover{
     background-color: var(--color-teal-light);
   }
+}
+
+.hub-container {
+  padding: var(--spacing-double);
+  width: 50rem;
+  max-width: calc(min(100vw, 100%));
+  min-width: 50rem;
+  margin: 0 auto;
 }
 
 

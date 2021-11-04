@@ -123,7 +123,7 @@
              [:b "Currently investigating: "] "post ID #" (:id post)]
 
 
-         [:div.container
+         [:div.hub-container
             (case @active-panel
               :hub [<hub-home> {:post post :change-panel! change-panel!}]
               [<investigate-post> {:post post
