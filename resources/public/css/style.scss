@@ -481,6 +481,7 @@ button { background-color: transparent;
   .stats {
     .stat {
       padding: var(--spacing);
+      svg { height: 80px; }
     }
   }
 }

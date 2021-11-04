@@ -92,16 +92,16 @@
        [:p {:class "subtitle has-text-white"} [:b points] " points"]]
       ]
 
-     [:div.stats.columns
-      [:div.stat.column
+     [:div.stats.columns.is-centered
+      [:div.stat.column.is-2.has-text-centered
        [icons/award]
-       [:div blocked-correctly " Blocked Correctly"]]
-      [:div.stat.column
+       [:div [:b blocked-correctly] " Blocked correctly"]]
+      [:div.stat.column.is-2.has-text-centered
        [icons/stop-sign]
-       [:div misleading-reposts " Misleading Reposts"]]
-      [:div.stat.column
+       [:div [:b misleading-reposts] " Misleading reposts"]]
+      [:div.stat.column.is-2.has-text-centered
        [icons/hourglass]
-       [:div missed-deadlines " Missed Deadlines"]]]]))
+       [:div [:b missed-deadlines] " Missed deadlines"]]]]))
 
 (defn <container> []
   (let [active-panel (r/atom :hub) ; or activity type such as :reverse-image-crop
