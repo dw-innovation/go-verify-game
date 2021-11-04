@@ -79,7 +79,7 @@
        [:div.columns.activity-actions
         [:div.column.action
          [:p "Ready to make a call?"]
-         [:button {:on-click (fn [] (state/open-timeline))} "Back to timeline"]]
+         [:button {:on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))} "Back to timeline"]]
         [:div.column.action
          [:p "Investigate further?"]
          [:button {:on-click back!} "Back to hub"]]]])))
