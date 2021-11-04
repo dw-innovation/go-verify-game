@@ -22,17 +22,15 @@
      [:div.column.is-8.mt-4
       [activities/get-activity activity back!]]]))
 
-(defn <title> [] [:div.activity-hub-title.has-centered-text.is-centered.columns
-                  [:div.column.is-centered ;; this centering does not work.  help.
-                   [:h3.title.is-3 "Verification Hub"]]])
+(defn <title> [] [:div {:class "columns is-centered mb-5"}
+                  [:div {:class "column is-6  has-text-centered"}
+                   [:h3.title.is-4 "This is Thomas"]
+                   [:h5.subtitle "He's your verification compagnon, a kind of personal tutor. Oh, he's also a duck."]]])
 
 (defn <thomas> [] [:div.thomas.columns.is-centered
-                   [:div.column.is-4
+                   [:div.column.is-3
                    [:div.thomas-icon
-                    [icons/thomas]]
-                   [:div.hub-description.has-centered-text ;; also, has-centered text not working
-                    [:p "This is " [:b "Thomas"] " a veteran verification duck and your personal tutor"]
-                    [:p "Well, he will help you, and eat you if you die"]]]])
+                    [icons/thomas]]]])
 
 (defn <hub-icon> [{icon :icon
                    title :title
@@ -45,7 +43,7 @@
 (defn <hub-icons> [[{icon :icon
                     title :title
                      on-click! :fn} & rest :as actions]]
-  [:div.icons.columns
+  [:div.icons.columns.mt-5
    (map <hub-icon> actions)])
 
 (defn <hub-icons-vertical> [[{icon :icon
@@ -87,8 +85,8 @@
                   :fn (choose-activity! :geolocation)} ]
         ]
     [:div
-     [<title>]
      [<thomas>]
+     [<title>]
      [<hub-icons> actions]
 
 
