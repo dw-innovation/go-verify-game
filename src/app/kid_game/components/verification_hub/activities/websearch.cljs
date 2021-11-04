@@ -10,10 +10,10 @@
 ;; requirement tree for changed to be picked up. no idea why. see issue #48
 
 (defn <header> []
-[:div.activity-header
- [:div.columns
- [:div.activity-icon
-  [icons/browser-search]]
+  [:div.activity-header
+   [:div.columns
+    [:div.activity-icon
+     [icons/browser-search]]
     [:div.activity-title "Web Search"]]])
 
 (defn <blooble-search> [placeholder search!]
@@ -28,8 +28,8 @@
                 :placeholder placeholder
                 :disabled true
                 :on-change #(reset! v (-> % .-target .-value))}]
-        [:span {:class "icon is-small is-left"}
-         [:i {:class "fa fa-search"}]]]]
+       [:span {:class "icon is-small is-left"}
+        [:i {:class "fa fa-search"}]]]]
      [:div.field
       [:div  {:class "control has-text-centered"}
        [:button {:class "button is-link"}
@@ -52,8 +52,7 @@
          [image-results/<search-result> res]])])
    (when loading
      [:div.loading-panel
-      [image-results/<loading>]])]
-   )
+      [image-results/<loading>]])])
 
 ;; Activity of type web-search, with it's corresponding dara
 (defn <main> [{:as data
@@ -62,13 +61,13 @@
                loading-time :loading-time ; could be nil
                results :results}
               back!]
- (let [searched? (r/atom false)
-       loading? (r/atom false)
-       click! (fn []
-                (reset! loading? true)
-                (async/go (async/<! (async/timeout (or loading-time 2000)))
-                          (reset! searched? true)
-                          (reset! loading? false)))]
+  (let [searched? (r/atom false)
+        loading? (r/atom false)
+        click! (fn []
+                 (reset! loading? true)
+                 (async/go (async/<! (async/timeout (or loading-time 2000)))
+                           (reset! searched? true)
+                           (reset! loading? false)))]
     (fn []
       [:div.activity-container.web-search
        [<header>]
@@ -83,5 +82,4 @@
          [:button {:on-click (fn [] (state/open-timeline))} "Back to timeline"]]
         [:div.column.action
          [:p "Investigate further?"]
-         [:button {:on-click back!} "Back to hub"]]]
-       ])))
+         [:button {:on-click back!} "Back to hub"]]]])))

@@ -19,10 +19,10 @@
   (r/adapt-react-class react-transition-group/CSSTransition))
 
 (defn <header> []
-[:div.activity-header
- [:div.columns
- [:div.activity-icon
-  [icons/recycle-search]]
+  [:div.activity-header
+   [:div.columns
+    [:div.activity-icon
+     [icons/recycle-search]]
     [:div.activity-title "Simple Reverse Image Search"]]])
 
 (defn <main> [{:as data
@@ -42,16 +42,16 @@
        [<header>]
        [image-results/<dragger> main-image drag-done!]
        [:div.activity-step
-       [css-transition-group {:class "transition-results"}
-        (if @loading?
-          [image-results/<loading>]
-          (when @dragged?
-            [css-transition {:class-names "ris-results-transition"}
-             [:div.ris-results
-              [:h3.ris-result-header "Pages with matching images:"]
-              [image-results/<search-results> result-search]
-              [:h3.ris-result-header "Similar images:"]
-              [image-results/<image-results> result-images]]]))]]
+        [css-transition-group {:class "transition-results"}
+         (if @loading?
+           [image-results/<loading>]
+           (when @dragged?
+             [css-transition {:class-names "ris-results-transition"}
+              [:div.ris-results
+               [:h3.ris-result-header "Pages with matching images:"]
+               [image-results/<search-results> result-search]
+               [:h3.ris-result-header "Similar images:"]
+               [image-results/<image-results> result-images]]]))]]
        [:hr]
        [:div.columns.activity-actions
         [:div.column.action
@@ -59,5 +59,4 @@
          [:button {:on-click (fn [] (state/open-timeline))} "Back to timeline"]]
         [:div.column.action
          [:p "Investigate further?"]
-         [:button {:on-click back!} "Back to hub"]]]
-       ])))
+         [:button {:on-click back!} "Back to hub"]]]])))
