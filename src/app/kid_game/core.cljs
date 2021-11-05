@@ -22,8 +22,9 @@
 
 (defn <game> [& {:keys [dev?]}]
   (let [size (if dev?
-                {:active "is-half active" :inactive "is-one-quarter"}
-                {:active "is-two-thirds active" :inactive "is-one-third"})]
+               {:active "is-half active" :inactive "is-one-quarter is-unselectable"}
+               {:active "is-two-thirds active" :inactive "is-one-third is-unselectable"})
+        pointer-events {:active {:pointer-events "all"} :inactive {:pointer-events "none"}}]
     [:div {:class "game-container columns"}
      [notifications/<notifications>]
 
@@ -36,14 +37,18 @@
                     "game-timeline"
                     (cond (= (state/get-panel) :timeline) (:active size)
                           :else                           (:inactive size))]
-            :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
+            :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))
+            :style (cond (= (state/get-panel) :timeline) (:active pointer-events)
+                         :else                           (:inactive pointer-events))}
       [<timeline>/<container>]]
 
      [:div {:class ["game-panel column"
                     "game-verification-hub"
                     (cond (= (state/get-panel) :verification-hub) (:active size)
                           :else                                   (:inactive size))]
-            :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
+            :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))
+            :style (cond (= (state/get-panel) :verification-hub) (:active pointer-events)
+                         :else                                   (:inactive pointer-events))}
       [<verification-hub>/<container>]]]))
 
 
@@ -54,19 +59,14 @@
                  [<timeline>/<post> (assoc post :game-state :live)]]
                 (map (fn [activity]
                        ^{:key (:type activity)} ;; important to keep track of rendering
-                        [activities/get-activity activity]) (:activities post))])))
+                       [activities/get-activity activity]) (:activities post))])))
 
 (defn <app> [& {:keys [dev]}]
   (let [is-dev? (r/atom dev)]
     (fn []
-      ;;[:div
-       (cond
-         (state/has-player?) [<game> :dev? @is-dev?]
-         :else [<login>/<form>])
-      ;;  [:button.devbutton {:on-click #(reset! is-dev? (not @is-dev?))}
-      ;;   "toggle dev tools"]
-      ;; ]
-    )))
+      (cond
+        (state/has-player?) [<game> :dev? @is-dev?]
+        :else [<login>/<form>]))))
 
 (defn <routes> []
   ;; decide what to render in our app.  This is some junk hand-made routing
