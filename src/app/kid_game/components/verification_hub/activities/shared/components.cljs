@@ -23,6 +23,7 @@
       "more info"]
      ]]])
 
+
 (defn <activity-actions> [back!]
   [:div.activity-actions.pb-5.pt-5
   [:div.columns.mt-5.mb-5.contain-section-width.center-section.has-text-white

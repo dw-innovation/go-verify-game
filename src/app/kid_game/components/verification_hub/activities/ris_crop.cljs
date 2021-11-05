@@ -176,7 +176,6 @@
         "Image Crop Explanation"
         [:p "More text"]]
        [:div.activity-step.contain-section-width.center-section
-       [:div.activity-step
         [<first-drag-step>]]
        [:div.activity-step.contain-section-width.center-section
         [<cropping-step>]]
