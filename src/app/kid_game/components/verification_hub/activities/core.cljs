@@ -20,16 +20,16 @@
   [:div
    [:h1 "The activity type was not found:" component-name]])
 
-(defn match [{:as activity typ :type data :data}]
+(defn match [{:as activity typ :type data :data} back!]
   (case typ
     :test [<test>]
-    :reverse-image-simple [ris-simple/<main> data]
-    :reverse-image-crop [ris-crop/<main> data]
-    :web-search [websearch/<main> data]
-    :polygon-search [polygon-search/<main> data]
+    :reverse-image-simple [ris-simple/<main> data back!]
+    :reverse-image-crop [ris-crop/<main> data back!]
+    :web-search [websearch/<main> data back!]
+    :polygon-search [polygon-search/<main> data back!]
     ; none of the above matched:
     [<not-found> typ]))
 
 
-(defn get-activity [{:as activity id :id typ :type data :data}]
-  [match activity])
+(defn get-activity [{:as activity id :id typ :type data :data} back!]
+  [match activity back!])

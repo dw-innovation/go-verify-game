@@ -22,6 +22,9 @@
                           :user {}}))
 
 (defonce points (atom 0))
+(defonce stats (atom {:blocked-correctly 0
+                      :missed-deadlines 0
+                      :misleading-reposts 0}))
 (defonce msg-list (atom []))
 (defonce notifications (atom []))
 (defonce users (atom {}))
@@ -50,7 +53,7 @@
 
 ;; set the app to work with a new user
 (defn set-player [user]
-       (swap! app-state assoc :user user))
+  (swap! app-state assoc :user user))
 
 (defn get-player [] (:user @app-state))
 
@@ -80,7 +83,7 @@
        (utils/indexes #(chat/same % chat))
        (first)
        (#(do
-          (if % (swap! msg-list assoc % (chat/seen! chat)))))))
+           (if % (swap! msg-list assoc % (chat/seen! chat)))))))
 
 (defn message-list [] @msg-list)
 
@@ -98,6 +101,7 @@
   (reset! points (- @points ps))
   (log/debug "lost points " ps)
   (log/debug "total points " @points))
+
 
 ;;
 ;;  posts
@@ -183,10 +187,10 @@
 
 (defn update-notification [n]
   (->> ;; use specter to update the post at the path where the ids are the same
-        (s/setval [(s/filterer #(= (:time %) (:time n))) s/FIRST]
-                  n @notifications)
+   (s/setval [(s/filterer #(= (:time %) (:time n))) s/FIRST]
+             n @notifications)
         ;; update the post state
-        (reset! notifications)))
+   (reset! notifications)))
 
 (defn disable-notification [n]
   (update-notification (assoc n :active false)))
