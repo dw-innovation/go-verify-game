@@ -78,8 +78,11 @@
         misclicks (r/atom 0)]
     (fn []
       [:div.activity-container.image-analysis
-       [components/<header> icons/image-analysis "Image Analysis" "Something looks strange here"]
+       [components/<header> icons/image-analysis "Image Analysis" "Something looks strange here"
+        "Image Analysis Explanation"
+        [:p "here is a description of image analysis"]]
        [:div.activity-step.contain-section-width.center-section
+
         [:div.activity-description "Mark the parts of the image that look weird to you.  Place pointer, click, and start finsing polygons."]
         [click-image-svg
          image-url

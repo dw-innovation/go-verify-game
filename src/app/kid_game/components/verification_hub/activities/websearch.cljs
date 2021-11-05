@@ -73,7 +73,9 @@
       [:div.activity-container.web-search
        [:div.activity-step.contain-section-width.center-section
 
-       [components/<header> icons/browser-search "Web Search" "Sometimes a basic search is enough"]
+       [components/<header> icons/browser-search "Web Search" "Sometimes a basic search is enough"
+        "Web Search Explanation"
+        [:p "More text"]]
        [<blooble-simulation>
         (string/join " + " terms)
         (if @searched? results nil)

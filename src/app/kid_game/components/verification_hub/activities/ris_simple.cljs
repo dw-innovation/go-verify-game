@@ -40,7 +40,9 @@
                                (reset! loading? false)))]
     (fn []
       [:div.activity-container.ris-simple
-       [components/<header> icons/recycle-search "Reverse Image Search" "See where this image might come from"]
+       [components/<header> icons/recycle-search "Reverse Image Search" "See where this image might come from"
+        "Reverse Image Search Explanation"
+        [:p "more text"]]
        [<header>]
        [image-results/<dragger> main-image drag-done!]
        [:div.activity-step.contain-section-width.center-section
