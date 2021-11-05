@@ -41,12 +41,11 @@
 (s/def ::stop-timer! fn?)
 
 (s/def ::game-post (s/merge ::post
-                          (s/keys :req-un [::game-state
-                                           ::investigated?]
-                                  :opt-un [::points-result
-                                           ::time-left
-                                           ::stop-timer!])
-                          ))
+                            (s/keys :req-un [::game-state
+                                             ::investigated?]
+                                    :opt-un [::points-result
+                                             ::time-left
+                                             ::stop-timer!])))
 
 (defn post? [p] (s/valid? ::post p))
 (defn is-game-post? [p]

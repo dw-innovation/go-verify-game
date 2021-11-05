@@ -85,7 +85,7 @@
   (state/add-post post)
   ;; add the live game post states
   (state/update-post post :game-state nil
-                          :investigated? false)
+                     :investigated? false)
   ;; attatch a time decreaser to the post, but only if time limiet
   (when (:time-limit post)
     ;; if it has a time limit, then it is a 'playable' post
@@ -132,16 +132,16 @@
                          investigated? :investigated?}]
   {:pre [(posts/is-game-post? post)
          (every? some? [time-left time-limit investigated?])]}
-  (let [time-left-fraction (+ 1(/ time-left time-limit))
+  (let [time-left-fraction (+ 1 (/ time-left time-limit))
         points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
     (loose-points! points)
     (notify :success (str "Blocked nonsense content, you lost " points " points"))
     (state/update-post post :points-result (- points))))
 
 (defn do-shared-correctly [{:as post
-                             time-left :time-left
-                             time-limit :time-limit
-                             investigated? :investigated?}]
+                            time-left :time-left
+                            time-limit :time-limit
+                            investigated? :investigated?}]
   {:pre [(posts/is-game-post? post)
          (every? some? [time-left time-limit investigated?])]}
   (let [time-left-fraction (/ time-left time-limit)
@@ -173,12 +173,11 @@
          game-state :game-state} post
         live-post? (= game-state :live)
         dead-post? (not live-post?)
-        legit-news? (not fake-news?)
-         ]
+        legit-news? (not fake-news?)]
     (cond
       ;; shared filler content:
       (and dead-post? blocked?) (do-blocked-irrelevant)
-      (and dead-post? shared?)(do-shared-irrelevant)
+      (and dead-post? shared?) (do-shared-irrelevant)
       (and live-post? blocked? fake-news?) (do-blocked-correctly post)
       (and live-post? blocked? legit-news?) (do-blocked-wrong post)
       (and live-post? shared? fake-news?) (do-shared-wrong post)
