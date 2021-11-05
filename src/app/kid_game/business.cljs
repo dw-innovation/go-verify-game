@@ -108,10 +108,10 @@
     (swap! state/stats assoc-in [stat] (inc s))))
 
 (defn do-blocked-irrelevant []
-  (notify :info (str "Blocked a post! 0 points")))
+  (notify :info (str "That wasn't tremendously useful, was it? 0 points")))
 
 (defn do-shared-irrelevant []
-  (notify :info (str "Shared a post! 0 points")))
+  (notify :info (str "That wasn't tremendously useful, was it? 0 points")))
 
 (defn do-blocked-correctly [{:as post
                              time-left :time-left
@@ -123,7 +123,7 @@
         points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
     (win-points! points)
     (inc-stat :blocked-correctly)
-    (notify :success (str "Blocked nonsense content, you won " points " points"))
+    (notify :success (str "You blocked nonsense content, you won " points " points"))
     (state/update-post post :points-result points)))
 
 (defn do-blocked-wrong [{:as post
@@ -135,7 +135,7 @@
   (let [time-left-fraction (+ 1 (/ time-left time-limit))
         points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
     (loose-points! points)
-    (notify :success (str "Blocked nonsense content, you lost " points " points"))
+    (notify :warning (str "You blocked legit content, you lost " points " points"))
     (state/update-post post :points-result (- points))))
 
 (defn do-shared-correctly [{:as post
@@ -147,7 +147,7 @@
   (let [time-left-fraction (/ time-left time-limit)
         points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
     (win-points! points)
-    (notify :success (str "Shared legit content, you won " points " points"))
+    (notify :success (str "You shared legit content, you won " points " points"))
     (state/update-post post :points-result points)))
 
 (defn do-shared-wrong [{:as post
@@ -160,7 +160,7 @@
         points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
     (loose-points! points)
     (inc-stat :misleading-reposts)
-    (notify :success (str "Shared nonsense content, you lost " points " points"))
+    (notify :warning (str "You shared nonsense content, you lost " points " points"))
     (state/update-post post :points-result (- points))))
 
 
