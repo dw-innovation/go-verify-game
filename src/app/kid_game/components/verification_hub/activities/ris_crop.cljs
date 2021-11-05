@@ -175,10 +175,11 @@
        [components/<header> icons/recycle-search "Reverse Image Search" "How cropping images can yield more search results"
         "Image Crop Explanation"
         [:p "More text"]]
+       [:div.activity-step.contain-section-width.center-section
        [:div.activity-step
         [<first-drag-step>]]
-       [:div.activity-step
+       [:div.activity-step.contain-section-width.center-section
         [<cropping-step>]]
-       [:div.activity-step
+       [:div.activity-step.contain-section-width.center-section
         [<second-drag-step>]]
        [components/<activity-actions> back!]])))

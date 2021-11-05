@@ -81,7 +81,8 @@
        [components/<header> icons/image-analysis "Image Analysis" "Something looks strange here"
         "Image Analysis Explanation"
         [:p "here is a description of image analysis"]]
-       [:div.activity-step
+       [:div.activity-step.contain-section-width.center-section
+
         [:div.activity-description "Mark the parts of the image that look weird to you.  Place pointer, click, and start finsing polygons."]
         [click-image-svg
          image-url

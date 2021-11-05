@@ -24,7 +24,8 @@
      ]]])
 
 (defn <activity-actions> [back!]
-  [:div.columns.mt-5.activity-actions.tile.notification.is-success
+  [:div.activity-actions.pb-5.pt-5
+  [:div.columns.mt-5.mb-5.contain-section-width.center-section.has-text-white
    [:div.column.has-text-centered
     [:p "Ready to make a call?"]
     [:button {:class "button is-primary is-inverted is-outlined"
@@ -34,4 +35,4 @@
     [:p "Investigate further?"]
     [:button {:class "button is-primary is-inverted is-outlined"
               :on-click back!}
-     [:span.icon [:i {:class "fas fa-search"}]] [:span "Back to hub"]]]])
+     [:span.icon [:i {:class "fas fa-search"}]] [:span "Back to hub"]]]]])

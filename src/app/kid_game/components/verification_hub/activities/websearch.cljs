@@ -71,6 +71,7 @@
                            (reset! loading? false)))]
     (fn []
       [:div.activity-container.web-search
+       [:div.activity-step.contain-section-width.center-section
 
        [components/<header> icons/browser-search "Web Search" "Sometimes a basic search is enough"
         "Web Search Explanation"
@@ -80,5 +81,6 @@
         (if @searched? results nil)
         @loading?
         click!]
+        ]
        [components/<activity-actions> back!]
        ])))

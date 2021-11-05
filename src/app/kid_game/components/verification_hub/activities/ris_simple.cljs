@@ -45,7 +45,7 @@
         [:p "more text"]]
        [<header>]
        [image-results/<dragger> main-image drag-done!]
-       [:div.activity-step
+       [:div.activity-step.contain-section-width.center-section
         [css-transition-group {:class "transition-results"}
          (if @loading?
            [image-results/<loading>]
