@@ -79,15 +79,45 @@ body {
     transition: width .4s ease-in-out,
                 box-shadow .4s ease-in-out,
                 filter .4s ease-in-out;
-    filter: // blur(1px)
-            brightness(.8);
     overflow-x: hidden;
-    &.active {
-	box-shadow: 5px 5px 30px 10px rgba(0,0,0,.2);
-	z-index: 1;
-        filter: brightness(1);
+
+    &.game-verification-hub {
+	    box-shadow: 5px 5px 30px 10px rgba(0,0,0,.2);
+	    z-index: 1;
     }
+
+    &.game-timeline {
+      filter: // blur(1px)
+        brightness(.8);
+      &.active {
+        filter: brightness(1);
+      }
+    }
+
 }
+
+.hub-arrow {
+  position: fixed;
+  z-indez: 999;
+  background-color: var(--color-white);
+  width: 6rem;
+  height: 6rem;
+  border-radius: 3rem;
+  margin-left: -2.4rem;
+  top: 6rem;
+  border: 10px solid var(--color-white);
+  cursor: pointer;
+
+  // transitions
+  &.in { left: 33vw; transform:rotate(0deg); }
+  &.out { left: 66vw; transform:rotate(180deg); }
+  transition: left .4s ease-in-out,
+              transform .7s ease-in-out;
+
+  path { fill: var(--color-hub-primary) }
+}
+
+
 
 // .game-panel > * { width: 66vw; }
 
