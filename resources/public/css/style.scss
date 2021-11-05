@@ -98,7 +98,6 @@ body {
 
 .hub-arrow {
   position: fixed;
-  z-indez: 999;
   background-color: var(--color-white);
   width: 6rem;
   height: 6rem;
@@ -115,6 +114,9 @@ body {
               transform .7s ease-in-out;
 
   path { fill: var(--color-hub-primary) }
+
+
+  z-index: 9999;
 }
 
 
