@@ -37,19 +37,22 @@
                     "game-timeline"
                     (cond (= (state/get-panel) :timeline) (:active size)
                           :else                           (:inactive size))]
-            :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))
-            :style (cond (= (state/get-panel) :timeline) (:active pointer-events)
-                         :else                           (:inactive pointer-events))}
-      [<timeline>/<container>]]
+            :on-click (fn [ev] (.stopPropagation ev) (println "clicked timelinneee") (state/open-timeline))
+            }
+      [:div.click-stopper {:style (if (= (state/get-panel) :timeline)
+                                    (:active pointer-events)
+                                    (:inactive pointer-events))}
+       [<timeline>/<container>]]]
 
      [:div {:class ["game-panel column"
                     "game-verification-hub"
                     (cond (= (state/get-panel) :verification-hub) (:active size)
                           :else                                   (:inactive size))]
-            :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))
-            :style (cond (= (state/get-panel) :verification-hub) (:active pointer-events)
-                         :else                                   (:inactive pointer-events))}
-      [<verification-hub>/<container>]]]))
+            :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
+      [:div.click-stopper {:style (if (= (state/get-panel) :verification-hub)
+                                    (:active pointer-events)
+                                    (:inactive pointer-events))}
+      [<verification-hub>/<container>]]]]))
 
 
 (defn <one-post> [post-id]
