@@ -79,7 +79,7 @@
     (fn []
       [:div.activity-container.image-analysis
        [components/<header> icons/image-analysis "Image Analysis" "Something looks strange here"]
-       [:div.activity-step
+       [:div.activity-step.contain-section-width.center-section
         [:div.activity-description "Mark the parts of the image that look weird to you.  Place pointer, click, and start finsing polygons."]
         [click-image-svg
          image-url

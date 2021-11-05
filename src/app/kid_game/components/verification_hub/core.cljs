@@ -18,8 +18,8 @@
                            back! :back!}]
   (let [activities (:activities post)
         activity (find-first (fn [a] (= (:type a) activity-type)) activities)]
-    [:div.columns.is-centered
-     [:div.column.is-8.mt-4
+    [:div.columns
+     [:div.column.is-12.mt-4
       [activities/get-activity activity back!]]]))
 
 (defn <title> [] [:div {:class "columns is-centered mb-5"}
@@ -27,7 +27,7 @@
                    [:h3.title.is-4 "This is Thomas"]
                    [:h5.subtitle "He's your verification compagnon, a kind of personal tutor. Oh, he's also a duck."]]])
 
-(defn <thomas> [] [:div.thomas.columns.is-centered
+(defn <thomas> [] [:div.thomas.columns.is-centered.pt-6
                    [:div.column.is-3
                     [:div.thomas-icon
                      [icons/thomas]]]])
@@ -80,15 +80,17 @@
                   :title "Geolocation"
                   :fn (choose-activity! :geolocation)}]]
     [:div
+     [:div.contain-section-width.center-section
      [<thomas>]
      [<title>]
      [:hr]
-     [<hub-icons> actions]
+     [<hub-icons> actions]]
 
      [:div.scores
+      [:div.contain-section-width.center-section
       [:div {:class "tile is-parent is-vertical"}
        [:h5 {:class "title has-text-white"} "Your score:"]
-       [:p {:class "subtitle has-text-white"} [:b (.toLocaleString points)] " points"]]]
+       [:p {:class "subtitle has-text-white"} [:b (.toLocaleString points)] " points"]]]]
 
      [:div.stats.columns.is-centered
       [:div.stat.column.is-2.has-text-centered

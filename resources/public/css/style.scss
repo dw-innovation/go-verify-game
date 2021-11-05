@@ -256,8 +256,6 @@ button { background-color: transparent;
 
 
 .activity-container {
-  max-width: 100%;
-  width: 35rem;
   .activity-actions {
     background-color: var(--color-hub-primary);
       button {
@@ -344,6 +342,13 @@ button { background-color: transparent;
 .ris-search-result-text { display: inline; }
 
 
+.contain-section-width {
+  max-width: 60rem;
+}
+.center-section {
+  margin: 0 auto;
+}
+
 
 
 
@@ -382,13 +387,6 @@ button { background-color: transparent;
     transform: rotate(360deg);
   }
 }
-
-.activity-container { max-width: 60rem;
-                      margin: 0 auto;
-                      }
-
-
-
 
 .comment {}
 .comment-inner { display: flex;
@@ -451,12 +449,7 @@ button { background-color: transparent;
 
 
 .hub-container {
-  padding: var(--spacing-double);
-  width: 50rem;
-  max-width: calc(min(100vw, 100%));
-  min-width: 50rem;
-  margin: 0 auto;
-
+  width: 66vw;
   .hub-icon {
     @extend .column;
     @extend .p-2;
@@ -475,7 +468,6 @@ button { background-color: transparent;
     // @include big-text;
     @extend .mt-5;
     @extend .mb-5;
-    @extend .br-1;
   }
   
   .stats {

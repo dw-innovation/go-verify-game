@@ -173,10 +173,10 @@
     (fn []
       [:div.activity-container.ris-simple
        [components/<header> icons/recycle-search "Reverse Image Search" "How cropping images can yield more search results"]
-       [:div.activity-step
+       [:div.activity-step.contain-section-width.center-section
         [<first-drag-step>]]
-       [:div.activity-step
+       [:div.activity-step.contain-section-width.center-section
         [<cropping-step>]]
-       [:div.activity-step
+       [:div.activity-step.contain-section-width.center-section
         [<second-drag-step>]]
        [components/<activity-actions> back!]])))
