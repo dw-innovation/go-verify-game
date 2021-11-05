@@ -94,7 +94,9 @@
        [:div.column.is-1
         [:div {:class (str "icon is-large " color)} [:i {:class (str "fas fa-2x " icon)}]]]
        [:div.column.is-8.is-offset-1 {:class color}
-        [:div copy] (when (not (nil? lost?)) [:b  (if lost? "-" "+") (.toLocaleString points-result ) " points"])]]]]))
+        [:div copy] (when (not (nil? lost?)) [:b  (if lost? "-" "+") (if points-result
+                                                                       (.toLocaleString points-result)
+                                                                       "nil") " points"])]]]]))
 
 (defn <post-overlay> [{:as           p
                        fake-news?    :fake-news?
