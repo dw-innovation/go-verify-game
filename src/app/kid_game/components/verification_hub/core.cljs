@@ -107,11 +107,26 @@
   (let [active-panel (r/atom :hub) ; or activity type such as :reverse-image-crop
         change-panel! (fn [activity-type] (reset! active-panel activity-type))
         back-to-hub! (fn [] (change-panel! :hub))]
+    ;; listen to the state... not the best way to handle it but very cool that you can!
+    (add-watch state/verification-hub-state :hub-component-watcher
+               ;; do something when the selected post changes!!
+               (fn [key atom old-state new-state]
+                 (when (not (= (-> old-state :post :id)
+                               (-> new-state :post :id)))
+                   ;; go back to the hub if you switch posts
+                   (change-panel! :hub))))
     (fn []
       (let [post (state/get-post (:post @state/verification-hub-state))
             points @state/points]
         [:div
          [<header>]
+
+         [:div.tags
+          [:div {:class "tag is-light is-info is-family-monospace"} "investigating: " (:id post)]
+          [:div {:class "tag is-light is-info is-family-monospace"} "panel: " @active-panel]
+          [:div {:class "tag is-light is-info is-family-monospace"} "time-left: " (:time-left post)]
+          [:div {:class "tag is-light is-info is-family-monospace"} "post is: "(:game-state post)]]
+
          [:div.hub-container
           (case @active-panel
             :hub [<hub-home> {:post post :change-panel! change-panel!}]
