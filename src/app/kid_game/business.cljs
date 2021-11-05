@@ -113,51 +113,43 @@
 (defn do-shared-irrelevant []
   (notify :info (str "That wasn't tremendously useful, was it? 0 points")))
 
-(defn do-blocked-correctly [{:as post
-                             time-left :time-left
-                             time-limit :time-limit
-                             investigated? :investigated?}]
-  {:pre [(posts/is-game-post? post)
-         (every? some? [time-left time-limit investigated?])]}
-  (let [time-left-fraction (/ time-left time-limit)
-        points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
+(defn calc-points [status {time-left :time-left time-limit :time-limit investigated? :investigated}]
+  {:pre [(status #{:blocked-correctly :blocked-wrong :shared-correctly :shared-wrong})
+         (every? some? [time-left time-limit])]}
+  (let [time-left-fraction (/ time-left time-limit)]
+    (-> (case status
+          :blocked-correctly (* time-left-fraction       (if investigated? 200 100))
+          :blocked-wrong     (* (+ 1 time-left-fraction) (if investigated? 200 100))
+          :shared-correctly  (* time-left-fraction       (if investigated? 200 100))
+          :shared-wrong      (* (+ 1 time-left-fraction) (if investigated? 200 100))
+          0)
+        (js/Math.floor))))
+
+(defn do-blocked-correctly [post]
+  {:pre [(posts/is-game-post? post)]}
+  (let [points (calc-points :blocked-correctly post)]
     (win-points! points)
     (inc-stat :blocked-correctly)
     (notify :success (str "You blocked nonsense content, you won " points " points"))
     (state/update-post post :points-result points)))
 
-(defn do-blocked-wrong [{:as post
-                         time-left :time-left
-                         time-limit :time-limit
-                         investigated? :investigated?}]
-  {:pre [(posts/is-game-post? post)
-         (every? some? [time-left time-limit investigated?])]}
-  (let [time-left-fraction (+ 1 (/ time-left time-limit))
-        points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
+(defn do-blocked-wrong [post]
+  {:pre [(posts/is-game-post? post)]}
+  (let [points (calc-points :blocked-wrong post)]
     (loose-points! points)
     (notify :warning (str "You blocked legit content, you lost " points " points"))
     (state/update-post post :points-result (- points))))
 
-(defn do-shared-correctly [{:as post
-                            time-left :time-left
-                            time-limit :time-limit
-                            investigated? :investigated?}]
-  {:pre [(posts/is-game-post? post)
-         (every? some? [time-left time-limit investigated?])]}
-  (let [time-left-fraction (/ time-left time-limit)
-        points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
+(defn do-shared-correctly [post]
+  {:pre [(posts/is-game-post? post)]}
+  (let [points (calc-points :shared-correctly post)]
     (win-points! points)
     (notify :success (str "You shared legit content, you won " points " points"))
     (state/update-post post :points-result points)))
 
-(defn do-shared-wrong [{:as post
-                        time-left :time-left
-                        time-limit :time-limit
-                        investigated? :investigated?}]
-  {:pre [(posts/is-game-post? post)
-         (every? some? [time-left time-limit investigated?])]}
-  (let [time-left-fraction (+ 1 (/ time-left time-limit))
-        points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
+(defn do-shared-wrong [post]
+  {:pre [(posts/is-game-post? post)]}
+  (let [points (calc-points :shared-wrong post)]
     (loose-points! points)
     (inc-stat :misleading-reposts)
     (notify :warning (str "You shared nonsense content, you lost " points " points"))
