@@ -58,6 +58,7 @@
                                     (:inactive pointer-events))}
        [<verification-hub>/<container>]]]
 
+     [:div.hub-arrow-shadow {:class (if timeline-active? "out" "in")}]
      [:div.hub-arrow {:class (if timeline-active? "out" "in")
                       :on-click (fn [] (if timeline-active?
                                          (state/open-verification-hub)
