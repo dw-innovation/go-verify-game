@@ -83,6 +83,9 @@
     (when p (stop-post-timer! p))) ; if it's there, stop the timer
   ;; TODO validate that it's an actual valid post
   (state/add-post post)
+  ;; add the live game post states
+  (state/update-post post :game-state nil
+                     :investigated? false)
   ;; attatch a time decreaser to the post, but only if time limiet
   (when (:time-limit post)
     ;; if it has a time limit, then it is a 'playable' post
@@ -93,47 +96,101 @@
 
 
 (defn post-investigate! [post]
+  (state/update-post post :investigated? true)
   (state/open-verification-hub post))
 
-(defn post-block! [post]
-  (let [fake-news? (:fake-news? post)
-        time-left (or (:time-left post) 20)
-        points time-left
-        {blocked-correctly :blocked-correctly
-         missed-deadlines :missed-deadlines
-         misleading-reposts :misleading-reposts} @state/stats]
-    (if (:fake-news? post)
-      (do (state/add-notification {:type :success
-                                   :text (str "+" (.toLocaleString points) " points")})
-          (swap! state/stats assoc-in [:blocked-correctly] (inc blocked-correctly))
-          (state/update-post post :points-result points)
-          (win-points! time-left))
-      (do (state/add-notification {:type :warning
-                                   :text (str "-" (.toLocaleString points) " points")})
-          (state/update-post post :points-result (- points))
-          (loose-points! time-left))))
-  (stop-post-timer! post)
-  (state/post-transition-state! post :blocked))
+(defn notify [typ text]
+  (state/add-notification {:type typ :text text}))
+
+(defn inc-stat [stat]
+  {:pre [(stat #{:blocked-correctly :missed-deadlines :misleading-reposts})]}
+  (let [s (stat @state/stats)]
+    (swap! state/stats assoc-in [stat] (inc s))))
+
+(defn do-blocked-irrelevant []
+  (notify :info (str "That wasn't tremendously useful, was it? 0 points")))
+
+(defn do-shared-irrelevant []
+  (notify :info (str "That wasn't tremendously useful, was it? 0 points")))
+
+(defn do-blocked-correctly [{:as post
+                             time-left :time-left
+                             time-limit :time-limit
+                             investigated? :investigated?}]
+  {:pre [(posts/is-game-post? post)
+         (every? some? [time-left time-limit investigated?])]}
+  (let [time-left-fraction (/ time-left time-limit)
+        points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
+    (win-points! points)
+    (inc-stat :blocked-correctly)
+    (notify :success (str "You blocked nonsense content, you won " points " points"))
+    (state/update-post post :points-result points)))
+
+(defn do-blocked-wrong [{:as post
+                         time-left :time-left
+                         time-limit :time-limit
+                         investigated? :investigated?}]
+  {:pre [(posts/is-game-post? post)
+         (every? some? [time-left time-limit investigated?])]}
+  (let [time-left-fraction (+ 1 (/ time-left time-limit))
+        points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
+    (loose-points! points)
+    (notify :warning (str "You blocked legit content, you lost " points " points"))
+    (state/update-post post :points-result (- points))))
+
+(defn do-shared-correctly [{:as post
+                            time-left :time-left
+                            time-limit :time-limit
+                            investigated? :investigated?}]
+  {:pre [(posts/is-game-post? post)
+         (every? some? [time-left time-limit investigated?])]}
+  (let [time-left-fraction (/ time-left time-limit)
+        points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
+    (win-points! points)
+    (notify :success (str "You shared legit content, you won " points " points"))
+    (state/update-post post :points-result points)))
+
+(defn do-shared-wrong [{:as post
+                        time-left :time-left
+                        time-limit :time-limit
+                        investigated? :investigated?}]
+  {:pre [(posts/is-game-post? post)
+         (every? some? [time-left time-limit investigated?])]}
+  (let [time-left-fraction (+ 1 (/ time-left time-limit))
+        points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
+    (loose-points! points)
+    (inc-stat :misleading-reposts)
+    (notify :warning (str "You shared nonsense content, you lost " points " points"))
+    (state/update-post post :points-result (- points))))
+
+
+(defn post-action! [action post]
+  {:pre [(posts/is-game-post? post)
+         (action #{:share :block})]}
+  (let [shared? (= action :share)
+        blocked? (= action :block)
+        {fake-news? :fake-news?
+         game-state :game-state} post
+        live-post? (= game-state :live)
+        dead-post? (not live-post?)
+        legit-news? (not fake-news?)]
+    (cond
+      ;; shared filler content:
+      (and dead-post? blocked?) (do-blocked-irrelevant)
+      (and dead-post? shared?) (do-shared-irrelevant)
+      (and live-post? blocked? fake-news?) (do-blocked-correctly post)
+      (and live-post? blocked? legit-news?) (do-blocked-wrong post)
+      (and live-post? shared? fake-news?) (do-shared-wrong post)
+      (and live-post? shared? legit-news?) (do-shared-correctly post)
+      :else (println "no matched cases for the post!"))
+    (stop-post-timer! post)
+    (state/post-transition-state! post (if blocked? :blocked :shared))))
 
 (defn post-share! [& {:keys [comment post]}]
-  (let [fake-news? (:fake-news? post)
-        time-left (or (:time-left post) 20)
-        points time-left
-        {blocked-correctly :blocked-correctly
-         missed-deadlines :missed-deadlines
-         misleading-reposts :misleading-reposts} @state/stats]
-    (if (:fake-news? post)
-      (do (state/add-notification {:type :warning
-                                   :text (str "-" time-left " points")})
-          (swap! state/stats assoc-in [:misleading-reposts] (inc misleading-reposts))
-          (state/update-post post :points-result points)
-          (loose-points! time-left))
-      (do (state/add-notification {:type :success
-                                   :text (str "+" (.toLocaleString points) " points")})
-          (state/update-post post :points-result (- points))
-          (win-points! time-left)))
-    (stop-post-timer! post)
-    (state/post-transition-state! post :shared)))
+  (post-action! :share post))
+
+(defn post-block! [post]
+  (post-action! :block post))
 
 ; user, string -> state update
 (defn chat-send! [& {:keys [to content]}]

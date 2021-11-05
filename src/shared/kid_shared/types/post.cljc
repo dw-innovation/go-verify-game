@@ -34,7 +34,22 @@
 (s/def ::post (s/or ::re-post ::re-post
                     ::post-text ::post-text))
 
+(s/def ::game-state #{nil :timed-out :live :blocked :shared})
+(s/def ::investigated? boolean?)
+(s/def ::points-result int?)
+(s/def ::time-left pos-int?)
+(s/def ::stop-timer! fn?)
+
+(s/def ::game-post (s/merge ::post
+                            (s/keys :req-un [::game-state
+                                             ::investigated?]
+                                    :opt-un [::points-result
+                                             ::time-left
+                                             ::stop-timer!])))
+
 (defn post? [p] (s/valid? ::post p))
+(defn is-game-post? [p]
+  (s/valid? ::game-post p))
 (defn why-not? [p] (s/explain ::post p))
 
 (gen/generate (s/gen ::post-text))

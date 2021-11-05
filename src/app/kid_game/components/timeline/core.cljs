@@ -94,9 +94,10 @@
        [:div.column.is-1
         [:div {:class (str "icon is-large " color)} [:i {:class (str "fas fa-2x " icon)}]]]
        [:div.column.is-8.is-offset-1 {:class color}
-        [:div copy] (when (not (nil? lost?)) [:b  (if lost? "-" "+") (if points-result
-                                                                       (.toLocaleString points-result)
-                                                                       "nil") " points"])]]]]))
+        [:div copy] (when (not (nil? lost?)) [:b  (if lost? "-" "+")
+                                              (if points-result
+                                                (.toLocaleString (js/Math.abs points-result))
+                                                "nil") " points"])]]]]))
 
 (defn <post-overlay> [{:as           p
                        fake-news?    :fake-news?
@@ -192,7 +193,7 @@
   [:div.timeline-container
    [<header>]
    (when (empty? (state/posts))
-     [:button {:on-click (fn [] (business/start-all-stories!))}"start all stories"])
+     [:button {:on-click (fn [] (business/start-all-stories!))} "start all stories"])
    ;; documentation for css transition group seems kind of tricky but is here:
    ;; https://reactcommunity.org/react-transition-group/
    [css-transition-group {:class "timeline-posts"}
