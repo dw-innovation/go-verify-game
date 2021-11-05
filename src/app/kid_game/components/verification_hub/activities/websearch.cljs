@@ -72,7 +72,9 @@
     (fn []
       [:div.activity-container.web-search
 
-       [components/<header> icons/browser-search "Web Search" "Sometimes a basic search is enough"]
+       [components/<header> icons/browser-search "Web Search" "Sometimes a basic search is enough"
+        "Web Search Explanation"
+        [:p "More text"]]
        [<blooble-simulation>
         (string/join " + " terms)
         (if @searched? results nil)

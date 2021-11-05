@@ -38,6 +38,6 @@
        [:div {:class "modal-background"
               :on-click #(close-modal)}]
        [:div {:class "box column is-5 p-5"
-              :style {:z-index 10}} [content]]
+              :style {:z-index 10}} (if content [content] "no content")]
        [:button.modal-close.is-large {:aria-label "close"
                                       :on-click #(toggle-modal)}]])))

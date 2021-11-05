@@ -172,7 +172,9 @@
         <second-drag-step> (fn [] [@second-drag-step <cropped-svg>])]
     (fn []
       [:div.activity-container.ris-simple
-       [components/<header> icons/recycle-search "Reverse Image Search" "How cropping images can yield more search results"]
+       [components/<header> icons/recycle-search "Reverse Image Search" "How cropping images can yield more search results"
+        "Image Crop Explanation"
+        [:p "More text"]]
        [:div.activity-step
         [<first-drag-step>]]
        [:div.activity-step
