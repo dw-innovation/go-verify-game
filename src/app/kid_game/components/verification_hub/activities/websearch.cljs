@@ -2,6 +2,7 @@
   (:require [reagent.core :as r]
             [kid-game.components.shared.icons :as icons]
             [kid-game.components.verification-hub.activities.shared.ris-image-results :as image-results]
+            [kid-game.components.verification-hub.activities.shared.components :as components]
             [cljs.core.async :as async :include-macros true]
             [clojure.string :as string]
             [kid-game.state :as state]))
@@ -70,16 +71,12 @@
                            (reset! loading? false)))]
     (fn []
       [:div.activity-container.web-search
-       [<header>]
+
+       [components/<header> icons/browser-search "Web Search" "Sometimes a basic search is enough"]
        [<blooble-simulation>
         (string/join " + " terms)
         (if @searched? results nil)
         @loading?
         click!]
-       [:div.columns.activity-actions
-        [:div.column.action
-         [:p "Ready to make a call?"]
-         [:button {:on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))} "Back to timeline"]]
-        [:div.column.action
-         [:p "Investigate further?"]
-         [:button {:on-click back!} "Back to hub"]]]])))
+       [components/<activity-actions> back!]
+       ])))

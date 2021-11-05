@@ -4,18 +4,12 @@
             [kid-game.components.verification-hub.activities.shared.ris-image-results :as image-results]
             [kid-game.components.verification-hub.activities.shared.svg-utils :as svg-utils]
             [cljs.core.async :as async :include-macros true]
+            [kid-game.components.verification-hub.activities.shared.components :as components]
             [clojure.string :as string]
             [kid-game.state :as state]))
 
 ;; FIXME: in some cases, this NS must be explicitly imported up the
 ;; requirement tree for changed to be picked up. no idea why. see issue #48
-
-(defn <header> []
-[:div.activity-header
- [:div.columns
-  [:div.activity-icon
-   [icons/image-analysis]]
-  [:div.activity-title "Image Analysis"]]])
 
 (defn click-image-svg [^String image-url ; the svg background image
                        ; a vector of polygons {shape message}
@@ -79,10 +73,12 @@
                image-url :main-image
                polygons :polygons}
               back!]
- (let []
+  (let [found-count (r/atom 0)
+        total-count (count polygons)
+        misclicks (r/atom 0)]
     (fn []
       [:div.activity-container.image-analysis
-       [<header>]
+       [components/<header> icons/image-analysis "Image Analysis" "Something looks strange here"]
        [:div.activity-step
         [:div.activity-description "Mark the parts of the image that look weird to you.  Place pointer, click, and start finsing polygons."]
         [click-image-svg
@@ -90,19 +86,26 @@
          polygons
          dimensions
          ;; correct click
-         (fn [polygon] (state/add-notification {:type :success
-                                                :text (:message polygon)}))
+         (fn [polygon]
+           (reset! found-count (inc @found-count))
+           (state/add-notification {:type :success
+                                    :text (:message polygon)}))
          ;; failed click
-         (fn [] (state/add-notification {:type :warn
+         (fn []
+           (reset! misclicks (inc @misclicks))
+           (state/add-notification {:type :warning
                                          :text "Nothing strange here"}))
          ;; found all
          (fn [] (state/add-notification {:type :success
                                          :text "Found all the strange things"}))
-         ]]
-       [:div.columns.activity-actions
-        [:div.column.action
-         [:p "Ready to make a call?"]
-         [:button {:on-click (fn [] (state/open-timeline))} "Back to timeline"]]
-        [:div.column.action
-         [:p "Investigate further?"]
-         [:button {:on-click back!} "Back to hub"]]]])))
+         ]
+        [:div.level.m-5.p-3
+         [:div.level-item
+          [:span.icon.has-text-success [:i.fas.fa-check]]
+          "Found " @found-count " / " total-count " manipulations" ]
+         [:div.level-item
+
+          [:span.icon.has-text-danger [:i.fas.fa-times]]
+          @misclicks " misclicks"]]]
+       [components/<activity-actions> back!]
+       ])))

@@ -3,6 +3,7 @@
             [kid-game.components.shared.icons :as icons]
             [react-transition-group]
             [kid-game.components.verification-hub.activities.shared.ris-image-results :as image-results]
+            [kid-game.components.verification-hub.activities.shared.components :as components]
             [cljs.core.async :as async :include-macros true]
             [kid-game.state :as state]))
 
@@ -39,6 +40,7 @@
                                (reset! loading? false)))]
     (fn []
       [:div.activity-container.ris-simple
+       [components/<header> icons/recycle-search "Reverse Image Search" "See where this image might come from"]
        [<header>]
        [image-results/<dragger> main-image drag-done!]
        [:div.activity-step
@@ -57,6 +59,4 @@
         [:div.column.action
          [:p "Ready to make a call?"]
          [:button {:on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))} "Back to timeline"]]
-        [:div.column.action
-         [:p "Investigate further?"]
-         [:button {:on-click back!} "Back to hub"]]]])))
+        [components/<activity-actions> back!]]])))
