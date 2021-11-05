@@ -8,7 +8,7 @@
                 ^String title
                 ^String subtitle
                 ^String modal-title
-                ^Vector modal-content]
+                ^fn modal-content]
   [:<>
    [modal/<modal> (fn [] [:div [:h3.title.is-3 modal-title] modal-content])]
    [:div {:class "columns is-centered is-vcentered"}
