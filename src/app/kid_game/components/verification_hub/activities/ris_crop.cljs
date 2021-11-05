@@ -4,6 +4,7 @@
             [react-transition-group]
             [kid-game.components.verification-hub.activities.shared.ris-image-results :as image-results]
             [kid-game.components.verification-hub.activities.shared.svg-utils :as svg-utils]
+            [kid-game.components.verification-hub.activities.shared.components :as components]
             [cljs.core.async :as async :include-macros true]
             [kid-game.state :as state]))
 
@@ -19,25 +20,9 @@
 (def css-transition
   (r/adapt-react-class react-transition-group/CSSTransition))
 
-(defn <header> []
-  [:div {:class "columns is-centered is-vcentered"}
-   [:div {:class "column is-1"} [icons/recycle-search]]
-   [:div {:class "is-11 pl-5 pt-5"}
-    [:h3.title.is-3 "Reverse image search, with crop"]
-    [:p.subtitle "How cropping images can yield more search results"]]])
 
-(defn <actions> [back!]
-  [:div.columns.mt-5.activity-actions.tile.notification.is-success
-   [:div.column.has-text-centered
-    [:p "Ready to make a call?"]
-    [:button {:class "button is-primary is-inverted is-outlined"
-              :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
-     [:span.icon [:i {:class "fas fa-newspaper-o"}]] [:span "Back to timeline"]]]
-   [:div.column.has-text-centered
-    [:p "Investigate further?"]
-    [:button {:class "button is-primary is-inverted is-outlined"
-              :on-click back!}
-     [:span.icon [:i {:class "fas fa-search"}]] [:span "Back to hub"]]]])
+
+
 
 ;; takes two points ([x y]) (in any order)
 ;; and returns [offset-x offset-y width height] of the resulting rectangle
@@ -187,12 +172,11 @@
         <second-drag-step> (fn [] [@second-drag-step <cropped-svg>])]
     (fn []
       [:div.activity-container.ris-simple
-       [<header>]
+       [components/<header> icons/recycle-search "Reverse Image Search" "How cropping images can yield more search results"]
        [:div.activity-step
         [<first-drag-step>]]
        [:div.activity-step
         [<cropping-step>]]
        [:div.activity-step
         [<second-drag-step>]]
-       [<actions> back!]])))
-
+       [components/<activity-actions> back!]])))
