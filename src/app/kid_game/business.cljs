@@ -120,7 +120,7 @@
   {:pre [(posts/is-game-post? post)
          (every? some? [time-left time-limit investigated?])]}
   (let [time-left-fraction (/ time-left time-limit)
-        points (* time-left-fraction (if investigated? 200 100))]
+        points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
     (win-points! points)
     (inc-stat :blocked-correctly)
     (notify :success (str "Blocked nonsense content, you won " points " points"))
@@ -133,7 +133,7 @@
   {:pre [(posts/is-game-post? post)
          (every? some? [time-left time-limit investigated?])]}
   (let [time-left-fraction (+ 1(/ time-left time-limit))
-        points (* time-left-fraction (if investigated? 200 100))]
+        points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
     (loose-points! points)
     (notify :success (str "Blocked nonsense content, you lost " points " points"))
     (state/update-post post :points-result (- points))))
@@ -145,7 +145,7 @@
   {:pre [(posts/is-game-post? post)
          (every? some? [time-left time-limit investigated?])]}
   (let [time-left-fraction (/ time-left time-limit)
-        points (* time-left-fraction (if investigated? 200 100))]
+        points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
     (win-points! points)
     (notify :success (str "Shared legit content, you won " points " points"))
     (state/update-post post :points-result points)))
@@ -157,7 +157,7 @@
   {:pre [(posts/is-game-post? post)
          (every? some? [time-left time-limit investigated?])]}
   (let [time-left-fraction (+ 1 (/ time-left time-limit))
-        points (* time-left-fraction (if investigated? 200 100))]
+        points (js/Math.floor (* time-left-fraction (if investigated? 200 100)))]
     (loose-points! points)
     (inc-stat :misleading-reposts)
     (notify :success (str "Shared nonsense content, you lost " points " points"))
@@ -168,7 +168,7 @@
   {:pre [(posts/is-game-post? post)
          (action #{:share :block})]}
   (let [shared? (= action :share)
-        blocked? (= action :blocked)
+        blocked? (= action :block)
         {fake-news? :fake-news?
          game-state :game-state} post
         live-post? (= game-state :live)
