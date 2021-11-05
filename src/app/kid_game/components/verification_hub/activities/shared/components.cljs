@@ -5,10 +5,10 @@
             [kid-game.state :as state]))
 
 (defn <header> [^js/SVG icon
-                ^String title
-                ^String subtitle
-                ^String modal-title
-                ^fn modal-content]
+                ^string title
+                ^string subtitle
+                ^string modal-title
+                ^vector modal-content]
   [:<>
    [modal/<modal> (fn [] [:div [:h3.title.is-3 modal-title] modal-content])]
    [:div {:class "columns is-centered is-vcentered"}
