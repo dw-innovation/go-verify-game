@@ -19,13 +19,6 @@
 (def css-transition
   (r/adapt-react-class react-transition-group/CSSTransition))
 
-(defn <header> []
-  [:div.activity-header
-   [:div.columns
-    [:div.activity-icon
-     [icons/recycle-search]]
-    [:div.activity-title "Simple Reverse Image Search"]]])
-
 (defn <main> [{:as data
                result-images :result-images
                main-image :main-image
@@ -43,9 +36,8 @@
        [components/<header> icons/recycle-search "Reverse Image Search" "See where this image might come from"
         "Reverse Image Search Explanation"
         [:p "more text"]]
-       [<header>]
-       [image-results/<dragger> main-image drag-done!]
        [:div.activity-step.contain-section-width.center-section
+        [image-results/<dragger> main-image drag-done!]
         [css-transition-group {:class "transition-results"}
          (if @loading?
            [image-results/<loading>]
@@ -57,8 +49,4 @@
                [:h3.ris-result-header "Similar images:"]
                [image-results/<image-results> result-images]]]))]]
        [:hr]
-       [:div.columns.activity-actions
-        [:div.column.action
-         [:p "Ready to make a call?"]
-         [:button {:on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))} "Back to timeline"]]
-        [components/<activity-actions> back!]]])))
+        [components/<activity-actions> back!]])))
