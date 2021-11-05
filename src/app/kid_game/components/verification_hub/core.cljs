@@ -4,6 +4,7 @@
             [reagent.core                                         :as r]
             [kid-game.components.shared.icons :as icons]
             [kid-game.utils.core :as utils :refer [in? find-first]]
+            [kid-game.components.timeline.core :as timeline]
             [kid-game.components.verification-hub.activities.core :as activities]))
 
 (defn <header> []
@@ -52,17 +53,21 @@
                    change-panel! :change-panel!}]
   (let [post-activities (:activities post)
         available-activities (map :type post-activities)
+        in-game? (= :live (:game-state post))
         choose-activity! (fn [& chosen-activity-typs]
                            (fn []
                              (if (not post)
                                (state/add-notification {:type :warning
                                                         :text "Choose a post first"})
+                               (if (not in-game?)
+                                 (state/add-notification {:type :warning
+                                                          :text "Out of time"})
                                (let [hits (intersection (set chosen-activity-typs)
                                                         (set available-activities))]
                                  (if (empty? hits)
                                    (state/add-notification {:type :warning
                                                             :text "Choose a different activity"})
-                                   (change-panel! (first hits)))))))
+                                   (change-panel! (first hits))))))))
         points @state/points
         {blocked-correctly :blocked-correctly
          misleading-reposts :misleading-reposts
@@ -117,6 +122,7 @@
                    (change-panel! :hub))))
     (fn []
       (let [post (state/get-post (:post @state/verification-hub-state))
+            in-game? (= :live (:game-state post))
             points @state/points]
         [:div
          [<header>]
@@ -127,9 +133,12 @@
           [:div {:class "tag is-light is-info is-family-monospace"} "time-left: " (:time-left post)]
           [:div {:class "tag is-light is-info is-family-monospace"} "post is: "(:game-state post)]]
 
+         [timeline/<post-overlay> post]
+
          [:div.hub-container
-          (case @active-panel
-            :hub [<hub-home> {:post post :change-panel! change-panel!}]
-            [<investigate-post> {:post post
-                                 :activity-type @active-panel
-                                 :back! back-to-hub!}])]]))))
+          (cond
+            (not in-game?) [<hub-home> {:post post :change-panel! change-panel!}]
+            (= @active-panel :hub) [<hub-home> {:post post :change-panel! change-panel!}]
+            :else [<investigate-post> {:post post
+                                       :activity-type @active-panel
+                                       :back! back-to-hub!}])]]))))
