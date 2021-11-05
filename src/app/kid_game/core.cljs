@@ -37,7 +37,7 @@
                     "game-timeline"
                     (cond (= (state/get-panel) :timeline) (:active size)
                           :else                           (:inactive size))]
-            :on-click (fn [ev] (.stopPropagation ev) (println "clicked timelinneee") (state/open-timeline))
+            :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))
             }
       [:div.click-stopper {:style (if (= (state/get-panel) :timeline)
                                     (:active pointer-events)
