@@ -31,7 +31,7 @@
    [:div.column.has-text-centered
     [:p "Ready to make a call?"]
     [:button {:class "button is-primary is-inverted is-outlined"
-              :on-click (fn [] (state/open-timeline))}
+              :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
      [:span.icon [:i {:class "fas fa-newspaper-o"}]] [:span "Back to timeline"]]]
    [:div.column.has-text-centered
     [:p "Investigate further?"]
