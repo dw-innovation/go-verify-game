@@ -1,12 +1,13 @@
 (ns kid-game.uikit
-  (:require [kid-shared.data.posts            :as posts-data]
+  (:require [kid-shared.data.posts                 :as posts-data]
             [kid-shared.data.activities            :as activities-data]
-            [kid-game.components.notifications :as notifications]
-            [kid-game.components.timeline.core :as timeline]
-            [kid-game.components.shared.icons :as icons]
+            [kid-game.components.notifications     :as notifications]
+            [kid-game.components.timeline.core     :as timeline]
+            [kid-game.components.shared.icons      :as icons]
+            [kid-game.components.modal             :as modal]
             [kid-game.components.verification-hub.activities.websearch :as websearch]
-            [reagent.core :as r]
-            [cljs.core.async                   :as async :include-macros true]))
+            [reagent.core                          :as r]
+            [cljs.core.async                       :as async :include-macros true]))
 
 (defn random-points [] (rand-int 3000))
 
@@ -136,8 +137,20 @@
     [:div {:style {:width "100px" :float "left"}}
      [icons/right-arrow]]]])
 
+(defn modal-content []
+  [:div [:div {:style {:width "100px" :float "center"}}
+         [icons/thomas]]
+   [:h4.title.is-4 "What's all this then?"]
+   [:p [:b "I am but a modal window and don't do much."] " I support all kinds of components passed into me."]
+   [:p.mt-2 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 
+        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
+        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."]])
+
 (defn <main-view> []
   [:div.container.game-container
+   [modal/<modal> modal-content]
    [:div {:class "columns"}
     [:div {:class "column is-full"}
      [:hr]
@@ -152,18 +165,25 @@
      [:h4.title.is-4 "Buttons"]
      [post-buttons]
      [:hr]
-     [:h4.title.is-4 "Inline results"]
-     [<overlays>]
-     [:hr]
+    ;;  [:h4.title.is-4 "Inline results"]
+    ;;  [<overlays>]
+    ;;  [:hr]
      [:h4.title.is-4 "Progress bar"]
      [<progress-bars>]
      [:hr]
      [:h4.title.is-4 "Icons"]
      [:div {:style {:overflow "hidden"}}
       [<icons>]]
+     [:hr]
      [:h4.title.is-4 "Blooble Simulation"]
      [websearch/<blooble-simulation>
       "Here are my terms"
       (-> activities-data/financiel-web-search :data :results)
       false
-      nil]]]])
+      nil]
+     [:hr]
+     [:h4.title.is-4 "Modal"]
+     [:p "Click the button to launch the modal"]
+     [:button {:class "button outline" :on-click #(modal/toggle-modal)}
+      [:span.icon [:i {:class "fas fa-window-restore"}]] [:span "Open modal"]]
+     [:hr.mt-5]]]])
