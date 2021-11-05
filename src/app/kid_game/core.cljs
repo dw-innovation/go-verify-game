@@ -12,6 +12,7 @@
             [kid-game.components.notifications                    :as notifications]
             [kid-game.components.verification-hub.core            :as <verification-hub>]
             [kid-game.components.verification-hub.activities.core :as activities]
+            [kid-game.components.shared.icons :as icons]
             ;; these NS are imported here for dev hot-reloading.  for some reason it does not work without
             ;; them imported at the top of the tree
             [kid-game.components.verification-hub.activities.websearch]
@@ -24,6 +25,8 @@
   (let [size (if dev?
                {:active "is-half active" :inactive "is-one-quarter is-unselectable"}
                {:active "is-two-thirds active" :inactive "is-one-third is-unselectable"})
+        timeline-active? (= (state/get-panel) :timeline)
+        hub-active? (not timeline-active?)
         pointer-events {:active {:pointer-events "all"} :inactive {:pointer-events "none"}}]
     [:div {:class "game-container columns"}
      [notifications/<notifications>]
@@ -35,11 +38,12 @@
 
      [:div {:class ["game-panel column"
                     "game-timeline"
-                    (cond (= (state/get-panel) :timeline) (:active size)
-                          :else                           (:inactive size))]
+                    (if timeline-active?
+                      (:active size)
+                      (:inactive size))]
             :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))
             }
-      [:div.click-stopper {:style (if (= (state/get-panel) :timeline)
+      [:div.click-stopper {:style (if timeline-active?
                                     (:active pointer-events)
                                     (:inactive pointer-events))}
        [<timeline>/<container>]]]
@@ -52,7 +56,14 @@
       [:div.click-stopper {:style (if (= (state/get-panel) :verification-hub)
                                     (:active pointer-events)
                                     (:inactive pointer-events))}
-      [<verification-hub>/<container>]]]]))
+       [<verification-hub>/<container>]]]
+
+     [:div.hub-arrow {:class (if timeline-active? "out" "in")
+                      :on-click (fn [] (if timeline-active?
+                                         (state/open-verification-hub)
+                                         (state/open-timeline)))}
+        [icons/circle-right-arrow-blue]]
+     ]))
 
 
 (defn <one-post> [post-id]
