@@ -111,20 +111,26 @@ body {
   transition: left .4s ease-in-out,
 }
 
+@keyframes spinleft { 0% { transform: rotate(0deg); }
+                      90% { transform: rotate(185deg); }
+                      95% { transform: rotate(175deg); }
+                      100% { transform: rotate(180deg); } }
+
+@keyframes spinright { 0% { transform: rotate(180deg); }
+                       90% { transform: rotate(365deg); }
+                       95% { transform: rotate(355deg); }
+                       100% { transform: rotate(360deg); } }
+
+
 .hub-arrow {
   @include hub-arrow-position;
   cursor: pointer;
   z-index: 9999;
-
   // transitions
-  &.in {  transform:rotate(0deg); }
-  &.out {  transform:rotate(180deg); }
-  transition: transform .7s ease-in-out,
-              left .4s ease-in-out;
-
+  &.in {  animation: spinright 1s 1; }
+  &.out {  animation: spinleft 1s 1; }
+  transition: left .4s ease-in-out;
   path { fill: var(--color-hub-primary) }
-
-
 }
 .hub-arrow-shadow {
   @include hub-arrow-position;
