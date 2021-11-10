@@ -22,9 +22,7 @@
             [moment]))
 
 (defn <game> [& {:keys [dev?]}]
-  (let [size (if dev?
-               {:active "is-half active" :inactive "is-one-quarter is-unselectable"}
-               {:active "is-two-thirds active" :inactive "is-one-third is-unselectable"})
+  (let [size {:active "is-two-thirds active" :inactive "is-one-third is-unselectable"}
         timeline-active? (= (state/get-panel) :timeline)
         hub-active? (not timeline-active?)
         pointer-events {:active {:pointer-events "all"} :inactive {:pointer-events "none"}}]
@@ -33,7 +31,7 @@
 
      ;; this meta panels is for during development
      (when dev?
-       [:div {:class "game-panel active column is-one-quarter p-5"}
+       [:div {:class "game-panel active column dev-panel"}
         [<meta>/<meta>]])
 
      [:div {:class ["game-panel column"

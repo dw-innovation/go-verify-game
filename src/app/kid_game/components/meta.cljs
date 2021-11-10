@@ -52,5 +52,12 @@
         [:p {:class "title is-5"} "Posts"]
         (for [p posts/all-activity-posts]
           [:div
+           [:hr]
+           (:id p)
+           [:div
            [:a {:href (str "?post=" (:id p))}
-            (:id p)]])]])))
+            "open"]]
+           [:div
+           [:a {:href "#"
+                :on-click (fn [] (business/add-post p))}
+            "inject into timeline"]]])]])))

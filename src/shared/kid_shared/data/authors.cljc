@@ -91,6 +91,84 @@
                                       :handle "@patriotic_news"
                                       :role :media}))
 
+(def stop_the_corp (user/create {:name "STOP THE CORP!"
+                                 :handle "@Stop_the_Corp"
+                                 :role :media}))
+
+(def concerned_citizen (user/create {:name "Concerned Citizen"
+                                     :handle "@_concerned_citizen"
+                                     :role :media}))
+
+(def c_report (user/create {:name "Climate Report"
+                                     :handle "@c_report"
+                                     :role :media}))
+
+(def saxony4ever (user/create {:name "Danilo Backman"
+                                     :handle "@saxony4ever"
+                                     :role :media}))
+
+(def ddoll99 (user/create {:name "Dresden Doll"
+                                     :handle "@ddoll99"
+                                     :role :media}))
+
+(def thismightbesatire (user/create {:name "TMBS"
+                                     :handle "@thismightbesatire"
+                                     :role :media}))
+
+(def int_news (user/create {:name "The Internationalist"
+                                     :handle "@int_news"
+                                     :role :media}))
+
+(def aynrandftw (user/create {:name "Joe Libeal"
+                              :handle "@aynrandftw"
+                              :role :media}))
+
+(def warehouseworker (user/create {:name "Abdul Smith"
+                              :handle "@warehouseworker"
+                              :role :media}))
+
+(def anonymous_worker (user/create {:name "Anon"
+                              :handle "@anonymous_worker"
+                              :role :media}))
+
+
+(def bloomberg_bizmonth (user/create {:name "Bloomberg Business Month"
+                              :handle "@Bloomberg_BizMonth"
+                              :role :media}))
+
+(def channel1live (user/create {:name "Channel One"
+                              :handle "@channel1live"
+                              :role :media}))
+
+(def socialmarkets2050 (user/create {:name "SoMa"
+                              :handle "@socialmarkets2050"
+                              :role :media}))
+
+
+(def radio_europe (user/create {:name "Radio Europe"
+                              :handle "@radio_europe"
+                              :role :media}))
+
+(def factsandfigures (user/create {:name "Facts and Figures"
+                              :handle "@FactsAndFigures"
+                              :role :media}))
+
+(def workingmom99 (user/create {:name "Paula Adamovivh"
+                              :handle "@workingmom99"
+                              :role :media}))
+
+(def megacorp_fresh (user/create {:name "Megacorp Fresh!"
+                              :handle "@megacorp_fresh"
+                              :role :media}))
+
+
+(def undergroundpegasus (user/create {:name "Underground Pegasus"
+                              :handle "@undergroundpegasus"
+                              :role :media}))
+
+(def coffeecakeweasel (user/create {:name "CCW"
+                              :handle "@coffeecakeweasel"
+                              :role :media}))
 
 (def posters [deutsche-welle
               reuters
