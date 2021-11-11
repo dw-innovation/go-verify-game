@@ -373,8 +373,9 @@ button { background-color: transparent;
 .ris-results-transition-exit-done { opacity: 0;
                                     transition: opacity 1s ease-in; }
 
-.ris-drag-blocks { display: flex; flex-basis: 0; }
-.ris-drag-block { width: 33%; }
+.ris-drag-blocks { display: flex; flex-basis: 0; justify-content: center; }
+.ris-drag-block { width: 33%;
+		  &:nth-of-type(2) {  width: 10% ; }}
 .ris-drag-block-center { display: flex; align-items: center; justify-content: center; }
 
 
@@ -394,7 +395,7 @@ button { background-color: transparent;
 
 
 .contain-section-width {
-  max-width: 60rem;
+  max-width: 40rem;
 }
 .center-section {
   margin: 0 auto;
