@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "engines": {
-    "node": "~14.17.3"
+    "node": "~16.13.0"
   },
   "scripts": {
     "watch-app": "babel ./src/app/kid_game/react_components/raw --out-dir ./src/app/kid_game/react_components/compiled --watch",
