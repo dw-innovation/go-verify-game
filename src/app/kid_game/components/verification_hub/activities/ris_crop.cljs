@@ -164,7 +164,7 @@
         [<cropper> <cropped-svg>] (cropper-components data cropped-correctly! cropped-wrong!)
 
         make-cropping-step (fn [] (fn [] [:div
-                                          [:h4.title.is-4.mb-0 "Which city skyline is that? "]
+                                          [:h4.title.is-4.mb-0 "No results? Let's refine our search"]
                                           [:p.mb-5 "Drag the cursor in the highlighted box."]
                                           [:div [<cropper>]]]))
         <cropping-step> (fn [] [@cropping-step])
@@ -172,7 +172,8 @@
         <second-drag-step> (fn [] [@second-drag-step <cropped-svg>])]
     (fn []
       [:div.activity-container.ris-simple
-       [components/<header> icons/recycle-search "Reverse Image Search" "How cropping images can yield more search results"
+       [components/<header> icons/recycle-search "Reverse Image Search"
+        "How cropping images can yield more search results"
         "Image Crop Explanation"
         [:p "More text"]]
        [:div.activity-step.contain-section-width.center-section
