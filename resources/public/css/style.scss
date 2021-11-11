@@ -529,4 +529,12 @@ button { background-color: transparent;
     }
   }
 }
- 
+
+.dev-panel {
+  position: fixed;
+  z-index: 333;
+  width: 20vw;
+  background-color: white;
+  overflow-y: scroll;
+  height: 100vh;
+}
