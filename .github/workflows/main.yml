@@ -27,6 +27,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
 
+    - name: Set up node LTS
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
       # extract our branch name
       # from https://stackoverflow.com/questions/58033366/how-to-get-current-branch-within-github-actions
       #   we can extrac the branch name this way.  for a PR, we want ${{ github.head_ref }}
