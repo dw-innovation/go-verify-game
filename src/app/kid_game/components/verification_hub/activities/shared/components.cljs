@@ -20,8 +20,7 @@
           :on-click #(modal/toggle-modal)}
       [:span {:class "icon is-small"}
        [:i {:class "fa fa-info-circle mr-1"}]]
-      "more info"]
-     ]]])
+      "What's reverse image search?"]]]])
 
 
 (defn <activity-actions> [back!]
