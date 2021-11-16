@@ -3,6 +3,7 @@
             [kid-game.components.shared.icons :as icons]
             [kid-game.components.verification-hub.activities.shared.ris-image-results :as image-results]
             [kid-game.components.verification-hub.activities.shared.components :as components]
+            [kid-shared.data.blocks :as blocks]
             [cljs.core.async :as async :include-macros true]
             [clojure.string :as string]
             [kid-game.state :as state]))
@@ -68,7 +69,7 @@
 
        [components/<header> icons/browser-search "Web Search" "Sometimes a basic search is enough"
         "Web Search Explanation"
-        [:p "More text"]]
+        blocks/web-search-explanation]
        [<blooble-simulation>
         (string/join " + " terms)
         (if @searched? results nil)

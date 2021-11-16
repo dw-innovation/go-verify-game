@@ -4,6 +4,7 @@
             [react-transition-group]
             [kid-game.components.verification-hub.activities.shared.ris-image-results :as image-results]
             [kid-game.components.verification-hub.activities.shared.svg-utils :as svg-utils]
+            [kid-shared.data.blocks :as blocks]
             [kid-game.components.verification-hub.activities.shared.components :as components]
             [cljs.core.async :as async :include-macros true]
             [kid-game.state :as state]))
@@ -175,7 +176,7 @@
        [components/<header> icons/recycle-search "Reverse Image Search"
         "How cropping images can yield more search results"
         "Image Crop Explanation"
-        [:p "More text"]]
+        blocks/ris-crop-explanation]
        [:div.activity-step.contain-section-width.center-section
         [<first-drag-step>]]
        [:div.activity-step.contain-section-width.center-section
