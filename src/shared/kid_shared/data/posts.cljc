@@ -27,7 +27,6 @@
    :id "p2-financial-gdp"
    :description "Pan-EU Q2 GDP release: -2.4% from Q1, (1.2 percentage point lower than forecast). Follow our liveblog for reactions from around the continent. https://on.ft.com/live/eX2GhH"
    :time-limit 900
-   :fake-news? false
    :by authors/financial_times})
 
 (def p2-financial-gdp-repost-1
