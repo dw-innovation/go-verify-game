@@ -36,6 +36,7 @@
 (defn <hub-icon> [{icon :icon
                    title :title
                    on-click! :fn}]
+  ^{:key title}
   [:a.hub-icon {:on-click on-click!}
    [icon]
    [:div.has-text-centered.has-text-black title]])
