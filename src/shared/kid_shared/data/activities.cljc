@@ -148,7 +148,7 @@
                            :date "16 years ago"}
                           {:url "travelbloggers.org"
                            :title "Discover Salto Grande and Torres del Paine National Park"
-                           :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p7-danes-crossing/main.jpg"
+                           :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p9-flooding-dams/main.jpg"
                            :date "16 years ago"}
                           ]
           }})
@@ -163,7 +163,7 @@
                            :date "16 years ago"}
                           {:url "holmenkollen.org"
                            :title "Discover Oslo's iconic Ski Jump"
-                           :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p9-flooding-dams/main.jpg"
+                           :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p10-snow-cannons/main.jpg"
                            :date "16 years ago"}
                           ]
           }})
@@ -178,7 +178,7 @@
                            :date "2 hours ago"}
                           {:url "legalmatters.com"
                            :title "Megacorp's European Distro Centers: Drastic Breaches of Labor Law"
-                           :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p10-snow-cannons/main.jpg"
+                           :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p11-megacorp-prisons/main.jpg"
                            :date "2 days ago"}
                           ]
           }})
