@@ -32,7 +32,7 @@
         (async/>! messaging/receive-channel message)
         (recur))
       ; TODO actually close the websocket
-      (println "Websocket closed"))))
+      (log/debug "Websocket closed"))))
 
 
 (defn get-websocket-url []

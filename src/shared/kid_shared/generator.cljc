@@ -17,25 +17,6 @@
 ;; keep a list of all the active posters
 (def active-generators (r/atom []))
 
-;; attach a posting loop to the room
-;; TODO exit this go loop, too
-;;
-;; send-channel -> exit-channel
-;; (defn gen-every-fifteen [send-channel]
-;;   (let [exit-channel (async/chan)]
-;;     (async/go-loop []
-;;       (async/alt!
-;;         ;; once every x seconds, do the following action
-;;         (async/timeout 15000) ([]
-;;                                (async/>! send-channel {:type ::messages/post-new
-;;                                                        :body (rand-nth posts-data/examples)})
-;;                                ;; and then continue the loop
-;;                                (recur))
-;;         exit-channel ([msg]
-;;                       (println "received exit message" msg))))
-;;     ;; return the exit channel:
-;;     exit-channel))
-
 ;; takes a story, defined as [num, post, comment, [story], num, comment, post, num, post]
 ;; and plays it to a channel, waiting on each num, and then
 ;; posting each post
@@ -89,21 +70,11 @@
     exit-channel)))
 
 ;; channel -> exit-channel
-(defn attach-default-room-poster [room-channel]
-  ;; (let [exit-channel-1 (gen-run-story room-channel stories/default-story)
-  ;;       exit-channel-2 (gen-run-story room-channel stories/a-new-racism 10000)]
-  ;;   ;; add the new loop to our list of active channels
-  ;;   (swap! active-generators conj exit-channel-1)
-  ;;   (swap! active-generators conj exit-channel-2)
-  ;;   ;; return the channel as well to whatever called it
-  ;;   exit-channel-1))
- )
+(defn attach-default-room-poster [room-channel])
 
 (defn kill-all-posters []
-  (println "killing all generators!!!!!")
-  (println @active-generators)
+  (log/debug "killing all posters: " @active-generators)
   (doall (for [c @active-generators]
     (do
-      (println "trying to close channel")
-      (async/put! c "kill-all-posters closed the channel"))))
-  )
+      (log/debug "trying to close channel")
+      (async/put! c "kill-all-posters closed the channel")))))
