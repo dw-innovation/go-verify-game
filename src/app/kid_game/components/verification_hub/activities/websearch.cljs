@@ -10,13 +10,6 @@
 ;; FIXME: in some cases, this NS must be explicitly imported up the
 ;; requirement tree for changed to be picked up. no idea why. see issue #48
 
-(defn <header> []
-  [:div.activity-header
-   [:div.columns
-    [:div.activity-icon
-     [icons/browser-search]]
-    [:div.activity-title "Web Search"]]])
-
 (defn <blooble-search> [placeholder search!]
   (let [v (r/atom nil)]
     [:form
