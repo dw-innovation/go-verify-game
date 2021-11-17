@@ -4,6 +4,7 @@
             [react-transition-group]
             [kid-game.components.verification-hub.activities.shared.ris-image-results :as image-results]
             [kid-game.components.verification-hub.activities.shared.components :as components]
+            [kid-shared.data.blocks :as blocks]
             [cljs.core.async :as async :include-macros true]
             [kid-game.state :as state]))
 
@@ -35,7 +36,7 @@
       [:div.activity-container.ris-simple
        [components/<header> icons/recycle-search "Reverse Image Search" "See where this image might come from"
         "Reverse Image Search Explanation"
-        [:p "more text"]]
+        blocks/ris-explanation]
        [:div.activity-step.contain-section-width.center-section
         [image-results/<dragger> main-image drag-done!]
         [css-transition-group {:class "transition-results"}

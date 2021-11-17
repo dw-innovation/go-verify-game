@@ -3,19 +3,15 @@
             [kid-game.state                        :as state]
             [kid-game.business                     :as business]
             [kid-game.components.modal             :as modal]
+            [kid-shared.data.blocks :as blocks]
             [kid-game.components.shared.icons      :as icons]
             ["../../react_components/compiled/intro.js" :as intro]))
 
 (defn modal-content []
   [:div [:div {:style {:width "100px" :float "center"}}
          [icons/thomas]]
-   [:h4.title.is-4 "Hallo and welcome to KID!"]
-   [:p [:b "This copy is meant to inform you!"] " blah blah blah"]
-   [:p.mt-2 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 
-        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat 
-        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."]])
+   [:h4.title.is-4 blocks/game-tagline-title]
+   [:p.mt-2 blocks/game-explanation]])
 
 (defn <form> []
   (let [v (r/atom nil)
@@ -26,8 +22,8 @@
        [modal/<modal> modal-content]
        [:div {:class "columns is-justify-content-center"}
         [:div {:class "column is-4"}
-         [:h1 {:class "title"} "KID Game"]
-         [:h5 {:class "subtitle"} "Welcome, what is your name?"]
+         [:h1 {:class "title"} blocks/game-tagline-title]
+         [:h5 {:class "subtitle"} blocks/game-tagline-welcome]
          [:a {:class "level level-left has-text-grey"
               :on-click #(modal/toggle-modal)}
           [:span {:class "icon is-small"}
