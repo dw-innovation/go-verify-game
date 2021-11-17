@@ -60,7 +60,7 @@
             time-left (or (:time-left p) (:time-limit post) 0)]
         ;; either receive message on exit channel to end loop, or ping that timeout every 100ms
         (async/alt!
-          exit-channel ([] (println "stopping post timer"))
+          exit-channel ([] (log/debug "stopping post timer"))
           (async/timeout 100) ([]
                                (if (> time-left 0)
                                  ;; update the post's time left and keep the loop going
@@ -174,7 +174,7 @@
       (and live-post? blocked? legit-news?) (do-blocked-wrong post)
       (and live-post? shared? fake-news?) (do-shared-wrong post)
       (and live-post? shared? legit-news?) (do-shared-correctly post)
-      :else (println "no matched cases for the post!"))
+      :else (log/debug "no matched cases for the post!"))
     (stop-post-timer! post)
     (state/post-transition-state! post (if blocked? :blocked :shared))))
 
@@ -227,6 +227,6 @@
       (do (log/debug "got new message!!!!!!!!!!")
           (handle-message! msg)
           (recur))
-      (println "receive channel got bad message"))))
+      (log/debug "receive channel got bad message"))))
 
 (listen-to-receive-channel!)

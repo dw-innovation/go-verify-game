@@ -1,6 +1,8 @@
 (ns user
-  (:require [kid-game.main] :reload-all))
+  (:require [kid-game.main]
+            [kid-game.utils.log :as log]
+            :reload-all))
 
-(println "starting application from dev/user.clj")
+(log/debug "starting application from dev/user.clj")
 
 (kid-game.main/-main 3449)

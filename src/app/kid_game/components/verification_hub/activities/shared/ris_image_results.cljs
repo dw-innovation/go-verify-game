@@ -44,10 +44,12 @@
 (defn <image-results> [imgs]
   [:div.ris-image-results
    (for [img imgs]
+     ^{:key (:src img)}
      [:div.ris-image-result
       [:img {:src (:src img)}]])])
 
 (defn <search-result> [{url :url title :title img-src :img-src date :date text :text}]
+  ^{:key title}
   [:div.ris-search-result
    [:div.ris-search-result-url url]
    [:div.ris-search-result-title title]
@@ -62,4 +64,4 @@
 ;; awaits vector of {:url :title :img-src :date :text}
 (defn <search-results> [search-results]
   [:div.ris-search-results
-   (for [res search-results] [<search-result> res])])
+   (map <search-result> search-results)])
