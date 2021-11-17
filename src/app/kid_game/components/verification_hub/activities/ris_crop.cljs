@@ -140,8 +140,6 @@
               [:h4.title.is-4.mb-2 "Results from your image search"]
               [:h3.ris-result-header [:b (count search-results)] " page(s) with matching images"]
               [image-results/<search-results> search-results]
-              [:h3.ris-result-header [:b (count image-results)] " similar image(s)"]
-              [image-results/<image-results> image-results]
               [:hr]]]))]])))
 
 (defn <main> [{:as data
