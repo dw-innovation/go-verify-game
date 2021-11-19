@@ -193,7 +193,6 @@ body {
     width: 35rem;
     /* constrain post size either to screen (mobile) or to parent container */
     max-width: calc(min(100vw, 100%));
-    min-width: 35rem;
     margin: var(--spacing) auto;
     border-top: 8px solid var(--color-timeline-primary);
 
@@ -557,4 +556,4 @@ button { background-color: transparent;
 .is-block-button { border-color: var(--color-red);
                    color: var(--color-red); }
 
-.is-background-grey { background-color: var(--color-grey) }
+.is-background-grey { background-color: var(--color-grey); }
