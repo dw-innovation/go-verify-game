@@ -14,7 +14,7 @@
 (defn <blooble-search> [placeholder search!]
   (let [v (r/atom placeholder)]
     [:form
-     {:on-submit (fn [x] (println "aaaaa") (.preventDefault x) (search!))}
+     {:on-submit (fn [x] (.preventDefault x) (search!))}
      [:div.field
       [:div {:class "control has-icons-left has-icons-right"}
        [:input {:class "input"
