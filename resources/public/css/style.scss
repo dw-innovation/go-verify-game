@@ -551,3 +551,8 @@ button { background-color: transparent;
                               95% {transform: translateY(0px)}
                               98% {transform: translateY(-15px)}
                               100% { transform: translateY(0px) }}
+
+.is-share-button { border-color: var(--color-green);
+                   color: var(--color-green); }
+.is-block-button { border-color: var(--color-red);
+                   color: var(--color-red); }

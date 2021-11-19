@@ -62,15 +62,16 @@
     [:img {:class "post-media" :src img}]]])
 
 (defn <post-actions> [p]
-  (let [
-        block! (fn [] (business/post-block! p))
+  (let [block! (fn [] (business/post-block! p))
         share! (fn [] (business/post-share! :comment "comment about post"
                                             :post p))]
-    [:div.buttons
-     [:button {:class "button outline" :on-click share!}
-      [:span.icon [:i {:class "fas fa-share"}]] [:span "share"]]
-     [:button {:class "button outline" :on-click block!}
-      [:span.icon [:i {:class "fas fa-ban"}]] [:span "block"]]
+    [:div.level.buttons
+     [:div.level-item.level-left
+      [:button {:class "button outline is-share-button" :on-click share!}
+      [:span.icon [:i {:class "fas fa-share"}]] [:span "share"]]]
+     [:div.level-item.level-right
+     [:button {:class "button outline is-block-button" :on-click block!}
+      [:span.icon [:i {:class "fas fa-ban"}]] [:span "block"]]]
 
      #_[:button {:class "button outline" :on-click (fn [ev] ;; stop propagation because there is a global
                                         ;; click to open panel, and we are specifically opening the other one
