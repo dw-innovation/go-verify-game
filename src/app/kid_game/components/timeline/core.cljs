@@ -9,6 +9,7 @@
             [kid-shared.types.post    :as posts]
             [kid-shared.types.comment :as comment]
             [kid-game.utils.core      :refer [timestamp-now new-uuid]]
+            ["../../react_components/compiled/js-utils.js" :as js-utils]
             [react-transition-group]
             [lodash]
             [moment]))
@@ -24,11 +25,36 @@
 
 (declare <post>)
 
-(defn <progress> [amnt total]
+(defn <rainbow-progress> [percent]
+  [:div {:class ["is-background-grey" "br-2" "mb-2"]
+         :style {:width "100%"
+                 :height "10px"
+                 }}
+   [:div {:class ["br-2"]
+          :style {:width (str percent  "%")
+                  :height "10px"
+                  :transition "width .1s"
+                  :background-color (js-utils/percentageToColor percent)
+                  }}]])
+
+;; bulma progress does not allow changing the color
+;;  , and, is really annoying in other ways.
+;;  I may have reintroduced the flickering issue above, though
+(defn <bulma-progress> [amnt total]
   (let [percent (* 100 (/ amnt total))]
-    [:progress {:class "progress is-primary is-small"
+    [:progress {:class "progress is-rainbow is-small"
                 :value percent
+                :color "yellow"
+                :background "blue"
+
+                :style {:background "red"
+                        :color "green"}
                 :max 100}]))
+
+(defn <progress> [amnt total]
+  (let [percent (js/Math.floor (* 100 (/ amnt total)))] [<rainbow-progress> percent])
+  ;; [<bulma-progress> amnt total]
+  )
 
 (defn <post-progress> [{time-left :time-left
                         time-limit :time-limit}]
@@ -69,7 +95,7 @@
      [:div.level-item.level-left
       [:button {:class "button outline is-share-button" :on-click share!}
       [:span.icon [:i {:class "fas fa-share"}]] [:span "share"]]]
-     [:div.level-item.level-right
+     [:div.level-item.level-right.pr-1
      [:button {:class "button outline is-block-button" :on-click block!}
       [:span.icon [:i {:class "fas fa-ban"}]] [:span "block"]]]
 
