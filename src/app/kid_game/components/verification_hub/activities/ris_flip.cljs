@@ -100,6 +100,11 @@
         [s3 <s3>] (drag-step)]
     (fn []
       [:div.activity-container
+
+       [components/<header> icons/recycle-search "Reverse Image Search" "You might need to flip the image"
+        "Reverse Image Search with FLip Explanation"
+        blocks/web-search-explanation]
+
        [:div.activity-step.contain-section-width.center-section
         [<s1> {:img-src main-image :search-results []}]]
        [:div.activity-step.contain-section-width.center-section
