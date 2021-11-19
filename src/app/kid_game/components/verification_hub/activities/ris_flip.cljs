@@ -21,7 +21,7 @@
   "to be a step function, it must return [atom, component]"
   [ret] (let [[status <component>] ret]
           (and (atom? status)
-               (status #{:strted :failed :succeeded})
+               (status #{:started :failed :succeeded})
                (fn? <component>))))
 
 ;; FIXME: in some cases, this NS must be explicitly imported up the
@@ -71,9 +71,9 @@
         flip! (fn []
                 (reset! status :flipping)
                 (async/go
-                  (async/<! (async/timeout 2000)) ;sync this timout with animation length on line +2
+                  (async/<! (async/timeout 500)) ;sync this timout with animation length on line +2
                   (reset! status :succeeded)))
-        animation-css {:animation "flip-animate 2s ease-in-out"
+        animation-css {:animation "flip-animate .5s ease-in-out"
                        :animation-fill-mode "forwards"}]
     [status
      (fn [{img-src :img-src}]
