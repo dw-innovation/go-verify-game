@@ -80,17 +80,17 @@
                      :date "1 day ago"}]}})
 
 (def urine-bottles-ris
-  {:type :reverse-image-simple
+  {:type :reverse-image-flip
    :data {:main-image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p6-urine-bottles/main.jpg"
-          :result-search [
-                          {:url "nnyt.com"
+          :flipped-image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p6-urine-bottles/flipped.jpg"
+          :result-search [{:url "nnyt.com"
                            :title "Megacorp, class struggle and exaggerated stories"
-                           :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p6-urine-bottles/main.jpg"
+                           :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p6-urine-bottles/flipped.jpg"
                            :date "3 hours ago"
                            :text "As Europe's most powerful conglomerate continues to exploit its blue collars, activists resort to spreading fabricated news. \"That's a terrible idea that will hurt the movement of precarious workers\", says..."}
                           {:url "inquiringminds.com"
                            :title "Yes, Megacorp is lying, but so are some activists"
-                           :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p6-urine-bottles/main.jpg"
+                           :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p6-urine-bottles/flipped.jpg"
                            :date "5 hours ago"
                            :text "Online research reveals that Megacorp indeed made employees pee in bottles. However, there is no proof they have been recycling and selling..."}
                           ]

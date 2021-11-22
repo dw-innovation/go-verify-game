@@ -189,15 +189,17 @@ body {
   }
 }
 
-.post {
+.post-wrapper {
     width: 35rem;
     /* constrain post size either to screen (mobile) or to parent container */
     max-width: calc(min(100vw, 100%));
-    min-width: 35rem;
-
     margin: var(--spacing) auto;
     border-top: 8px solid var(--color-timeline-primary);
+
     background-color: var(--color-white);
+}
+
+.post {
     padding: var(--spacing);
     .infocolumn {
       flex: 1;
@@ -318,9 +320,6 @@ button { background-color: transparent;
   }
 }
 
-.ris-image-dragger {
-  margin: var(--spacing-double);
-}
 
 .blooble-simulation {
   padding: var(--spacing);
@@ -368,7 +367,7 @@ button { background-color: transparent;
 .ris-results-transition-enter { opacity: 0; }
 .ris-results-transition-enter-done { opacity: 1;
                                      transition: all .5s ease-in;
-                                     margin: var(--spacing-double); }
+                                     margin-top: var(--spacing-double); }
 .ris-results-transition-exit { opacity: 1; }
 .ris-results-transition-exit-done { opacity: 0;
                                     transition: opacity 1s ease-in; }
@@ -376,7 +375,7 @@ button { background-color: transparent;
 .ris-drag-blocks { display: flex; flex-basis: 0; justify-content: center; }
 .ris-drag-block { width: 33%;
 		  &:nth-of-type(2) {  width: 10% ; }}
-.ris-drag-block-center { display: flex; align-items: center; justify-content: center; }
+.ris-drag-block-center { display: flex; align-items: center; justify-content: center; flex: 1 }
 
 
 .ris-search-result { margin-top: var(--spacing); }
@@ -538,3 +537,25 @@ button { background-color: transparent;
   overflow-y: scroll;
   height: 100vh;
 }
+
+@keyframes peek-out-animation { 0% { transform: translateX(0px) scaleX(-1); }
+                                90% { transform: translateX(150px) scaleX(-1); }
+                                100% { transform: translateX(80px) scaleX(1); z-index: 9 }}
+
+@keyframes bounce-animation { 0% { transform: translateY(0px)  }
+                              3% { transform: translateY(-10px) }
+                              5% { transform: translateY(0px) }
+                              95% {transform: translateY(0px)}
+                              98% {transform: translateY(-15px)}
+                              100% { transform: translateY(0px) }}
+
+@keyframes flip-animate { 0% { transform: scaleX(1) }
+                          100% { transform: scaleX(-1)} }
+
+.is-share-button { border-color: var(--color-green);
+                   color: var(--color-green); }
+.is-block-button { border-color: var(--color-red);
+                   color: var(--color-red); }
+
+.is-background-grey { background-color: var(--color-grey); }
+

@@ -1,8 +1,6 @@
 (ns kid-game.utils.log
   (:require [kid-shared.types.shared :as shared]
             [clojure.spec.alpha :as s]))
-
-
 ;;
 ;;  debug macro
 ;;   use like: (log/debug "handling message" msg)

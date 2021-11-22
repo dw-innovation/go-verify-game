@@ -3,6 +3,7 @@
             [kid-game.state :as state]
             [kid-game.utils.log :as log]
             [kid-game.components.verification-hub.activities.ris-simple :as ris-simple]
+            [kid-game.components.verification-hub.activities.ris-flip :as ris-flip]
             [kid-game.components.verification-hub.activities.ris-crop :as ris-crop]
             [kid-game.components.verification-hub.activities.websearch :as websearch]
             [kid-game.components.verification-hub.activities.polygon-search :as polygon-search]
@@ -25,6 +26,7 @@
     :test [<test>]
     :reverse-image-simple [ris-simple/<main> data back!]
     :reverse-image-crop [ris-crop/<main> data back!]
+    :reverse-image-flip [ris-flip/<main> data back!]
     :web-search [websearch/<main> data back!]
     :polygon-search [polygon-search/<main> data back!]
     ; none of the above matched:

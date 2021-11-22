@@ -47,5 +47,6 @@
                               :timeout 2}
               [image-results/<ris-results> result-search]
               ]))]]
+
        [:hr]
         [components/<activity-actions> back!]])))

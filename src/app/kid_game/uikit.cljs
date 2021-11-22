@@ -88,6 +88,8 @@
     [:div {:style {:width "100px" :float "left"}}
      [icons/thomas]]
     [:div {:style {:width "100px" :float "left"}}
+     [icons/thomas-with-speech!?-bubble]]
+    [:div {:style {:width "100px" :float "left"}}
      [icons/image-analysis]]
     [:div {:style {:width "100px" :float "left"}}
      [icons/geolocation]]
