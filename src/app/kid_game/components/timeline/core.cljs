@@ -2,12 +2,14 @@
   (:require [cljs.js                  :refer [empty-state eval js-eval]]
             [cljs.core.async          :as async :include-macros true]
             [reagent.core             :as r]
+            [kid-game.components.shared.icons :as icons]
             [kid-game.state           :as state]
             [kid-game.business        :as business]
             [kid-game.utils.log       :as log]
             [kid-shared.types.post    :as posts]
             [kid-shared.types.comment :as comment]
             [kid-game.utils.core      :refer [timestamp-now new-uuid]]
+            ["../../react_components/compiled/js-utils.js" :as js-utils]
             [react-transition-group]
             [lodash]
             [moment]))
@@ -23,11 +25,36 @@
 
 (declare <post>)
 
-(defn <progress> [amnt total]
+(defn <rainbow-progress> [percent]
+  [:div {:class ["is-background-grey" "br-2" "mb-2"]
+         :style {:width "100%"
+                 :height "10px"
+                 }}
+   [:div {:class ["br-2"]
+          :style {:width (str percent  "%")
+                  :height "10px"
+                  :transition "width .1s"
+                  :background-color (js-utils/percentageToColor percent)
+                  }}]])
+
+;; bulma progress does not allow changing the color
+;;  , and, is really annoying in other ways.
+;;  I may have reintroduced the flickering issue above, though
+(defn <bulma-progress> [amnt total]
   (let [percent (* 100 (/ amnt total))]
-    [:progress {:class "progress is-primary is-small"
+    [:progress {:class "progress is-rainbow is-small"
                 :value percent
+                :color "yellow"
+                :background "blue"
+
+                :style {:background "red"
+                        :color "green"}
                 :max 100}]))
+
+(defn <progress> [amnt total]
+  (let [percent (js/Math.floor (* 100 (/ amnt total)))] [<rainbow-progress> percent])
+  ;; [<bulma-progress> amnt total]
+  )
 
 (defn <post-progress> [{time-left :time-left
                         time-limit :time-limit}]
@@ -63,20 +90,26 @@
                                       :height "300px"}}]])
 
 (defn <post-actions> [p]
-  (let [investigate! (fn [] (business/post-investigate! p))
-        block! (fn [] (business/post-block! p))
+  (let [block! (fn [] (business/post-block! p))
         share! (fn [] (business/post-share! :comment "comment about post"
                                             :post p))]
-    [:div.buttons
-     [:button {:class "button outline" :on-click share!}
-      [:span.icon [:i {:class "fas fa-share"}]] [:span "share"]]
-     [:button {:class "button outline" :on-click block!}
-      [:span.icon [:i {:class "fas fa-ban"}]] [:span "block"]]
-     [:button {:class "button outline" :on-click (fn [ev] ;; stop propagation because there is a global
+    [:div.level.buttons
+     [:div.level-item.level-left
+      [:button {:class "button outline is-share-button" :on-click share!}
+      [:span.icon [:i {:class "fas fa-share"}]] [:span "share"]]]
+     [:div.level-item.level-right.pr-1
+     [:button {:class "button outline is-block-button" :on-click block!}
+      [:span.icon [:i {:class "fas fa-ban"}]] [:span "block"]]]
+
+     #_[:button {:class "button outline" :on-click (fn [ev] ;; stop propagation because there is a global
                                         ;; click to open panel, and we are specifically opening the other one
                                                    (.stopPropagation ev)
                                                    (investigate!))}
-      [:span.icon [:i {:class "fas fa-search"}]] [:span "investigate"]]]))
+      [:span.icon [:i {:class "fas fa-search"}]] [:span "investigate"]]
+
+
+
+     ]))
 
 (defn <action-info-content> [result copy points-result]
   (let [icon (case result :won  "fa-check"
@@ -136,34 +169,61 @@
       ^{:key (comment/id comment)} ;; important to keep track of rendering
       [<comment> comment]])])
 
+(defn <peeking-duck> [investigate!]
+[:div {:style {:position "absolute" ; note - this relies on the post having position:relative
+                    :right "0"
+                    :top "25px"
+                    :animation "peek-out-animation 1s ease-in-out"
+                    :animation-fill-mode "forwards"
+                    :animation-delay "5s"
+                    :width "150px"}}
+      [:div {:on-click (fn [ev] ;; stop propagation because there is a global
+                        ;; click to open panel, and we are specifically opening the other one
+                        (println "clicked investigate")
+                        (.stopPropagation ev)
+                        (investigate!))
+             :style {:animation "bounce-animation 10s ease-in-out infinite"
+                     :cursor "pointer"
+                     :position "relative"
+                     }}
+        [icons/thomas-with-speech!?-bubble]]]
+  )
+
 (defn <type-text> [;; destructure the post
                    {:as p
                     description :description
                     game-state :game-state ; either :live, :shared, :blocked, or :timed-out
                     author :by
                     comments :comments}]
-  [:div {:class ["post" "post-type-text my-5" game-state]}
-   [<debug-tags> p]
-   [:div.columns.mr-0
-    [:div.authorcolumn [<author-image> author]]
-    [:div.infocolumn
-     [<author-name> author]
-     [<post-text> description]
-     (when (:image p) [<post-media> (:image p)])
-     (when (= game-state :live) [<post-actions> p])
-     (when (= game-state :live) [<post-progress> p])
-     [<post-comments> comments]
-     (case game-state
-       :live      nil
-       :shared    [<post-overlay> p]
-       :blocked   [<post-overlay> p]
-       :timed-out [<post-overlay> p]
-       nil)]]])
+  (let [investigate! (fn [] (business/post-investigate! p))]
+  [:div.post-wrapper.my-5 {:style {:position "relative"}}
+   (when (= :live game-state) [<peeking-duck> investigate!])
+   [:div {:class ["post" "post-type-text" game-state]
+          :style {:position "relative" ; for the duck in <peeking-duck> to be position:absoluted correctly
+                  :background-color "white" ; lazy for now
+                  }}
+    [<debug-tags> p]
+    [:div.columns.mr-0
+     [:div.authorcolumn [<author-image> author]]
+     [:div.infocolumn
+      [<author-name> author]
+      [<post-text> description]
+      (when (:image p) [<post-media> (:image p)])
+      (when (= game-state :live) [<post-actions> p])
+      (when (= game-state :live) [<post-progress> p])
+      [<post-comments> comments]
+      (case game-state
+        :live      nil
+        :shared    [<post-overlay> p]
+        :blocked   [<post-overlay> p]
+        :timed-out [<post-overlay> p]
+        nil)]]]]))
 
 (defn <type-re-post> [{:as p
                        author :by
                        comment :comment
                        original-post :post}]
+  [:div.post-wrapper
   [:div {:class ["post" "post-type-re-post"]}
    [<debug-tags> p]
    [:div.columns.mr-0
@@ -171,7 +231,7 @@
     [:div.infocolumn
      [<author-name> author]
      [<post-text> comment]
-     [:div {:class "post-sub-post"} (<post> original-post)]]]])
+     [:div {:class "post-sub-post"} (<post> original-post)]]]]])
 
 (defn match-post [p]
   (case (:type p)

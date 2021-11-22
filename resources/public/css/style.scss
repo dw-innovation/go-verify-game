@@ -189,15 +189,17 @@ body {
   }
 }
 
-.post {
+.post-wrapper {
     width: 35rem;
     /* constrain post size either to screen (mobile) or to parent container */
     max-width: calc(min(100vw, 100%));
-    min-width: 35rem;
-
     margin: var(--spacing) auto;
     border-top: 8px solid var(--color-timeline-primary);
+
     background-color: var(--color-white);
+}
+
+.post {
     padding: var(--spacing);
     .infocolumn {
       flex: 1;
@@ -536,5 +538,24 @@ button { background-color: transparent;
   height: 100vh;
 }
 
+@keyframes peek-out-animation { 0% { transform: translateX(0px) scaleX(-1); }
+                                90% { transform: translateX(150px) scaleX(-1); }
+                                100% { transform: translateX(80px) scaleX(1); z-index: 9 }}
+
+@keyframes bounce-animation { 0% { transform: translateY(0px)  }
+                              3% { transform: translateY(-10px) }
+                              5% { transform: translateY(0px) }
+                              95% {transform: translateY(0px)}
+                              98% {transform: translateY(-15px)}
+                              100% { transform: translateY(0px) }}
+
 @keyframes flip-animate { 0% { transform: scaleX(1) }
                           100% { transform: scaleX(-1)} }
+
+.is-share-button { border-color: var(--color-green);
+                   color: var(--color-green); }
+.is-block-button { border-color: var(--color-red);
+                   color: var(--color-red); }
+
+.is-background-grey { background-color: var(--color-grey); }
+
