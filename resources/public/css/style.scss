@@ -193,6 +193,12 @@ body {
     width: 35rem;
     /* constrain post size either to screen (mobile) or to parent container */
     max-width: calc(min(100vw, 100%));
+    min-width: 35rem;
+   /* for a re-post-allow scaling down */
+    .post-wrapper {
+      min-width: 0rem;
+    }
+
     margin: var(--spacing) auto;
     border-top: 8px solid var(--color-timeline-primary);
 
