@@ -128,11 +128,12 @@
         [:div
          [<header>]
 
+         (when @state/dev?
          [:div.tags
           [:div {:class "tag is-light is-info is-family-monospace"} "investigating: " (:id post)]
           [:div {:class "tag is-light is-info is-family-monospace"} "panel: " @active-panel]
           [:div {:class "tag is-light is-info is-family-monospace"} "time-left: " (:time-left post)]
-          [:div {:class "tag is-light is-info is-family-monospace"} "post is: "(:game-state post)]]
+          [:div {:class "tag is-light is-info is-family-monospace"} "post is: "(:game-state post)]])
 
          [timeline/<post-overlay> post]
 

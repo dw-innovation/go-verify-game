@@ -61,9 +61,11 @@
   [<progress> time-left time-limit])
 
 (defn <debug-tags> [p]
-  [:div.tags
-   [:div {:class "tag is-light is-info is-family-monospace"} (:id p)]
-   [:div {:class "tag is-light is-info is-family-monospace"} (:game-state p)]])
+  (if @state/dev?
+    [:div.tags
+     [:div {:class "tag is-light is-info is-family-monospace"} (:id p)]
+     [:div {:class "tag is-light is-info is-family-monospace"} (:game-state p)]]
+    [:span]))
 
 (defn <author-image> [{:as author
                        image :image
@@ -197,7 +199,9 @@
                     comments :comments}]
   (let [investigate! (fn [] (business/post-investigate! p))]
   [:div.post-wrapper.my-5 {:style {:position "relative"}}
+
    (when (= :live game-state) [<peeking-duck> investigate!])
+
    [:div {:class ["post" "post-type-text" game-state]
           :style {:position "relative" ; for the duck in <peeking-duck> to be position:absoluted correctly
                   :background-color "white" ; lazy for now
