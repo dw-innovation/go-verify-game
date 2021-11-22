@@ -22,7 +22,7 @@
             ; end weird import
             [moment]))
 
-(defn <game> [& {:keys [dev?]}]
+(defn <game> []
   (let [size {:active "is-two-thirds active" :inactive "is-one-third is-unselectable"}
         timeline-active? (= (state/get-panel) :timeline)
         hub-active? (not timeline-active?)
@@ -31,7 +31,7 @@
      [notifications/<notifications>]
 
      ;; this meta panels is for during development
-     (when dev?
+     (when @state/dev?
        [:div {:class "game-panel active column dev-panel"}
         [<meta>/<meta>]])
 
@@ -75,22 +75,19 @@
                        ^{:key (:type activity)} ;; important to keep track of rendering
                        [activities/get-activity activity]) (:activities post))])))
 
-(defn <app> [& {:keys [dev]}]
-  (let [is-dev? (r/atom dev)]
-    (fn []
-      (cond
-        (state/has-player?) [<game> :dev? @is-dev?]
-        :else [<login>/<form>]))))
+(defn <app> []
+  (cond
+    (state/has-player?) [<game>]
+    :else [<login>/<form>]))
 
 (defn <routes> []
   ;; decide what to render in our app.  This is some junk hand-made routing
   (let [s js/window.location.search ; get the ?var=val&var2=val2 from the url
         post-id    (-> (js/URLSearchParams. s) (.get "post"))
-        uikit?     (-> (js/URLSearchParams. s) (.get "uikit"))
-        dev?       (-> (js/URLSearchParams. s) (.get "dev"))]
+        uikit?     (-> (js/URLSearchParams. s) (.get "uikit"))]
+    (when (and @state/dev?
+               (not (state/has-player?))) (business/new-session! "dev-user"))
     (cond
-      dev? (do (and (not (state/has-player?)) (business/new-session! "dev-user"))
-               [<app> :dev true])
       uikit? [uikit/<main-view>]
       post-id [<one-post> post-id]
       :else [<app>])))

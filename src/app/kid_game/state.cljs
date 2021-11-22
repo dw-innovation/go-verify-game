@@ -16,6 +16,10 @@
 ;;     use the supplied functions
 ;;
 
+(defonce dev? (atom (let [s js/window.location.search ; get the ?var=val&var2=val2 from the url
+                          d (-> (js/URLSearchParams. s) (.get "dev"))]
+                      (= "true" d))))
+
 (defonce app-state (atom {:text "Hello world!"
                           ;; either login, timeline, or verification-hub
                           :active-panel :login ; start on the login page
