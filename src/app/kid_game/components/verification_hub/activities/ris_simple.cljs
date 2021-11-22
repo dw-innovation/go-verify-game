@@ -46,8 +46,6 @@
              [css-transition {:class-names "ris-results-transition" :timeout 2}
               [:div.ris-results
                [:h3.ris-result-header "Pages with matching images:"]
-               [image-results/<search-results> result-search]
-               [:h3.ris-result-header "Similar images:"]
-               [image-results/<image-results> result-images]]]))]]
+               [image-results/<search-results> result-search]]]))]]
        [:hr]
         [components/<activity-actions> back!]])))

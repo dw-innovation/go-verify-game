@@ -18,6 +18,7 @@
             [kid-game.components.verification-hub.activities.websearch]
             [kid-game.components.verification-hub.activities.polygon-search]
             [kid-game.components.verification-hub.activities.ris-crop]
+            [kid-game.components.verification-hub.activities.ris-flip]
             ; end weird import
             [moment]))
 
