@@ -12,7 +12,7 @@
 ;; requirement tree for changed to be picked up. no idea why. see issue #48
 
 (defn <blooble-search> [placeholder search!]
-  (let [v (r/atom nil)]
+  (let [v (r/atom placeholder)]
     [:form
      {:on-submit (fn [x] (.preventDefault x) (search!))}
      [:div.field
@@ -27,7 +27,9 @@
         [:i {:class "fa fa-search"}]]]]
      [:div.field
       [:div  {:class "control has-text-centered"}
-       [:button {:class "button is-link"}
+       [:button {:class "button is-link"
+                 :disabled (if search! false true)
+                 }
         [:span "Blooble search"]]]]]))
 
 (defn <blooble-simulation> [terms-string ; a string to show in the search bar
@@ -35,19 +37,33 @@
                             loading ; bool, show the loading
                             search! ; function to run on click
                             ]
-  [:div.blooble-simulation
-   [:div.blooble-logo
-    [icons/blooble-logo]]
-   [<blooble-search> terms-string search!]
-   (when results
-     [:div.results
-      [:b.results-count (count results) " search results found"]
-      (for [res results]
-        [:div.search-result
-         [image-results/<search-result> res]])])
-   (when loading
-     [:div.loading-panel
-      [image-results/<loading>]])])
+  (let [filling-string (r/atom "")
+        filling-done (r/atom false)]
+    ;; attatch a loop that fills the string by random timer
+    (async/go-loop [[current-char & rest] terms-string]
+      (async/<! (async/timeout (rand 200)))
+      (reset! filling-string (str @filling-string current-char))
+      (if rest
+        (recur rest)
+        (reset! filling-done true)))
+    ;; return the component
+    (fn [terms-string results loading search!]
+      [:div.blooble-simulation
+       [:div.blooble-logo
+        [icons/blooble-logo]]
+
+       [<blooble-search> @filling-string (if @filling-done search! nil)]
+
+       (when results
+         [:div.results
+          [:b.results-count (count results) " search results found"]
+          (for [res results]
+            ^{:key (:title res)}
+            [:div.search-result
+             [image-results/<search-result> res]])])
+       (when loading
+         [:div.loading-panel
+          [image-results/<loading>]])])))
 
 ;; Activity of type web-search, with it's corresponding dara
 (defn <main> [{:as data
@@ -67,8 +83,8 @@
       [:div.activity-container.web-search
        [:div.activity-step.contain-section-width.center-section
 
-       [components/<header> icons/browser-search "Web Search" "Sometimes a basic search is enough"
-        "Web Search Explanation"
+       [components/<header> icons/browser-search "web search" "sometimes a basic search is enough"
+        "web search explanation"
         blocks/web-search-explanation]
        [<blooble-simulation>
         (string/join " + " terms)
