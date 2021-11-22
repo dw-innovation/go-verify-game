@@ -1,6 +1,7 @@
 (ns kid-game.components.verification-hub.activities.shared.ris-image-results
   (:require [reagent.core :as r]
             [cljs.core.async :as async :include-macros true]
+            [kid-game.components.verification-hub.activities.shared.components :as components]
             [kid-game.state :as state]))
 
 
@@ -40,14 +41,6 @@
                              (reset! done? true)
                              (done!))} "Drag here"])]]])))
 
-;; awaits vector of {:src ""}
-(defn <image-results> [imgs]
-  [:div.ris-image-results
-   (for [img imgs]
-     ^{:key (:src img)}
-     [:div.ris-image-result
-      [:img {:src (:src img)}]])])
-
 (defn <search-result> [{url :url title :title img-src :img-src date :date text :text}]
   ^{:key title}
   [:div.ris-search-result
@@ -65,3 +58,11 @@
 (defn <search-results> [search-results]
   [:div.ris-search-results
    (map <search-result> search-results)])
+
+;; awaits vector of {:url :title :img-src :date :text}
+(defn <ris-results> [results]
+  [components/<blooble-simulation>
+   [:div.ris-results
+    [:h4.title.is-4.mb-2 "Results from your image search"]
+    [:h3.ris-result-header [:b (count results)] " page(s) with matching images"]
+    [<search-results> results]]])

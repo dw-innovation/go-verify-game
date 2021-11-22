@@ -32,10 +32,10 @@
                  }
         [:span "Blooble search"]]]]]))
 
-(defn <blooble-simulation> [terms-string ; a string to show in the search bar
-                            results ; components to place after the break, or nil
-                            loading ; bool, show the loading
-                            search! ; function to run on click
+(defn <search-simulation> [terms-string ; a string to show in the search bar
+                           results ; components to place after the break, or nil
+                           loading ; bool, show the loading
+                           search! ; function to run on click
                             ]
   (let [filling-string (r/atom "")
         filling-done (r/atom false)]
@@ -48,12 +48,9 @@
         (reset! filling-done true)))
     ;; return the component
     (fn [terms-string results loading search!]
-      [:div.blooble-simulation
-       [:div.blooble-logo
-        [icons/blooble-logo]]
+      [components/<blooble-simulation>
 
        [<blooble-search> @filling-string (if @filling-done search! nil)]
-
        (when results
          [:div.results
           [:b.results-count (count results) " search results found"]
@@ -86,7 +83,7 @@
        [components/<header> icons/browser-search "web search" "sometimes a basic search is enough"
         "web search explanation"
         blocks/web-search-explanation]
-       [<blooble-simulation>
+       [<search-simulation>
         (string/join " + " terms)
         (if @searched? results nil)
         @loading?
