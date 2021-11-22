@@ -78,7 +78,7 @@
                   :fn (choose-activity! :web-search)}
                  {:icon icons/recycle-search
                   :title "Reverse image search"
-                  :fn (choose-activity! :reverse-image-crop :reverse-image-simple)}
+                  :fn (choose-activity! :reverse-image-crop :reverse-image-simple :reverse-image-flip)}
                  {:icon icons/image-analysis
                   :title "Image analysis"
                   :fn (choose-activity! :polygon-search)}

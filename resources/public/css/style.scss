@@ -320,9 +320,6 @@ button { background-color: transparent;
   }
 }
 
-.ris-image-dragger {
-  margin: var(--spacing-double);
-}
 
 .blooble-simulation {
   padding: var(--spacing);
@@ -370,7 +367,7 @@ button { background-color: transparent;
 .ris-results-transition-enter { opacity: 0; }
 .ris-results-transition-enter-done { opacity: 1;
                                      transition: all .5s ease-in;
-                                     margin: var(--spacing-double); }
+                                     margin-top: var(--spacing-double); }
 .ris-results-transition-exit { opacity: 1; }
 .ris-results-transition-exit-done { opacity: 0;
                                     transition: opacity 1s ease-in; }
@@ -378,7 +375,7 @@ button { background-color: transparent;
 .ris-drag-blocks { display: flex; flex-basis: 0; justify-content: center; }
 .ris-drag-block { width: 33%;
 		  &:nth-of-type(2) {  width: 10% ; }}
-.ris-drag-block-center { display: flex; align-items: center; justify-content: center; }
+.ris-drag-block-center { display: flex; align-items: center; justify-content: center; flex: 1 }
 
 
 .ris-search-result { margin-top: var(--spacing); }
@@ -552,9 +549,13 @@ button { background-color: transparent;
                               98% {transform: translateY(-15px)}
                               100% { transform: translateY(0px) }}
 
+@keyframes flip-animate { 0% { transform: scaleX(1) }
+                          100% { transform: scaleX(-1)} }
+
 .is-share-button { border-color: var(--color-green);
                    color: var(--color-green); }
 .is-block-button { border-color: var(--color-red);
                    color: var(--color-red); }
 
 .is-background-grey { background-color: var(--color-grey); }
+
