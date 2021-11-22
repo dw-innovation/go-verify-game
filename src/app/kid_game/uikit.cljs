@@ -176,7 +176,7 @@
       [<icons>]]
      [:hr]
      [:h4.title.is-4 "Blooble Simulation"]
-     [websearch/<blooble-simulation>
+     [websearch/<search-simulation>
       "Here are my terms"
       (-> activities-data/financiel-web-search :data :results)
       false

@@ -1,6 +1,7 @@
 (ns kid-game.components.verification-hub.activities.shared.components
   (:require [reagent.core :as r]
             [cljs.core.async :as async :include-macros true]
+            [kid-game.components.shared.icons :as icons]
             [kid-game.components.modal             :as modal]
             [kid-game.state :as state]))
 
@@ -36,3 +37,10 @@
     [:button {:class "button is-primary is-inverted is-outlined"
               :on-click back!}
      [:span.icon [:i {:class "fas fa-search"}]] [:span "Back to hub"]]]]])
+
+(defn <blooble-simulation> [children]
+  [:div.blooble-simulation
+   [:div.blooble-logo
+    [icons/blooble-logo]]
+   children
+   ])

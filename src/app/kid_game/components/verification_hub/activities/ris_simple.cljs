@@ -43,11 +43,9 @@
          (if @loading?
            [image-results/<loading>]
            (when @dragged?
-             [css-transition {:class-names "ris-results-transition" :timeout 2}
-              [:div.ris-results
-               [:h3.ris-result-header "Pages with matching images:"]
-               [image-results/<search-results> result-search]
-               [:h3.ris-result-header "Similar images:"]
-               [image-results/<image-results> result-images]]]))]]
+             [css-transition {:class-names "ris-results-transition"
+                              :timeout 2}
+              [image-results/<ris-results> result-search]
+              ]))]]
        [:hr]
         [components/<activity-actions> back!]])))
