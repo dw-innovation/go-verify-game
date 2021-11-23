@@ -8,7 +8,7 @@
             [kid-game.utils.log       :as log]
             [kid-shared.types.post    :as posts]
             [kid-shared.types.comment :as comment]
-            [kid-game.utils.core      :refer [timestamp-now new-uuid]]
+            [kid-game.utils.core      :refer [timestamp-now new-uuid highlight-text]]
             ["../../react_components/compiled/js-utils.js" :as js-utils]
             [react-transition-group]
             [lodash]
@@ -82,7 +82,7 @@
 
 (defn <post-text> [copy]
   [:div.block.mb-3
-   [:p copy]])
+   [:p (highlight-text copy)]])
 
 (defn <post-media> [img]
   [:div.block
