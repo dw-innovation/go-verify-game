@@ -325,7 +325,7 @@ button { background-color: transparent;
   display: flex;
   flex-direction: column;
   .activity-header {
-
+    @extend .mb-4;
   }
   .activity-steps {
     flex-grow: 1;
