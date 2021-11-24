@@ -17,7 +17,7 @@
      {:on-submit (fn [x] (.preventDefault x) (search!))}
      [:div.field
       [:div {:class "control has-icons-left has-icons-right"}
-       [:input {:class "input"
+       [:input {:class "input has-text-black"
                 :type "text"
                 :value @v
                 :placeholder placeholder
