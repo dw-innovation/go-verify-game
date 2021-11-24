@@ -189,7 +189,6 @@ body {
   }
 }
 
-.post-sub-post { @extend .p-2 }
 .post-wrapper {
   box-shadow: 0px 1px 10px rgba(0,0,0,0.05);
 
@@ -203,6 +202,8 @@ body {
     .post-wrapper {
       min-width: 0rem;
       border-top: 4px solid var(--color-timeline-primary);
+      width: 100%;
+      min-width: 100%;
     }
 
     margin: var(--spacing) auto;
@@ -215,7 +216,7 @@ body {
     .infocolumn {
       @extend .pl-3;
       flex: 1;
-      overflow: hidden;
+      /* overflow: hidden; */
     }
 
     .author-image {
@@ -223,6 +224,7 @@ body {
 	    width: var(--spacing-quadruple);
 	    height: var(--spacing-quadruple);
       border-radius: var(--spacing-double);
+      border: 1px solid var(--color-timeline-primary);
       overflow: hidden;
       background-color: #e6e6e6; 
       img {
@@ -282,6 +284,7 @@ body {
                                  text-align: center;
                                  line-height: 1;
                                  color: white; }
+
 .chat-select.selected { background-color: lightblue; }
 .chat-title { font-weight: bold; }
 .latest-message { opacity: .4; }
@@ -464,12 +467,27 @@ button { background-color: transparent;
   }
 }
 
-.comment {}
+.comment { @extend .mt-3;
+           position: relative; }
+
+.comment:before {
+  content: " ";
+  position: absolute;
+  width: 40px;
+  height: 60px;
+  top: -10px;
+  left: -55px;
+  border-left: 2px solid var(--color-grey);
+  border-bottom: 2px solid var(--color-grey);
+}
+
 .comment-inner { display: flex;
-                 margin-top: var(--spacing); }
+                 @extend .pt-2; }
 .comment-inner-left { padding-right: var(--spacing); }
-.comment .post-author-image, .comment .post-author-image img { width: var(--spacing-double);
-                                                               height: var(--spacing-double); }
+.comment .post-author-image,
+.comment .post-author-image img { width: var(--spacing-double);
+                                  height: var(--spacing-double);
+                                }
 .comment-author { font-weight: bold; }
 .comment-handle { font-weight: normal;
                   @extend .has-text-grey;

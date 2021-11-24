@@ -182,10 +182,10 @@
                               :handle "@FactsAndFigures"
                               :role :media}))
 
-(def workingmom99 (user/create {:name "Paula Adamovivh"
+(def workingmom99 (user/create {:name "Paula Adamovich"
                                 :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40workingmom99.jpg"
-                              :handle "@workingmom99"
-                              :role :media}))
+                                :handle "@workingmom99"
+                                :role :media}))
 
 (def megacorp_fresh (user/create {:name "Megacorp Fresh!"
                                   :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40megacorp_fresh.jpg"

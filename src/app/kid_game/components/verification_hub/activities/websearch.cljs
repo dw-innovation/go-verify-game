@@ -86,7 +86,7 @@
        [:div {:class "activity-steps"}
        [:div.activity-step.contain-section-width.center-section
         [<search-simulation>
-         (string/join " + " terms)
+         (string/join " AND " terms)
          (if @searched? results nil)
          @loading?
          click!]
