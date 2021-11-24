@@ -26,14 +26,14 @@
 (def p1-climate-refugees-copenhagen-with-comments
   [p1-climate-refugees-copenhagen
      ;; a comment create's a new comment
-   3 {:post-id (:id posts/p1-climate-refugees-copenhagen)
+   3 {:post-id (:id p1-climate-refugees-copenhagen)
       :by authors/tktktktktk
       :text "Would these people treat their country like they treat their kind host, Italy? Me thinks not. #notAllWelcome"}
-   6 {:post-id (:id posts/p1-climate-refugees-copenhagen)
+   6 {:post-id (:id p1-climate-refugees-copenhagen)
       :by authors/tktktktktk
       :text "Too much is too much, when will the EU finally do something about the hordes of so-called \"climate refugees\"? #notallwelcome"}
    10
-   posts/p1-climate-refugees-copenhagen-response
+   p1-climate-refugees-copenhagen-response
    ]
   )
 
