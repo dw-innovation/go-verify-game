@@ -206,7 +206,8 @@
   ;; TODO should actually throw a variety of errors instead of true falsing
   ;; a message must have a type and a body
   (if-let [{:keys [type body]} msg]
-    (do (log/debug "handling message" msg)
+    (do 
+      ;; (log/debug "handling message" msg)
         (case type
           ;; eventually, the following functions should all call local funcs
           ;; and not delegate to state functions
