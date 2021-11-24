@@ -565,3 +565,8 @@ button { background-color: transparent;
 
 .is-background-grey { background-color: var(--color-grey); }
 
+.parsed-string {
+  .link {
+    color: var(--color-blue);
+  }
+}
