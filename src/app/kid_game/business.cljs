@@ -226,7 +226,9 @@
 (defn listen-to-receive-channel! []
   (async/go-loop []
     (if-let [msg (async/<! messaging/receive-channel)]
-      (do (log/debug "got new message!!!!!!!!!!")
+      (do
+        ;; or hide if (state/dev? true)
+        ;; (log/debug "got new message!!!!!!!!!!")
           (handle-message! msg)
           (recur))
       (log/debug "receive channel got bad message"))))
