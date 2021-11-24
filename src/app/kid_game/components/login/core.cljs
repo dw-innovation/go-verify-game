@@ -25,7 +25,8 @@
         [:div {:class "column is-12 has-text-centered"}
          [:h1 {:class "title is-text-hub-primary mb-6"} blocks/game-tagline-title]
          [:h5 {:class "subtitle mb-6"}
-           blocks/game-tagline-welcome
+          "You've heard about that whole \"fake news\" thing,"
+          [:br] "haven't you?"
           [:a {:class "is-text-hub-primary"
                :on-click #(modal/toggle-modal)}
            [:span {:class "pl-1 is-small"}
