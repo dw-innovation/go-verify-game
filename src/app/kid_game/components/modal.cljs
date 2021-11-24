@@ -1,38 +1,40 @@
-(ns kid-game.components.modal
-  (:require [reagent.core :as r]))
+(ns kid-game.components.modal)
 
 (defn select-modal []
   (.getElementById js/document "modal"))
 
-(defn toggle-modal []
+(defn toggle-modal
   "Toggle the `.is-active` class on the modal,
    making it in turns visible and hidden.
    This is not part of the Bulma standard lib."
+  []
   (let [el        (select-modal)
         classList (.-classList el)]
-    (if (.contains classList "is-active")
-      (.remove classList "is-active")
-      (.add classList "is-active"))))
+    (cond (.contains classList "is-active")
+          (.remove classList "is-active")
+          :else (.add classList "is-active"))))
 
-(defn close-modal []
+(defn close-modal
   "Explicitly close the modal by removing the
    `.is-active` class"
+  []
   (let [el        (select-modal)
         classList (.-classList el)]
-    (if (.contains classList "is-active")
+    (when (.contains classList "is-active")
       (.remove classList "is-active"))))
 
-(defn setup-esc-listener []
+(defn setup-esc-listener
   "Close the modal if Escape key is pressed 
    while the modal is visible."
+  []
   (.addEventListener
    js/document "keydown"
    (fn [e]
-     (if (= (.-keyCode e) 27) (close-modal)))))
+     (when (= (.-keyCode e) 27) (close-modal)))))
 
 (defn <modal> [content]
   (fn []
-    (let [esc-listener (setup-esc-listener)]
+    (let [esc-listener (setup-esc-listener)]   ;; which ends up being an unused binding...
       [:div {:class "modal"
              :id "modal"}
        [:div {:class "modal-background"
