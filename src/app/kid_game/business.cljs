@@ -29,7 +29,9 @@
   (use-new-player! :name player-name)
   (socket/setup-socket! (state/get-player)))
 
-(defn logout [] (state/clear-player))
+(defn logout []
+  (reset! state/dev? false)
+  (state/clear-player))
 
 (defn post-text-post! [& {:keys [title description fake-news?]}]
   (messaging/send {:type ::messages/post-new
