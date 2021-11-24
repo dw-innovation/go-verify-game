@@ -140,7 +140,7 @@
                                      :handle "@int_news"
                                      :role :media}))
 
-(def aynrandftw (user/create {:name "Joe Libeal"
+(def aynrandftw (user/create {:name "Joe Liberal"
                               :handle "@aynrandftw"
                               :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40ayndrandftw.jpg"
                               :role :media}))

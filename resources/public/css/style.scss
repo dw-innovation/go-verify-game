@@ -471,6 +471,11 @@ button { background-color: transparent;
 .comment .post-author-image, .comment .post-author-image img { width: var(--spacing-double);
                                                                height: var(--spacing-double); }
 .comment-author { font-weight: bold; }
+.comment-handle { font-weight: normal;
+                  @extend .has-text-grey;
+                  @extend .pl-2; }
+
+
 
 
 
