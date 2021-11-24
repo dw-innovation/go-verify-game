@@ -189,25 +189,31 @@ body {
   }
 }
 
+.post-sub-post { @extend .p-2 }
 .post-wrapper {
+  box-shadow: 0px 1px 10px rgba(0,0,0,0.05);
+
     width: 35rem;
     /* constrain post size either to screen (mobile) or to parent container */
     max-width: calc(min(100vw, 100%));
     min-width: 35rem;
+
+    border-top: 8px solid var(--color-timeline-primary);
    /* for a re-post-allow scaling down */
     .post-wrapper {
       min-width: 0rem;
+      border-top: 4px solid var(--color-timeline-primary);
     }
 
     margin: var(--spacing) auto;
-    border-top: 8px solid var(--color-timeline-primary);
 
     background-color: var(--color-white);
 }
 
 .post {
-    padding: var(--spacing);
+  @extend .p-5;
     .infocolumn {
+      @extend .pl-3;
       flex: 1;
       overflow: hidden;
     }
