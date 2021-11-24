@@ -479,6 +479,7 @@ button { background-color: transparent;
   left: -55px;
   border-left: 2px solid var(--color-grey);
   border-bottom: 2px solid var(--color-grey);
+  border-bottom-left-radius: var(--spacing);
 }
 
 .comment-inner { display: flex;
