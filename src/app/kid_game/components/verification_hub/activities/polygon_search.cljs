@@ -79,11 +79,15 @@
         misclicks (r/atom 0)]
     (fn []
       [:div.activity-container.image-analysis
+
+       [:div {:class "activity-header"}
        [components/<header>
         icons/image-analysis
         "Image Analysis" "Something looks strange here"
         "Image Analysis Explanation"
-        [:p blocks/image-analysis-explanation]]
+        [:p blocks/image-analysis-explanation]]]
+
+       [:div {:class "activity-steps"}
        [:div.activity-step.contain-section-width.center-section
 
         [:div.activity-description "Mark the parts of the image that look weird to you.  Place pointer, click, and start finsing polygons."]
@@ -112,6 +116,8 @@
          [:div.level-item
 
           [:span.icon.has-text-danger [:i.fas.fa-times]]
-          @misclicks " misclicks"]]]
-       [components/<activity-actions> back!]
+          @misclicks " misclicks"]]]]
+
+       [:div {:class "activity-footer"}
+       [components/<activity-actions> back!]]
        ])))

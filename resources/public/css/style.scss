@@ -321,12 +321,25 @@ button { background-color: transparent;
 
 
 .activity-container {
-  .activity-actions {
-    background-color: var(--color-hub-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .activity-header {
+
+  }
+  .activity-steps {
+    flex-grow: 1;
+
+  }
+  .activity-footer {
+    .activity-actions {
+      background-color: var(--color-hub-primary);
       button {
-         margin-top: var(--spacing-half);
+        margin-top: var(--spacing-half);
       }
   }
+  }
+
   .blooble-simulation {
     margin: var(--spacing-double);
   }

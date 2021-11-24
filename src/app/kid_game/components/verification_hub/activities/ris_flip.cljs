@@ -101,14 +101,21 @@
     (fn []
       [:div.activity-container
 
-       [components/<header> icons/recycle-search "Reverse Image Search" "You might need to flip the image"
-        "Reverse Image Search with FLip Explanation"
-        blocks/web-search-explanation]
+       [:div {:class "activity-header"}
+        [components/<header> icons/recycle-search "Reverse Image Search" "You might need to flip the image"
+         "Reverse Image Search with FLip Explanation"
+         blocks/web-search-explanation]]
 
-       [:div.activity-step.contain-section-width.center-section
-        [<s1> {:img-src main-image :search-results []}]]
-       [:div.activity-step.contain-section-width.center-section
-        (when (= @s1 :succeeded) [<s2> {:img-src main-image}])]
-       [:div.activity-step.contain-section-width.center-section
-        (when (#{:succeeded} @s2) [<s3> {:img-src flipped-image
-                                         :search-results search-results}])]])))
+       [:div {:class "activity-steps"}
+        [:div.activity-step.contain-section-width.center-section
+         [<s1> {:img-src main-image :search-results []}]]
+        [:div.activity-step.contain-section-width.center-section
+         (when (= @s1 :succeeded) [<s2> {:img-src main-image}])]
+        [:div.activity-step.contain-section-width.center-section
+         (when (#{:succeeded} @s2) [<s3> {:img-src flipped-image
+                                          :search-results search-results}])]]
+
+       [:div {:class "activity-footer"}
+        [components/<activity-actions> back!]]
+
+        ])))

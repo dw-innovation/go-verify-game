@@ -170,14 +170,18 @@
         <second-drag-step> (fn [] [@second-drag-step <cropped-svg>])]
     (fn []
       [:div.activity-container.ris-simple
+       [:div {:class "activity-header"}
        [components/<header> icons/recycle-search "Reverse Image Search"
         "How cropping images can yield more search results"
         "Image Crop Explanation"
-        blocks/ris-crop-explanation]
+        blocks/ris-crop-explanation]]
+       [:div {:class "activity-steps"}
        [:div.activity-step.contain-section-width.center-section
         [<first-drag-step>]]
        [:div.activity-step.contain-section-width.center-section
         [<cropping-step>]]
        [:div.activity-step.contain-section-width.center-section
-        [<second-drag-step>]]
-       [components/<activity-actions> back!]])))
+        [<second-drag-step>]]]
+
+       [:div {:class "activity-footer"}
+       [components/<activity-actions> back!]]])))

@@ -34,9 +34,13 @@
                                (reset! loading? false)))]
     (fn []
       [:div.activity-container.ris-simple
+
+       [:div {:class "activity-header"}
        [components/<header> icons/recycle-search "Reverse Image Search" "See where this image might come from"
         "Reverse Image Search Explanation"
-        blocks/ris-explanation]
+        blocks/ris-explanation]]
+
+       [:div {:class "activity-steps"}
        [:div.activity-step.contain-section-width.center-section
         [image-results/<dragger> main-image drag-done!]
         [css-transition-group {:class "transition-results"}
@@ -46,7 +50,7 @@
              [css-transition {:class-names "ris-results-transition"
                               :timeout 2}
               [image-results/<ris-results> result-search]
-              ]))]]
+              ]))]]]
 
-       [:hr]
-        [components/<activity-actions> back!]])))
+       [:div {:class "activity-footer"}
+        [components/<activity-actions> back!]]])))

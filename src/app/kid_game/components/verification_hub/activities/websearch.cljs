@@ -78,16 +78,20 @@
                            (reset! loading? false)))]
     (fn []
       [:div.activity-container.web-search
-       [:div.activity-step.contain-section-width.center-section
+       [:div {:class "activity-header"}
+        [components/<header> icons/browser-search "web search" "sometimes a basic search is enough"
+         "web search explanation"
+         blocks/web-search-explanation]]
 
-       [components/<header> icons/browser-search "web search" "sometimes a basic search is enough"
-        "web search explanation"
-        blocks/web-search-explanation]
-       [<search-simulation>
-        (string/join " + " terms)
-        (if @searched? results nil)
-        @loading?
-        click!]
-        ]
-       [components/<activity-actions> back!]
+       [:div {:class "activity-steps"}
+       [:div.activity-step.contain-section-width.center-section
+        [<search-simulation>
+         (string/join " + " terms)
+         (if @searched? results nil)
+         @loading?
+         click!]
+        ]]
+
+       [:div {:class "activity-footer"}
+        [components/<activity-actions> back!]]
        ])))
