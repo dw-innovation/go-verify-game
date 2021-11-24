@@ -16,27 +16,11 @@
     ;; you can attatch that story in kid-shared/generator.cljc
     [2 ; a number means wait this amount of seconds
      ;; a post will create a new post in the timeline
-     posts/p1-climate-refugees-copenhagen
-     3
-     ;; a comment create's a new comment
-     {:post-id (:id posts/p1-climate-refugees-copenhagen)
-      :by posters/tktktktktk
-      :text "Would these people treat their country like they treat their kind host, Italy? Me thinks not. #notAllWelcome"}
-     ;; a vector, i.e. another story will generate a new story
-     ;; [3 posts/climate-3 5 {:post-id (:id posts/climate-3)
-     ;;                       :by posters/tktktktktk
-     ;;                       :text "i agree!"}]
+     posts/p1-climate-refugees-copenhagen-with-comments
      5
      posts/p10-snow-cannons-story
      3
      posts/p7-danes-crossing
-     10
-     {:post-id (:id posts/p1-climate-refugees-copenhagen)
-      :by posters/tktktktktk
-      :text "Too much is too much, when will the EU stop bickering and fix this flooding (pardon the pun) of so-called climate refugees? #notallWelcome"}
-     20
-     posts/p1-climate-refugees-copenhagen-response
-     5
      posts/p9-flooding-dams])
 
 (def financial-times
