@@ -11,7 +11,7 @@
 (defn modal-content []
   [:div [:div {:style {:width "100px" :float "center"}}
          [icons/thomas]]
-   [:h4.title.is-4 blocks/game-tagline-title]
+   ;; [:h4.title.is-4 blocks/game-tagline-title]
    [:p.mt-2 blocks/game-explanation]])
 
 (defn <form> []
