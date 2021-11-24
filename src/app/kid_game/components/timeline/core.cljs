@@ -86,10 +86,14 @@
 
 (defn <post-media> [img]
   [:div.block
-   [:div {:class "post-media" :style {:background (str "center / 100% url(" img ") no-repeat ")
-                                      :min-height "100%"
-                                      :width "100%"
-                                      :height "300px"}}]])
+   [:div {:class "post-media"}]
+    [:img {:src img}]])
+;; (defn <post-media> [img]
+;;   [:div.block
+;;    [:div {:class "post-media" :style {:background (str "center / 100% url(" img ") no-repeat ")
+;;                                       :min-height "100%"
+;;                                       :width "100%"
+;;                                       :height "300px"}}]])
 
 (defn <post-actions> [p]
   (let [block! (fn [] (business/post-block! p))
