@@ -48,14 +48,8 @@
 
 (def game-explanation
   [:<>
-   [:p.mb-3 "We've created this little browser game to teach you the basics of verification.  
-        That's just a fancy term for thoroughly checking news items and social media messages
-        that may contain false information – or worse."]
-   [:p.mb-3 "Now as soon as you've entered your name and clicked on the \"login\" button,
-        you'll be taken to \"Bleeper\". That's a fictitious social network
-        in a not so distant future which might be more realistic than you like."]
-   [:p.mb-3 "On the platform, you'll see a lot of posts sliding in and out of your timeline.
-        In this demo, you can read all of them, and you’re free to interact with some of them --
-        hopefully after you've taken a closer look."]
+   [:p.mb-3 "We've created this little browser game to teach you the basics of verification. That's just a fancy term for thoroughly checking news items and social media messages that may contain false information – or worse."]
+   [:p.mb-3 "Now as soon as you've entered your name and clicked on the \"login\" button, you'll be taken to \"Bleeper\". That's a fictitious social network in a not so distant future which might be more realistic than you like."]
+   [:p.mb-3 "On the platform, you'll see a lot of posts sliding in and out of your timeline. In this demo, you can read all of them, and you’re free to interact with some of them -- hopefully after you've taken a closer look."]
    [:p.mb-3 "You'll get the hang of this soon. And if you don't, feel free to ask your friend, the duck!"]
    ])
