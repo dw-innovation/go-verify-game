@@ -22,11 +22,26 @@
    :comment "Can’t believe this is still happening: the picture of the devastated seafront doing the rounds in certain groups is absolutely fake. We’re tracking a small network of accounts pushing these news, stay tuned."
    :by authors/j_louis})
 
+
+(def p1-climate-refugees-copenhagen-with-comments
+  [p1-climate-refugees-copenhagen
+     ;; a comment create's a new comment
+   3 {:post-id (:id p1-climate-refugees-copenhagen)
+      :by authors/tktktktktk
+      :text "Would these people treat their country like they treat their kind host, Italy? Me thinks not. #notAllWelcome"}
+   6 {:post-id (:id p1-climate-refugees-copenhagen)
+      :by authors/tktktktktk
+      :text "Too much is too much, when will the EU finally do something about the hordes of so-called \"climate refugees\"? #notallwelcome"}
+   10
+   p1-climate-refugees-copenhagen-response
+   ]
+  )
+
 (def p2-financial-gdp
   {:type :post-text
    :id "p2-financial-gdp"
    :description "Pan-EU Q2 GDP release: -2.4% from Q1, (1.2 percentage point lower than forecast). Follow our liveblog for reactions from around the continent. https://on.ft.com/live/eX2GhH"
-   :time-limit 900
+   ;; :time-limit 900
    :by authors/financial_times})
 
 (def p2-financial-gdp-repost-1

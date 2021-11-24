@@ -17,7 +17,7 @@
      {:on-submit (fn [x] (.preventDefault x) (search!))}
      [:div.field
       [:div {:class "control has-icons-left has-icons-right"}
-       [:input {:class "input"
+       [:input {:class "input has-text-black"
                 :type "text"
                 :value @v
                 :placeholder placeholder
@@ -49,18 +49,18 @@
     ;; return the component
     (fn [terms-string results loading search!]
       [components/<blooble-simulation>
-
-       [<blooble-search> @filling-string (if @filling-done search! nil)]
-       (when results
-         [:div.results
-          [:b.results-count (count results) " search results found"]
-          (for [res results]
-            ^{:key (:title res)}
-            [:div.search-result
-             [image-results/<search-result> res]])])
-       (when loading
-         [:div.loading-panel
-          [image-results/<loading>]])])))
+       [:<>
+        [<blooble-search> @filling-string (if @filling-done search! nil)]
+        (when results
+          [:div.results
+           [:b.results-count (count results) " search results found"]
+           (for [res results]
+             ^{:key (:title res)}
+             [:div.search-result
+              [image-results/<search-result> res]])])
+        (when loading
+          [:div.loading-panel
+           [image-results/<loading>]])]])))
 
 ;; Activity of type web-search, with it's corresponding dara
 (defn <main> [{:as data

@@ -125,7 +125,7 @@
         lost? (case result :lost true
                     :won false
                     nil)]
-    [:div {:class (str "notification my-5 is-light " color)}
+    [:div {:class (str "notification is-light " color)}
      [:section
       [:div.columns.is-centered.is-vcentered
        [:div.column.is-1
@@ -207,6 +207,12 @@
                   :background-color "white" ; lazy for now
                   }}
     [<debug-tags> p]
+(case game-state
+        :live      nil
+        :shared    [<post-overlay> p]
+        :blocked   [<post-overlay> p]
+        :timed-out [<post-overlay> p]
+        nil)
     [:div.columns.mr-0
      [:div.authorcolumn [<author-image> author]]
      [:div.infocolumn
@@ -216,12 +222,7 @@
       (when (= game-state :live) [<post-actions> p])
       (when (= game-state :live) [<post-progress> p])
       [<post-comments> comments]
-      (case game-state
-        :live      nil
-        :shared    [<post-overlay> p]
-        :blocked   [<post-overlay> p]
-        :timed-out [<post-overlay> p]
-        nil)]]]]))
+      ]]]]))
 
 (defn <type-re-post> [{:as p
                        author :by
