@@ -257,7 +257,9 @@
   [:div.timeline-container
    [<header>]
    (when (empty? (state/posts))
-     [:button {:on-click (fn [] (business/start-all-stories!))} "start all stories"])
+     [:div {:class "is-flex is-justify-content-center is-align-items-center"
+            :style {:height "300px"}}
+      [:button.button {:on-click (fn [] (business/start-all-stories!))} "start all stories"]])
    ;; documentation for css transition group seems kind of tricky but is here:
    ;; https://reactcommunity.org/react-transition-group/
    [css-transition-group {:class "timeline-posts"}
