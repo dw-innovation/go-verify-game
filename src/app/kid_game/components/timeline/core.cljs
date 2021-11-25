@@ -258,7 +258,7 @@
 
 (defn <header> []
   [:div {:class ["panel-header" "timeline-header"]}
-   [:img {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/bleeper_logo.png"
+   [:img {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/bleeper_logo_blue.png"
           :style {:height "100%"}}]
    ])
 
