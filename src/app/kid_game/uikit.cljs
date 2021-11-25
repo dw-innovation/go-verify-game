@@ -9,7 +9,7 @@
             [reagent.core                          :as r]
             [cljs.core.async                       :as async :include-macros true]))
 
-(defn random-points [] (rand-int 3000))
+(defn random-points [] (.toLocaleString (rand-int 3000)))
 
 (defn <notifications> []
   [:div.columns
@@ -27,6 +27,22 @@
     [notifications/<notification>
      {:active true
       :text "testing text"}]]])
+
+(defn <real-copy-notifications>
+  "Actual copy for notifications from
+   src/app/kid_game/business.cljs"
+  []
+  (let [copy #{{:type :success :copy "You blocked nonsense content, you won "}
+               {:type :warning :copy "You blocked legit content, you lost "}
+               {:type :success :copy "You shared legit content, you won "}
+               {:type :warning :copy "You shared nonsense content, you lost "}}]
+    [:div.columns
+     (map (fn [e] [:div.column.is-one-fourth
+                   [notifications/<notification>
+                    {:active true
+                     :type (:type e)
+                     :text (str (:copy e) (random-points) " points")}]])
+          copy)]))
 
 (defn single-simple-post []
   (let [post (assoc posts-data/p1-climate-refugees-copenhagen
@@ -66,9 +82,9 @@
       (recur))))
 
 
-(defn progress-bar [status]
+(defn progress-bar []
   (let [post (r/atom posts-data/p1-climate-refugees-copenhagen)
-        exit-channel (attach-post-timer post)]
+        exit-channel (attach-post-timer post)]    ;; which ends up as unused binding
     (fn []
       [timeline/<post-progress> @post])))
 
@@ -77,7 +93,7 @@
    [:p "Decreasing.:"]
    [progress-bar :live]
    [:p.mt-4 "Timed out:"]
-   (progress-bar :timed-out)])
+   (progress-bar)])
 
 (defn <icons> []
   [:div
@@ -158,6 +174,8 @@
      [:hr]
      [:h2.title.is-2 "Notifications"]
      [<notifications>]
+     [:h4.title.is-4 "Actual business copy:"]
+     [<real-copy-notifications>]
      [:hr]
      [:h2.title.is-2 "Timeline content"]
      [:p "These can be " [:b "simple posts,"] "or " [:b "more complex reposts."]]

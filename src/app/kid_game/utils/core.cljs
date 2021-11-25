@@ -17,7 +17,7 @@
   (into {} (for [[k v] m] [k (f v)])))
 
 (defn indexes [pred coll]
-   (keep-indexed #(when (pred %2) %1) coll))
+  (keep-indexed #(when (pred %2) %1) coll))
 
 (defn in?
   "true if coll contains elm"
@@ -56,7 +56,6 @@
          [:span.parsed-string
           (map (fn [a]
                  (if (url? a)
-                   [:span.link a]
+                   ^{:key a} [:span.link a]
                    a))
-               matches)]))
-  ))
+               matches)]))))

@@ -86,14 +86,7 @@
 
 (defn <post-media> [img]
   [:div.block
-   [:div {:class "post-media"}]
-    [:img {:src img}]])
-;; (defn <post-media> [img]
-;;   [:div.block
-;;    [:div {:class "post-media" :style {:background (str "center / 100% url(" img ") no-repeat ")
-;;                                       :min-height "100%"
-;;                                       :width "100%"
-;;                                       :height "300px"}}]])
+   [:img {:class "post-media" :src img}]])
 
 (defn <post-actions> [p]
   (let [block! (fn [] (business/post-block! p))
@@ -264,7 +257,9 @@
   [:div.timeline-container
    [<header>]
    (when (empty? (state/posts))
-     [:button {:on-click (fn [] (business/start-all-stories!))} "start all stories"])
+     [:div {:class "is-flex is-justify-content-center is-align-items-center"
+            :style {:height "300px"}}
+      [:button.button {:on-click (fn [] (business/start-all-stories!))} "start all stories"]])
    ;; documentation for css transition group seems kind of tricky but is here:
    ;; https://reactcommunity.org/react-transition-group/
    [css-transition-group {:class "timeline-posts"}

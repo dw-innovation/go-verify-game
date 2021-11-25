@@ -1,14 +1,10 @@
 (ns kid-game.components.meta
-  (:require [reagent.core             :as r]
-            [kid-game.state           :as state]
+  (:require [kid-game.state           :as state]
             [kid-game.business        :as business]
-            [kid-game.utils.log       :as log]
             [kid-game.messaging       :as messaging]
             [kid-shared.generator     :as gen]
-            [kid-shared.data.posts   :as posts]
-            [kid-shared.data.stories :as stories]
-            [cljs.core.async          :as async :include-macros true]))
-
+            [kid-shared.data.posts    :as posts]
+            [kid-shared.data.stories  :as stories]))
 
 (defn <meta> []
   (let [gens (fn [] @gen/active-generators)]
@@ -54,10 +50,8 @@
           [:div
            [:hr]
            (:id p)
-           [:div
-           [:a {:href (str "?post=" (:id p))}
-            "open"]]
-           [:div
-           [:a {:href "#"
-                :on-click (fn [] (business/add-post p))}
-            "inject into timeline"]]])]])))
+           [:div [:a {:href (str "?post=" (:id p))}
+                  "open"]]
+           [:div [:a {:href "#"
+                      :on-click (fn [] (business/add-post p))}
+                  "inject into timeline"]]])]])))
