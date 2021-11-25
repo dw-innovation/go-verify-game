@@ -158,7 +158,7 @@ body {
                 height: 5rem;
                 @extends .p-4;
 		h5 { color: var(--color-white); }}
-.timeline-header         { background-color: #1e95a8;}
+.timeline-header         { background-color: var(--color-timeline-primary);}
 .verification-hub-header { @include inverted-hub; }
 
 .history { grid-area: history;
