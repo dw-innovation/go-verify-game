@@ -3,6 +3,7 @@
             [cljs.core.async          :as async :include-macros true]
             [reagent.core             :as r]
             [kid-game.components.shared.icons :as icons]
+            [kid-shared.generator     :as gen]
             [kid-game.state           :as state]
             [kid-game.business        :as business]
             [kid-game.utils.log       :as log]
@@ -263,6 +264,8 @@
      [:div {:class "is-flex is-justify-content-center is-align-items-center"
             :style {:height "300px"}}
       [:button.button {:on-click (fn [] (business/start-all-stories!))} "start all stories"]])
+   (when (> (count @gen/active-generators) 0)
+     [:div.loader]) ;; see css for functionality
    ;; documentation for css transition group seems kind of tricky but is here:
    ;; https://reactcommunity.org/react-transition-group/
    [css-transition-group {:class "timeline-posts"}
