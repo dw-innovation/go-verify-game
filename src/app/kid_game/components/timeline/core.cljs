@@ -250,8 +250,10 @@
 
 (defn <header> []
   [:div {:class ["panel-header" "timeline-header"]}
-   [:img {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/bleeper_logo_blue.png"
-          :style {:height "100%"}}]
+     [:img {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/bleeper_logo_main.png"
+            :style {:height "100%"}}]
+   [:h5 {:class "title is-5 has-text-white pl-5"}
+    "BLEEPER | Home: " (-> @state/app-state :user :name)]
    ])
 
 (defn <container> []
