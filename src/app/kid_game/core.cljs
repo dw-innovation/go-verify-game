@@ -27,7 +27,7 @@
         timeline-active? (= (state/get-panel) :timeline)
         hub-active? (not timeline-active?)
         pointer-events {:active {:pointer-events "all"} :inactive {:pointer-events "none"}}]
-    [:div {:class "game-container columns"}
+    [:div {:class "game-container columns mt-0 ml-0"}
      [notifications/<notifications>]
 
      ;; this meta panels is for during development

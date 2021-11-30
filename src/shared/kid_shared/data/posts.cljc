@@ -65,7 +65,7 @@
    :fake-news? true
    :time-limit 900
    :by authors/financiel_times
-   :description "Central Europe faces severe economic problems due large-scale arrival of lazy and criminal climate refugees."
+   :description "Central Europe faces severe economic problems due to large-scale arrival of lazy and criminal \"climate refugees.\""
    :activities [activities/financiel-web-search]})
 
 (def p3-financiel-gdp-repost-1
