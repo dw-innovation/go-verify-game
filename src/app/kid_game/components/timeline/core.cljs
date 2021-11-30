@@ -257,11 +257,24 @@
     "BLEEPER | Home: " (-> @state/app-state :user :name)]
    ])
 
+
+(defn <thomas-says-we-are-done> []
+  [:div.mb-5
+   [:div.columns.post-wrapper
+    [:div.column.is-one-fifth
+    [icons/thomas]]
+    [:div.column.p-5.pl-5
+     [:p.mb-3 "Quack, quack! You've reached the end of this demo. I hope you enjoyed playing it. You can find your final score and stats at the bottom of this page."]
+     [:p.mb-3 "Still got a couple of minutes? Please fill out this feedback questionnaire (so the developers can improve the game): -> https://tinyurl.com/kid-game-feedback"]
+     [:p.mb-3 "Btw, we've also put together a nice verification toolbox/tutorial for you: -> https://tinyurl.com/kid-verification-toolbox"]
+     [:p.mb-3 "That's it for now. Have a good one. And never forget: Facts matter. Quack."]]]])
+
 (defn <container> []
   [:div.timeline-container
    [<header>]
-   (when (> (count @gen/active-generators) 0)
-     [:div.loader]) ;; see css for functionality
+   (if (> (count @gen/active-generators) 0)
+     [:div.loader]
+     [<thomas-says-we-are-done>]) ;; see css for functionality
    ;; documentation for css transition group seems kind of tricky but is here:
    ;; https://reactcommunity.org/react-transition-group/
    [css-transition-group {:class "timeline-posts"}
