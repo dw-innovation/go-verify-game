@@ -60,9 +60,17 @@
    (map <search-result> search-results)])
 
 ;; awaits vector of {:url :title :img-src :date :text}
-(defn <ris-results> [results]
+(defn <blooble-image-results> [results]
   [components/<blooble-simulation>
    [:div.ris-results
     [:h4.title.is-4.mb-2 "Results from your image search"]
+    [:h3.ris-result-header [:b (count results)] " page(s) with matching images"]
+    [<search-results> results]]])
+
+;; awaits vector of {:url :title :img-src :date :text}
+(defn <blooble-websearch-results> [results]
+  [components/<blooble-simulation>
+   [:div.ris-results
+    [:h4.title.is-4.mb-2 "Results from your search"]
     [:h3.ris-result-header [:b (count results)] " page(s) with matching images"]
     [<search-results> results]]])

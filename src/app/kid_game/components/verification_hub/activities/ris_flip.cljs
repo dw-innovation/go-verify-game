@@ -59,11 +59,9 @@
           [:div {:class "is-flex is-justify-content-center"} [image-results/<loading>]]
           (when @dragged?
             [css-transition {:class-names "ris-results-transition" :timeout 100}
-             [:div
-              [:h4.title.is-4.mb-2 "Results from your image search"]
-              [:h3.ris-result-header [:b (count search-results)] " page(s) with matching images"]
-              [image-results/<search-results> search-results]
-              [:hr]]]))]])]))
+             (when search-results
+               [image-results/<blooble-image-results> search-results])
+             ]))]])]))
 
 (defn flip-step []
   "returns a vector of type [atom, reagent-function] where atom is the status of the step"

@@ -139,7 +139,7 @@
           [:div {:class "is-flex is-justify-content-center"} [image-results/<loading>]]
           (when @dragged?
             [css-transition {:class-names "ris-results-transition" :timeout 100}
-             [image-results/<ris-results> search-results]]))]])))
+             [image-results/<blooble-image-results> search-results]]))]])))
 
 (defn <main> [{:as data
                result-images :result-images

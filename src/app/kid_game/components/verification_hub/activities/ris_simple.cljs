@@ -45,11 +45,11 @@
         [image-results/<dragger> main-image drag-done!]
         [css-transition-group {:class "transition-results"}
          (if @loading?
-           [image-results/<loading>]
+           [:div {:class "is-flex is-justify-content-center"} [image-results/<loading>]]
            (when @dragged?
              [css-transition {:class-names "ris-results-transition"
                               :timeout 2}
-              [image-results/<ris-results> result-search]
+              [image-results/<blooble-image-results> result-search]
               ]))]]]
 
        [:div {:class "activity-footer"}
