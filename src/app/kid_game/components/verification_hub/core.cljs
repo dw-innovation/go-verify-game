@@ -101,10 +101,10 @@
      [:div.stats.columns.is-centered
       [:div.stat.column.is-2.has-text-centered
        [icons/award]
-       [:div [:b blocked-correctly] " Blocked correctly"]]
+       [:div [:b blocked-correctly] " Blocked nonsense"]]
       [:div.stat.column.is-2.has-text-centered
        [icons/stop-sign]
-       [:div [:b misleading-reposts] " Misleading reposts"]]
+       [:div [:b misleading-reposts] " Shared nonsense"]]
       [:div.stat.column.is-2.has-text-centered
        [icons/hourglass]
        [:div [:b missed-deadlines] " Missed deadlines"]]]]))
