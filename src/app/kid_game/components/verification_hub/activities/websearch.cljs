@@ -59,8 +59,7 @@
              [:div.search-result
               [image-results/<search-result> res]])])
         (when loading
-          [:div.loading-panel
-           [image-results/<loading>]])]])))
+           [:div {:class "is-flex is-justify-content-center"} [image-results/<loading>]])]])))
 
 ;; Activity of type web-search, with it's corresponding dara
 (defn <main> [{:as data

@@ -14,7 +14,6 @@
             [lodash]
             [moment]))
 
-
 ;; documentation for css transition group seems kind of tricky but is here:
 ;; https://reactcommunity.org/react-transition-group/
 (def css-transition-group
