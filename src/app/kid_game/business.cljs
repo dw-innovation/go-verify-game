@@ -15,7 +15,7 @@
 ;;  the business logic of the framework
 ;;
 (defn start-all-stories! []
-  (gen/gen-run-story messaging/receive-channel stories/game-story))
+  (gen/gen-run-story messaging/receive-channel stories/global-story))
 
 (defn use-new-player! [& {:keys [name]}]
   (->> {:id (str (random-uuid))

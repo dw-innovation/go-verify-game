@@ -20,57 +20,42 @@
      5
      posts/p10-snow-cannons-story
      3
-     posts/p7-danes-crossing
-     posts/p9-flooding-dams])
+     posts/p7-danes-crossing?
+     posts/p9-flooding-dams?])
 
 (def financial-times
   [posts/p2-financial-gdp
    20
    posts/p2-financial-gdp-repost-1
    10
-   posts/p3-financiel-gdp
-   3
-   {:post-id (:id posts/p3-financiel-gdp)
-    :by posters/patriot88
-    :text "Not a surprise if you ask me. Bloody Baltic bastards. #NotAllWelcome"}
-   10
-   posts/p2-financial-gdp-repost-2
-   3
-   {:post-id (:id posts/p3-financiel-gdp)
-    :by posters/groceries4you
-    :text "Met two of them at my store yesterday. Guy #1 pretended to apply for a job while guy #2 apparently shoved a two dozen chocolate bars into his fancy backpack. Goddamn thieves is what they are."}
+   posts/p3-financiel-gdp?-story
    10
    posts/p3-financiel-gdp-repost-1
    15
    posts/p3-financiel-gdp-repost-2])
 
-(def minister-in-the-city
-  [posts/p4-minister-in-city])
+(def global-story
+  [
+   1 posts/p17-megacorp-food-fan-story
+   12 posts/p18-rita-talks-about-bowie
+   6 posts/p13-megacorp-buying-spree-story
+   12 posts/p16-satellite-image?-story
+   12 posts/p15-algae-deluxe-story
+   5 posts/p12-megacorp-salad
+   10 posts/p14-megacorp-employment
 
-(def luxembourg
-  [posts/p5-luxembourgian-president])
+   12 posts/p6-urine-bottles?-story
+   12 posts/p8-megacorp-traffic?-story
+   12 posts/p11-megacorp-prisons?-story
+   12 posts/p5-luxembourgian-president?
+   12 posts/p4-minister-in-city?
 
-(def megacorp
-  [posts/megacorp-filler-story
-   3
-   posts/p6-urine-bottles
-   15
-   posts/p8-megacorp-traffic
-   4
-   posts/p11-megacorp-prisons-story])
+   20
+   ])
 
-(def game-story
-  [minister-in-the-city
-   14
-   megacorp
-   4
-   climate
-   15
-   financial-times])
-
-(def all-stories [["game-story (all)" game-story]
-                  ["bulgarian president" luxembourg]
+(def all-stories [["game-story (all)" global-story]
+                  ["rita" posts/p16-satellite-image?-story]
+                  ["urine-bottkes" posts/p6-urine-bottles?-story]
                   ["climate" climate]
-                  ["megacorp" megacorp]
                   ["financial times" financial-times]
-                  ["minister in a strange city" minister-in-the-city]])
+                  ])

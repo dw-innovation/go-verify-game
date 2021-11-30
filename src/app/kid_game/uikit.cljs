@@ -45,13 +45,13 @@
           copy)]))
 
 (defn single-simple-post []
-  (let [post (assoc posts-data/p1-climate-refugees-copenhagen
+  (let [post (assoc posts-data/p1-climate-refugees-copenhagen?
                     :game-state :live)]
     [timeline/<post> post]))
 (defn simple-repost [] (timeline/<post> posts-data/p1-climate-refugees-copenhagen-response))
 
 (defn post-buttons []
-  (let [post posts-data/p1-climate-refugees-copenhagen]
+  (let [post posts-data/p1-climate-refugees-copenhagen?]
     (timeline/<post-actions> post)))
 
 (defn <overlays> []
@@ -83,7 +83,7 @@
 
 
 (defn progress-bar []
-  (let [post (r/atom posts-data/p1-climate-refugees-copenhagen)
+  (let [post (r/atom posts-data/p1-climate-refugees-copenhagen?)
         exit-channel (attach-post-timer post)]    ;; which ends up as unused binding
     (fn []
       [timeline/<post-progress> @post])))

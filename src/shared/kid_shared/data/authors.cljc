@@ -33,9 +33,9 @@
                                  :handle "@eu-innovation"
                                  :role :media}))
 
-(def rita-moonberg (user/create {:name "Rita Moonberg"
+(def rita-teenberg (user/create {:name "Rita Teenberg"
                                  :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40rita.jpg"
-                                 :handle "@rita"
+                                 :handle "@rita_teenberg"
                                  :role :media}))
 
 (def rainer-werner (user/create {:name "Rainer Werner"
@@ -203,11 +203,47 @@
                               :handle "@coffeecakeweasel"
                               :role :media}))
 
+(def barbcamara (user/create {:name "Barb Camara (SkyNews)"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40BarbCamara.jpg"
+                              :handle "@BarbCamara"}))
+
+(def blueberrysagittarius (user/create {:name "Raffaela B."
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40blueberrysaggitarius.jpg"
+                              :handle "@blueberrysagittarius"}))
+
+(def unitedneocons (user/create {:name "NeoCons"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40unitedneocons.jpg"
+                              :handle "@unitedneocons"}))
+
+(def miss_jenny_m (user/create {:name "Jenny Mecklenburg"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40miss_jenny_m.jpg"
+                              :handle "@miss_jenny_m"}))
+
+(def marsexpress (user/create {:name "Life on Mars?"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40marsexpress.jpg"
+                              :handle "@marsexpress"}))
+
+
+(def lightningtangerine (user/create {:name "Lightning Tangerine"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40lighningtangerine.jpg"
+                              :handle "@lightningtangerine"}))
+
+(def bloggers_united (user/create {:name "Bloggers United"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40bloggers_united.jpg"
+                              :handle "@bloggers_united"}))
+
+(def megacorp_press (user/create {:name "Megacorp Press Department"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40bloggers_united.jpg"
+                              :handle "@megacorp_press"}))
+
+(def emily_dupont (user/create {:name "Emily D."
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40emily_dupont.jpg"
+                              :handle "@emily_dupont"}))
+
 (def posters [deutsche-welle
               reuters
               zeit
               freiheit378
-              rita-moonberg
               eu-innovation])
 
 (defn random-poster []

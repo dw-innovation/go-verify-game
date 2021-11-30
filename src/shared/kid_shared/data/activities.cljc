@@ -184,4 +184,21 @@
           }})
 
 
+(def satellite-image-web-search
+  {:type :web-search
+   :data {:terms ["\"ESA\" AND \"Europe\" AND \"rising sea levels\""]
+          :loading-time 4000
+          :results [{:url "unhcr.com"
+                     :title "New satellite images taken by ESA Satellite SeaEye 1 show submerged European coastal regions."
+                     :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p16-satellite-image/nain-image.jpg"
+                     :date "23 days ago"}
+                    {:url "WoWLiGSS.com"
+                     :title "How can we save what remains of the North Sea and Baltic Rim?"
+                     :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p16-satellite-image/nain-image.jpg"
+                     :date "23 days ago"}
+                    {:url "nnyt.com"
+                     :title "EU Government struggles with repercussions of latest floods in Northern Europe."
+                     :date "15 days ago"}]}})
+
+
 (def all-activities [ris-hurricaine-michael])

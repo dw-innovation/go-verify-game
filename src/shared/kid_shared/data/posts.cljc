@@ -4,7 +4,7 @@
             [kid-shared.data.activities :as activities]))
 
 
-(def p1-climate-refugees-copenhagen
+(def p1-climate-refugees-copenhagen?
   {:type :post-text
    :id "p1-climate-refugees-copenhagen"
    :description "So-called “climate refugees” from Copenhagen are trashing Liguria. Here’s a picture from the suburbs of Genoa taken yesterday -- this is an outrage! "
@@ -18,18 +18,18 @@
 (def p1-climate-refugees-copenhagen-response
   {:type :re-post
    :id "p1-climate-refugees-copenhagen-response"
-   :post p1-climate-refugees-copenhagen
+   :post p1-climate-refugees-copenhagen?
    :comment "Can’t believe this is still happening: the picture of the devastated seafront doing the rounds in certain groups is absolutely fake. We’re tracking a small network of accounts pushing these news, stay tuned."
    :by authors/j_louis})
 
 
 (def p1-climate-refugees-copenhagen-with-comments
-  [p1-climate-refugees-copenhagen
+  [p1-climate-refugees-copenhagen?
      ;; a comment create's a new comment
-   3 {:post-id (:id p1-climate-refugees-copenhagen)
+   3 {:post-id (:id p1-climate-refugees-copenhagen?)
       :by authors/tktktktktk
       :text "Would these people treat their country like they treat their kind host, Italy? Me thinks not. #notAllWelcome"}
-   6 {:post-id (:id p1-climate-refugees-copenhagen)
+   6 {:post-id (:id p1-climate-refugees-copenhagen?)
       :by authors/tktktktktk
       :text "Too much is too much, when will the EU finally do something about the hordes of so-called \"climate refugees\"? #notallwelcome"}
    10
@@ -58,7 +58,7 @@
    :post p2-financial-gdp
    :by authors/european_liberal})
 
-(def p3-financiel-gdp
+(def p3-financiel-gdp?
   {:type :post-text
    :id "p3-financiel-gdp"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p3-financiel-gdp/chart_migrants.jpeg"
@@ -67,22 +67,31 @@
    :by authors/financiel_times
    :description "Central Europe faces severe economic problems due to large-scale arrival of lazy and criminal \"climate refugees.\""
    :activities [activities/financiel-web-search]})
+(def p3-financiel-gdp?-story
+  [p3-financiel-gdp?
+   3 {:post-id (:id p3-financiel-gdp?)
+      :by authors/patriot88
+      :text "Not a surprise if you ask me. Bloody Baltic bastards. #NotAllWelcome"}
+   4 {:post-id (:id p3-financiel-gdp?)
+      :by authors/groceries4you
+      :text "Met two of them at my store yesterday. Guy #1 pretended to apply for a job while guy #2 apparently shoved a two dozen chocolate bars into his fancy backpack. Goddamn thieves is what they are."}
+   ])
 
 (def p3-financiel-gdp-repost-1
   {:type :re-post
    :id "p3-financiel-gdp-repost-1"
    :comment "'Lazy and criminal refugees?' So the FT has joined the right-wingers and hate mongers now? Unsubscribing!"
-   :post p3-financiel-gdp
+   :post p3-financiel-gdp?
    :by authors/alicia_ko})
 
 (def p3-financiel-gdp-repost-2
   {:type :re-post
    :id "p3-financiel-gdp-repost-2"
    :comment " Yet another example of false narratives driven by those who’d rather leave our neighbours to their misery. Climate problems concern ALL OF US, and blatant racism isn’t helping!"
-   :post p3-financiel-gdp
+   :post p3-financiel-gdp?
    :by authors/journo-jane})
 
-(def p4-minister-in-city
+(def p4-minister-in-city?
   {:type :post-text
    :id "p4-minister-in-city"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p4-minister-in-the-city/Frankfurt_BusinessMan_2+1.jpg"
@@ -92,7 +101,7 @@
    :by authors/socialist_inquirer
    :activities [activities/ris-minister-in-city]})
 
-(def p5-luxembourgian-president
+(def p5-luxembourgian-president?
   {:type :post-text
    :id "p5-luxembourgian-president"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p5-bulgarian-president/ai-president.jpg"
@@ -103,7 +112,7 @@
    :activities [activities/luxembourgian-president-fake-image
                 activities/luxembourgian-president-web-search]})
 
-(def p6-urine-bottles
+(def p6-urine-bottles?
   {:type :post-text
    :id "p6-urine-bottles"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p6-urine-bottles/main.jpg"
@@ -112,8 +121,22 @@
    :time-limit 500
    :fake-news? true
    :activities [activities/urine-bottles-ris]})
+(def p6-urine-bottles?-story
+  [p6-urine-bottles?
 
-(def p7-danes-crossing
+   4 {:post-id "p6-urine-bottles"
+      :by authors/megacorp_press
+      :text "We strongly reject these unfounded allegations. See official press release https://press.mgcorp.com/a8HT8mm"}
+   4 {:post-id "p6-urine-bottles"
+      :by authors/emily_dupont
+      :text "Not a fan of Megacorp, but certainly they wouldn't go this far?"}
+   3 {:type :re-post
+      :id "urine-repost"
+      :comment "Then they recycle the pee and sell it to the workers again. Sustainable business model. Way to go, @megacorp!"
+      :post p6-urine-bottles?
+      :by authors/bloggers_united}])
+
+(def p7-danes-crossing?
   {:type :post-text
    :id "p7-danes-crossing"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p7-danes-crossing/main.jpg"
@@ -124,7 +147,7 @@
    :activities [activities/danes-crossing-ris]
    })
 
-(def p8-megacorp-traffic
+(def p8-megacorp-traffic?
   {:type :post-text
    :id "p8-megacorp-traffic"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p8-megacorp-traffic/main.jpg"
@@ -134,8 +157,17 @@
    :fake-news? true
    :activities [activities/megacorp-traffic-ris]
    })
+(def p8-megacorp-traffic?-story
+  [p8-megacorp-traffic?
+   4 {:post-id "p8-megacorp-traffic"
+      :by authors/lightningtangerine
+      :text "This is the crux: We're so dependent on Megacorp, we can't set boundaries anymore. It's all helpful and harmful at the same time."}
+   4 {:post-id "p8-megacorp-traffic"
+      :by authors/j_louis
+      :text "This is fake. And another case of \"activists\" doing the public a disservice. City is clearly US, map data cannot be real. More on Megacorp’s delivery infrastructure (yes, the largest in the world and certainly not a sustainable one) in my story from earlier this year: https://in.bbc.co.uk..."}
+   ])
 
-(def p9-flooding-dams
+(def p9-flooding-dams?
   {:type :post-text
    :id "p9-flooding-dams"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p9-flooding-dams/main.jpg"
@@ -146,7 +178,7 @@
    :activities [activities/flooding-dams-ris]
    })
 
-(def p10-snow-cannons
+(def p10-snow-cannons?
   {:type :post-text
    :id "p10-snow-cannons"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p10-snow-cannons/main.jpg"
@@ -166,10 +198,10 @@
                     :by authors/thismightbesatire
                     :text "Wow, the city and the Elbe Valley sure changed a lot. Did the green communists also launch a large-scale terraforming project?"
                     })
-(def p10-snow-cannons-story [p10-snow-cannons 3 p10-comment-1 7 p10-comment-2 9 p10-comment-3])
+(def p10-snow-cannons-story [p10-snow-cannons? 3 p10-comment-1 7 p10-comment-2 9 p10-comment-3])
 
 
-(def p11-megacorp-prisons
+(def p11-megacorp-prisons?
   {:type :post-text
    :id "p11-megacorp-prisons"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p11-megacorp-prisons/main.jpg"
@@ -178,7 +210,7 @@
    :time-limit 3000
    :fake-news? false
    :activities [activities/megacorp-prisons-ris]})
-(def p11-megacorp-prisons-story [p11-megacorp-prisons
+(def p11-megacorp-prisons?-story [p11-megacorp-prisons?
                                  5 {:post-id "p11-megacorp-prisons"
                                     :by authors/aynrandftw
                                     :text "That's ridiculous, and you know it. Sure, they have security to stop the bloody unionists from wrecking the place, but MC workers are treated well, earn decent wages and enjoy a lot of benefits!"}
@@ -194,51 +226,106 @@
                        :by authors/megacorp_fresh
                        :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p15-algea-deluxe/alga.jpeg"
                        :description "Algae Deluxe Rolls – from our sea farms to your plate in less than 12 hours, guaranteed. Contains all the nutrients you need. Order now: https://buy.mgcorp.com/at57HJam"})
-(def megacorp-filler-story [1  p15-algae-deluxe
-                            10 {:type :re-post
-                               :id "p15-algae-deluxe-re-post"
-                               :post p15-algae-deluxe
-                               :comment "Millions displaced by rising sea levels. Flooded land offered to companies, for bascially nothing, all bought by Megacorp. And for what? Algae rolls? Disgusting EU politics if you ask me."
-                               :by authors/undergroundpegasus}
-                            4 {:post-id "p15-algae-deluxe-re-post"
-                               :by authors/coffeecakeweasel
-                               :text " Certainly not drinking the Kool-Aid re: \"aggressive capitalism is our way out of today’s catastrophic world!\", but there are admittedly some successes wrt producing food for all, at speed, from disused land."}
-                            6 {:type :post-text
-                               :id "p12-megacorp-salad"
-                               :by authors/bloomberg_bizmonth
-                               :description "Megacorp’s latest life-saver: giant low-power cooler will bring back salad and lettuce on the menu, the company promises. We toured the facility. https://t.co./weyoi1203x"}
-                            13 {:type :post-text
-                               :id "p13-megacorp-buying-spree"
-                               :by authors/channel1live
-                               :decription "Low tarriffs, high profits: A closer look at Megacorp's buying spree in the health tech sector. Tonight 9pm, Channel 1"}
-                            13 {:post-id "p13-megacorp-buying-spree"
-                               :by authors/socialmarkets2050
-                               :text "\"Low tarriffs?\" You mean to say \"government gifts\"! Another perfect example of EU lawmakers sucking up to Megacorp."}
-                            4 {:type :post-text
-                               :id "p14-megacorp-employment"
-                               :by authors/radio_europe
-                               :description "Megacorp now employs 40% of workers in the EU - https://t.co/e8GHYnn"}
-                            2 {:post-id "p14-megacorp-employment"
-                               :by authors/warehouseworker
-                               :text "A company so large, how come they don't regulate it? So many of us toiling away for shitty wages"}
-                            2 {:post-id "p14-megacorp-employment"
-                               :by authors/factsandfigures
-                               :text "40%. Mind-boggling number. Sit on a bench anywhere: 4 out of 10 passerby work for Megacorp. How did it get so big?"}
-                            2 {:post-id "p14-megacorp-employment"
-                               :by authors/workingmom99
-                               :text "40% of the workforce? No private company should be allowed to be this big! But it's not like our governments & the EU really care about monopolies & what they do to ordinary people."}
+(def p15-algae-deluxe-story
+  [p15-algae-deluxe
+   4 {:post-id "p15-algae-deluxe"
+      :text "Millions displaced by rising sea levels. Flooded land offered to companies, for bascially nothing, all bought by Megacorp. And for what? Algae rolls? Disgusting EU politics if you ask me."
+      :by authors/undergroundpegasus}
+   8 {:post-id "p15-algae-deluxe"
+      :by authors/coffeecakeweasel
+      :text " Certainly not drinking the Kool-Aid re: \"aggressive capitalism is our way out of today’s catastrophic world!\", but there are admittedly some successes wrt producing food for all, at speed, from disused land."}
+   ])
 
-                            ])
+(def p12-megacorp-salad
+  {:type :post-text
+   :id "p12-megacorp-salad"
+   :by authors/bloomberg_bizmonth
+   :description "Megacorp’s latest life-saver: giant low-power cooler will bring back salad and lettuce on the menu, the company promises. We toured the facility. https://t.co./weyoi1203x"}
+  )
 
-(def all-activity-posts [p1-climate-refugees-copenhagen
-                         p1-climate-refugees-copenhagen-response
-                         p2-financial-gdp
-                         p3-financiel-gdp
-                         p4-minister-in-city
-                         p5-luxembourgian-president
-                         p6-urine-bottles
-                         p7-danes-crossing
-                         p8-megacorp-traffic
-                         p9-flooding-dams
-                         p10-snow-cannons
-                         p11-megacorp-prisons])
+(def p14-megacorp-employment
+{:type :post-text
+ :id "p14-megacorp-employment"
+ :by authors/radio_europe
+ :description "Megacorp now employs 40% of workers in the EU - https://t.co/e8GHYnn"})
+(def p14-megacorp-employment-story
+  [p14-megacorp-employment
+   2 {:post-id "p14-megacorp-employment"
+      :by authors/warehouseworker
+      :text "A company so large, how come they don't regulate it? So many of us toiling away for shitty wages"}
+   2 {:post-id "p14-megacorp-employment"
+      :by authors/factsandfigures
+      :text "40%. Mind-boggling number. Sit on a bench anywhere: 4 out of 10 passerby work for Megacorp. How did it get so big?"}
+   2 {:post-id "p14-megacorp-employment"
+      :by authors/workingmom99
+      :text "40% of the workforce? No private company should be allowed to be this big! But it's not like our governments & the EU really care about monopolies & what they do to ordinary people."}
+   ])
+
+(def p13-megacorp-buying-spree
+  {:type :post-text
+   :id "p13-megacorp-buying-spree"
+   :by authors/channel1live
+   :decription "Low tarriffs, high profits: A closer look at Megacorp's buying spree in the health tech sector. Tonight 9pm, Channel 1"}
+  )
+(def p13-megacorp-buying-spree-story
+  [p13-megacorp-buying-spree
+   5 {:post-id "p13-megacorp-buying-spree"
+      :by authors/socialmarkets2050
+      :text "\"Low tarriffs?\" You mean to say \"government gifts\"! Another perfect example of EU lawmakers sucking up to Megacorp."}])
+
+
+(def p16-satellite-image?
+{:type :post-text
+   :id "p16-satellite-image"
+   :description "Just got this satellite image from @ESA. This is what our continent looks like now. Thanks to climate change and rising sea levels. Hate to say I told you so!"
+   :time-limit 1000
+   :fake-news? false
+   :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p16-satellite-image/nain-image.jpg"
+   :by authors/rita-teenberg
+   :activities [activities/satellite-image-web-search]})
+(def p16-satellite-image?-story
+  [p16-satellite-image?
+   4 {:post-id "p16-satellite-image"
+      :by authors/freiheit378
+      :text "Fake news! Chill Rita, chill!"}
+   4 {:post-id "p16-satellite-image"
+      :by authors/barbcamara
+      :text "A stunning and humbling picture. Thinking of my family home in Italy’s Veneto, long gone into the sea."}
+   4 {:post-id "p16-satellite-image"
+      :by authors/blueberrysagittarius
+      :text "Another sign of our impending doom. Oh, how I miss PaTreVe. Remember when it was one of the most beautiful places in Europe, @BarbCamara?"}
+   4 {:post-id "p16-satellite-image"
+      :by authors/unitedneocons
+      :text "Cherry-picking is the anthropocene-affirmers’ weapon of choice. Case in point: Rita’s latest post, a picture from heavens knows where, though we’ll tell you: state-funded “science” (note quote marks) with no counterpoint or balance."}])
+
+(def p17-megacorp-food-fan
+  {:type :post-text
+   :id "p17-megacorp-food-fan"
+   :description "Just got my delivery on rice grown in the New Baltic Sea, next to the New Rostock wind farms, yum! <3 Megacorp eco grub!"
+   :by authors/miss_jenny_m})
+(def p17-megacorp-food-fan-story
+  [1 p17-megacorp-food-fan
+   4 {:post-id "p17-megacorp-food-fan"
+      :by authors/marsexpress
+      :text "My new hobby: Documenting posts by \"eco\" influencers --  who fall for Megacorp propaganda hook, line, and sinker. Geez."}])
+
+
+(def p18-rita-talks-about-bowie
+  {:type :post-text
+   :id "p18-rita-talks-about-bowie"
+   :description "\"News guy wept and told us / Earth was really dying /
+Cried so much his face was wet / Then I knew he was not lying.\" Bowie wrote that song in 1972. Uncanny!"
+   :by authors/rita-teenberg})
+
+
+(def all-activity-posts [p1-climate-refugees-copenhagen?
+                         p3-financiel-gdp?
+                         p4-minister-in-city?
+                         p5-luxembourgian-president?
+                         p6-urine-bottles?
+                         p7-danes-crossing?
+                         p8-megacorp-traffic?
+                         p9-flooding-dams?
+                         p10-snow-cannons?
+                         p11-megacorp-prisons?
+                         p16-satellite-image?])
