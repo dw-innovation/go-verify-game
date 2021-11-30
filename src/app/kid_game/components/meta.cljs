@@ -22,6 +22,7 @@
        [:nav.panel
         [:p.panel-heading "Run a story"]
         (for [[name story] stories/all-stories]
+          ^{:key name}
           [:a {:class "panel-block"
                :on-click (fn [] (gen/gen-run-story messaging/receive-channel story))}
            [:span.panel-icon [:i {:class "fa fa-book" :aria-hidden "true"}]]
@@ -47,6 +48,7 @@
        [:div {:class "tile box is-flex-direction-column"}
         [:p {:class "title is-5"} "Posts"]
         (for [p posts/all-activity-posts]
+          ^{:key (:id p)}
           [:div
            [:hr]
            (:id p)

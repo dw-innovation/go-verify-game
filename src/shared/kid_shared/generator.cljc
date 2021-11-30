@@ -17,25 +17,50 @@
 ;; keep a list of all the active posters
 (def active-generators (r/atom []))
 
+(def queue (atom []))
+(defn add-to-queue [item]
+  (println "added to queue")
+  (reset! queue (conj @queue item))
+  (println @queue))
+
+(declare gen-run-story)
+
+(defn maybe-run-queue [send-channel]
+  (when (and (= 0 (count @active-generators))
+             (> (count @queue) 0))
+    (gen-run-story send-channel @queue)
+    (reset! queue [])))
+
 ;; takes a story, defined as [num, post, comment, [story], num, comment, post, num, post]
 ;; and plays it to a channel, waiting on each num, and then
 ;; posting each post
 (defn gen-run-story
-  ;; if you don't specify a wait time, it's 0
-  ([send-channel story] (gen-run-story send-channel story 0))
   ;; run the story:
-  ([send-channel story initial-wait-time]
+  [send-channel story]
   (let [exit-channel (async/chan)
-        story-channel (async/chan)]
-    ;; add the exit channel to the active generators list, so we can kill it
-    (swap! active-generators conj exit-channel)
+        story-channel (async/chan)
+        ;; create a new 'active story' item
+        temp-id (gensym)
+        active-generator {:id temp-id
+                          :exit! (fn []
+                                   (log/debug "exit message sent, will cancel after next wait time")
+                                   (async/put! exit-channel "i am an exit message"))
+                          }]
+    ;; add the new story item to the active generators
+    (swap! active-generators conj active-generator)
     ;; attatch the loop to run the story
     (async/go-loop []
       (log/debug "new story item received!")
       (async/alt!
-        exit-channel ([] (println "stopping the story, forever")
+        exit-channel ([message]
+                      (log/debug "exit message received: killing the channel and removing from active generators")
+                      (log/debug "the message was " message)
                       ;; remove this channel from the active generators
-                      (reset! active-generators (remove #(= % exit-channel) @active-generators)))
+                      (reset! active-generators (remove #(= (:id %) temp-id) @active-generators))
+                      ;; if active generators is empty, run a new channel with the queue
+                      (maybe-run-queue send-channel)
+
+                      )
         ;; received a new story item on the channel
         ;; here's the deal about stories.  they are a vector.  they can contain
         ;; different data types.  they are played out in order. a number means wait that amount
@@ -59,22 +84,24 @@
                        ;; channel if we found false
                        (if story-item
                          (recur)
-                         (do (async/put! exit-channel "close msg")
+                         (do (async/put! exit-channel "the story came to it's natural end, i am an exit message")
                              (recur))))))
 
-    (async/go (async/<! (async/timeout initial-wait-time))
+    (async/go
               ;; play the story vector on to the story channel, which will be consumed by the above loop
               ;; sending false is the message that the story is over
-              (async/onto-chan! story-channel (conj story false)))
+              (async/onto-chan! story-channel story))
     ;; return the exit channel, so that clients of this function can also end the loop
-    exit-channel)))
+    exit-channel))
 
 ;; channel -> exit-channel
 (defn attach-default-room-poster [room-channel])
+
 
 (defn kill-all-posters []
   (log/debug "killing all posters: " @active-generators)
   (doall (for [c @active-generators]
     (do
-      (log/debug "trying to close channel")
-      (async/put! c "kill-all-posters closed the channel")))))
+      (log/debug "trying to close channel" c)
+      ((:exit! c))
+      ))))
