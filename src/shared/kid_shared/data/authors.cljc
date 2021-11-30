@@ -101,7 +101,7 @@
                                       :role :media}))
 
 (def patriotic_news (user/create {:name "Patriotic News"
-                                  :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40patriotic_news.jpghttps://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40patriotic_news.jpg"
+                                  :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40patriotic_news.jpg"
                                       :handle "@patriotic_news"
                                       :role :media}))
 
