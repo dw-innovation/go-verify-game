@@ -260,10 +260,6 @@
 (defn <container> []
   [:div.timeline-container
    [<header>]
-   (when (empty? (state/posts))
-     [:div {:class "is-flex is-justify-content-center is-align-items-center"
-            :style {:height "300px"}}
-      [:button.button {:on-click (fn [] (business/start-all-stories!))} "start all stories"]])
    (when (> (count @gen/active-generators) 0)
      [:div.loader]) ;; see css for functionality
    ;; documentation for css transition group seems kind of tricky but is here:
