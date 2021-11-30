@@ -7,7 +7,7 @@
             [kid-game.business        :as business]
             [kid-game.utils.log       :as log]
             [kid-shared.types.post    :as posts]
-            [kid-shared.types.comment :as comment]
+            (kid-shared.types.comment :as comment)
             [kid-game.utils.core      :refer [timestamp-now new-uuid highlight-text]]
             ["../../react_components/compiled/js-utils.js" :as js-utils]
             [react-transition-group]
@@ -250,7 +250,11 @@
 
 (defn <header> []
   [:div {:class ["panel-header" "timeline-header"]}
-   [:h5 {:class "title is-5 is-white"} "Your timeline"]])
+     [:img {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/bleeper_logo_main.png"
+            :style {:height "100%"}}]
+   [:h5 {:class "title is-5 has-text-white pl-5"}
+    "BLEEPER | Home: " (-> @state/app-state :user :name)]
+   ])
 
 (defn <container> []
   [:div.timeline-container
