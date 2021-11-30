@@ -35,14 +35,17 @@
 
 (defn <hub-icon> [{icon :icon
                    title :title
+                   available? :available?
                    on-click! :fn}]
   ^{:key title}
-  [:a.hub-icon {:on-click on-click!}
+  [:a.hub-icon {:on-click on-click!
+                :style {:opacity (if available? 1 0.3)}}
    [icon]
    [:div.has-text-centered.has-text-black title]])
 
 (defn <hub-icons> [[{icon :icon
                      title :title
+                     available? :available?
                      on-click! :fn} & rest :as actions]]
   [:div.has-text-centered
    [:h4.title.is-4 "Thomas recommends you try one of the following"]
@@ -55,6 +58,10 @@
   (let [post-activities (:activities post)
         available-activities (map :type post-activities)
         in-game? (= :live (:game-state post))
+        ;; given a list of activities, return only those available
+        available (fn [& activity-types] (intersection (set activity-types)
+                                                       (set available-activities)))
+        available? (fn [& activity-types] (not (empty? (apply available activity-types))))
         choose-activity! (fn [& chosen-activity-typs]
                            (fn []
                              (if (not post)
@@ -63,8 +70,7 @@
                                (if (not in-game?)
                                  (state/add-notification {:type :warning
                                                           :text "Out of time"})
-                               (let [hits (intersection (set chosen-activity-typs)
-                                                        (set available-activities))]
+                               (let [hits (apply available chosen-activity-typs)]
                                  (if (empty? hits)
                                    (state/add-notification {:type :warning
                                                             :text "Choose a different activity"})
@@ -75,16 +81,21 @@
          missed-deadlines :missed-deadlines} @state/stats
         actions [{:icon icons/browser-search
                   :title "Web Search"
+                  :available? (available? :web-search)
                   :fn (choose-activity! :web-search)}
                  {:icon icons/recycle-search
                   :title "Reverse image search"
+                  :available? (available? :reverse-image-crop :reverse-image-simple :reverse-image-flip)
                   :fn (choose-activity! :reverse-image-crop :reverse-image-simple :reverse-image-flip)}
                  {:icon icons/image-analysis
                   :title "Image analysis"
+                  :available? (available? :polygon-search)
                   :fn (choose-activity! :polygon-search)}
                  {:icon icons/geolocation
                   :title "Geolocation"
-                  :fn (choose-activity! :geolocation)}]]
+                  :available? (available? :geolocation)
+                  :fn (choose-activity! :geolocation)}
+                 ]]
     [:div
      [:div.contain-section-width.center-section
      [<thomas>]
