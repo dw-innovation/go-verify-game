@@ -15,32 +15,30 @@
    [:div {:class "columns is-centered is-vcentered"}
     [:div {:class "column is-1"} [icon]]
     [:div {:class "is-11 pl-5 pt-5"}
-     [:h3.title.is-3 title]
-     [:p.subtitle subtitle]
-     [:a {:class "level level-left has-text-grey"
-          :on-click #(modal/toggle-modal)}
-      [:span {:class "icon is-small"}
-       [:i {:class "fa fa-info-circle mr-1"}]]
-      (str "What's " title "?" )]]]])
+     [:h3.title.is-3.level title
+      [:a {:class "level level-left has-text-grey ml-4"
+           :on-click #(modal/toggle-modal)}
+       [:span {:class "icon is-small"}
+        [:i {:class "fa fa-info-circle mr-1"}]]]]
+     [:p.subtitle subtitle]]]])
 
 
 (defn <activity-actions> [back!]
   [:div.activity-actions.pb-5.pt-5
-  [:div.columns.mt-5.mb-5.contain-section-width.center-section.has-text-white
-   [:div.column.has-text-centered
-    [:p "Ready to make a call?"]
-    [:button {:class "button is-primary is-inverted is-outlined"
-              :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
-     [:span.icon [:i {:class "fas fa-newspaper-o"}]] [:span "Back to timeline"]]]
-   [:div.column.has-text-centered
-    [:p "Investigate further?"]
-    [:button {:class "button is-primary is-inverted is-outlined"
-              :on-click back!}
-     [:span.icon [:i {:class "fas fa-search"}]] [:span "Back to hub"]]]]])
+   [:div.columns.mt-5.mb-5.contain-section-width.center-section.has-text-white
+    [:div.column.has-text-centered
+     [:p "Ready to make a call?"]
+     [:button {:class "button is-primary is-inverted is-outlined"
+               :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
+      [:span.icon [:i {:class "fas fa-newspaper-o"}]] [:span "Back to timeline"]]]
+    [:div.column.has-text-centered
+     [:p "Investigate further?"]
+     [:button {:class "button is-primary is-inverted is-outlined"
+               :on-click back!}
+      [:span.icon [:i {:class "fas fa-search"}]] [:span "Back to hub"]]]]])
 
 (defn <blooble-simulation> [children]
   [:div.blooble-simulation
    [:div.blooble-logo
     [icons/blooble-logo]]
-   children
-   ])
+   children])
