@@ -208,7 +208,7 @@
                               :handle "@BarbCamara"}))
 
 (def blueberrysagittarius (user/create {:name "Raffaela B."
-                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40blueberrysaggitarius.jpg"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40blueberrysagittarius.jpg"
                               :handle "@blueberrysagittarius"}))
 
 (def unitedneocons (user/create {:name "NeoCons"
