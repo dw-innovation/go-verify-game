@@ -171,17 +171,17 @@
     (fn []
       [:div.activity-container.ris-simple
        [:div {:class "activity-header"}
-       [components/<header> icons/recycle-search "Reverse Image Search"
-        "How cropping images can yield more search results"
-        "Image Crop Explanation"
-        blocks/ris-crop-explanation]]
+        [components/<header> icons/recycle-search "Reverse Image Search"
+         "How cropping images can yield more search results"
+         "Image Crop Explanation"
+         blocks/ris-crop-explanation]]
        [:div {:class "activity-steps"}
-       [:div.activity-step.contain-section-width.center-section
-        [<first-drag-step>]]
-       [:div.activity-step.contain-section-width.center-section
-        [<cropping-step>]]
-       [:div.activity-step.contain-section-width.center-section
-        [<second-drag-step>]]]
+        [:div.activity-step.contain-section-width.center-section
+         [<first-drag-step>]]
+        [:div.activity-step.contain-section-width.center-section
+         [<cropping-step>]]
+        [:div.activity-step.contain-section-width.center-section
+         [<second-drag-step>]]]
 
        [:div {:class "activity-footer"}
-       [components/<activity-actions> back!]]])))
+        [components/<activity-actions> back!]]])))
