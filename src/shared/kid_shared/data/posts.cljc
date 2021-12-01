@@ -1,13 +1,11 @@
 (ns kid-shared.data.posts
   (:require [kid-shared.data.authors :as authors]
-            [kid-shared.types.post :as posts]
             [kid-shared.data.activities :as activities]))
-
 
 (def p1-climate-refugees-copenhagen?
   {:type :post-text
    :id "p1-climate-refugees-copenhagen"
-   :description "So-called “climate refugees” from Copenhagen are trashing Liguria. Here’s a picture from the suburbs of Genoa taken yesterday -- this is an outrage! "
+   :description "So-called “climate refugees” from Copenhagen are trashing Liguria. Here’s a picture from the suburbs of Genoa taken yesterday – this is an outrage! "
    :time-limit 4000
    :fake-news? true
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/p1-climate-refugees-copenhagen-main.jpg"
@@ -22,7 +20,6 @@
    :comment "Can’t believe this is still happening: the picture of the devastated seafront doing the rounds in certain groups is absolutely fake. We’re tracking a small network of accounts pushing these news, stay tuned."
    :by authors/j_louis})
 
-
 (def p1-climate-refugees-copenhagen-with-comments
   [p1-climate-refugees-copenhagen?
      ;; a comment create's a new comment
@@ -33,9 +30,7 @@
       :by authors/tktktktktk
       :text "Too much is too much, when will the EU finally do something about the hordes of so-called \"climate refugees\"? #notallwelcome"}
    10
-   p1-climate-refugees-copenhagen-response
-   ]
-  )
+   p1-climate-refugees-copenhagen-response])
 
 (def p2-financial-gdp
   {:type :post-text
@@ -74,8 +69,7 @@
       :text "Not a surprise if you ask me. Bloody Baltic bastards. #NotAllWelcome"}
    4 {:post-id (:id p3-financiel-gdp?)
       :by authors/groceries4you
-      :text "Met two of them at my store yesterday. Guy #1 pretended to apply for a job while guy #2 apparently shoved a two dozen chocolate bars into his fancy backpack. Goddamn thieves is what they are."}
-   ])
+      :text "Met two of them at my store yesterday. Guy #1 pretended to apply for a job while guy #2 apparently shoved a two dozen chocolate bars into his fancy backpack. Goddamn thieves is what they are."}])
 
 (def p3-financiel-gdp-repost-1
   {:type :re-post
@@ -123,7 +117,6 @@
    :activities [activities/urine-bottles-ris]})
 (def p6-urine-bottles?-story
   [p6-urine-bottles?
-
    4 {:post-id "p6-urine-bottles"
       :by authors/megacorp_press
       :text "We strongly reject these unfounded allegations. See official press release https://press.mgcorp.com/a8HT8mm"}
@@ -144,8 +137,7 @@
    :by authors/concerned_citizen
    :time-limit 700
    :fake-news? true
-   :activities [activities/danes-crossing-ris]
-   })
+   :activities [activities/danes-crossing-ris]})
 
 (def p8-megacorp-traffic?
   {:type :post-text
@@ -155,8 +147,7 @@
    :by authors/stop_the_corp
    :time-limit 1300
    :fake-news? true
-   :activities [activities/megacorp-traffic-ris]
-   })
+   :activities [activities/megacorp-traffic-ris]})
 (def p8-megacorp-traffic?-story
   [p8-megacorp-traffic?
    4 {:post-id "p8-megacorp-traffic"
@@ -164,8 +155,7 @@
       :text "This is the crux: We're so dependent on Megacorp, we can't set boundaries anymore. It's all helpful and harmful at the same time."}
    4 {:post-id "p8-megacorp-traffic"
       :by authors/j_louis
-      :text "This is fake. And another case of \"activists\" doing the public a disservice. City is clearly US, map data cannot be real. More on Megacorp’s delivery infrastructure (yes, the largest in the world and certainly not a sustainable one) in my story from earlier this year: https://in.bbc.co.uk..."}
-   ])
+      :text "This is fake. And another case of \"activists\" doing the public a disservice. City is clearly US, map data cannot be real. More on Megacorp’s delivery infrastructure (yes, the largest in the world and certainly not a sustainable one) in my story from earlier this year: https://in.bbc.co.uk..."}])
 
 (def p9-flooding-dams?
   {:type :post-text
@@ -175,8 +165,7 @@
    :by authors/c_report
    :time-limit 800
    :fake-news? true
-   :activities [activities/flooding-dams-ris]
-   })
+   :activities [activities/flooding-dams-ris]})
 
 (def p10-snow-cannons?
   {:type :post-text
@@ -186,20 +175,17 @@
    :by authors/c_report
    :time-limit 800
    :fake-news? true
-   :activities [activities/snow-cannons-ris]
-   })
+   :activities [activities/snow-cannons-ris]})
 (def p10-comment-1 {:post-id "p10-snow-cannons"
                     :by authors/saxony4ever
-                    :text "Ha! I knew it was all a big hoax. Bet those cannons were operated by \"climate refugees\". They'll do anything to steal our tax money!"} )
+                    :text "Ha! I knew it was all a big hoax. Bet those cannons were operated by \"climate refugees\". They'll do anything to steal our tax money!"})
 (def p10-comment-2 {:post-id "p10-snow-cannons"
                     :by authors/ddoll99
                     :text "Guys, are you serious?"})
 (def p10-comment-3 {:post-id "p10-snow-cannons"
                     :by authors/thismightbesatire
-                    :text "Wow, the city and the Elbe Valley sure changed a lot. Did the green communists also launch a large-scale terraforming project?"
-                    })
+                    :text "Wow, the city and the Elbe Valley sure changed a lot. Did the green communists also launch a large-scale terraforming project?"})
 (def p10-snow-cannons-story [p10-snow-cannons? 3 p10-comment-1 7 p10-comment-2 9 p10-comment-3])
-
 
 (def p11-megacorp-prisons?
   {:type :post-text
@@ -211,15 +197,15 @@
    :fake-news? false
    :activities [activities/megacorp-prisons-ris]})
 (def p11-megacorp-prisons?-story [p11-megacorp-prisons?
-                                 5 {:post-id "p11-megacorp-prisons"
-                                    :by authors/aynrandftw
-                                    :text "That's ridiculous, and you know it. Sure, they have security to stop the bloody unionists from wrecking the place, but MC workers are treated well, earn decent wages and enjoy a lot of benefits!"}
-                                 3 {:post-id "p11-megacorp-prisons"
-                                    :by authors/warehouseworker
-                                    :text "A colleague of mine was injured by an MC spring gun last week. His 'rule violation': Leaving 10 minutes before the shift ended, so he could pick up his kid from hospital."}
-                                 3 {:post-id "p11-megacorp-prisons"
-                                    :by authors/anonymous_worker
-                                    :text "Corporate bastards! They'll get what they deserve soon."}])
+                                  5 {:post-id "p11-megacorp-prisons"
+                                     :by authors/aynrandftw
+                                     :text "That's ridiculous, and you know it. Sure, they have security to stop the bloody unionists from wrecking the place, but MC workers are treated well, earn decent wages and enjoy a lot of benefits!"}
+                                  3 {:post-id "p11-megacorp-prisons"
+                                     :by authors/warehouseworker
+                                     :text "A colleague of mine was injured by an MC spring gun last week. His 'rule violation': Leaving 10 minutes before the shift ended, so he could pick up his kid from hospital."}
+                                  3 {:post-id "p11-megacorp-prisons"
+                                     :by authors/anonymous_worker
+                                     :text "Corporate bastards! They'll get what they deserve soon."}])
 
 (def p15-algae-deluxe {:type :post-text
                        :id "p15-algae-deluxe"
@@ -233,21 +219,19 @@
       :by authors/undergroundpegasus}
    8 {:post-id "p15-algae-deluxe"
       :by authors/coffeecakeweasel
-      :text " Certainly not drinking the Kool-Aid re: \"aggressive capitalism is our way out of today’s catastrophic world!\", but there are admittedly some successes wrt producing food for all, at speed, from disused land."}
-   ])
+      :text " Certainly not drinking the Kool-Aid re: \"aggressive capitalism is our way out of today’s catastrophic world!\", but there are admittedly some successes wrt producing food for all, at speed, from disused land."}])
 
 (def p12-megacorp-salad
   {:type :post-text
    :id "p12-megacorp-salad"
    :by authors/bloomberg_bizmonth
-   :description "Megacorp’s latest life-saver: giant low-power cooler will bring back salad and lettuce on the menu, the company promises. We toured the facility. https://t.co./weyoi1203x"}
-  )
+   :description "Megacorp’s latest life-saver: giant low-power cooler will bring back salad and lettuce on the menu, the company promises. We toured the facility. https://t.co./weyoi1203x"})
 
 (def p14-megacorp-employment
-{:type :post-text
- :id "p14-megacorp-employment"
- :by authors/radio_europe
- :description "Megacorp now employs 40% of workers in the EU - https://t.co/e8GHYnn"})
+  {:type :post-text
+   :id "p14-megacorp-employment"
+   :by authors/radio_europe
+   :description "Megacorp now employs 40% of workers in the EU - https://t.co/e8GHYnn"})
 (def p14-megacorp-employment-story
   [p14-megacorp-employment
    2 {:post-id "p14-megacorp-employment"
@@ -258,24 +242,21 @@
       :text "40%. Mind-boggling number. Sit on a bench anywhere: 4 out of 10 passerby work for Megacorp. How did it get so big?"}
    2 {:post-id "p14-megacorp-employment"
       :by authors/workingmom99
-      :text "40% of the workforce? No private company should be allowed to be this big! But it's not like our governments & the EU really care about monopolies & what they do to ordinary people."}
-   ])
+      :text "40% of the workforce? No private company should be allowed to be this big! But it's not like our governments & the EU really care about monopolies & what they do to ordinary people."}])
 
 (def p13-megacorp-buying-spree
   {:type :post-text
    :id "p13-megacorp-buying-spree"
    :by authors/channel1live
-   :decription "Low tarriffs, high profits: A closer look at Megacorp's buying spree in the health tech sector. Tonight 9pm, Channel 1"}
-  )
+   :decription "Low tarriffs, high profits: A closer look at Megacorp's buying spree in the health tech sector. Tonight 9pm, Channel 1"})
 (def p13-megacorp-buying-spree-story
   [p13-megacorp-buying-spree
    5 {:post-id "p13-megacorp-buying-spree"
       :by authors/socialmarkets2050
       :text "\"Low tarriffs?\" You mean to say \"government gifts\"! Another perfect example of EU lawmakers sucking up to Megacorp."}])
 
-
 (def p16-satellite-image?
-{:type :post-text
+  {:type :post-text
    :id "p16-satellite-image"
    :description "Just got this satellite image from @ESA. This is what our continent looks like now. Thanks to climate change and rising sea levels. Hate to say I told you so!"
    :time-limit 1000
@@ -283,6 +264,7 @@
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p16-satellite-image/nain-image.jpg"
    :by authors/rita-teenberg
    :activities [activities/satellite-image-web-search]})
+
 (def p16-satellite-image?-story
   [p16-satellite-image?
    4 {:post-id "p16-satellite-image"
@@ -301,14 +283,13 @@
 (def p17-megacorp-food-fan
   {:type :post-text
    :id "p17-megacorp-food-fan"
-   :description "Just got my delivery on rice grown in the New Baltic Sea, next to the New Rostock wind farms, yum! <3 Megacorp eco grub!"
+   :description "Just got my delivery of rice grown in the New Baltic Sea, next to the New Rostock wind farms, yum! <3 Megacorp eco grub!"
    :by authors/miss_jenny_m})
 (def p17-megacorp-food-fan-story
   [1 p17-megacorp-food-fan
    4 {:post-id "p17-megacorp-food-fan"
       :by authors/marsexpress
-      :text "My new hobby: Documenting posts by \"eco\" influencers --  who fall for Megacorp propaganda hook, line, and sinker. Geez."}])
-
+      :text "My new hobby: Documenting posts by \"eco\" influencers –  who fall for Megacorp propaganda hook, line, and sinker. Geez."}])
 
 (def p18-rita-talks-about-bowie
   {:type :post-text
@@ -316,7 +297,6 @@
    :description "\"News guy wept and told us / Earth was really dying /
 Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote that song in 1972. Uncanny!"
    :by authors/rita-teenberg})
-
 
 (def all-activity-posts [p1-climate-refugees-copenhagen?
                          p3-financiel-gdp?
