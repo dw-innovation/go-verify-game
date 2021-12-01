@@ -65,7 +65,7 @@
    :fake-news? true
    :time-limit 900
    :by authors/financiel_times
-   :description "Central Europe faces severe economic problems due to large-scale arrival of lazy and criminal \"climate refugees.\""
+   :description "Central Europe faces severe economic problems due to large-scale arrival of lazy and criminal \"climate refugees\"."
    :activities [activities/financiel-web-search]})
 (def p3-financiel-gdp?-story
   [p3-financiel-gdp?
@@ -314,7 +314,7 @@
   {:type :post-text
    :id "p18-rita-talks-about-bowie"
    :description "\"News guy wept and told us / Earth was really dying /
-Cried so much his face was wet / Then I knew he was not lying.\" Bowie wrote that song in 1972. Uncanny!"
+Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote that song in 1972. Uncanny!"
    :by authors/rita-teenberg})
 
 
