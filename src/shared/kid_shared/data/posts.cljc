@@ -95,7 +95,7 @@
   {:type :post-text
    :id "p4-minister-in-city"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p4-minister-in-the-city/Frankfurt_BusinessMan_2+1.jpg"
-   :description "EU Minister of Finance spotted near Megacorp Headquarters in Shanghai. What shady deal is he getting into now?"
+   :description "EU Minister of Finance spotted near Megacorp Headquarters in Shanghai. What shady deal is he getting into now? https://pic.bleeper.com/qu7v9ap"
    :time-limit 2000
    :fake-news? true
    :by authors/socialist_inquirer
@@ -151,7 +151,7 @@
   {:type :post-text
    :id "p8-megacorp-traffic"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p8-megacorp-traffic/main.jpg"
-   :description "The whole “Megacorp is saving us, cut them some slack” argument is wrong. We gave up so much public space, health and wellbeing so they could “help us”. Result? Cities paralysed by traffic jams, caused by that massive fleet of white delivery vans. Just look at the sheer number of them serving Germany only yesterday evening. https://pic.beep.com/h9HXt1"
+   :description "The whole “Megacorp is saving us, cut them some slack” argument is wrong. We gave up so much public space, health and wellbeing so they could “help us”. Result? Cities paralysed by traffic jams, caused by that massive fleet of white delivery vans. Just look at the sheer number of them serving Germany only yesterday evening. https://pic.bleeper.com/h9HXt1"
    :by authors/stop_the_corp
    :time-limit 1300
    :fake-news? true
@@ -171,7 +171,7 @@
   {:type :post-text
    :id "p9-flooding-dams"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p9-flooding-dams/main.jpg"
-   :description "EU lies exposed: The floddings in Northern Europe aren't caused by \"climate change\", the government is blowing up dams! #investigative"
+   :description "EU lies exposed: The floodings in Northern Europe aren't caused by \"climate change\", the government is blowing up dams! #investigation https://pic.bleeper.com/s9zniu1"
    :by authors/c_report
    :time-limit 800
    :fake-news? true
@@ -205,7 +205,7 @@
   {:type :post-text
    :id "p11-megacorp-prisons"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p11-megacorp-prisons/main.jpg"
-   :description "Barbed wire, spring guns, drone surveillance: Megacorp's new distro centers are run like prisons"
+   :description "Barbed wire, spring guns, drone surveillance: Megacorp's new distro centers are run like prisons. https://pic.bleeper.com/hf99n2zh"
    :by authors/int_news
    :time-limit 3000
    :fake-news? false
