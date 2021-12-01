@@ -92,14 +92,14 @@
   (let [block! (fn [] (business/post-block! p))
         share! (fn [] (business/post-share! :comment "comment about post"
                                             :post p))]
-    [:div.level.buttons
-     [:div.level-item.level-left
+    [:div.level.buttons {:style {:opacity 0 :animation "fadeIn 0.5s" :animation-delay "0.5s" :animation-fill-mode "forwards"}}
+     [:div.level-item.level-left 
       [:button {:class "button outline is-share-button" :on-click share!}
       [:span.icon [:i {:class "fas fa-share"}]] [:span "share"]]]
      [:div.level-item.level-right.pr-1
      [:button {:class "button outline is-block-button" :on-click block!}
       [:span.icon [:i {:class "fas fa-ban"}]] [:span "block"]]]
-
+    ;; all this below is dead code?!
      #_[:button {:class "button outline" :on-click (fn [ev] ;; stop propagation because there is a global
                                         ;; click to open panel, and we are specifically opening the other one
                                                    (.stopPropagation ev)
@@ -174,7 +174,7 @@
                     :top "25px"
                     :animation "peek-out-animation 1s ease-in-out"
                     :animation-fill-mode "forwards"
-                    :animation-delay "5s"
+                    :animation-delay "1s"
                     :width "150px"}}
       [:div {:on-click (fn [ev] ;; stop propagation because there is a global
                         ;; click to open panel, and we are specifically opening the other one

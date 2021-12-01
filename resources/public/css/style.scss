@@ -691,3 +691,8 @@ button { background-color: transparent;
     box-shadow: 0 2.5em 0 0;
   }
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
