@@ -78,7 +78,8 @@
         [:div {:class "is-flex is-justify-content-center mb-5"}
          [:div
           [:div
-           [:h3.title.is-3 "No results? Let's try a flip."]
+           [:h3.title.is-3 "No results? Let's try a flip."
+            [components/<modal-icon> blocks/ris-flip-explanation]]
            [:p.subtitle "Click on the button to invert the picture."]
            ]
           [:div.mt-3 {:style (when (#{:flipping :succeeded} @status) animation-css)}
@@ -102,7 +103,7 @@
        [:div {:class "activity-header"}
         [components/<header> icons/recycle-search "Reverse Image Search" "You might need to flip the image"
          "Reverse Image Search with Flip Explanation"
-         blocks/web-search-explanation]]
+         blocks/ris-explanation]]
 
        [:div {:class "activity-steps"}
         [:div.activity-step.contain-section-width.center-section
