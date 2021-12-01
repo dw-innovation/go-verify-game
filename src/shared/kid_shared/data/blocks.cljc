@@ -20,13 +20,14 @@
 
 (def ris-explanation
   [:<>
-   [:p "Among other things, an RIS tells you whether or not an image has been used on the (open) web before -- and in which context."]
+   [:p "Among other things, an RIS tells you whether or not an image has been used on the (open) web before – and in which context."]
    [:p "To do an RIS hands down, install the so-called \"WeVerify Plugin\" for your browser. Once it’s activated, right-click on the web image you need to verify, choose a search engine (e.g. the one by Megacorp) – and wait for the RIS results to show up."]
-   [:p "If the image you're verifying shows up in lots of other places on the web (especially with different dates and descriptions), it’s very likely you're NOT looking at an original. Which means: People making weird claims about said image on Beeper are probably NOT telling the truth."]])
+   [:p "If the image you're verifying shows up in lots of other places on the web (especially with different dates and descriptions), it’s very likely you're NOT looking at an original."]
+   [:p "Which means: People making weird claims about said image on Beeper are probably NOT telling the truth."]])
 
 (def ris-crop-explanation
   [:<>
-   [:p "Sometimes, an RIS doesn't yield any results. In that case, try cropping the picture, thus putting a focus on a certain part of it, e.g. a person or a building. Repeat the search. Refine the keywords if necessary."]
+   [:p "Sometimes, an RIS doesn't yield any results. In that case, it can be good idea to crop the picture, thus putting a focus on a certain part of it, e.g. a person or a building. Repeat the search. Refine the keywords if necessary."]
    [:p "Do the results show the person or building allegedly depicted in the uncropped version? If they don't, any claim about this image should be treated with utmost caution."]])
 
 (def game-tagline-title "Welcome to the KID Game")
