@@ -52,11 +52,15 @@
                                                       :text "Already found all the strange things"})))))
         <polygon> (fn [{visible? :visible?
                         shape :shape
+                        message :message
                         :as polygon}]
-                    [:g.polygon [:a {:href "#" :on-click (succeeded! polygon)}
-                                 [:g {:opacity (if visible? 1 0.2)}
+                    ^{:key polygon}
+                    [:g.polygon [:a {:href "#" :on-click (fn [evt]
+                                                           (when (not visible?) ((succeeded! polygon) evt)))}
+                                 [:g {:opacity (if visible? 1 0)}
                                   shape]]])
         <marker> (fn [{x :x y :y color :color}]
+                   ^{:key (str x y)}
                    [:rect {:x x :y y :fill color :width 10 :height 10}])]
     (fn []
       [:div {:ref #(reset! container %)}
