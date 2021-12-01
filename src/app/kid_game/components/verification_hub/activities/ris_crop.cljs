@@ -162,8 +162,8 @@
         [<cropper> <cropped-svg>] (cropper-components data cropped-correctly! cropped-wrong!)
 
         make-cropping-step (fn [] (fn [] [:div
-                                          [:h4.title.is-4.mb-0 "No results? Let's refine our search"]
-                                          [:p.mb-5 "Drag the cursor in the highlighted box."]
+                                          [:h4.title.is-4.mb-0 "No results? Let's try cropping."]
+                                          [:p.mb-5 "Drag the cursor to frame a specific part of the image."]
                                           [:div [<cropper>]]]))
         <cropping-step> (fn [] [@cropping-step])
         <first-drag-step> (fn [] [<drag-step> main-image result-search result-images (fn [] (reset! cropping-step (make-cropping-step)))])
@@ -171,17 +171,17 @@
     (fn []
       [:div.activity-container.ris-simple
        [:div {:class "activity-header"}
-       [components/<header> icons/recycle-search "Reverse Image Search"
-        "How cropping images can yield more search results"
-        "Image Crop Explanation"
-        blocks/ris-crop-explanation]]
+        [components/<header> icons/recycle-search "Reverse Image Search"
+         ""
+         "Image Crop Explanation"
+         blocks/ris-crop-explanation]]
        [:div {:class "activity-steps"}
-       [:div.activity-step.contain-section-width.center-section
-        [<first-drag-step>]]
-       [:div.activity-step.contain-section-width.center-section
-        [<cropping-step>]]
-       [:div.activity-step.contain-section-width.center-section
-        [<second-drag-step>]]]
+        [:div.activity-step.contain-section-width.center-section
+         [<first-drag-step>]]
+        [:div.activity-step.contain-section-width.center-section
+         [<cropping-step>]]
+        [:div.activity-step.contain-section-width.center-section
+         [<second-drag-step>]]]
 
        [:div {:class "activity-footer"}
-       [components/<activity-actions> back!]]])))
+        [components/<activity-actions> back!]]])))
