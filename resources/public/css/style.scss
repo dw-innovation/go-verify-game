@@ -643,6 +643,7 @@ button { background-color: transparent;
   animation: load7 1.8s infinite ease-in-out;
 }
 .loader {
+  border: none;
   color: var(--color-grey);
   font-size: 10px;
   margin: 0 auto;
