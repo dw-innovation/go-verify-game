@@ -298,6 +298,72 @@
 Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote that song in 1972. Uncanny!"
    :by authors/rita-teenberg})
 
+
+(def p19-chinese-minister-of-finance?
+  {:type :post-text
+   :id "p19-chinese-minister-of-finance"
+   :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p19-chinese-minister-of-finance/main.jpg"
+   :description "Chinese minister of finance and undersecretary arrive in Athens, offer cancellation of Greek debt in exchange for island of Crete. German government approves."
+   :time-limit 1000
+   :fake-news? true
+   :by authors/gardiannews
+   :activities [activities/chinese-ministers-polygons
+                activities/chinese-ministers-web-search]})
+
+(def p20-river-thames-estuary?
+  {:type :post-text
+   :id "p20-river-thames-estuary"
+   :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p20-river-thames-estuary/main.jpg"
+   :description "A month ago, this large part of the river Thames estuary was sold for next to nothing to Megacorp by the City of London. Used to be for everyone, with a park on the southside. Arguably this is all gone with the flooding, but why the gift to a thriving company? Beyond me… https://pic.beep.com/q88hCu9"
+   :time-limit 1000
+   :fake-news? true
+   :by authors/livingbytheriver99
+   :activities [activities/thames-estuary-ris
+                activities/thames-estuary-websearch]}
+  )
+(def p20-river-thames-estuary?-story
+  [p20-river-thames-estuary?
+   4 {:post-id "p20-river-thames-estuary"
+      :by authors/blackberrycurrentcat
+      :text "Er, maybe because nobody wants to live there? And nobody has the funds to rebuild? Just wait what happens when Megacorp takes their jobs elsewhere!"}
+   ])
+
+(def p21-eu-commission-hearing?
+ {:type :post-text
+   :id "p21-eu-commission-hearing"
+   :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p21-eu-commission-hearing/main.jpg"
+   :description "EXCLUSIVE -  EU commissioners have pre-written scripts - Megacorp CEO hearing is just theatre."
+   :time-limit 1000
+   :fake-news? true
+   :by authors/dbf_eu
+   :activities [activities/eu-commission-ris]})
+
+(def filler-wink-corona {:type :post-text
+                         :id "filler-wink-corona"
+                         :description "Remember Corona virus? Remember Corona beer? Remember anything?"
+                         :by authors/krill})
+
+(def filler-new-beachfronts {:type :post-text
+                             :id "filler-new-beachfronts"
+                             :description "New owner of beachfront? Sell now for maximum profit. https://blp.pr/ls8fn"
+                             :by authors/LDRE})
+
+(def filler-bowie-sightings {:type :post-text
+                             :id "filler-bowie-sightings"
+                             :description "Bowie sightings in the Mediterranean patently false, say fact checkers."
+                             :by authors/newBBCnews})
+
+(def filler-blockchain {:type :post-text
+                        :id "filler-blockchain"
+                        :description "Here's how AI, blockchain, and quantum computing will help us solve the climate crisis https://lilurl.eu/6gc9w"
+                             :by authors/eu_innovation})
+
+
+(def filler-bowie-quote {:type :post-text
+                        :id "filler-bowie-quote"
+                        :description "\"The potential of what the internet is going to do to society, both good and bad, is unimaginable\" David Bowie, 1999"
+                             :by authors/good_quotes})
+
 (def all-activity-posts [p1-climate-refugees-copenhagen?
                          p3-financiel-gdp?
                          p4-minister-in-city?
@@ -308,4 +374,7 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
                          p9-flooding-dams?
                          p10-snow-cannons?
                          p11-megacorp-prisons?
-                         p16-satellite-image?])
+                         p16-satellite-image?
+                         p19-chinese-minister-of-finance?
+                         p20-river-thames-estuary?
+                         p21-eu-commission-hearing?])

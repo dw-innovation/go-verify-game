@@ -240,6 +240,43 @@
                               :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40emily_dupont.jpg"
                               :handle "@emily_dupont"}))
 
+(def gardiannews (user/create {:name "Guardian"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40gardiannews.jpg"
+                              :handle "@gardiannews"}))
+
+(def livingbytheriver99 (user/create {:name "LBTR"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40livingbytheriver99.jpg"
+                              :handle "@livingbytheriver99"}))
+
+(def blackberrycurrentcat (user/create {:name "Blackberry "
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40blackberrycurrentcat.jpg"
+                              :handle "@blackberrycurrentcat"}))
+
+(def dbf_eu (user/create {:name "Don't be Fooled!"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40dbf_eu.jpg"
+                              :handle "@dbf_eu"}))
+
+(def krill (user/create {:name "Wink"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40krill.jpg"
+                              :handle "@krill"}))
+
+(def LDRE (user/create {:name "La Defense Real Estate"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40ldre.jpg"
+                              :handle "@krill"}))
+
+(def newBBCnews (user/create {:name "New BBC News"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40newBBCnews.jpg"
+                              :handle "@newBBCnews"}))
+
+(def eu_innovation (user/create {:name "EU Innovation"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40eu_innovation.jpg"
+                              :handle "@eu_innovation"}))
+
+
+(def good_quotes (user/create {:name "Good Quotes"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40good_quotes.jpg"
+                              :handle "@good_quotes"}))
+
 (def posters [deutsche-welle
               reuters
               zeit

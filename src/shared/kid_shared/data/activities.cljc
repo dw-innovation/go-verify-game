@@ -200,5 +200,91 @@
                      :title "EU Government struggles with repercussions of latest floods in Northern Europe."
                      :date "15 days ago"}]}})
 
+(def chinese-ministers-polygons
+  {:type :polygon-search
+   :data {:main-image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p19-chinese-minister-of-finance/main.jpg"
+          :dimensions [962 641]
+          :polygons [
+                     {:shape [:path {:d "M2.5 55.5V9L271 3V47.5L2.5 55.5Z"
+                                     :transform "translate(445,164)"}]
+                      :message "Is “imbarchi” a Greek word?"}
+                     {:shape [:path {:d "M41.5 66.5L4 33.5L40.6306 3.70709L233 3L262.5 33.5L247 63L41.5 66.5Z"
+                                     :transform "translate(256,335)"}]
+                      :message "This says “Milano Malpensa”, doesn’t it?"}
+                     {:shape
+                      [:path {:d "M38 45L56 14.5L69.5 3L80.5 7.5L91.5 12L106.5 38L98.5 91L75 93H31.5L3 83L12.5 61.5L38 45Z"
+                              :transform "translate(696,190)"}]
+                      :message "That’s an awful lot of dandruff. Or is something else?"}
+                     {:shape
+                      [:path {:d "M2.5 25.5L53.5 3L116 12V46V69L102.5 115.5L41 125L11 89L2.5 25.5Z"
+                              :transform "translate(692,326)"}]
+                      :message "Is it snowing inside the airport?"}
+                     {:shape
+                      [:path {:d "M7 34L2.5 9L48 3L86 13.5L117.5 16.5L125.5 34L65 45.9459L47 49.5L41.5 31L7 34Z"
+                              :transform "translate(743,532)"}]
+                      :message "How come their shoes are sinking into the ground?"}
+                     {:shape
+                      [:path {:d "M87.5 12.5L37 3L3.5 22.5L49 69L109.5 77L103 39.5L87.5 12.5Z"
+                              :transform "translate(631,494)"}]
+                      :message "This looks weird."}
+                     ]}})
+
+(def chinese-ministers-web-search
+  {:type :web-search
+   :data {:terms ["\"China\" AND \"Greek debt\" AND \"Gardian\""]
+          :loading-time 4000
+          :results [{:url "factful.eu"
+                     :title "China may pursue economic interests all over the globe, but they are NOT aquiring the Greek island of Crete"
+                     :date "4 days ago"}
+                    {:url "mil-academy.org"
+                     :title "Guardian editor-in-chief says she is \"tired of imposters spreading fake news\"
+"
+                     :date "2 days ago"}]}})
+
+(def thames-estuary-ris
+  {:type :reverse-image-simple
+   :data {:main-image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p20-river-thames-estuary/main.jpg"
+          :result-search [
+                          {:url "euters.com"
+                           :title "NSRE Opens New Windfarm"
+                           :description "After a construction period of almost two years, London-based green energy company NSRE (North Sea Renewable Energy) is about to open its fifth large-scale windarm in England."
+                           :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p20-river-thames-estuary/main.jpg"
+                           :date "3 days ago"}
+                          {:url "guardian.co.uk"
+                           :title "City Government and NGO representatives in rare agreement:
+\"New NSRE Windfarm is a big step towards a more sustainable future\""
+                           :img-src
+"https://kid-game-resources.s3.eu-central-1.amazonaws.com/p20-river-thames-estuary/main.jpg"
+                           :date "2 days ago"}
+                          ]
+          }})
+
+(def thames-estuary-websearch
+  {:type :web-search
+   :data {:terms ["\"thames estuary\" AND \"megacorp\""]
+          :loading-time 4000
+          :results []}})
+
+
+(def eu-commission-ris
+  {:type :reverse-image-simple
+   :data {:main-image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p21-eu-commission-hearing/main.jpg"
+          :result-search [
+                          {:url "nnyt.com"
+                           :title "On this day in 1974: Ford justifies decision to pardon Nixon before House Judiciary Committee."
+                           :description "In what is still considered an unwise and unjust act by many critics, Gerald Ford, 38th President of the United States..."
+                           :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p21-eu-commission-hearing/main.jpg"
+                           :date "4 years ago"}
+                          {:url "historybuff.net"
+                           :title "The Pardon of Richard Nixon: Corrupt bargain or wise act of reconciliation? "
+                           :description "Remember Nixon? Remember Watergate? Remember how President Ford eventually decided to let his predecessor off the hook? Let's start at...
+"
+                           :img-src
+"https://kid-game-resources.s3.eu-central-1.amazonaws.com/p21-eu-commission-hearing/main.jpg"
+                           :date "3 months ago"}
+                          ]
+          }})
+
+
 
 (def all-activities [ris-hurricaine-michael])
