@@ -75,11 +75,13 @@
                        :animation-fill-mode "forwards"}]
     [status
      (fn [{img-src :img-src}]
-        [:div {:class "is-flex is-justify-content-center mb-5"}
+        [:div {:class " mb-5"}
+
          [:div
           [:div
-           [:h3.title.is-3 "No results? Let's try a flip."]
-           [:p.subtitle "Click on the button to invert the picture."]
+           [:h4.title.is-4.mb-0 "No results? Let's try a flip."
+            [components/<modal-icon> blocks/ris-flip-explanation]]
+           [:p.mb-5 "Click on the button to invert the picture."]
            ]
           [:div.mt-3 {:style (when (#{:flipping :succeeded} @status) animation-css)}
            [:img {:src img-src}]]
@@ -100,9 +102,9 @@
       [:div.activity-container
 
        [:div {:class "activity-header"}
-        [components/<header> icons/recycle-search "Reverse Image Search" "You might need to flip the image"
+        [components/<header> icons/recycle-search "Reverse Image Search" ""
          "Reverse Image Search with Flip Explanation"
-         blocks/web-search-explanation]]
+         blocks/ris-explanation]]
 
        [:div {:class "activity-steps"}
         [:div.activity-step.contain-section-width.center-section

@@ -162,7 +162,9 @@
         [<cropper> <cropped-svg>] (cropper-components data cropped-correctly! cropped-wrong!)
 
         make-cropping-step (fn [] (fn [] [:div
-                                          [:h4.title.is-4.mb-0 "No results? Let's try cropping."]
+                                          [:h4.title.is-4.mb-0 "No results? Let's try cropping."
+                                           [:span.is-inline
+                                            [components/<modal-icon> blocks/ris-crop-explanation]]]
                                           [:p.mb-5 "Drag the cursor to frame a specific part of the image."]
                                           [:div [<cropper>]]]))
         <cropping-step> (fn [] [@cropping-step])
@@ -174,7 +176,7 @@
         [components/<header> icons/recycle-search "Reverse Image Search"
          ""
          "Image Crop Explanation"
-         blocks/ris-crop-explanation]]
+         blocks/ris-explanation]]
        [:div {:class "activity-steps"}
         [:div.activity-step.contain-section-width.center-section
          [<first-drag-step>]]
