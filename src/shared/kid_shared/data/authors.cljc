@@ -262,7 +262,7 @@
 
 (def LDRE (user/create {:name "La Defense Real Estate"
                               :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40ldre.jpg"
-                              :handle "@krill"}))
+                              :handle "@LDRE"}))
 
 (def newBBCnews (user/create {:name "New BBC News"
                               :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40newBBCnews.jpg"
