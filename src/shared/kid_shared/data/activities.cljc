@@ -245,7 +245,7 @@
   {:type :reverse-image-simple
    :data {:main-image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p20-river-thames-estuary/main.jpg"
           :result-search [
-                          {:url "euters.com"
+                          {:url "reuters.com"
                            :title "NSRE Opens New Windfarm"
                            :description "After a construction period of almost two years, London-based green energy company NSRE (North Sea Renewable Energy) is about to open its fifth large-scale windarm in England."
                            :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p20-river-thames-estuary/main.jpg"
