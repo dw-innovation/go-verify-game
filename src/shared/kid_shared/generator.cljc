@@ -19,9 +19,7 @@
 
 (def queue (atom []))
 (defn add-to-queue [item]
-  (println "added to queue")
-  (reset! queue (conj @queue item))
-  (println @queue))
+  (reset! queue (conj @queue item)))
 
 (declare gen-run-story)
 
