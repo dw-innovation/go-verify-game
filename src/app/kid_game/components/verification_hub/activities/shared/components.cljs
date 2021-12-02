@@ -5,21 +5,27 @@
             [kid-game.components.modal             :as modal]
             [kid-game.state :as state]))
 
+(defn <modal-icon> [modal-content] ; a [:div]
+  (let [[toggle-modal close-modal <modal>] (modal/make-modal)]
+    (fn []
+      [:<> [<modal> (fn [] modal-content)]
+      [:a {:class "has-text-grey ml-4 is-small"
+           :on-click #(toggle-modal)}
+       [:i {:class "fa fa-info-circle mr-1"}]]])))
+
 (defn <header> [^js/SVG icon
                 ^string title
                 ^string subtitle
                 ^string modal-title
                 ^vector modal-content]
   [:<>
-   [modal/<modal> (fn [] [:div [:h3.title.is-3 modal-title] modal-content])]
+   [modal/<modal> (fn [] )]
    [:div {:class "columns is-centered is-vcentered"}
     [:div {:class "column is-1"} [icon]]
     [:div {:class "is-11 pl-5 pt-5"}
      [:h3.title.is-3.level title
-      [:a {:class "level level-left has-text-grey ml-4"
-           :on-click #(modal/toggle-modal)}
-       [:span {:class "icon is-small"}
-        [:i {:class "fa fa-info-circle mr-1"}]]]]
+      [<modal-icon> [:div [:h3.title.is-3 modal-title] modal-content]]
+      ]
      [:p.subtitle subtitle]]]])
 
 

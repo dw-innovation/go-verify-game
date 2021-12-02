@@ -30,6 +30,10 @@
    [:p "Sometimes, an RIS doesn't yield any results. In that case, it can be good idea to crop the picture, thus putting a focus on a certain part of it, e.g. a person or a building. Repeat the search. Refine the keywords if necessary."]
    [:p "Do the results show the person or building allegedly depicted in the uncropped version? If they don't, any claim about this image should be treated with utmost caution."]])
 
+(def ris-flip-explanation
+  [:<>
+   [:p "Sometimes, an RIS doesn't yield any results. That may be because it has been inverted. Try flipping it again, then repeat the RIS."]])
+
 (def game-tagline-title "Welcome to the KID Game")
 
 (def game-tagline-welcome "You've heard about that whole \"fake news\" thing, haven't you?")

@@ -11,11 +11,11 @@
 (def global-story
   [
    1 posts/p17-megacorp-food-fan-story
-   12 posts/p18-rita-talks-about-bowie
    6 posts/p13-megacorp-buying-spree-story
    12 posts/p16-satellite-image?-story
    5 posts/filler-new-beachfronts
    12 posts/p15-algae-deluxe-story
+   12 posts/p18-rita-talks-about-bowie
    5 posts/p12-megacorp-salad
    10 posts/p20-river-thames-estuary?-story
    10 posts/p14-megacorp-employment
@@ -35,6 +35,8 @@
 
    10 posts/p2-financial-gdp
    5  posts/p2-financial-gdp-repost-1
+   
+   12 posts/p21-eu-commission-hearing?
 
    10 posts/p10-snow-cannons-story
 
