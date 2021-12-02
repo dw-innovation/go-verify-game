@@ -94,7 +94,7 @@
        [:div {:class "activity-steps"}
        [:div.activity-step.contain-section-width.center-section
 
-        [:div.activity-description "Mark the parts of the image that look weird to you.  Place pointer, click, and start finsing polygons."]
+        [:div.activity-description "Mark the parts of the image that look weird to you.  Place pointer, click, and start finding polygons."]
         [click-image-svg
          image-url
          polygons
