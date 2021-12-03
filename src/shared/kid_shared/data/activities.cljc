@@ -67,7 +67,7 @@
 
 (def luxembourgian-president-web-search
   {:type :web-search
-   :data {:terms ["Luxembourgian President" "EU" "Beret"]
+   :data {:terms ["\"Luxembourgian President\" AND EU AND Beret"]
           :loading-time 4000
           :results [{:url "factful.eu"
                      :title "\"Luxembourgian president\" viral post is a deepfake."
@@ -239,7 +239,7 @@
 
 (def chinese-ministers-web-search
   {:type :web-search
-   :data {:terms ["\"China\" AND \"Greek debt\" AND \"Gardian\""]
+   :data {:terms ["China AND \"Greek debt\" AND Gardian"]
           :loading-time 4000
           :results [{:url "factful.eu"
                      :title "China may pursue economic interests all over the globe, but they are NOT aquiring the Greek island of Crete"
@@ -269,7 +269,7 @@
 
 (def thames-estuary-websearch
   {:type :web-search
-   :data {:terms ["\"thames estuary\" AND \"megacorp\""]
+   :data {:terms ["\"thames estuary\" AND megacorp"]
           :loading-time 4000
           :results []}})
 
