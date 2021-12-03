@@ -215,7 +215,7 @@
 (def p15-algae-deluxe-story
   [p15-algae-deluxe
    4 {:post-id "p15-algae-deluxe"
-      :text "Millions displaced by rising sea levels. Flooded land offered to companies, for bascially nothing, all bought by Megacorp. And for what? Algae rolls? Disgusting EU politics if you ask me."
+      :text "Millions displaced by rising sea levels. Flooded land offered to companies, for basically nothing, all bought by Megacorp. And for what? Algae rolls? Disgusting EU politics if you ask me."
       :by authors/undergroundpegasus}
    8 {:post-id "p15-algae-deluxe"
       :by authors/coffeecakeweasel
