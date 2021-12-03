@@ -289,6 +289,38 @@
                               :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40TIPIAU.jpg"
                               :handle "@pragmaticpancake"}))
 
+(def verification_quotes (user/create {:name "Verification Quotes"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40verification_quotes.jpg"
+                              :handle "@verification_quotes"}))
+
+(def MIL_Academy (user/create {:name "MIL Academy"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40MIL_academy.jpg"
+                              :handle "@MIL_Academy"}))
+
+(def rooted_in_reality (user/create {:name "Rooted in reality"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40rooted_in_reality.jpg"
+                              :handle "@rooted_in_reality"}))
+
+(def punkrockkid77 (user/create {:name "Sheena Vivienne"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40punkrockkid77.jpg"
+                              :handle "@punkrockkid77"}))
+
+(def vintage_verification (user/create {:name "Vintage Verification"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40vintage_verification.jpg"
+                              :handle "@vintage_verification"}))
+
+(def MIL_kids (user/create {:name "MIL Kids"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40MIL_kids.jpg"
+                              :handle "@MIL_kids"}))
+
+(def OSINT_FTW (user/create {:name "OSINT Collective"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40OSINT_FTW.jpg"
+                              :handle "@OSINT_FTW"}))
+
+(def bbsm (user/create {:name "Bowie Black Star Movement"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40bbsm.jpg"
+                              :handle "@bbsm"}))
+
 (def posters [deutsche-welle
               reuters
               zeit

@@ -384,6 +384,71 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
       :by authors/pragmaticpancake}
    ])
 
+
+(def filler-quote-factitious-fictitious {:type :post-text
+                                         :id "filler-quote-factitious"
+                                         :description "“The difference between factitious and fictitious tends to dissolve.” - Marshall McLuhan, 1967"
+                                         :by authors/verification_quotes})
+
+(def filler-quote-wet-rag {:type :post-text
+                                         :id "filler-quote-wet-rag"
+                                         :description "\"Fact-checking is good, but it's also like bringing a wet rag to a war.\" - Jeff Jarvis"
+                                         :by authors/verification_quotes})
+
+(def filler-mil-tutorials {:type :post-text
+                           :id "filler-quote-mil-tutorials"
+                           :description "Don't be deceived by fake content on Beeper. Check out our free verification tutorials now!"
+                           :by authors/MIL_Academy})
+
+(def filler-mil-dossier {:type :post-text
+                           :id "filler-quote-mil-dossier"
+                           :description "Tired of social media disinformation? Learn to figure out what's fake and what's real in our free verification dossier."
+                           :by authors/MIL_Academy})
+
+(def filler-mil-media-literacy {:type :post-text
+                           :id "filler-quote-mil-media-literacy"
+                           :description "Media and Information Literacy (MIL) is defined as \"the ability to access, analyze, create and reflect on media.\" It is a prerequisite for citizens to claim their rights to freedom of information and expression."
+                           :by authors/MIL_Academy})
+
+(def filler-apple-banana {:type :post-text
+                           :id "filler-apple-banana"
+                           :description "Remember this campaign? Not a banana, peepz!"
+                           :by authors/rooted_in_reality})
+
+(def filler-pop-quiz {:type :post-text
+                           :id "filler-pop-quiz"
+                           :description " Pop trivia quiz: Do you know the song the following lines were taken from?
+When you swore to be true / Our bed was belief / But alternative facts snuck in like a thief
+"
+                           :by authors/punkrockkid77})
+
+(def filler-mil-kidz {:type :post-text
+                      :image "https://static.dw.com/image/55963768_401.jpg"
+                           :id "filler-mil-kids"
+                           :description "Hey there! Remember the five core competencies of media and information literacy (MIL)? --> Access. Analyze. Reflect. Create. Act. <--"
+                           :by authors/MIL_kids})
+
+(def filler-osint-tool {:type :post-text
+                           :id "filler-osint-tool"
+                           :description "Our new verification tool will allow users to do collaborative network analysis in XR. Sign up for a beta testing account now! -> osint-collective.org/network-xr"
+                           :by authors/OSINT_FTW})
+
+(def filler-osint-funding {:type :post-text
+                           :id "filler-osint-funding"
+                           :description "#followerpower: Megacorp offered to sponsor one of our upcoming research projects. What are your thoughts?
+
+* Honni soit qui mal y pense. *
+* No strings attached? At least consider the option. *
+* Shut up and take the money! *
+"
+                           :by authors/OSINT_FTW})
+
+(def filler-bowie-boat {:type :post-text
+                        :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/bowie_boat.jpg"
+                           :id "filler-bowie-boat"
+                           :description "Join us on the MS Hunky Dory: bbsm.org/membership"
+                           :by authors/bbsm})
+
 (def all-activity-posts [p1-climate-refugees-copenhagen?
                          p3-financiel-gdp?
                          p4-minister-in-city?
