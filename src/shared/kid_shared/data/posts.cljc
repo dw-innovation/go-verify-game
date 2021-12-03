@@ -387,12 +387,12 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
 
 (def filler-quote-factitious-fictitious {:type :post-text
                                          :id "filler-quote-factitious"
-                                         :description "“The difference between factitious and fictitious tends to dissolve.” - Marshall McLuhan, 1967"
+                                         :description "“The difference between factitious and fictitious tends to dissolve” - Marshall McLuhan, 1967"
                                          :by authors/verification_quotes})
 
 (def filler-quote-wet-rag {:type :post-text
                                          :id "filler-quote-wet-rag"
-                                         :description "\"Fact-checking is good, but it's also like bringing a wet rag to a war.\" - Jeff Jarvis"
+                                         :description "\"Fact-checking is good, but it's also like bringing a wet rag to a war\" - Jeff Jarvis"
                                          :by authors/verification_quotes})
 
 (def filler-mil-tutorials {:type :post-text
