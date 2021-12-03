@@ -172,6 +172,9 @@
    [:div {:class "columns"}
     [:div {:class "column is-full"}
      [:hr]
+     [:h2.title.is-2 "End of Content Message"]
+     [timeline/<thomas-says-we-are-done>]
+     [:hr]
      [:h2.title.is-2 "Notifications"]
      [<notifications>]
      [:h4.title.is-4 "Actual business copy:"]

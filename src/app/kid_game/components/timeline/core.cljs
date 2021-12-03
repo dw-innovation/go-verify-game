@@ -7,6 +7,7 @@
             [kid-game.state           :as state]
             [kid-game.business        :as business]
             [kid-game.utils.log       :as log]
+            [kid-game.components.modal :as modal]
             [kid-shared.types.post    :as posts]
             (kid-shared.types.comment :as comment)
             [kid-game.utils.core      :refer [timestamp-now new-uuid highlight-text]]
@@ -36,20 +37,6 @@
                   :transition "width .1s"
                   :background-color (js-utils/percentageToColor percent)
                   }}]])
-
-;; bulma progress does not allow changing the color
-;;  , and, is really annoying in other ways.
-;;  I may have reintroduced the flickering issue above, though
-(defn <bulma-progress> [amnt total]
-  (let [percent (* 100 (/ amnt total))]
-    [:progress {:class "progress is-rainbow is-small"
-                :value percent
-                :color "yellow"
-                :background "blue"
-
-                :style {:background "red"
-                        :color "green"}
-                :max 100}]))
 
 (defn <progress> [amnt total]
   (let [percent (js/Math.floor (* 100 (/ amnt total)))] [<rainbow-progress> percent])
@@ -99,15 +86,6 @@
      [:div.level-item.level-right.pr-1
      [:button {:class "button outline is-block-button" :on-click block!}
       [:span.icon [:i {:class "fas fa-ban"}]] [:span "block"]]]
-    ;; all this below is dead code?!
-     #_[:button {:class "button outline" :on-click (fn [ev] ;; stop propagation because there is a global
-                                        ;; click to open panel, and we are specifically opening the other one
-                                                   (.stopPropagation ev)
-                                                   (investigate!))}
-      [:span.icon [:i {:class "fas fa-search"}]] [:span "investigate"]]
-
-
-
      ]))
 
 (defn <action-info-content> [result copy points-result]
@@ -259,15 +237,31 @@
 
 
 (defn <thomas-says-we-are-done> []
+  (let [[toggle close <modal>] (modal/make-modal)
+        modal-content (fn [] [:div
+             [:p.mb-3 "Quack, quack! You've reached the end of this demo. I hope you enjoyed playing it. You can find your final score and stats at the bottom of this page."]
+                              [:p.mb-3 "Still got a couple of minutes? Please fill out this feedback questionnaire (so the developers can improve the game): "]
+                              [:p.mb-3
+                               [:a {:href "https://tinyurl.com/kid-game-feedback"
+                                    :target "_blank"} "https://tinyurl.com/kid-game-feedback"]]
+                              [:p.mb-3 "Btw, we've also put together a nice verification toolbox/tutorial for you: "]
+                              [:p.mb-3
+                               [:a {:href "https://tinyurl.com/kid-verification-toolbox"
+                                    :target "_blank"} "https://tinyurl.com/kid-verification-toolbox"]]
+             [:p.mb-3 "That's it for now. Have a good one. And never forget: Facts matter. Quack."]])]
+    (fn []
   [:div.mb-5
-   [:div.columns.post-wrapper
-    [:div.column.is-one-fifth
-    [icons/thomas]]
-    [:div.column.p-5.pl-5
-     [:p.mb-3 "Quack, quack! You've reached the end of this demo. I hope you enjoyed playing it. You can find your final score and stats at the bottom of this page."]
-     [:p.mb-3 "Still got a couple of minutes? Please fill out this feedback questionnaire (so the developers can improve the game): -> https://tinyurl.com/kid-game-feedback"]
-     [:p.mb-3 "Btw, we've also put together a nice verification toolbox/tutorial for you: -> https://tinyurl.com/kid-verification-toolbox"]
-     [:p.mb-3 "That's it for now. Have a good one. And never forget: Facts matter. Quack."]]]])
+   [<modal> modal-content]
+   [:div.post-wrapper {:style {:position "relative"}}
+   [<peeking-duck> toggle]
+    [:div.post.post-type-text.p-5.pl-5 {:style {:position "relative"
+                                                :background-color "white"}}
+     [:h4.is-4.title "You have reached the end of the demo."]
+     [:p "Thanks for playing!"]
+     [:p "Please click Thomas for further details ->"]
+     [:br]
+     [:br]
+     ]]])))
 
 (defn <container> []
   [:div.timeline-container
