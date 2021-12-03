@@ -263,7 +263,8 @@
    :fake-news? false
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p16-satellite-image/nain-image.jpg"
    :by authors/rita-teenberg
-   :activities [activities/satellite-image-web-search]})
+   :activities [activities/satellite-image-web-search
+                activities/satellite-image-ris]})
 
 (def p16-satellite-image?-story
   [p16-satellite-image?
