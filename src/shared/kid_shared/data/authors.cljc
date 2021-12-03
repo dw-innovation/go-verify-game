@@ -277,6 +277,18 @@
                               :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40good_quotes.jpg"
                               :handle "@good_quotes"}))
 
+(def NewsRewired (user/create {:name "Rewired News"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40NewsRewired.jpg"
+                              :handle "@NewsRewired"}))
+
+(def TIPIAU (user/create {:name "There Is Power In A Union"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40TIPIAU.jpg"
+                              :handle "@TIPIAU"}))
+
+(def pragmaticpancake (user/create {:name "Peter Pancake"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40TIPIAU.jpg"
+                              :handle "@pragmaticpancake"}))
+
 (def posters [deutsche-welle
               reuters
               zeit

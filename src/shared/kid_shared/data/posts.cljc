@@ -365,6 +365,25 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
                         :description "\"The potential of what the internet is going to do to society, both good and bad, is unimaginable\" David Bowie, 1999"
                              :by authors/good_quotes})
 
+(def filler-megacorp-labor-laws {:type :post-text
+                                 :id "filler-megacorp-labor-laws"
+                                 :description "Sources say that a meeting of Megacorp workers was attended by Megacorp HR reps posing as members (a major violation of labor laws). Follow for reactions https://t.co/live-mega"
+                                 :by authors/NewsRewired
+                                 })
+(def filler-megacorp-labor-laws-story
+  [filler-megacorp-labor-laws
+   4 {:type :re-post
+      :id "filler-megacorp-labor-laws-repost"
+      :post filler-megacorp-labor-laws
+      :comment "MegaCRAP stooges spying on their own employees lawfully organizing. We’ve seen this before: yes, that’s called union-busting, old-as-the-world, and totally illegal. Wake up, us!"
+      :by authors/TIPIAU}
+   6 {:type :re-post
+      :id "filler-megacorp-labor-laws-repost-2"
+      :post filler-megacorp-labor-laws
+      :comment "“Sources say” is literally you saying that there's nothing but rumors. Let me tell you something: There's no union busting. There isn't even a lot of unionizing as most workers are pretty happy with their jobs at Megacorp."
+      :by authors/pragmaticpancake}
+   ])
+
 (def all-activity-posts [p1-climate-refugees-copenhagen?
                          p3-financiel-gdp?
                          p4-minister-in-city?
