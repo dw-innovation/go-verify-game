@@ -407,7 +407,7 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
 
 (def filler-mil-media-literacy {:type :post-text
                            :id "filler-quote-mil-media-literacy"
-                           :description "Media and Information Literacy (MIL) is defined as \"the ability to access, analyze, create and reflect on media.\" It is a prerequisite for citizens to claim their rights to freedom of information and expression."
+                           :description "Media and Information Literacy (MIL) is defined as \"the ability to access, analyze, create and reflect on media\". It is a prerequisite for citizens to claim their rights to freedom of information and expression."
                            :by authors/MIL_Academy})
 
 (def filler-apple-banana {:type :post-text
