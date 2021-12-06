@@ -201,7 +201,7 @@
   {:type :reverse-image-simple
    :data {:main-image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p16-satellite-image/nain-image.jpg"
           :result-search [
-                          {:url "ega.org"
+                          {:url "esa.org"
                            :title "New satellite images show submerged European coastal regions."
                            :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p16-satellite-image/nain-image.jpg"
                            :date "4 hours ago"}
