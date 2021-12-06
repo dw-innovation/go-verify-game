@@ -239,7 +239,7 @@
 (defn <thomas-says-we-are-done> []
   (let [[toggle close <modal>] (modal/make-modal)
         modal-content (fn [] [:div
-             [:p.mb-3 "Quack, quack! You've reached the end of this demo. I hope you enjoyed playing it. You can find your final score and stats in the verification hub at the bottom."]
+             [:p.mb-3 "Quack, quack! You've reached the end of this demo. I hope you enjoyed playing it. You can find your final score and stats at the bottom of the verification hub page."]
                               [:p.mb-3 "Still got a couple of minutes? Please fill out this feedback questionnaire (so the developers can improve the game): "]
                               [:p.mb-3
                                [:a {:href "https://tinyurl.com/kid-game-feedback"
