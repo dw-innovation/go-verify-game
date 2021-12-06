@@ -286,7 +286,7 @@
                               :handle "@TIPIAU"}))
 
 (def pragmaticpancake (user/create {:name "Peter Pancake"
-                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40TIPIAU.jpg"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40pragmaticpancake.jpg"
                               :handle "@pragmaticpancake"}))
 
 (def verification_quotes (user/create {:name "Verification Quotes"
