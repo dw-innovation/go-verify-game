@@ -314,7 +314,7 @@
                               :handle "@MIL_kids"}))
 
 (def OSINT_FTW (user/create {:name "OSINT Collective"
-                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40OSINT_FTW.jpg"
+                              :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40osint_ftw.jpg"
                               :handle "@OSINT_FTW"}))
 
 (def bbsm (user/create {:name "Bowie Black Star Movement"
