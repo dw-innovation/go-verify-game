@@ -173,7 +173,7 @@
                     author :by
                     comments :comments}]
   (let [investigate! (fn [] (business/post-investigate! p))]
-  [:div.post-wrapper.my-5 {:style {:position "relative"}}
+  [:div.post-wrapper {:style {:position "relative"}}
 
    (when (= :live game-state) [<peeking-duck> investigate!])
 
@@ -224,8 +224,12 @@
       [<type-text> p])))
 
 (defn <post> [p]
-  ^{:key (:id p)} ;; important to keep track of rendering
-  [match-post p])
+  (let [selected-post (state/get-post (:post @state/verification-hub-state))
+        active? (= (:id p) (:id selected-post))]
+    ^{:key (:id p)} ;; important to keep track of rendering
+    [:div.post-section {:class (when active? "active")
+                        :id (:id p)}
+     [match-post p]]))
 
 (defn <header> []
   [:div {:class ["panel-header" "timeline-header"]}
@@ -263,6 +267,29 @@
      [:br]
      ]]])))
 
+(defn <posts> []
+  (let [selected-post (state/get-post (:post @state/verification-hub-state))
+        timeline-active? (= (state/get-panel) :timeline)
+        hub-active? (not timeline-active?)]
+    ;; when the hub is active, always scroll to the post being investigated
+    ;; document.getElementById('id').scrollIntoView();
+    (when hub-active?
+      (-> js/document
+          (.getElementById (:id selected-post))
+          (.scrollIntoView {:behavior "smooth"
+                            :block    "center"
+                            :inline     "center"
+
+        })))
+    [css-transition-group {:class "timeline-posts"}
+     (map-indexed (fn [index post]
+                    [css-transition {:timeout 2000
+                                     :key (:id post)
+                                     :class-names "post-transition"}
+                     ^{:key (:id post)} ;; important to keep track of rendering
+                     [<post> post]])
+                  (state/posts))]))
+
 (defn <container> []
   [:div.timeline-container
    [<header>]
@@ -271,11 +298,5 @@
      [<thomas-says-we-are-done>]) ;; see css for functionality
    ;; documentation for css transition group seems kind of tricky but is here:
    ;; https://reactcommunity.org/react-transition-group/
-   [css-transition-group {:class "timeline-posts"}
-    (map-indexed (fn [index post]
-                   [css-transition {:timeout 2000
-                                    :key (:id post)
-                                    :class-names "post-transition"}
-                    ^{:key (:id post)} ;; important to keep track of rendering
-                    [<post> post]])
-                 (state/posts))]])
+   [<posts>]
+   ])

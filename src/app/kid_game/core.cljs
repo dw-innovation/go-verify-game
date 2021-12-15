@@ -23,46 +23,35 @@
             [moment]))
 
 (defn <game> []
-  (let [size {:active "is-two-thirds active" :inactive "is-one-third is-unselectable"}
+  (let [size {:active "active" :inactive "inactive is-unselectable"}
         timeline-active? (= (state/get-panel) :timeline)
         hub-active? (not timeline-active?)
         pointer-events {:active {:pointer-events "all"} :inactive {:pointer-events "none"}}]
-    [:div {:class "game-container columns mt-0 ml-0"}
+    [:div {:class "game-container mt-0 ml-0"}
      [notifications/<notifications>]
+
+     [:div.game-panels
 
      ;; this meta panels is for during development
      (when @state/dev?
-       [:div {:class "game-panel active column dev-panel"}
+       [:div {:class "game-panel dev-panel"}
         [<meta>/<meta>]])
 
-     [:div {:class ["game-panel column"
+     [:div {:class ["game-panel"
                     "game-timeline"
                     (if timeline-active?
                       (:active size)
                       (:inactive size))]
             :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))
             }
-      [:div.click-stopper {:style (if timeline-active?
-                                    (:active pointer-events)
-                                    (:inactive pointer-events))}
-       [<timeline>/<container>]]]
+       [<timeline>/<container>]]
 
-     [:div {:class ["game-panel column"
+     [:div {:class ["game-panel"
                     "game-verification-hub"
-                    (cond (= (state/get-panel) :verification-hub) (:active size)
-                          :else                                   (:inactive size))]
+                    (cond hub-active? (:active size)
+                          :else       (:inactive size))]
             :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
-      [:div.click-stopper {:style (if (= (state/get-panel) :verification-hub)
-                                    (:active pointer-events)
-                                    (:inactive pointer-events))}
        [<verification-hub>/<container>]]]
-
-     [:div.hub-arrow-shadow {:class (if timeline-active? "out" "in")}]
-     [:div.hub-arrow {:class (if timeline-active? "out" "in")
-                      :on-click (fn [] (if timeline-active?
-                                         (state/open-verification-hub)
-                                         (state/open-timeline)))}
-        [icons/circle-right-arrow-blue]]
      ]))
 
 
