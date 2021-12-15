@@ -100,12 +100,19 @@ body {
     &.game-timeline {
       z-index: 1;
       flex: 1;
+      .timeline-container {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column-reverse;
+        overflow:auto;
+      }
       .post-section {
         padding-bottom: var(--spacing);
         transition: filter .4s ease-in-out;
       }
       &.inactive {
         background-color: rgba(0,0,0,.2);
+        overflow:hidden;
         .post-section {
           filter:  blur(1px)
                    brightness(.8);

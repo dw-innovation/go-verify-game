@@ -23,10 +23,22 @@
             [moment]))
 
 (defn <game> []
-  (let [size {:active "active" :inactive "inactive is-unselectable"}
-        timeline-active? (= (state/get-panel) :timeline)
-        hub-active? (not timeline-active?)
-        pointer-events {:active {:pointer-events "all"} :inactive {:pointer-events "none"}}]
+    (let [size {:active "active" :inactive "inactive"}
+          active-panel (state/get-panel)
+          timeline-active? (= active-panel :timeline)
+          hub-active? (not timeline-active?)
+          pointer-events {:active {:pointer-events "all"} :inactive {:pointer-events "none"}}]
+      (log/debug :only "aaaaaaaaaaaaaaaaaaa")
+      (log/debug :only "aaaaaaaaaaaaaaaaaaa")
+      (log/debug :only "aaaaaaaaaaaaaaaaaaa")
+      (log/debug :only "aaaaaaaaaaaaaaaaaaa")
+      (println active-panel)
+      (log/debug :only timeline-active?)
+      (log/debug :only (if timeline-active?
+                      (:active size)
+                      (:inactive size)))
+
+
     [:div {:class "game-container mt-0 ml-0"}
      [notifications/<notifications>]
 
@@ -37,7 +49,8 @@
        [:div {:class "game-panel dev-panel"}
         [<meta>/<meta>]])
 
-     [:div {:class ["game-panel"
+      [:div {:id "timeline"
+             :class ["game-panel"
                     "game-timeline"
                     (if timeline-active?
                       (:active size)
