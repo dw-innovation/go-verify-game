@@ -9,6 +9,7 @@
             [kid-shared.types.post :as posts]
             [kid-shared.types.comment :as comment]
             [kid-game.utils.log :as log]
+            [kid-shared.ticks :as ticks]
             [kid-shared.data.stories :as stories]
             [kid-shared.types.messages :as messages]
             [clojure.core.async :as async]))
@@ -68,7 +69,7 @@
         story-channel ([story-item]
                        (cond
                          (number? story-item) (do (log/debug "story item is a number, waiting")
-                                                  (async/<! (async/timeout (* 1000 story-item))))
+                                                  (async/<! (ticks/wait-chan story-item)))
                          (posts/post? story-item) (do (log/debug "story item is a post")
                                                       (async/>! send-channel {:type ::messages/post-new
                                                                               :body story-item}))

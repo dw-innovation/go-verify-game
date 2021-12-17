@@ -19,6 +19,7 @@
             [kid-game.components.verification-hub.activities.polygon-search]
             [kid-game.components.verification-hub.activities.ris-crop]
             [kid-game.components.verification-hub.activities.ris-flip]
+            [kid-shared.ticks :as ticks]
             ; end weird import
             [moment]))
 

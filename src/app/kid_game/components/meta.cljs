@@ -4,6 +4,7 @@
             [kid-game.messaging       :as messaging]
             [kid-shared.generator     :as gen]
             [kid-shared.data.posts    :as posts]
+            [kid-shared.ticks         :as ticks]
             [kid-shared.data.stories  :as stories]))
 
 (defn <meta> []
@@ -12,6 +13,12 @@
       [:div
        [:div {:class "tile box"}
         [:h5 {:class "title is-5"} "🛠 Dev info"]]
+
+       [:div.title.box
+        [:ul [:li "ticks: " @ticks/ticks]]
+        [:button.button.is-danger.is-light {:on-click #(ticks/pause)} "pause"]
+        [:button.button.is-danger.is-light {:on-click #(ticks/continue)} "continue"]
+        ]
        [:div.title.box
         [:button.button.is-danger.is-light {:on-click #(business/logout)} "<- Logout of dev"]]
        [:div {:class "tile box"}

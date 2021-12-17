@@ -8,6 +8,7 @@
             [kid-shared.types.post :as posts]
             [kid-shared.types.chat :as chat]
             [kid-shared.data.stories :as stories]
+            [kid-shared.ticks :as ticks]
             [kid-game.socket :as socket]
             [cljs.core.async :as async :include-macros true]))
 
@@ -58,26 +59,17 @@
         exit-channel (async/chan)]
     ;; give the post an anonymous function that can stop the timer associated with it
     (state/update-post p :stop-timer! (fn [] (async/put! exit-channel "exit message")))
-    ;; start the countdown loop
-    (async/go-loop []
-      (let [p (state/get-post post) ; get a fresh post on every loop
-            ;; get the time left or instantiate the time left
-            time-left (or (:time-left p) (:time-limit post) 0)]
-        ;; either receive message on exit channel to end loop, or ping that timeout every 100ms
-        (async/alt!
-          exit-channel ([] (log/debug "stopping post timer"))
-          (async/timeout 100) ([]
-                               (if (> time-left 0)
-                                 ;; update the post's time left and keep the loop going
-                                 (do (state/update-post p :time-left (dec time-left))
-                                     (recur))
-                                 ;; otherwise, transition the post's state to timed-out
-                                 ;; TODO: move this to a function called "do-timed-out"
-                                 (do (swap! state/stats assoc-in [:missed-deadlines] (inc (:missed-deadlines @state/stats)))
+    (let [time-limit (:time-limit p)]
+      (ticks/for-ticks time-limit (fn [] (let [p (state/get-post post) ; get a fresh post on every loop
+                                               ;; get the time left or instantiate the time left
+                                               time-left (or (:time-left p) (:time-limit post) 0)]
+                                           (state/update-post p :time-left (dec time-left)))))
+      (ticks/after time-limit (fn [] (do (swap! state/stats assoc-in [:missed-deadlines] (inc (:missed-deadlines @state/stats)))
                                      ;; If it times out, add it to the top of the story stack
                                      (gen/add-to-queue 10)
                                      (gen/add-to-queue post)
-                                     (state/post-transition-state! p :timed-out)))))))))
+                                     (state/post-transition-state! p :timed-out)))))
+    ))
 
 ;; only works if the timer has already been attatched
 (defn stop-post-timer! [post]
