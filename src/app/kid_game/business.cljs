@@ -66,8 +66,6 @@
                                            (state/update-post p :time-left (dec time-left)))))
       (ticks/after time-limit (fn [] (do (swap! state/stats assoc-in [:missed-deadlines] (inc (:missed-deadlines @state/stats)))
                                      ;; If it times out, add it to the top of the story stack
-                                     (gen/add-to-queue 10)
-                                     (gen/add-to-queue post)
                                      (state/post-transition-state! p :timed-out)))))
     ))
 

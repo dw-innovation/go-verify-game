@@ -1,6 +1,7 @@
 (ns kid-shared.ticks
   (:require [cljs.core.async :as async :include-macros true]
             [reagent.core :as r]
+            [kid-game.utils.log :as log]
             [clojure.spec.alpha :as s]))
 
 ;; the config value for the amount of milliseconds per tick

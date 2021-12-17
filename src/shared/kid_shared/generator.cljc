@@ -18,17 +18,16 @@
 ;; keep a list of all the active posters
 (def active-generators (r/atom []))
 
-(def queue (atom []))
-(defn add-to-queue [item]
-  (reset! queue (conj @queue item)))
+(def paused? (r/atom false))
+
+(defn pause []
+  (log/debug "pausing generator")
+  (reset! paused? true))
+(defn continue []
+  (log/debug "resuming generator")
+  (reset! paused? false))
 
 (declare gen-run-story)
-
-(defn maybe-run-queue [send-channel]
-  (when (and (= 0 (count @active-generators))
-             (> (count @queue) 0))
-    (gen-run-story send-channel @queue)
-    (reset! queue [])))
 
 ;; takes a story, defined as [num, post, comment, [story], num, comment, post, num, post]
 ;; and plays it to a channel, waiting on each num, and then
@@ -49,7 +48,8 @@
     (swap! active-generators conj active-generator)
     ;; attatch the loop to run the story
     (async/go-loop []
-      (log/debug "new story item received!")
+      (when @paused? (do (log/debug "generator is paused")
+                         (async/<! (ticks/wait-chan 1)) (recur)))
       (async/alt!
         exit-channel ([message]
                       (log/debug "exit message received: killing the channel and removing from active generators")
@@ -57,8 +57,6 @@
                       ;; remove this channel from the active generators
                       (reset! active-generators (remove #(= (:id %) temp-id) @active-generators))
                       ;; if active generators is empty, run a new channel with the queue
-                      (maybe-run-queue send-channel)
-
                       )
         ;; received a new story item on the channel
         ;; here's the deal about stories.  they are a vector.  they can contain

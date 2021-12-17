@@ -20,6 +20,7 @@
             [kid-game.components.verification-hub.activities.ris-crop]
             [kid-game.components.verification-hub.activities.ris-flip]
             [kid-shared.ticks :as ticks]
+            [kid-shared.generator :as gen]
             ; end weird import
             [moment]))
 
@@ -34,9 +35,8 @@
           hub-active? (not timeline-active?)
           pointer-events {:active {:pointer-events "all"} :inactive {:pointer-events "none"}}]
 
-      (if (or (= @ticks/ticks 0) (< scrolltop 40))
-        (ticks/continue)
-        (ticks/pause))
+      (cond (and @gen/paused? (< scrolltop 40)) (gen/continue)
+            (and (not @gen/paused?) (>= scrolltop 40)) (gen/pause))
 
 
     [:div {:class "game-container mt-0 ml-0"}
