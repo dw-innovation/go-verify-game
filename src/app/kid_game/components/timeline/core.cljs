@@ -10,6 +10,7 @@
             [kid-game.components.modal :as modal]
             [kid-shared.types.post    :as posts]
             (kid-shared.types.comment :as comment)
+            [kid-shared.ticks         :as ticks]
             [kid-game.utils.core      :refer [timestamp-now new-uuid highlight-text]]
             ["../../react_components/compiled/js-utils.js" :as js-utils]
             [react-transition-group]
@@ -268,24 +269,15 @@
      ]]])))
 
 (defn <posts> []
-  (let [timeline-height (r/atom 0)]
+  (let [timeline-height (r/atom 0)
+        timeline-el (r/atom nil)]
     (fn []
       (let [selected-post (state/get-post (:post @state/verification-hub-state))
-            timeline-el (-> js/document (.getElementById "timeline"))
+            scrolltop (if @timeline-el (.-scrollTop @timeline-el) 300)
             timeline-active? (= (state/get-panel) :timeline)
             hub-active? (not timeline-active?)
             posts (state/posts)]
-        ;; when the hub is active, always scroll to the post being investigated
-        ;; document.getElementById('id').scrollIntoView();
-        (when hub-active?
-          (-> js/document
-              (.getElementById (:id selected-post))
-              (.scrollIntoView {:behavior "smooth"
-                                :block    "center"
-                                :inline     "center"})))
-        ;;
-        ;;var scrollDiff = el.scrollHeight - lastScrollHeight;
-        ;; el.scrollTop += scrollDiff;
+
         [css-transition-group {:class "timeline-posts"}
          (map-indexed (fn [index post]
                         [css-transition {:timeout 2000
@@ -297,13 +289,14 @@
 
 (defn <container> []
   [:div.timeline-container
+   [<header>]
     ;; see css for functionality
    ;; documentation for css transition group seems kind of tricky but is here:
    ;; https://reactcommunity.org/react-transition-group/
-   [:div {:style {:min-height "100vh"}}
-   [<posts>]]
-   (if (> (count @gen/active-generators) 0)
-     [:div.loader]
-     [<thomas-says-we-are-done>])
-   [<header>]
+   [:div.posts-list
+    (if (> (count @gen/active-generators) 0)
+      [:div.loader]
+      [<thomas-says-we-are-done>])
+    [<posts>]]
+
    ])

@@ -97,7 +97,12 @@
 
 (defn post-investigate! [post]
   (state/update-post post :investigated? true)
-  (state/open-verification-hub post))
+  (state/open-verification-hub post)
+  (-> js/document
+      (.getElementById (:id post))
+      (.scrollIntoView {:behavior "smooth"
+                        :block    "center"
+                        :inline     "center"})))
 
 (defn notify [typ text]
   (state/add-notification {:type typ :text text}))

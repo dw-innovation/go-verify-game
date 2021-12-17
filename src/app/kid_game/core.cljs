@@ -24,20 +24,19 @@
             [moment]))
 
 (defn <game> []
+  (let [timeline-el (r/atom nil)]
+    (fn []
+
     (let [size {:active "active" :inactive "inactive"}
+          scrolltop (if @timeline-el (.-scrollTop @timeline-el) 300)
           active-panel (state/get-panel)
           timeline-active? (= active-panel :timeline)
           hub-active? (not timeline-active?)
           pointer-events {:active {:pointer-events "all"} :inactive {:pointer-events "none"}}]
-      (log/debug :only "aaaaaaaaaaaaaaaaaaa")
-      (log/debug :only "aaaaaaaaaaaaaaaaaaa")
-      (log/debug :only "aaaaaaaaaaaaaaaaaaa")
-      (log/debug :only "aaaaaaaaaaaaaaaaaaa")
-      (println active-panel)
-      (log/debug :only timeline-active?)
-      (log/debug :only (if timeline-active?
-                      (:active size)
-                      (:inactive size)))
+
+      (if (or (= @ticks/ticks 0) (< scrolltop 40))
+        (ticks/continue)
+        (ticks/pause))
 
 
     [:div {:class "game-container mt-0 ml-0"}
@@ -51,6 +50,7 @@
         [<meta>/<meta>]])
 
       [:div {:id "timeline"
+             :ref (fn [el] (reset! timeline-el el))
              :class ["game-panel"
                     "game-timeline"
                     (if timeline-active?
@@ -66,7 +66,7 @@
                           :else       (:inactive size))]
             :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
        [<verification-hub>/<container>]]]
-     ]))
+     ]))))
 
 
 (defn <one-post> [post-id]
