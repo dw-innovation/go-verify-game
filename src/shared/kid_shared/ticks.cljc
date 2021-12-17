@@ -4,7 +4,7 @@
             [clojure.spec.alpha :as s]))
 
 ;; the config value for the amount of milliseconds per tick
-(def ms-per-tick (atom 500))
+(def ms-per-tick (atom 1000))
 
 (defonce ticks (r/atom 0))
 
