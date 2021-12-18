@@ -18,6 +18,8 @@
         [:ul [:li "ticks: " @ticks/ticks]]
         [:button.button.is-danger.is-light {:on-click #(ticks/pause)} "pause"]
         [:button.button.is-danger.is-light {:on-click #(ticks/continue)} "continue"]
+        [:button.button.is-danger.is-light {:on-click #(ticks/stop!)} "stop"]
+        [:button.button.is-danger.is-light {:on-click #(ticks/start!)} "start"]
         ]
        [:div.title.box
         [:button.button.is-danger.is-light {:on-click #(business/logout)} "<- Logout of dev"]]

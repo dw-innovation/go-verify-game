@@ -26,6 +26,7 @@
        (state/set-player)))
 
 (defn new-session! [player-name]
+  (ticks/start!)
   (state/open-game)
   (use-new-player! :name player-name)
   ;; TODO only start all stories if websocket fails
