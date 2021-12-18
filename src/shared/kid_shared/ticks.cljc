@@ -32,6 +32,11 @@
 ;; the config value for the amount of milliseconds per tick
 (def ms-per-tick (atom 1000))
 
+(defn set-tick-speed! [ms]
+  (reset! ms-per-tick ms))
+
+(defn tick-speed [] @ms-per-tick)
+
 (defonce ticks (r/atom 0))
 
 (def paused (atom false))
@@ -41,8 +46,10 @@
 
 (defn paused? [] @paused)
 
+;; tick-fn is an atom so you can stop the recursive function
+;; by replacing the function living at the reference
 (defonce tick-fn (atom (fn [])))
-;; start the ticker!!
+
 (defn start!
   "starts the ticker"
   []
@@ -51,9 +58,9 @@
                     (when (not @paused)
                       (reset! ticks (inc @ticks)))
                     ;; recur
-                    (js/window.setTimeout @tick-fn @ms-per-tick)))
+                    (js/window.setTimeout @tick-fn (tick-speed))))
   ;; start the tail recur:
-  (.setTimeout js/window @tick-fn @ms-per-tick))
+  (.setTimeout js/window @tick-fn (tick-speed)))
 
 (defn stop!
   "stops the ticker"
