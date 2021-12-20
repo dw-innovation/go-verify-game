@@ -75,12 +75,12 @@
                        :animation-fill-mode "forwards"}]
     [status
      (fn [{img-src :img-src}]
+       (let [[icon modal] (components/<modal-icon> blocks/ris-flip-explanation)]
         [:div {:class " mb-5"}
-
          [:div
           [:div
-           [:h4.title.is-4.mb-0 "No results? Let's try a flip."
-            [components/<modal-icon> blocks/ris-flip-explanation]]
+           [:h4.title.is-4.mb-0.mt-6 "No results? Let's try a flip." [icon]]
+           [modal]
            [:p.mb-5 "Click on the button to invert the picture."]
            ]
           [:div.mt-3 {:style (when (#{:flipping :succeeded} @status) animation-css)}
@@ -88,7 +88,7 @@
           [:div
            [:button {:on-click flip!} "Flip!"]]
           ]]
-        )]))
+        ))]))
 
 
 (defn <main> [{:as data

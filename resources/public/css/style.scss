@@ -187,8 +187,13 @@ body {
                                transition: opacity 0.5s ease-in; }
 
 .modal {
+  .is-active {
+    overflow: scroll;
+  }
   .modal-background {
     background-color: rgba(10, 10, 10, 0.16) !important;
+    backdrop-filter: blur(3px);
+    position: fixed;
   }
   .modal-card-body {
     padding: 4rem 0;

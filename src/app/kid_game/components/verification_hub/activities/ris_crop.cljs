@@ -161,12 +161,13 @@
                          (reset! second-drag-step (make-second-step)))
         [<cropper> <cropped-svg>] (cropper-components data cropped-correctly! cropped-wrong!)
 
-        make-cropping-step (fn [] (fn [] [:div
-                                          [:h4.title.is-4.mb-0 "No results? Let's try cropping."
-                                           [:span.is-inline
-                                            [components/<modal-icon> blocks/ris-crop-explanation]]]
-                                          [:p.mb-5 "Drag the cursor to frame a specific part of the image."]
-                                          [:div [<cropper>]]]))
+        make-cropping-step (fn [] (fn [] (let [[icon modal] (components/<modal-icon> blocks/ris-crop-explanation)]
+                                           [:div
+                                            [:h4.title.is-4.mb-0.mt-6 "No results? Let's try cropping."
+                                             [:span.is-inline[icon]]]
+                                            [modal]
+                                            [:p.mb-5 "Drag the cursor to frame a specific part of the image."]
+                                            [:div [<cropper>]]])))
         <cropping-step> (fn [] [@cropping-step])
         <first-drag-step> (fn [] [<drag-step> main-image result-search result-images (fn [] (reset! cropping-step (make-cropping-step)))])
         <second-drag-step> (fn [] [@second-drag-step <cropped-svg>])]
