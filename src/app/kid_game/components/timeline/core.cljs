@@ -120,7 +120,7 @@
                        points-result :points-result}]
   (case game-state
     :live nil
-    :timed-out [<action-info-content> :timeout "You ran out of time to react to this post."]
+    :timed-out [<action-info-content> :timeout "Too late. This post has already gone viral."]
     :shared (if fake-news?
               [<action-info-content> :lost "You shared nonsense content" points-result]
               [<action-info-content> :won "You shared legit content" points-result])
