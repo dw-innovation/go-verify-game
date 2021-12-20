@@ -28,16 +28,18 @@
 (declare <post>)
 
 (defn <rainbow-progress> [percent]
-  [:div {:class ["is-background-grey" "br-2" "mb-2"]
-         :style {:width "100%"
-                 :height "10px"
-                 }}
-   [:div {:class ["br-2"]
-          :style {:width (str percent  "%")
-                  :height "10px"
-                  :transition "width .1s"
-                  :background-color (js-utils/percentageToColor percent)
-                  }}]])
+  [:div
+   [:div {:style {:flex 1}}
+    [:div {:class ["is-background-grey" "br-2" "mb-2"]
+           :style {:width "100%"
+                   :height "10px"
+                   }}
+     [:div {:class ["br-2"]
+            :style {:width (str percent  "%")
+                    :height "10px"
+                    :transition "width .1s"
+                    :background-color (js-utils/percentageToColor percent)
+                  }}]]]])
 
 (defn <progress> [amnt total]
   (let [percent (js/Math.floor (* 100 (/ amnt total)))] [<rainbow-progress> percent])

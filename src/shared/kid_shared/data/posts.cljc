@@ -109,7 +109,7 @@
   {:type :post-text
    :id "p6-urine-bottles"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p6-urine-bottles/main.jpg"
-   :description "Exclusive: Megacorp forces workers to pee in bottles!"
+   :description "Exclusive: Megacorp sells recycled pee to workers!"
    :by authors/stop_the_corp
    :time-limit 40
    :fake-news? true
@@ -124,7 +124,7 @@
       :text "Not a fan of Megacorp, but certainly they wouldn't go this far?"}
    3 {:type :re-post
       :id "urine-repost"
-      :comment "Then they recycle the pee and sell it to the workers again. Sustainable business model. Way to go, @megacorp!"
+      :comment "Sustainable business model. Way to go, @megacorp!"
       :post p6-urine-bottles?
       :by authors/bloggers_united}])
 
