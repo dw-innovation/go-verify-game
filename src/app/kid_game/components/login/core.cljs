@@ -69,7 +69,7 @@
           ;; button field
            [:div.field
             [:div.control
-             [:button {:class "button is-share-button"}
+             [:button {:class "button is-login-button"}
               [:span {:class "icon is-small"}
                [:i {:class "fa fa-sign-in"}]]
               [:span "Login"]]]]]]]]])))

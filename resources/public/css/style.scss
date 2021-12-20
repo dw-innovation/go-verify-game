@@ -598,6 +598,8 @@ button { background-color: transparent;
 @keyframes flip-animate { 0% { transform: scaleX(1) }
                           100% { transform: scaleX(-1)} }
 
+.is-login-button { border-color: var(--color-green);
+                   color: var(--color-green); }
 .is-share-button { border-color: var(--color-green);
                    background-color: var(--color-green);
                    color: var(--color-white); }
