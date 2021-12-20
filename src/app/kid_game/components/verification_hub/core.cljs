@@ -9,7 +9,14 @@
 
 (defn <header> []
   [:div {:class ["panel-header" "verification-hub-header"]}
-   [:h5 {:class "title is-5 has-text-white"} "Verification Hub"]])
+   [:div.level {:style {:width "100%"}}
+    [:div.level-left
+    [:h5.level-item {:class "title is-5 has-text-white"} "Verification Hub"]]
+   [:div.level-right
+    [:span.level-item {:class "icon is-left"
+                       :style {:cursor "pointer"}
+                       :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
+     [:i {:class "fa fa-times"}]]]]])
 
 (defn <default-view> []
   [:div.container [:h4.title.is-4 "I am the default verification hub view"]])
@@ -146,7 +153,7 @@
           [:div {:class "tag is-light is-info is-family-monospace"} "time-left: " (:time-left post)]
           [:div {:class "tag is-light is-info is-family-monospace"} "post is: "(:game-state post)]])
 
-         [:div.m-3
+         [:div.m-3.hub-progress
           [timeline/<post-progress> post]]
 
          [timeline/<post-overlay> post]

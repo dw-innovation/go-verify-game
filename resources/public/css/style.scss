@@ -328,8 +328,6 @@ button { background-color: transparent;
 .hub-post > .post { transform: scale(.5)
                                translate(-25%,-25%); }
 
-
-
 .activity-container {
   min-height: 100vh;
   display: flex;
@@ -349,10 +347,6 @@ button { background-color: transparent;
         margin-top: var(--spacing-half);
       }
   }
-  }
-
-  .blooble-simulation {
-    margin: var(--spacing-double);
   }
 }
 
@@ -690,4 +684,9 @@ button { background-color: transparent;
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+.hub-progress {
+  position: sticky;
+  top: 5rem;
 }
