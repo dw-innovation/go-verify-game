@@ -48,7 +48,8 @@
     (swap! active-generators conj active-generator)
     ;; attatch the loop to run the story
     (async/go-loop []
-      (when @paused? (do (log/debug "generator is paused")
+      ;; when the paused flag is on, just keep looping
+      (when @paused? (do (log/debug "generator is paused... waiting to start")
                          (async/<! (ticks/wait-chan 1)) (recur)))
       (async/alt!
         exit-channel ([message]
