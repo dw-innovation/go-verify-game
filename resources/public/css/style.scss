@@ -109,13 +109,10 @@ body {
       }
       &.inactive {
         background-color: rgba(0,0,0,.2);
-        overflow:hidden;
+        /*  overflow:hidden; */
         .post-section {
           filter:  blur(1px)
                    brightness(.8);
-
-            padding-top: 100px;
-            margin-top: -100px;
           &.active {
             filter: blur(0px)
                     brightness(1);

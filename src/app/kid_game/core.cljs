@@ -27,47 +27,45 @@
 (defn <game> []
   (let [timeline-el (r/atom nil)]
     (fn []
+      (let [size {:active "active" :inactive "inactive"}
+            scrolltop (if @timeline-el (.-scrollTop @timeline-el) 300)
+            active-panel (state/get-panel)
+            timeline-active? (= active-panel :timeline)
+            hub-active? (not timeline-active?)]
 
-    (let [size {:active "active" :inactive "inactive"}
-          scrolltop (if @timeline-el (.-scrollTop @timeline-el) 300)
-          active-panel (state/get-panel)
-          timeline-active? (= active-panel :timeline)
-          hub-active? (not timeline-active?)
-          pointer-events {:active {:pointer-events "all"} :inactive {:pointer-events "none"}}]
+        (cond (and @gen/paused? (< scrolltop 40)) (gen/continue)
+              ;; the story generator is paused whenever the user is investigating, or not currently
+              ;; scrolled to the top of the timeline
+              (or hub-active?
+                  (and (not @gen/paused?) (>= scrolltop 40))) (gen/pause))
 
-      (cond (and @gen/paused? (< scrolltop 40)) (gen/continue)
-            (and (not @gen/paused?) (>= scrolltop 40)) (gen/pause))
+        [:div {:class "game-container mt-0 ml-0"}
+         [notifications/<notifications>]
 
+         [:div.game-panels
 
-    [:div {:class "game-container mt-0 ml-0"}
-     [notifications/<notifications>]
+          ;; this meta panels is for during development
+          (when @state/dev?
+            [:div {:class "game-panel dev-panel"}
+             [<meta>/<meta>]])
 
-     [:div.game-panels
+          [:div {:id "timeline"
+                 :ref (fn [el] (reset! timeline-el el))
+                 :class ["game-panel"
+                         "game-timeline"
+                         (if timeline-active?
+                           (:active size)
+                           (:inactive size))]
+                 :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))
+                 }
+           [<timeline>/<container>]]
 
-     ;; this meta panels is for during development
-     (when @state/dev?
-       [:div {:class "game-panel dev-panel"}
-        [<meta>/<meta>]])
-
-      [:div {:id "timeline"
-             :ref (fn [el] (reset! timeline-el el))
-             :class ["game-panel"
-                    "game-timeline"
-                    (if timeline-active?
-                      (:active size)
-                      (:inactive size))]
-            :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))
-            }
-       [<timeline>/<container>]]
-
-     [:div {:class ["game-panel"
-                    "game-verification-hub"
-                    (cond hub-active? (:active size)
-                          :else       (:inactive size))]
-            :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
-       [<verification-hub>/<container>]]]
-     ]))))
-
+          [:div {:class ["game-panel"
+                         "game-verification-hub"
+                         (cond hub-active? (:active size)
+                               :else       (:inactive size))]
+                 :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
+           [<verification-hub>/<container>]]]]))))
 
 (defn <one-post> [post-id]
   (let [post (-> (filter (fn [p] (= post-id (:id p))) posts-data/all-activity-posts) (first))]
