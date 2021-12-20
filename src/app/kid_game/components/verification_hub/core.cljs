@@ -146,6 +146,9 @@
           [:div {:class "tag is-light is-info is-family-monospace"} "time-left: " (:time-left post)]
           [:div {:class "tag is-light is-info is-family-monospace"} "post is: "(:game-state post)]])
 
+         [:div.m-3
+          [timeline/<post-progress> post]]
+
          [timeline/<post-overlay> post]
 
          [:div.hub-container

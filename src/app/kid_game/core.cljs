@@ -33,11 +33,13 @@
             timeline-active? (= active-panel :timeline)
             hub-active? (not timeline-active?)]
 
-        (cond (and @gen/paused? (< scrolltop 40)) (gen/continue)
+        (cond
               ;; the story generator is paused whenever the user is investigating, or not currently
               ;; scrolled to the top of the timeline
               (or hub-active?
-                  (and (not @gen/paused?) (>= scrolltop 40))) (gen/pause))
+                  (and (not @gen/paused?) (>= scrolltop 40))) (gen/pause)
+              (and @gen/paused? (< scrolltop 40)) (gen/continue))
+
 
         [:div {:class "game-container mt-0 ml-0"}
          [notifications/<notifications>]
