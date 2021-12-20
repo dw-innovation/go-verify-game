@@ -10,6 +10,7 @@
             [kid-game.components.modal :as modal]
             [kid-shared.types.post    :as posts]
             (kid-shared.types.comment :as comment)
+            [kid-shared.ticks         :as ticks]
             [kid-game.utils.core      :refer [timestamp-now new-uuid highlight-text]]
             ["../../react_components/compiled/js-utils.js" :as js-utils]
             [react-transition-group]
@@ -173,7 +174,7 @@
                     author :by
                     comments :comments}]
   (let [investigate! (fn [] (business/post-investigate! p))]
-  [:div.post-wrapper.my-5 {:style {:position "relative"}}
+  [:div.post-wrapper {:style {:position "relative"}}
 
    (when (= :live game-state) [<peeking-duck> investigate!])
 
@@ -224,8 +225,12 @@
       [<type-text> p])))
 
 (defn <post> [p]
-  ^{:key (:id p)} ;; important to keep track of rendering
-  [match-post p])
+  (let [selected-post (state/get-post (:post @state/verification-hub-state))
+        active? (= (:id p) (:id selected-post))]
+    ^{:key (:id p)} ;; important to keep track of rendering
+    [:div.post-section {:class (when active? "active")
+                        :id (:id p)}
+     [match-post p]]))
 
 (defn <header> []
   [:div {:class ["panel-header" "timeline-header"]}
@@ -263,19 +268,35 @@
      [:br]
      ]]])))
 
+(defn <posts> []
+  (let [timeline-height (r/atom 0)
+        timeline-el (r/atom nil)]
+    (fn []
+      (let [selected-post (state/get-post (:post @state/verification-hub-state))
+            scrolltop (if @timeline-el (.-scrollTop @timeline-el) 300)
+            timeline-active? (= (state/get-panel) :timeline)
+            hub-active? (not timeline-active?)
+            posts (state/posts)]
+
+        [css-transition-group {:class "timeline-posts"}
+         (map-indexed (fn [index post]
+                        [css-transition {:timeout 2000
+                                         :key (:id post)
+                                         :class-names "post-transition"}
+                         ^{:key (:id post)} ;; important to keep track of rendering
+                         [<post> post]])
+                      posts)]))))
+
 (defn <container> []
   [:div.timeline-container
    [<header>]
-   (if (> (count @gen/active-generators) 0)
-     [:div.loader]
-     [<thomas-says-we-are-done>]) ;; see css for functionality
+    ;; see css for functionality
    ;; documentation for css transition group seems kind of tricky but is here:
    ;; https://reactcommunity.org/react-transition-group/
-   [css-transition-group {:class "timeline-posts"}
-    (map-indexed (fn [index post]
-                   [css-transition {:timeout 2000
-                                    :key (:id post)
-                                    :class-names "post-transition"}
-                    ^{:key (:id post)} ;; important to keep track of rendering
-                    [<post> post]])
-                 (state/posts))]])
+   [:div.posts-list
+    (if (> (count @gen/active-generators) 0)
+      [:div.loader]
+      [<thomas-says-we-are-done>])
+    [<posts>]]
+
+   ])

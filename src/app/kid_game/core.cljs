@@ -19,52 +19,55 @@
             [kid-game.components.verification-hub.activities.polygon-search]
             [kid-game.components.verification-hub.activities.ris-crop]
             [kid-game.components.verification-hub.activities.ris-flip]
+            [kid-shared.ticks :as ticks]
+            [kid-shared.generator :as gen]
             ; end weird import
             [moment]))
 
 (defn <game> []
-  (let [size {:active "is-two-thirds active" :inactive "is-one-third is-unselectable"}
-        timeline-active? (= (state/get-panel) :timeline)
-        hub-active? (not timeline-active?)
-        pointer-events {:active {:pointer-events "all"} :inactive {:pointer-events "none"}}]
-    [:div {:class "game-container columns mt-0 ml-0"}
-     [notifications/<notifications>]
+  (let [timeline-el (r/atom nil)]
+    (fn []
+      (let [size {:active "active" :inactive "inactive"}
+            scrolltop (if @timeline-el (.-scrollTop @timeline-el) 300)
+            active-panel (state/get-panel)
+            timeline-active? (= active-panel :timeline)
+            hub-active? (not timeline-active?)]
 
-     ;; this meta panels is for during development
-     (when @state/dev?
-       [:div {:class "game-panel active column dev-panel"}
-        [<meta>/<meta>]])
+        (cond
+              ;; the story generator is paused whenever the user is investigating, or not currently
+              ;; scrolled to the top of the timeline
+              ;; TODO kinda hacky, think of a better way
+              (or hub-active?
+                  (>= scrolltop 40)) (when (not @gen/paused?) (gen/pause))
+              (and @gen/paused? (< scrolltop 40)) (gen/continue))
 
-     [:div {:class ["game-panel column"
-                    "game-timeline"
-                    (if timeline-active?
-                      (:active size)
-                      (:inactive size))]
-            :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))
-            }
-      [:div.click-stopper {:style (if timeline-active?
-                                    (:active pointer-events)
-                                    (:inactive pointer-events))}
-       [<timeline>/<container>]]]
+        [:div {:class "game-container mt-0 ml-0"}
+         [notifications/<notifications>]
 
-     [:div {:class ["game-panel column"
-                    "game-verification-hub"
-                    (cond (= (state/get-panel) :verification-hub) (:active size)
-                          :else                                   (:inactive size))]
-            :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
-      [:div.click-stopper {:style (if (= (state/get-panel) :verification-hub)
-                                    (:active pointer-events)
-                                    (:inactive pointer-events))}
-       [<verification-hub>/<container>]]]
+         [:div.game-panels
 
-     [:div.hub-arrow-shadow {:class (if timeline-active? "out" "in")}]
-     [:div.hub-arrow {:class (if timeline-active? "out" "in")
-                      :on-click (fn [] (if timeline-active?
-                                         (state/open-verification-hub)
-                                         (state/open-timeline)))}
-        [icons/circle-right-arrow-blue]]
-     ]))
+          ;; this meta panels is for during development
+          (when @state/dev?
+            [:div {:class "game-panel dev-panel"}
+             [<meta>/<meta>]])
 
+          [:div {:id "timeline"
+                 :ref (fn [el] (reset! timeline-el el))
+                 :class ["game-panel"
+                         "game-timeline"
+                         (if timeline-active?
+                           (:active size)
+                           (:inactive size))]
+                 :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))
+                 }
+           [<timeline>/<container>]]
+
+          [:div {:class ["game-panel"
+                         "game-verification-hub"
+                         (cond hub-active? (:active size)
+                               :else       (:inactive size))]
+                 :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
+           [<verification-hub>/<container>]]]]))))
 
 (defn <one-post> [post-id]
   (let [post (-> (filter (fn [p] (= post-id (:id p))) posts-data/all-activity-posts) (first))]

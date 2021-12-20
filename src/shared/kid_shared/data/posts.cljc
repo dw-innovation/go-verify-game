@@ -6,7 +6,7 @@
   {:type :post-text
    :id "p1-climate-refugees-copenhagen"
    :description "So-called “climate refugees” from Copenhagen are trashing Liguria. Here’s a picture from the suburbs of Genoa taken yesterday – this is an outrage! "
-   :time-limit 4000
+   :time-limit 100
    :fake-news? true
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p1-climate-refugees-copenhagen/p1-climate-refugees-copenhagen-main.jpg"
    :by authors/rainer-werner
@@ -36,7 +36,6 @@
   {:type :post-text
    :id "p2-financial-gdp"
    :description "Pan-EU Q2 GDP release: -2.4% from Q1, (1.2 percentage point lower than forecast). Follow our liveblog for reactions from around the continent. https://on.ft.com/live/eX2GhH"
-   ;; :time-limit 900
    :by authors/financial_times})
 
 (def p2-financial-gdp-repost-1
@@ -58,7 +57,7 @@
    :id "p3-financiel-gdp"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p3-financiel-gdp/chart_migrants.jpeg"
    :fake-news? true
-   :time-limit 900
+   :time-limit 90
    :by authors/financiel_times
    :description "Central Europe faces severe economic problems due to large-scale arrival of lazy and criminal \"climate refugees\"."
    :activities [activities/financiel-web-search]})
@@ -90,7 +89,7 @@
    :id "p4-minister-in-city"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p4-minister-in-the-city/Frankfurt_BusinessMan_2+1.jpg"
    :description "EU Minister of Finance spotted near Megacorp Headquarters in Shanghai. What shady deal is he getting into now? https://pic.bleeper.com/qu7v9ap"
-   :time-limit 2000
+   :time-limit 90
    :fake-news? true
    :by authors/socialist_inquirer
    :activities [activities/ris-minister-in-city]})
@@ -100,7 +99,7 @@
    :id "p5-luxembourgian-president"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p5-bulgarian-president/ai-president.jpg"
    :description "New Luxembourgian president at press conference: \"I've had it with the Union! We'll be an independent nation again, spend 20% of the GDP on our military – and proudly wear the traditional beret!”"
-   :time-limit 1000
+   :time-limit 40
    :fake-news? true
    :by authors/patriotic_news
    :activities [activities/luxembourgian-president-fake-image
@@ -112,7 +111,7 @@
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p6-urine-bottles/main.jpg"
    :description "Exclusive: Megacorp forces workers to pee in bottles!"
    :by authors/stop_the_corp
-   :time-limit 500
+   :time-limit 40
    :fake-news? true
    :activities [activities/urine-bottles-ris]})
 (def p6-urine-bottles?-story
@@ -135,7 +134,7 @@
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p7-danes-crossing/main.jpg"
    :description "What they told us: \"More workforce, more growth!” What we got: Trashed beaches everywhere. Thousands of non-working age Danes crossing over."
    :by authors/concerned_citizen
-   :time-limit 700
+   :time-limit 70
    :fake-news? true
    :activities [activities/danes-crossing-ris]})
 
@@ -145,7 +144,7 @@
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p8-megacorp-traffic/main.jpg"
    :description "The whole “Megacorp is saving us, cut them some slack” argument is wrong. We gave up so much public space, health and wellbeing so they could “help us”. Result? Cities paralysed by traffic jams, caused by that massive fleet of white delivery vans. Just look at the sheer number of them serving Germany only yesterday evening. https://pic.bleeper.com/h9HXt1"
    :by authors/stop_the_corp
-   :time-limit 1300
+   :time-limit 130
    :fake-news? true
    :activities [activities/megacorp-traffic-ris]})
 (def p8-megacorp-traffic?-story
@@ -163,7 +162,7 @@
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p9-flooding-dams/main.jpg"
    :description "EU lies exposed: The floodings in Northern Europe aren't caused by \"climate change\", the government is blowing up dams! #investigation https://pic.bleeper.com/s9zniu1"
    :by authors/c_report
-   :time-limit 800
+   :time-limit 80
    :fake-news? true
    :activities [activities/flooding-dams-ris]})
 
@@ -173,7 +172,7 @@
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p10-snow-cannons/main.jpg"
    :description "Remember how Dresden allegedly experienced its \"coldest winter since records began\" last year? Well, it was all make believe! Digging through secret archives, we found proof that greens and socialists colluded to bombard the city with snow cannons! #factchecking #investigative "
    :by authors/c_report
-   :time-limit 800
+   :time-limit 80
    :fake-news? true
    :activities [activities/snow-cannons-ris]})
 (def p10-comment-1 {:post-id "p10-snow-cannons"
@@ -193,7 +192,7 @@
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p11-megacorp-prisons/main.jpg"
    :description "Barbed wire, spring guns, drone surveillance: Megacorp's new distro centers are run like prisons. https://pic.bleeper.com/hf99n2zh"
    :by authors/int_news
-   :time-limit 3000
+   :time-limit 300
    :fake-news? false
    :activities [activities/megacorp-prisons-ris]})
 (def p11-megacorp-prisons?-story [p11-megacorp-prisons?
@@ -259,7 +258,7 @@
   {:type :post-text
    :id "p16-satellite-image"
    :description "Just got this satellite image from @ESA. This is what our continent looks like now. Thanks to climate change and rising sea levels. Hate to say I told you so!"
-   :time-limit 1000
+   :time-limit 100
    :fake-news? false
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p16-satellite-image/nain-image.jpg"
    :by authors/rita-teenberg
@@ -305,7 +304,7 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
    :id "p19-chinese-minister-of-finance"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p19-chinese-minister-of-finance/main.jpg"
    :description "Chinese minister of finance and undersecretary arrive in Athens, offer cancellation of Greek debt in exchange for island of Crete. German government approves."
-   :time-limit 1000
+   :time-limit 100
    :fake-news? true
    :by authors/gardiannews
    :activities [activities/chinese-ministers-polygons
@@ -316,7 +315,7 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
    :id "p20-river-thames-estuary"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p20-river-thames-estuary/main.jpg"
    :description "A month ago, this large part of the river Thames estuary was sold for next to nothing to Megacorp by the City of London. Used to be for everyone, with a park on the southside. Arguably this is all gone with the flooding, but why the gift to a thriving company? Beyond me… https://pic.beep.com/q88hCu9"
-   :time-limit 1000
+   :time-limit 100
    :fake-news? true
    :by authors/livingbytheriver99
    :activities [activities/thames-estuary-ris
@@ -334,7 +333,7 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
    :id "p21-eu-commission-hearing"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p21-eu-commission-hearing/main.jpg"
    :description "EXCLUSIVE -  EU commissioners have pre-written scripts - Megacorp CEO hearing is just theatre."
-   :time-limit 1000
+   :time-limit 100
    :fake-news? true
    :by authors/dbf_eu
    :activities [activities/eu-commission-ris]})

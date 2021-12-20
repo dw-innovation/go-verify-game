@@ -75,27 +75,29 @@ body {
     i { font-style: normal;}
 }
 
-.game-panel {
-    transition: width .4s ease-in-out,
-                box-shadow .4s ease-in-out,
-                filter .4s ease-in-out;
-    overflow-x: hidden;
+.game-panels { display: flex;
+  .game-panel { transition: width .4s ease-in-out,
+                            box-shadow .4s ease-in-out,
+                            filter .4s ease-in-out;
+                overflow-x: hidden;
+                height: 100vh;
+    &.game-verification-hub { box-shadow: 5px 5px 30px 10px rgba(0,0,0,.2);
+                              z-index: 10;
+                              width: 0vh;
+      .hub-container { width: 50vw; }
+      &.active { width: 50vw; }}
 
-    &.game-verification-hub {
-	    box-shadow: 5px 5px 30px 10px rgba(0,0,0,.2);
-	    z-index: 10;
-    }
-
-    &.game-timeline {
-      z-index: 1;
-      filter: // blur(1px)
-        brightness(.8);
-      &.active {
-        filter: brightness(1);
-      }
-    }
-
-}
+    &.game-timeline { z-index: 1;
+                      flex: 1;
+                      align-items: center;
+                      justify-content: center;
+      .post-section { padding-bottom: var(--spacing);
+                      transition: filter .4s ease-in-out; }
+      &.inactive { background-color: rgba(0,0,0,.2);
+        .post-section { filter:  blur(1px)
+                                 brightness(.8);
+        &.active { filter: blur(0px)
+                           brightness(1); }}}}}}
 
 @mixin hub-arrow-position {
    position: fixed;
@@ -197,21 +199,21 @@ body {
 .post-wrapper {
   box-shadow: 0px 1px 10px rgba(0,0,0,0.05);
 
-    width: 35rem;
-    /* constrain post size either to screen (mobile) or to parent container */
-    max-width: calc(min(100vw, 100%));
-    min-width: 35rem;
+  width: 35rem;
+  /* constrain post size either to screen (mobile) or to parent container */
+  max-width: calc(min(100vw, 100%));
+  min-width: 35rem;
 
-    border-top: 8px solid var(--color-timeline-primary);
-   /* for a re-post-allow scaling down */
-    .post-wrapper {
-      min-width: 0rem;
-      border-top: 4px solid var(--color-timeline-primary);
-      width: 100%;
-      min-width: 100%;
-    }
+  border-top: 8px solid var(--color-timeline-primary);
+  /* for a re-post-allow scaling down */
+  .post-wrapper {
+    min-width: 0rem;
+    border-top: 4px solid var(--color-timeline-primary);
+    width: 100%;
+    min-width: 100%;
+  }
 
-    margin: var(--spacing) auto;
+    margin: 0 auto;
 
     background-color: var(--color-white);
 }
@@ -326,30 +328,25 @@ button { background-color: transparent;
 .hub-post > .post { transform: scale(.5)
                                translate(-25%,-25%); }
 
-
-
 .activity-container {
-  min-height: 100vh;
+  min-height: calc(100vh - 5rem);
   display: flex;
   flex-direction: column;
   .activity-header {
-    @extend .mb-4;
+    @extend .mt-6;
+    @extend .mb-6;
   }
   .activity-steps {
     flex-grow: 1;
-
   }
   .activity-footer {
+
     .activity-actions {
       background-color: var(--color-hub-primary);
       button {
         margin-top: var(--spacing-half);
       }
   }
-  }
-
-  .blooble-simulation {
-    margin: var(--spacing-double);
   }
 }
 
@@ -554,7 +551,6 @@ button { background-color: transparent;
 
 
 .hub-container {
-  width: 66vw;
   .hub-icon {
     @extend .column;
     @extend .p-2;
@@ -583,15 +579,6 @@ button { background-color: transparent;
   }
 }
 
-.dev-panel {
-  position: fixed;
-  z-index: 333;
-  width: 20vw;
-  background-color: white;
-  overflow-y: scroll;
-  height: 100vh;
-}
-
 @keyframes peek-out-animation { 0% { transform: translateX(0px) scaleX(-1); }
                                 90% { transform: translateX(150px) scaleX(-1); }
                                 100% { transform: translateX(100px) scaleX(1); z-index: 9 }}
@@ -607,9 +594,11 @@ button { background-color: transparent;
                           100% { transform: scaleX(-1)} }
 
 .is-share-button { border-color: var(--color-green);
-                   color: var(--color-green); }
+                   background-color: var(--color-green);
+                   color: var(--color-white); }
 .is-block-button { border-color: var(--color-red);
-                   color: var(--color-red); }
+                   background-color: var(--color-red);
+                   color: var(--color-white); }
 
 .is-background-grey { background-color: var(--color-grey-light); }
 
@@ -695,4 +684,9 @@ button { background-color: transparent;
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+.hub-progress {
+  position: sticky;
+  top: 5rem;
 }
