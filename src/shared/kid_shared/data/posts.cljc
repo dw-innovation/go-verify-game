@@ -396,7 +396,7 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
 
 (def filler-mil-tutorials {:type :post-text
                            :id "filler-quote-mil-tutorials"
-                           :description "Don't be deceived by fake content on Bleeper. Check out our free verification tutorials now!"
+                           :description "Don't be deceived by fake content on Bleeper. Check out our free verification tutorials now! https://short.blp/dsjh62"
                            :by authors/MIL_Academy})
 
 (def filler-mil-dossier {:type :post-text
@@ -411,7 +411,7 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
 
 (def filler-apple-banana {:type :post-text
                            :id "filler-apple-banana"
-                           :description "Remember this campaign? Not a banana, peepz!"
+                           :description "Remember this campaign? Not a banana, peepz! https://pic.blpr/628ci7"
                            :by authors/rooted_in_reality})
 
 (def filler-pop-quiz {:type :post-text
