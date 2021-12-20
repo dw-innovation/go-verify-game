@@ -75,53 +75,29 @@ body {
     i { font-style: normal;}
 }
 
-.game-panels {
-  display: flex;
-  .game-panel {
-    transition: width .4s ease-in-out,
-                box-shadow .4s ease-in-out,
-                filter .4s ease-in-out;
-    overflow-x: hidden;
-    height: 100vh;
+.game-panels { display: flex;
+  .game-panel { transition: width .4s ease-in-out,
+                            box-shadow .4s ease-in-out,
+                            filter .4s ease-in-out;
+                overflow-x: hidden;
+                height: 100vh;
+    &.game-verification-hub { box-shadow: 5px 5px 30px 10px rgba(0,0,0,.2);
+                              z-index: 10;
+                              width: 0vh;
+      .hub-container { width: 50vw; }
+      &.active { width: 50vw; }}
 
-    &.game-verification-hub {
-	    box-shadow: 5px 5px 30px 10px rgba(0,0,0,.2);
-	    z-index: 10;
-      width: 0vh;
-
-      .hub-container { /* keep the inner always the right width */
-        width: 50vw;
-      }
-      &.active {
-        width: 50vw;
-      }
-    }
-
-    &.game-timeline {
-      z-index: 1;
-      flex: 1;
-      align-items: center;
-      justify-content: center;
-
-      .post-section {
-        padding-bottom: var(--spacing);
-        transition: filter .4s ease-in-out;
-      }
-      &.inactive {
-        background-color: rgba(0,0,0,.2);
-        /*  overflow:hidden; */
-        .post-section {
-          filter:  blur(1px)
-                   brightness(.8);
-          &.active {
-            filter: blur(0px)
-                    brightness(1);
-          }
-        }
-      }
-    }
-  }
-}
+    &.game-timeline { z-index: 1;
+                      flex: 1;
+                      align-items: center;
+                      justify-content: center;
+      .post-section { padding-bottom: var(--spacing);
+                      transition: filter .4s ease-in-out; }
+      &.inactive { background-color: rgba(0,0,0,.2);
+        .post-section { filter:  blur(1px)
+                                 brightness(.8);
+        &.active { filter: blur(0px)
+                           brightness(1); }}}}}}
 
 @mixin hub-arrow-position {
    position: fixed;
