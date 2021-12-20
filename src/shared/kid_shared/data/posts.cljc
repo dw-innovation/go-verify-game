@@ -396,7 +396,7 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
 
 (def filler-mil-tutorials {:type :post-text
                            :id "filler-quote-mil-tutorials"
-                           :description "Don't be deceived by fake content on Beeper. Check out our free verification tutorials now!"
+                           :description "Don't be deceived by fake content on Bleeper. Check out our free verification tutorials now!"
                            :by authors/MIL_Academy})
 
 (def filler-mil-dossier {:type :post-text

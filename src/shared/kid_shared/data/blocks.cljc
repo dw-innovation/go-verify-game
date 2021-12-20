@@ -23,7 +23,7 @@
    [:p.mb-3 "Among other things, an RIS tells you whether or not an image has been used on the (open) web before – and in which context."]
    [:p.mb-3 "To do an RIS hands down, install the so-called \"WeVerify Plugin\" for your browser. Once it’s activated, right-click on the web image you need to verify, choose a search engine (e.g. the one by Megacorp) – and wait for the RIS results to show up."]
    [:p.mb-3 "If the image you're verifying shows up in lots of other places on the web (especially with different dates and descriptions), it’s very likely you're NOT looking at an original."]
-   [:p.mb-3 "Which means: People making weird claims about said image on Beeper are probably NOT telling the truth."]])
+   [:p.mb-3 "Which means: People making weird claims about said image on Bleeper are probably NOT telling the truth."]])
 
 (def ris-crop-explanation
   [:<>
