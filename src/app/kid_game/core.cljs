@@ -38,7 +38,7 @@
               ;; scrolled to the top of the timeline
               ;; TODO kinda hacky, think of a better way
               (or hub-active?
-                  (and (not @gen/paused?) (>= scrolltop 40))) (gen/pause)
+                  (>= scrolltop 40)) (when (not @gen/paused?) (gen/pause))
               (and @gen/paused? (< scrolltop 40)) (gen/continue))
 
         [:div {:class "game-container mt-0 ml-0"}
