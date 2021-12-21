@@ -23,15 +23,14 @@
 
 (defn match [{:as activity typ :type data :data} back!]
   (case typ
-    :test [<test>]
+    :test                 [<test>]
     :reverse-image-simple [ris-simple/<main> data back!]
-    :reverse-image-crop [ris-crop/<main> data back!]
-    :reverse-image-flip [ris-flip/<main> data back!]
-    :web-search [websearch/<main> data back!]
-    :polygon-search [polygon-search/<main> data back!]
-    ; none of the above matched:
+    :reverse-image-crop   [ris-crop/<main> data back!]
+    :reverse-image-flip   [ris-flip/<main> data back!]
+    :web-search           [websearch/<main> data back!]
+    :polygon-search       [polygon-search/<main> data back!]
+                                        ; none of the above matched:
     [<not-found> typ]))
-
 
 (defn get-activity [{:as activity id :id typ :type data :data} back!]
   [match activity back!])

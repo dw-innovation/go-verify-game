@@ -12,8 +12,8 @@
 
 (enable-console-print!)
 
-; listens to the send-chan and forwards them to the server for
-; distribution
+                                        ; listens to the send-chan and forwards them to the server for
+                                        ; distribution
 (defn connect-server-send [svr-chan]
   (async/go-loop []
     (when-let [msg (<! messaging/send-channel)] ; listen to send-chan
@@ -31,15 +31,15 @@
         (log/debug "received new server message" message)
         (async/>! messaging/receive-channel message)
         (recur))
-      ; TODO actually close the websocket
+                                        ; TODO actually close the websocket
       (log/debug "Websocket closed"))))
 
 (defn get-websocket-url []
   ;; assume that the server is the same as whatever served us this frontend app
-  (let [host js/window.location.hostname
-        port js/window.location.port
-        path js/window.location.pathname
-        room (second (.split path "/"))
+  (let [host   js/window.location.hostname
+        port   js/window.location.port
+        path   js/window.location.pathname
+        room   (second (.split path "/"))
         ws-url (str "ws://" host ":" port "/" room "/ws")]
     (log/debug "created location"
                ":host" host

@@ -18,18 +18,17 @@
 
 (defn create-room [id]
   (let [channel (new-room-channel)
-        mult (async/mult channel)]
-    ; create the room in the state
-    (->> {:id id
+        mult    (async/mult channel)]
+    ;; create the room in the state
+    (->> {:id      id
           :channel channel
-          :mult mult
+          :mult    mult
           :posters (postgen/attach-default-room-poster channel)
-          :users {}}
+          :users   {}}
          ((fn [x] (log "created room!" x) x))
          (assoc-in @state [:rooms id])
          (reset! state)))
-
-  ; after room has been created, return what you just got
+  ;; after room has been created, return what you just got
   (get-room id))
 
 (defn get-or-create-room [id]

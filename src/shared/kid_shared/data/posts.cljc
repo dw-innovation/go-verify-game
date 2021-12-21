@@ -85,25 +85,25 @@
    :by authors/journo-jane})
 
 (def p4-minister-in-city?
-  {:type :post-text
-   :id "p4-minister-in-city"
-   :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p4-minister-in-the-city/Frankfurt_BusinessMan_2+1.jpg"
+  {:type        :post-text
+   :id          "p4-minister-in-city"
+   :image       "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p4-minister-in-the-city/Frankfurt_BusinessMan_2+1.jpg"
    :description "EU Minister of Finance spotted near Megacorp Headquarters in Shanghai. What shady deal is he getting into now? https://pic.bleeper.com/qu7v9ap"
-   :time-limit 90
-   :fake-news? true
-   :by authors/socialist_inquirer
-   :activities [activities/ris-minister-in-city]})
+   :time-limit  90
+   :fake-news?  true
+   :by          authors/socialist_inquirer
+   :activities  [activities/ris-minister-in-city]})
 
 (def p5-luxembourgian-president?
-  {:type :post-text
-   :id "p5-luxembourgian-president"
-   :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p5-bulgarian-president/ai-president.jpg"
+  {:type        :post-text
+   :id          "p5-luxembourgian-president"
+   :image       "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p5-bulgarian-president/ai-president.jpg"
    :description "New Luxembourgian president at press conference: \"I've had it with the Union! We'll be an independent nation again, spend 20% of the GDP on our military – and proudly wear the traditional beret!”"
-   :time-limit 40
-   :fake-news? true
-   :by authors/patriotic_news
-   :activities [activities/luxembourgian-president-fake-image
-                activities/luxembourgian-president-web-search]})
+   :time-limit  40
+   :fake-news?  true
+   :by          authors/patriotic_news
+   :activities  [activities/luxembourgian-president-fake-image
+                 activities/luxembourgian-president-web-search]})
 
 (def p6-urine-bottles?
   {:type :post-text
@@ -298,7 +298,6 @@
 Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote that song in 1972. Uncanny!"
    :by authors/rita-teenberg})
 
-
 (def p19-chinese-minister-of-finance?
   {:type :post-text
    :id "p19-chinese-minister-of-finance"
@@ -319,17 +318,15 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
    :fake-news? true
    :by authors/livingbytheriver99
    :activities [activities/thames-estuary-ris
-                activities/thames-estuary-websearch]}
-  )
+                activities/thames-estuary-websearch]})
 (def p20-river-thames-estuary?-story
   [p20-river-thames-estuary?
    4 {:post-id "p20-river-thames-estuary"
       :by authors/blackberrycurrentcat
-      :text "Er, maybe because nobody wants to live there? And nobody has the funds to rebuild? Just wait what happens when Megacorp takes their jobs elsewhere!"}
-   ])
+      :text "Er, maybe because nobody wants to live there? And nobody has the funds to rebuild? Just wait what happens when Megacorp takes their jobs elsewhere!"}])
 
 (def p21-eu-commission-hearing?
- {:type :post-text
+  {:type :post-text
    :id "p21-eu-commission-hearing"
    :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p21-eu-commission-hearing/main.jpg"
    :description "EXCLUSIVE -  EU commissioners have pre-written scripts - Megacorp CEO hearing is just theatre."
@@ -356,19 +353,17 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
 (def filler-blockchain {:type :post-text
                         :id "filler-blockchain"
                         :description "Here's how AI, blockchain, and quantum computing will help us solve the climate crisis https://lilurl.eu/6gc9w"
-                             :by authors/eu_innovation})
-
+                        :by authors/eu_innovation})
 
 (def filler-bowie-quote {:type :post-text
-                        :id "filler-bowie-quote"
-                        :description "\"The potential of what the internet is going to do to society, both good and bad, is unimaginable\" David Bowie, 1999"
-                             :by authors/good_quotes})
+                         :id "filler-bowie-quote"
+                         :description "\"The potential of what the internet is going to do to society, both good and bad, is unimaginable\" David Bowie, 1999"
+                         :by authors/good_quotes})
 
 (def filler-megacorp-labor-laws {:type :post-text
                                  :id "filler-megacorp-labor-laws"
                                  :description "Sources say that a meeting of Megacorp workers was attended by Megacorp HR reps posing as members (a major violation of labor laws). Follow for reactions https://t.co/live-mega"
-                                 :by authors/NewsRewired
-                                 })
+                                 :by authors/NewsRewired})
 (def filler-megacorp-labor-laws-story
   [filler-megacorp-labor-laws
    4 {:type :re-post
@@ -380,9 +375,7 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
       :id "filler-megacorp-labor-laws-repost-2"
       :post filler-megacorp-labor-laws
       :comment "“Sources say” is literally you saying that there's nothing but rumors. Let me tell you something: There's no union busting. There isn't even a lot of unionizing as most workers are pretty happy with their jobs at Megacorp."
-      :by authors/pragmaticpancake}
-   ])
-
+      :by authors/pragmaticpancake}])
 
 (def filler-quote-factitious-fictitious {:type :post-text
                                          :id "filler-quote-factitious"
@@ -390,9 +383,9 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
                                          :by authors/verification_quotes})
 
 (def filler-quote-wet-rag {:type :post-text
-                                         :id "filler-quote-wet-rag"
-                                         :description "\"Fact-checking is good, but it's also like bringing a wet rag to a war\" - Jeff Jarvis"
-                                         :by authors/verification_quotes})
+                           :id "filler-quote-wet-rag"
+                           :description "\"Fact-checking is good, but it's also like bringing a wet rag to a war\" - Jeff Jarvis"
+                           :by authors/verification_quotes})
 
 (def filler-mil-tutorials {:type :post-text
                            :id "filler-quote-mil-tutorials"
@@ -400,37 +393,37 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
                            :by authors/MIL_Academy})
 
 (def filler-mil-dossier {:type :post-text
-                           :id "filler-quote-mil-dossier"
-                           :description "Tired of social media disinformation? Learn to figure out what's fake and what's real in our free verification dossier."
-                           :by authors/MIL_Academy})
+                         :id "filler-quote-mil-dossier"
+                         :description "Tired of social media disinformation? Learn to figure out what's fake and what's real in our free verification dossier."
+                         :by authors/MIL_Academy})
 
 (def filler-mil-media-literacy {:type :post-text
-                           :id "filler-quote-mil-media-literacy"
-                           :description "Media and Information Literacy (MIL) is defined as \"the ability to access, analyze, create and reflect on media\". It is a prerequisite for citizens to claim their rights to freedom of information and expression."
-                           :by authors/MIL_Academy})
+                                :id "filler-quote-mil-media-literacy"
+                                :description "Media and Information Literacy (MIL) is defined as \"the ability to access, analyze, create and reflect on media\". It is a prerequisite for citizens to claim their rights to freedom of information and expression."
+                                :by authors/MIL_Academy})
 
 (def filler-apple-banana {:type :post-text
-                           :id "filler-apple-banana"
-                           :description "Remember this campaign? Not a banana, peepz! https://pic.blpr/628ci7"
-                           :by authors/rooted_in_reality})
+                          :id "filler-apple-banana"
+                          :description "Remember this campaign? Not a banana, peepz! https://pic.blpr/628ci7"
+                          :by authors/rooted_in_reality})
 
 (def filler-pop-quiz {:type :post-text
-                           :id "filler-pop-quiz"
-                           :description " Pop trivia quiz: Do you know the song the following lines were taken from?
+                      :id "filler-pop-quiz"
+                      :description " Pop trivia quiz: Do you know the song the following lines were taken from?
 When you swore to be true / Our bed was belief / But alternative facts snuck in like a thief
 "
-                           :by authors/punkrockkid77})
+                      :by authors/punkrockkid77})
 
 (def filler-mil-kidz {:type :post-text
                       :image "https://static.dw.com/image/55963768_401.jpg"
-                           :id "filler-mil-kids"
-                           :description "Hey there! Remember the five core competencies of media and information literacy (MIL)? --> Access. Analyze. Reflect. Create. Act. <--"
-                           :by authors/MIL_kids})
+                      :id "filler-mil-kids"
+                      :description "Hey there! Remember the five core competencies of media and information literacy (MIL)? --> Access. Analyze. Reflect. Create. Act. <--"
+                      :by authors/MIL_kids})
 
 (def filler-osint-tool {:type :post-text
-                           :id "filler-osint-tool"
-                           :description "Our new verification tool will allow users to do collaborative network analysis in XR. Sign up for a beta testing account now! -> osint-collective.org/network-xr"
-                           :by authors/OSINT_FTW})
+                        :id "filler-osint-tool"
+                        :description "Our new verification tool will allow users to do collaborative network analysis in XR. Sign up for a beta testing account now! -> osint-collective.org/network-xr"
+                        :by authors/OSINT_FTW})
 
 (def filler-osint-funding {:type :post-text
                            :id "filler-osint-funding"
@@ -444,9 +437,9 @@ When you swore to be true / Our bed was belief / But alternative facts snuck in 
 
 (def filler-bowie-boat {:type :post-text
                         :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/bowie_boat.jpg"
-                           :id "filler-bowie-boat"
-                           :description "Join us on the MS Hunky Dory: bbsm.org/membership"
-                           :by authors/bbsm})
+                        :id "filler-bowie-boat"
+                        :description "Join us on the MS Hunky Dory: bbsm.org/membership"
+                        :by authors/bbsm})
 
 (def all-activity-posts [p1-climate-refugees-copenhagen?
                          p3-financiel-gdp?

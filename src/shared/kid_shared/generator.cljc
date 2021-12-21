@@ -29,11 +29,9 @@
   (log/debug "resuming generator")
   (reset! paused? false))
 
-
 ;; takes a story, defined as [num, post, comment, [story], num, comment, post, num, post]
 ;; and plays it to a channel, waiting on each num, and then
 ;; posting each post
-
 
 (defn gen-run-story
   ;; run the story:

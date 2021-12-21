@@ -19,11 +19,10 @@
 (def default-user {:id (new-uuid)
                    :created (timestamp-now)})
 
-(defn create [{:as partial-user
+(defn create [{:as  partial-user
                name :name
-               role :role
-               }]
-  (merge default-user partial-user {:role (or role :media) }))
+               role :role}]
+  (merge default-user partial-user {:role (or role :media)}))
 
 (def u1 (create {:name "User 1" :role :manipulator}))
 (def u2 (create {:name "User 2" :role :manipulator}))

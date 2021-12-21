@@ -22,14 +22,12 @@
                                     ::time-limit
                                     ::fake-news?]))
 
-
 (s/def ::re-post (s/keys :req-un [:re-post/type
                                   ::shared/id
                                   ::by
                                   ::comment
                                   ::post]
                          :opt-un [::shared/created]))
-
 
 (s/def ::post (s/or ::re-post ::re-post
                     ::post-text ::post-text))

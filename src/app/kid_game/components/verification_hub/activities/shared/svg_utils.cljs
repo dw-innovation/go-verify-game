@@ -3,8 +3,6 @@
             [cljs.core.async :as async :include-macros true]
             [kid-game.state :as state]))
 
-
-
 (defn get-svg-point [^js/SVGSVGElement svg x y]
   (let [point (.createSVGPoint svg)]
     (set! (.-x point) x) ; mutate the values in js, i see no way around this

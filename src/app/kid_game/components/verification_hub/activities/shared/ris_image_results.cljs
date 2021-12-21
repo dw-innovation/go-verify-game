@@ -7,14 +7,16 @@
 
 ;; filled out lovingly by css
 ;; TODO alt for screenreaders
+
+
 (defn <loading> [] [:div.lds-ring [:div] [:div] [:div] [:div]])
 
 (defn <dragger> [img ; either a STRING for img src or an SVG
-                 ; function on success:
+                                        ; function on success:
                  done!
                  reset? ; optional component, resets the status, annoying hack :/
                  ]
-  (let [done? (r/atom false)
+  (let [done?          (r/atom false)
         drag-component (if (string? img)
                          [:img {:src img}]
                          img)]
@@ -26,20 +28,20 @@
            [:div {:class "drag-target box is-flex is-justify-content-center is-align-items-center"}
             [:span.icon [:i {:class "fas fa-file-image-o"}]]]
            [:div.ris-image-dragger-image {:draggable true
-                                          :on-drop (fn [evt] (.preventDefault evt))}
+                                          :on-drop   (fn [evt] (.preventDefault evt))}
             drag-component])]
         [:div.ris-drag-block-center.ris-drag-block
          [:span.icon [:i {:class "fas fa-arrow-right"}]]]
         [:div.ris-drag-block-right.ris-drag-block
          (if @done?
            [:div.ris-image-dragger-image drag-component]
-           [:div {:class "drag-target box is-flex is-justify-content-center is-align-items-center"
-                  :on-drag-over (fn [e] (.preventDefault e))
+           [:div {:class         "drag-target box is-flex is-justify-content-center is-align-items-center"
+                  :on-drag-over  (fn [e] (.preventDefault e))
                   :on-drag-enter (fn [e] (.preventDefault e))
-                  :on-drop (fn [e]
-                             (.preventDefault e)
-                             (reset! done? true)
-                             (done!))} "Drag here"])]]])))
+                  :on-drop       (fn [e]
+                                   (.preventDefault e)
+                                   (reset! done? true)
+                                   (done!))} "Drag here"])]]])))
 
 (defn <search-result> [{url :url title :title img-src :img-src date :date text :text}]
   ^{:key title}

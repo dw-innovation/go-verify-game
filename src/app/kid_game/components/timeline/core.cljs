@@ -32,14 +32,12 @@
    [:div {:style {:flex 1}}
     [:div {:class ["is-background-grey" "br-2" "mb-2"]
            :style {:width "100%"
-                   :height "10px"
-                   }}
+                   :height "10px"}}
      [:div {:class ["br-2"]
             :style {:width (str percent  "%")
                     :height "10px"
                     :transition "width .1s"
-                    :background-color (js-utils/percentageToColor percent)
-                  }}]]]])
+                    :background-color (js-utils/percentageToColor percent)}}]]]])
 
 (defn <progress> [amnt total]
   (let [percent (js/Math.floor (* 100 (/ amnt total)))] [<rainbow-progress> percent])
@@ -83,13 +81,12 @@
         share! (fn [] (business/post-share! :comment "comment about post"
                                             :post p))]
     [:div.level.buttons {:style {:opacity 0 :animation "fadeIn 0.5s" :animation-delay "0.5s" :animation-fill-mode "forwards"}}
-     [:div.level-item.level-left 
+     [:div.level-item.level-left
       [:button {:class "button outline is-share-button" :on-click share!}
-      [:span.icon [:i {:class "fas fa-share"}]] [:span "share"]]]
+       [:span.icon [:i {:class "fas fa-share"}]] [:span "share"]]]
      [:div.level-item.level-right.pr-1
-     [:button {:class "button outline is-block-button" :on-click block!}
-      [:span.icon [:i {:class "fas fa-ban"}]] [:span "block"]]]
-     ]))
+      [:button {:class "button outline is-block-button" :on-click block!}
+       [:span.icon [:i {:class "fas fa-ban"}]] [:span "block"]]]]))
 
 (defn <action-info-content> [result copy points-result]
   (let [icon (case result :won  "fa-check"
@@ -150,24 +147,22 @@
       [<comment> comment]])])
 
 (defn <peeking-duck> [investigate!]
-[:div {:style {:position "absolute" ; note - this relies on the post having position:relative
-                    :right "0"
-                    :top "25px"
-                    :animation "peek-out-animation 1s ease-in-out"
-                    :animation-fill-mode "forwards"
-                    :animation-delay "1s"
-                    :width "150px"}}
-      [:div {:on-click (fn [ev] ;; stop propagation because there is a global
+  [:div {:style {:position "absolute" ; note - this relies on the post having position:relative
+                 :right "0"
+                 :top "25px"
+                 :animation "peek-out-animation 1s ease-in-out"
+                 :animation-fill-mode "forwards"
+                 :animation-delay "1s"
+                 :width "150px"}}
+   [:div {:on-click (fn [ev] ;; stop propagation because there is a global
                         ;; click to open panel, and we are specifically opening the other one
-                        (println "clicked investigate")
-                        (.stopPropagation ev)
-                        (investigate!))
-             :style {:animation "bounce-animation 10s ease-in-out infinite"
-                     :cursor "pointer"
-                     :position "relative"
-                     }}
-        [icons/thomas-with-speech!?-bubble]]]
-  )
+                      (println "clicked investigate")
+                      (.stopPropagation ev)
+                      (investigate!))
+          :style {:animation "bounce-animation 10s ease-in-out infinite"
+                  :cursor "pointer"
+                  :position "relative"}}
+    [icons/thomas-with-speech!?-bubble]]])
 
 (defn <type-text> [;; destructure the post
                    {:as p
@@ -176,45 +171,44 @@
                     author :by
                     comments :comments}]
   (let [investigate! (fn [] (business/post-investigate! p))]
-  [:div.post-wrapper {:style {:position "relative"}}
+    [:div.post-wrapper {:style {:position "relative"}}
 
-   (when (= :live game-state) [<peeking-duck> investigate!])
+     (when (= :live game-state) [<peeking-duck> investigate!])
 
-   [:div {:class ["post" "post-type-text" game-state]
-          :style {:position "relative" ; for the duck in <peeking-duck> to be position:absoluted correctly
-                  :background-color "white" ; lazy for now
-                  }}
-    [<debug-tags> p]
-(case game-state
+     [:div {:class ["post" "post-type-text" game-state]
+            :style {:position "relative" ; for the duck in <peeking-duck> to be position:absoluted correctly
+                    :background-color "white" ; lazy for now
+                    }}
+      [<debug-tags> p]
+      (case game-state
         :live      nil
         :shared    [<post-overlay> p]
         :blocked   [<post-overlay> p]
         :timed-out [<post-overlay> p]
         nil)
-    [:div.columns.mr-0
-     [:div.authorcolumn [<author-image> author]]
-     [:div.infocolumn
-      [<author-name> author]
-      [<post-text> description]
-      (when (:image p) [<post-media> (:image p)])
-      (when (= game-state :live) [<post-actions> p])
-      (when (= game-state :live) [<post-progress> p])
-      [<post-comments> comments]
-      ]]]]))
+      [:div.columns.mr-0
+       [:div.authorcolumn [<author-image> author]]
+       [:div.infocolumn
+        [<author-name> author]
+        [<post-text> description]
+        (when (:image p) [<post-media> (:image p)])
+        (when (= game-state :live) [<post-actions> p])
+        (when (= game-state :live) [<post-progress> p])
+        [<post-comments> comments]]]]]))
 
 (defn <type-re-post> [{:as p
                        author :by
                        comment :comment
                        original-post :post}]
   [:div.post-wrapper
-  [:div {:class ["post" "post-type-re-post"]}
-   [<debug-tags> p]
-   [:div.columns.mr-0
-    [:div.authorcolumn [<author-image> author]]
-    [:div.infocolumn
-     [<author-name> author]
-     [<post-text> comment]
-     [:div {:class "post-sub-post"} (<post> original-post)]]]]])
+   [:div {:class ["post" "post-type-re-post"]}
+    [<debug-tags> p]
+    [:div.columns.mr-0
+     [:div.authorcolumn [<author-image> author]]
+     [:div.infocolumn
+      [<author-name> author]
+      [<post-text> comment]
+      [:div {:class "post-sub-post"} (<post> original-post)]]]]])
 
 (defn match-post [p]
   (case (:type p)
@@ -236,17 +230,15 @@
 
 (defn <header> []
   [:div {:class ["panel-header" "timeline-header"]}
-     [:img {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/bleeper_logo_main.png"
-            :style {:height "100%"}}]
+   [:img {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/bleeper_logo_main.png"
+          :style {:height "100%"}}]
    [:h5 {:class "title is-5 has-text-white pl-5"}
-    "BLEEPER | Home: " (-> @state/app-state :user :name)]
-   ])
-
+    "BLEEPER | Home: " (-> @state/app-state :user :name)]])
 
 (defn <thomas-says-we-are-done> []
   (let [[toggle close <modal>] (modal/make-modal)
         modal-content (fn [] [:div
-             [:p.mb-3 "Quack, quack! You've reached the end of this demo. I hope you enjoyed playing it. You can find your final score and stats at the bottom of the verification hub page."]
+                              [:p.mb-3 "Quack, quack! You've reached the end of this demo. I hope you enjoyed playing it. You can find your final score and stats at the bottom of the verification hub page."]
                               [:p.mb-3 "Still got a couple of minutes? Please fill out this feedback questionnaire (so the developers can improve the game): "]
                               [:p.mb-3
                                [:a {:href "https://tinyurl.com/kid-game-feedback"
@@ -255,20 +247,19 @@
                               [:p.mb-3
                                [:a {:href "https://tinyurl.com/kid-verification-toolbox"
                                     :target "_blank"} "https://tinyurl.com/kid-verification-toolbox"]]
-             [:p.mb-3 "That's it for now. Have a good one. And never forget: Facts matter. Quack."]])]
+                              [:p.mb-3 "That's it for now. Have a good one. And never forget: Facts matter. Quack."]])]
     (fn []
-  [:div.mb-5
-   [<modal> modal-content]
-   [:div.post-wrapper {:style {:position "relative"}}
-   [<peeking-duck> toggle]
-    [:div.post.post-type-text.p-5.pl-5 {:style {:position "relative"
-                                                :background-color "white"}}
-     [:h4.is-4.title "You have reached the end of the demo."]
-     [:p "Thanks for playing!"]
-     [:p "Please click Thomas for further details ->"]
-     [:br]
-     [:br]
-     ]]])))
+      [:div.mb-5
+       [<modal> modal-content]
+       [:div.post-wrapper {:style {:position "relative"}}
+        [<peeking-duck> toggle]
+        [:div.post.post-type-text.p-5.pl-5 {:style {:position "relative"
+                                                    :background-color "white"}}
+         [:h4.is-4.title "You have reached the end of the demo."]
+         [:p "Thanks for playing!"]
+         [:p "Please click Thomas for further details ->"]
+         [:br]
+         [:br]]]])))
 
 (defn <posts> []
   (let [timeline-height (r/atom 0)
@@ -299,6 +290,4 @@
     (if (> (count @gen/active-generators) 0)
       [:div.loader]
       [<thomas-says-we-are-done>])
-    [<posts>]]
-
-   ])
+    [<posts>]]])

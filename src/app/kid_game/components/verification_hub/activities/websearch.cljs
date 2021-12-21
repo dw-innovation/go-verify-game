@@ -28,15 +28,14 @@
      [:div.field
       [:div  {:class "control has-text-centered"}
        [:button {:class "button is-link"
-                 :disabled (if search! false true)
-                 }
+                 :disabled (if search! false true)}
         [:span "Blooble search"]]]]]))
 
 (defn <search-simulation> [terms-string ; a string to show in the search bar
                            results ; components to place after the break, or nil
                            loading ; bool, show the loading
                            search! ; function to run on click
-                            ]
+                           ]
   (let [filling-string (r/atom "")
         filling-done (r/atom false)]
     ;; attatch a loop that fills the string by random timer
@@ -59,22 +58,22 @@
              [:div.search-result
               [image-results/<search-result> res]])])
         (when loading
-           [:div {:class "is-flex is-justify-content-center"} [image-results/<loading>]])]])))
+          [:div {:class "is-flex is-justify-content-center"} [image-results/<loading>]])]])))
 
 ;; Activity of type web-search, with it's corresponding dara
-(defn <main> [{:as data
-               id :id
-               terms :terms
+(defn <main> [{:as          data
+               id           :id
+               terms        :terms
                loading-time :loading-time ; could be nil
-               results :results}
+               results      :results}
               back!]
   (let [searched? (r/atom false)
-        loading? (r/atom false)
-        click! (fn []
-                 (reset! loading? true)
-                 (async/go (async/<! (async/timeout (or loading-time 2000)))
-                           (reset! searched? true)
-                           (reset! loading? false)))]
+        loading?  (r/atom false)
+        click!    (fn []
+                    (reset! loading? true)
+                    (async/go (async/<! (async/timeout (or loading-time 2000)))
+                              (reset! searched? true)
+                              (reset! loading? false)))]
     (fn []
       [:div.activity-container.web-search
        [:div {:class "activity-header"}
@@ -83,14 +82,12 @@
          blocks/web-search-explanation]]
 
        [:div {:class "activity-steps"}
-       [:div.activity-step.contain-section-width.center-section
-        [<search-simulation>
-         (string/join " AND " terms)
-         (if @searched? results nil)
-         @loading?
-         click!]
-        ]]
+        [:div.activity-step.contain-section-width.center-section
+         [<search-simulation>
+          (string/join " AND " terms)
+          (if @searched? results nil)
+          @loading?
+          click!]]]
 
        [:div {:class "activity-footer"}
-        [components/<activity-actions> back!]]
-       ])))
+        [components/<activity-actions> back!]]])))

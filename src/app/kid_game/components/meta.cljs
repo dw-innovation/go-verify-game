@@ -9,7 +9,7 @@
             [kid-shared.data.stories  :as stories]))
 
 (defn <meta> []
-  (let [gens (fn [] @gen/active-generators)
+  (let [gens       (fn [] @gen/active-generators)
         tick-speed (r/atom 1000)]
     (fn []
       [:div
@@ -23,18 +23,17 @@
         [:button.button.is-danger.is-light {:on-click #(ticks/stop!)} "stop"]
         [:button.button.is-danger.is-light {:on-click #(ticks/start!)} "start"]
         [:br]
-         ;; <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        ;; <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
         [:small "faster"]
-        [:input {:type "range"
-                 :min "1"
-                 :max "4000"
-                 :value @tick-speed
+        [:input {:type     "range"
+                 :min      "1"
+                 :max      "4000"
+                 :value    @tick-speed
                  :on-input (fn [e]
                              (let [v (-> e .-target .-value)]
                                (reset! tick-speed v)
                                (ticks/set-tick-speed! v)))}]
-        [:small "slower"]
-        ]
+        [:small "slower"]]
        [:div.title.box
         [:button.button.is-danger.is-light {:on-click #(business/logout)} "<- Logout of dev"]]
        [:div {:class "tile box"}
@@ -46,24 +45,24 @@
         [:p.panel-heading "Run a story"]
         (for [[name story] stories/all-stories]
           ^{:key name}
-          [:a {:class "panel-block"
+          [:a {:class    "panel-block"
                :on-click (fn [] (gen/gen-run-story messaging/receive-channel story))}
            [:span.panel-icon [:i {:class "fa fa-book" :aria-hidden "true"}]]
            [:span name]])]
 
        [:div {:class "tile box is-flex-direction-column"}
         [:p "active stories: " (count (gens))]
-        [:button {:class "button is-danger is-light"
+        [:button {:class    "button is-danger is-light"
                   :on-click (fn [] (gen/kill-all-posters))} "stop all stories"]]
 
        [:div {:class "tile box is-flex-direction-column"}
         [:p {:class "title is-5"} "Test notifications"]
         [:div.buttons
-         [:button {:class "button is-warning is-light"
+         [:button {:class    "button is-warning is-light"
                    :on-click (fn [] (state/add-notification {:type :success
                                                              :text "+tktktk points"}))}
           "test: success notification"]
-         [:button {:class "button is-warning is-light"
+         [:button {:class    "button is-warning is-light"
                    :on-click (fn [] (state/add-notification {:type :warning
                                                              :text "-tktktk points"}))}
           "test: warning notification"]]]
@@ -77,6 +76,6 @@
            (:id p)
            [:div [:a {:href (str "?post=" (:id p))}
                   "open"]]
-           [:div [:a {:href "#"
+           [:div [:a {:href     "#"
                       :on-click (fn [] (business/add-post p))}
                   "inject into timeline"]]])]])))

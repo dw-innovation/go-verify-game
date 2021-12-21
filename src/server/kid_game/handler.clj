@@ -40,23 +40,22 @@
         ; just pass the message as is
         (>! room-ch message)))))
 
-
 (defn connections-handler
   "create and manage the websocket connection between the browser and the server"
   [req]
   (with-channel req ws-ch ; ws-ch comes from chord, stands for "websocket channel"
     (log "we received a new websocket connection!")
     (log req)
-    (let [room-tap (async/chan) ; this seems to just make an anonymous channel?
-          client-connection ws-ch ; rename what chord gave us
-          client-id (random-uuid)
-          params (req :params)
-          ; TODO if not room error
-          room-id (params :room)
-          room (state/get-or-create-room room-id)
-          room-channel (room :channel)
-          room-mult (room :mult)]
-      ; subscribe to the room channel locally
+    (let [room-tap          (async/chan) ; this seems to just make an anonymous channel?
+          client-connection ws-ch        ; rename what chord gave us
+          client-id         (random-uuid)
+          params            (req :params)
+                                        ; TODO if not room error
+          room-id           (params :room)
+          room              (state/get-or-create-room room-id)
+          room-channel      (room :channel)
+          room-mult         (room :mult)]
+                                        ; subscribe to the room channel locally
       (async/tap room-mult room-tap) ; client channel taps the main channel
       (go-loop []
         (log "go!" "go!")
@@ -69,9 +68,9 @@
                                  (recur))
                                (do
                                  (async/untap room-mult room-tap) ; unsubscribe from the room
-                                 ; tell the other clients the user left
-                                 ; TODO client-id isn't user id any more
-                                 ; and there should be proper linking to ::messages/user-left
+                                        ; tell the other clients the user left
+                                        ; TODO client-id isn't user id any more
+                                        ; and there should be proper linking to ::messages/user-left
                                  (>! room-channel {:type :user-left
                                                    :body client-id})
                                  (state/remove-user room-id client-id))))
@@ -91,6 +90,6 @@
   ;;      (resp/resource-response "test-activities.html" {:root "public"}))
   ; get the app for a particular room
   (GET "/:room" [room]
-       (resp/resource-response "index.html" {:root "public"}))
+    (resp/resource-response "index.html" {:root "public"}))
   (route/resources "/")
   (route/not-found "<h1>Page not found</h1>"))

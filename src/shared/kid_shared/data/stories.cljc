@@ -1,5 +1,5 @@
 (ns kid-shared.data.stories (:require [kid-shared.data.authors :as posters]
-                                              [kid-shared.data.posts :as posts]))
+                                      [kid-shared.data.posts :as posts]))
 
 ;; here's the deal about stories.  they are a vector.  they can contain
 ;; different data types.  they are played out in order. a number means wait that amount
@@ -9,8 +9,7 @@
 
 
 (def global-story
-  [
-   1 posts/p17-megacorp-food-fan-story
+  [1 posts/p17-megacorp-food-fan-story
    6 posts/p13-megacorp-buying-spree-story
    12 posts/p16-satellite-image?-story
    5 posts/filler-new-beachfronts
@@ -52,11 +51,10 @@
    5  posts/p2-financial-gdp-repost-1
 
    12 posts/filler-megacorp-labor-laws-story ;; this one should have some time after it
-   
+
    12 posts/p21-eu-commission-hearing?
 
    10 posts/p10-snow-cannons-story
-
 
    6 posts/filler-mil-media-literacy
 
@@ -73,5 +71,4 @@
    8 ;; wait time before thomas
    ])
 
-(def all-stories [["game-story (all)" global-story]
-                  ])
+(def all-stories [["game-story (all)" global-story]])

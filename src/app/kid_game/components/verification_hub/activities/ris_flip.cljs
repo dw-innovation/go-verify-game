@@ -35,65 +35,58 @@
 (def css-transition
   (r/adapt-react-class react-transition-group/CSSTransition))
 
-
 (defn drag-step []
   "returns a vector of type [atom, reagent-function] where atom is the status of the step"
-  (let [status (r/atom :started)
-        dragged? (r/atom false)
-        loading? (r/atom false)
+  (let [status     (r/atom :started)
+        dragged?   (r/atom false)
+        loading?   (r/atom false)
         drag-done! (fn []
                      (reset! loading? true)
                      (async/go (async/<! (async/timeout 2000))
                                (reset! dragged? true)
                                (reset! loading? false)
                                (async/<! (async/timeout 1000))
-                               (reset! status :succeeded)
-                               ))]
+                               (reset! status :succeeded)))]
     [status
-    (fn [{img-src :img-src
-          search-results :search-results}]
-      [:div
-       [image-results/<dragger> img-src drag-done!]
-       [css-transition-group {:class "transition-results" :timeout 100}
-        (if @loading?
-          [:div {:class "is-flex is-justify-content-center"} [image-results/<loading>]]
-          (when @dragged?
-            [css-transition {:class-names "ris-results-transition" :timeout 100}
-             (when search-results
-               [image-results/<blooble-image-results> search-results])
-             ]))]])]))
+     (fn [{img-src        :img-src
+           search-results :search-results}]
+       [:div
+        [image-results/<dragger> img-src drag-done!]
+        [css-transition-group {:class "transition-results" :timeout 100}
+         (if @loading?
+           [:div {:class "is-flex is-justify-content-center"} [image-results/<loading>]]
+           (when @dragged?
+             [css-transition {:class-names "ris-results-transition" :timeout 100}
+              (when search-results
+                [image-results/<blooble-image-results> search-results])]))]])]))
 
 (defn flip-step []
   "returns a vector of type [atom, reagent-function] where atom is the status of the step"
-  (let [status (r/atom :started)
-        flip! (fn []
-                (reset! status :flipping)
-                (async/go
-                  (async/<! (async/timeout 500)) ;sync this timout with animation length on line +2
-                  (reset! status :succeeded)))
-        animation-css {:animation "flip-animate .5s ease-in-out"
+  (let [status        (r/atom :started)
+        flip!         (fn []
+                        (reset! status :flipping)
+                        (async/go
+                          (async/<! (async/timeout 500)) ;sync this timout with animation length on line +2
+                          (reset! status :succeeded)))
+        animation-css {:animation           "flip-animate .5s ease-in-out"
                        :animation-fill-mode "forwards"}]
     [status
      (fn [{img-src :img-src}]
        (let [[icon modal] (components/<modal-icon> blocks/ris-flip-explanation)]
-        [:div {:class " mb-5"}
-         [:div
+         [:div {:class " mb-5"}
           [:div
-           [:h4.title.is-4.mb-0.mt-6 "No results? Let's try a flip." [icon]]
-           [modal]
-           [:p.mb-5 "Click on the button to invert the picture."]
-           ]
-          [:div.mt-3 {:style (when (#{:flipping :succeeded} @status) animation-css)}
-           [:img {:src img-src}]]
-          [:div
-           [:button {:on-click flip!} "Flip!"]]
-          ]]
-        ))]))
+           [:div
+            [:h4.title.is-4.mb-0.mt-6 "No results? Let's try a flip." [icon]]
+            [modal]
+            [:p.mb-5 "Click on the button to invert the picture."]]
+           [:div.mt-3 {:style (when (#{:flipping :succeeded} @status) animation-css)}
+            [:img {:src img-src}]]
+           [:div
+            [:button {:on-click flip!} "Flip!"]]]]))]))
 
-
-(defn <main> [{:as data
-               main-image :main-image
-               flipped-image :flipped-image
+(defn <main> [{:as            data
+               main-image     :main-image
+               flipped-image  :flipped-image
                search-results :result-search} back!]
   (let [[s1 <s1>] (drag-step)
         [s2 <s2>] (flip-step)
@@ -112,10 +105,8 @@
         [:div.activity-step.contain-section-width.center-section
          (when (= @s1 :succeeded) [<s2> {:img-src main-image}])]
         [:div.activity-step.contain-section-width.center-section
-         (when (#{:succeeded} @s2) [<s3> {:img-src flipped-image
+         (when (#{:succeeded} @s2) [<s3> {:img-src        flipped-image
                                           :search-results search-results}])]]
 
        [:div {:class "activity-footer"}
-        [components/<activity-actions> back!]]
-
-        ])))
+        [components/<activity-actions> back!]]])))
