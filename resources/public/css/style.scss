@@ -25,6 +25,8 @@
         --color-hub-primary: var(--color-teal);
         --color-hub-secondary: var(--color-teal-light);
 
+        --header-height: 5rem;
+
         --spacing: 1rem;
         --spacing-half: .5rem;
         --spacing-double: 2rem;
@@ -157,7 +159,7 @@ body {
                 z-index: 7;
                 position: sticky;
                 top: 0rem;
-                height: 5rem;
+                height: var(--header-height);
                 @extends .p-4;
                 display: flex;
                 justify-content: left;
@@ -334,7 +336,7 @@ button { background-color: transparent;
                                translate(-25%,-25%); }
 
 .activity-container {
-  min-height: calc(100vh - 5rem);
+  min-height: calc(100vh - var(--header-height));
   display: flex;
   flex-direction: column;
   .activity-header {
@@ -534,9 +536,7 @@ button { background-color: transparent;
 .image-analysis {
   .polygon { fill: transparent;
              stroke: yellow;
-             stroke-width: 4;}
-
-}
+             stroke-width: 4;}}
 
 
 

@@ -4,51 +4,61 @@
             [kid-game.utils.log :as log]
             [clojure.spec.alpha :as s]))
 
-;; usage of these functions:
+;; # usage
 ;;
 ;;  start the ticker:
-;;  (start!)
+;;
+;; (ticks/start!)
+;;
+;; Adjust the speed:
+;;
+;; (ticks/set-tick-speed! 2000)
 ;;
 ;; Add some repeating functions on ticks:
 ;;
-;; (every 1 :tick (fn [] (println :tick @num)))
-;; (every 3 :tock (fn [] (println :tock @num)))
+;; (ticks/every 5 (fn [] (println "hello")))
 ;;
-;; Stop one of the repeating fucnctions:
+;; Supply keys to make them stoppable
 ;;
-;; (stop :tick)
+;; (ticks/every 1 :tick (fn [] (println :tick @num)))
+;; (ticks/every 3 :tock (fn [] (println :tock @num)))
+;;
+;; (ticks/cancel :tick)
+;; (ticks/cancel :tock)
 ;;
 ;; Schedule a function after n amounts of ticks
 ;;
-;; (after 14 (fn [] (println "hellloooooooooooooooooooooo")))
+;; (ticks/after 14 (fn [] (println "hellloooooooooooooooooooooo")))
 ;;
-;; Use ticks in an core.async channel:
+;; Cancel something you scheduled
+;;
+;; (ticks/after 14 :print-hi (fn [] (println "hi")))
+;; (ticks/cancel :print-hi)
+;;
+;; Use ticks and waiting in an core.async channel:
 ;;
 ;; (async/go-loop []
-;;   (async/<! (wait-chan 14))
-;;   (println "from go-loop" @num)
+;;   (async/<! (ticks/wait-chan 14))
+;;   (println "from go-loop")
 ;;   (recur))
 
-;; the config value for the amount of milliseconds per tick
-(def ms-per-tick (atom 1000))
+
+;; state:
+(def ms-per-tick (atom 1000)) ; the speed
+(defonce ticks (r/atom 0))    ; the total amount of ticks since started, also the atom listened to
+(def paused (atom false))     ; paused?
+;; tick-fn is an atom so you can stop the recursive function
+;; by replacing the function living at the reference with a blank lambda
+(defonce tick-fn (atom (fn [])))
 
 (defn set-tick-speed! [ms]
   (reset! ms-per-tick ms))
 
 (defn tick-speed [] @ms-per-tick)
 
-(defonce ticks (r/atom 0))
-
-(def paused (atom false))
-
 (defn pause [] (reset! paused true))
 (defn continue [] (reset! paused false))
-
 (defn paused? [] @paused)
-
-;; tick-fn is an atom so you can stop the recursive function
-;; by replacing the function living at the reference
-(defonce tick-fn (atom (fn [])))
 
 (defn start!
   "starts the ticker"
@@ -93,8 +103,7 @@
 
 ;; run function for n amount of ticks, on every tick
 (defn for-ticks
-  "run a function for n amount of ticks, on every tick. optionally supply k as a key to cancel or stop"
-  ([n fun] (for-ticks n (gensym) fun))
+  ([n fun] (for-ticks n (gensym fun)))
   ([n k fun] (doall (map #(after % fun) (range n)))))
 
 (defn wait-chan
