@@ -57,24 +57,26 @@
 ;; contains an anonymous function to kill this timer
 (defn attach-post-timer! [post]
   (let [p (state/get-post post)
-        exit-channel (async/chan)]
-    ;; give the post an anonymous function that can stop the timer associated with it
-    (state/update-post p :stop-timer! (fn [] (async/put! exit-channel "exit message")))
-    (let [time-limit (:time-limit p)]
-      (ticks/for-ticks time-limit (fn [] (let [p (state/get-post post) ; get a fresh post on every loop
-                                               ;; get the time left or instantiate the time left
-                                               time-left (or (:time-left p) (:time-limit post) 0)]
-                                           (state/update-post p :time-left (dec time-left)))))
-      (ticks/after time-limit (fn [] (do (swap! state/stats assoc-in [:missed-deadlines] (inc (:missed-deadlines @state/stats)))
-                                     ;; If it times out, add it to the top of the story stack
-                                     (state/post-transition-state! p :timed-out)))))
-    ))
+        time-limit (:time-limit p)
+        ticks-dec-key (gensym) ;; generate symbols to track the timers
+        ticks-stop-key (gensym)
+        decrease-time! (fn [] (let [p (state/get-post post) ; get a fresh post on ever excecution
+                                    time-left (or (:time-left p) (:time-limit post) 0)]
+                                (state/update-post p :time-left (dec time-left))))
+        time-out! (fn [] (do (swap! state/stats assoc-in [:missed-deadlines] (inc (:missed-deadlines @state/stats)))
+                             (state/post-transition-state! p :timed-out)))
+        cancel! (fn [] (do (ticks/cancel ticks-dec-key)
+                           (ticks/cancel ticks-stop-key)))]
+    (state/update-post p :stop-timer! cancel!)
+    (ticks/for-ticks time-limit ticks-dec-key decrease-time!)
+    (ticks/after time-limit ticks-stop-key time-out!)))
 
 ;; only works if the timer has already been attatched
 (defn stop-post-timer! [post]
-  (if (fn? (:stop-timer! post)) ; is there a function at the expected key?
-    ((:stop-timer! post)) ; then run it!
-    (log/warn "post does not have a stopping function!")))
+  (let [p (state/get-post post)]
+    (if (fn? (:stop-timer! p)) ; is there a function at the expected key?
+      ((:stop-timer! p)) ; then run it!
+      (log/warn "post does not have a stopping function!"))))
 
 (defn add-post [post]
   ;; remove the post timer from below if it's already there

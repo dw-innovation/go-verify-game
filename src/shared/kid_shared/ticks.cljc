@@ -80,17 +80,22 @@
   "stop a recurring function that had been initialized with every, use the same key passed to every"
   [key] (remove-watch ticks key))
 
+(def cancel stop)
+
 (defn after
-  "run the supplied function after n ticks"
-  [n fun] (let [k (gensym)
-                s @ticks]
-            (add-watch ticks k (fn [key a os ns]
-                                 (when (> (- ns n) s)
-                                   (fun)
-                                   (stop k))))))
+  "run the supplied function after n ticks, add key to allow cancelling"
+  ([n fun] (after n (gensym) fun))
+  ([n k fun] (let [s @ticks]
+               (add-watch ticks k (fn [key a os ns]
+                                    (when (> (- ns n) s)
+                                      (fun)
+                                      (stop k)))))))
 
 ;; run function for n amount of ticks, on every tick
-(defn for-ticks [n fun] (doall (map #(after % fun) (range n))))
+(defn for-ticks
+  "run a function for n amount of ticks, on every tick. optionally supply k as a key to cancel or stop"
+  ([n fun] (for-ticks n (gensym) fun))
+  ([n k fun] (doall (map #(after % fun) (range n)))))
 
 (defn wait-chan
   "return a channel which will receive an item after n wait ticks"
