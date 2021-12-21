@@ -86,11 +86,9 @@
                            (fn [key atom old new]
                              (when (= 0 (mod new n)) (funk))))))
 
-(defn stop
+(defn cancel
   "stop a recurring function that had been initialized with every, use the same key passed to every"
   [key] (remove-watch ticks key))
-
-(def cancel stop)
 
 (defn after
   "run the supplied function after n ticks, add key to allow cancelling"
@@ -99,7 +97,7 @@
                (add-watch ticks k (fn [key a os ns]
                                     (when (> (- ns n) s)
                                       (fun)
-                                      (stop k)))))))
+                                      (cancel k)))))))
 
 ;; run function for n amount of ticks, on every tick
 (defn for-ticks
