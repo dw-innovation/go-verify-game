@@ -34,7 +34,6 @@
       ; TODO actually close the websocket
       (log/debug "Websocket closed"))))
 
-
 (defn get-websocket-url []
   ;; assume that the server is the same as whatever served us this frontend app
   (let [host js/window.location.hostname
@@ -56,7 +55,7 @@
 ;; tries to set up the websockets, returns true on success, false on failure
 (defn try-setup-websockets! []
   (async/go
-    (let [url (get-websocket-url)
+    (let [url                        (get-websocket-url)
           {:keys [ws-channel error]} (<! (ws-ch url))]
       (if error
         (do (log/debug "Something went wrong with the websocket"

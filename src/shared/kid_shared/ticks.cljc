@@ -42,7 +42,6 @@
 ;;   (println "from go-loop")
 ;;   (recur))
 
-
 ;; state:
 (def ms-per-tick (atom 1000)) ; the speed
 (defonce ticks (r/atom 0))    ; the total amount of ticks since started, also the atom listened to

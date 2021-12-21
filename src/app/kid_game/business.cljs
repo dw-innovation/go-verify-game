@@ -19,10 +19,10 @@
   (gen/gen-run-story messaging/receive-channel stories/global-story))
 
 (defn use-new-player! [& {:keys [name]}]
-  (->> {:id (str (random-uuid))
-        :name name
+  (->> {:id      (str (random-uuid))
+        :name    name
         :created (timestamp-now)
-        :role :investigator}
+        :role    :investigator}
        (state/set-player)))
 
 (defn new-session! [player-name]
@@ -31,8 +31,7 @@
   (use-new-player! :name player-name)
   ;; TODO only start all stories if websocket fails
   ;; (socket/setup-socket! (state/get-player))
-  (when (not @state/dev?) (start-all-stories!))
-  )
+  (when (not @state/dev?) (start-all-stories!)))
 
 (defn logout []
   (reset! state/dev? false)
@@ -40,13 +39,13 @@
 
 (defn post-text-post! [& {:keys [title description fake-news?]}]
   (messaging/send {:type ::messages/post-new
-                   :body {:type :post-text
-                          :id (new-uuid)
-                          :created (timestamp-now)
-                          :title title
-                          :time-limit 300
-                          :fake-news? fake-news?
-                          :by (state/get-player)
+                   :body {:type        :post-text
+                          :id          (new-uuid)
+                          :created     (timestamp-now)
+                          :title       title
+                          :time-limit  300
+                          :fake-news?  fake-news?
+                          :by          (state/get-player)
                           :description description}}))
 
 (defn win-points! [points] (state/win-points points))
@@ -56,17 +55,17 @@
 ;; periodically.  additionally this function registers post :stop-timer! which
 ;; contains an anonymous function to kill this timer
 (defn attach-post-timer! [post]
-  (let [p (state/get-post post)
-        time-limit (:time-limit p)
-        ticks-dec-key (gensym) ;; generate symbols to track the timers
+  (let [p              (state/get-post post)
+        time-limit     (:time-limit p)
+        ticks-dec-key  (gensym) ;; generate symbols to track the timers
         ticks-stop-key (gensym)
-        decrease-time! (fn [] (let [p (state/get-post post) ; get a fresh post on ever excecution
+        decrease-time! (fn [] (let [p         (state/get-post post) ; get a fresh post on ever excecution
                                     time-left (or (:time-left p) (:time-limit post) 0)]
                                 (state/update-post p :time-left (dec time-left))))
-        time-out! (fn [] (do (swap! state/stats assoc-in [:missed-deadlines] (inc (:missed-deadlines @state/stats)))
-                             (state/post-transition-state! p :timed-out)))
-        cancel! (fn [] (do (ticks/cancel ticks-dec-key)
-                           (ticks/cancel ticks-stop-key)))]
+        time-out!      (fn [] (do (swap! state/stats assoc-in [:missed-deadlines] (inc (:missed-deadlines @state/stats)))
+                                  (state/post-transition-state! p :timed-out)))
+        cancel!        (fn [] (do (ticks/cancel ticks-dec-key)
+                                  (ticks/cancel ticks-stop-key)))]
     (state/update-post p :stop-timer! cancel!)
     (ticks/for-ticks time-limit ticks-dec-key decrease-time!)
     (ticks/after time-limit ticks-stop-key time-out!)))
@@ -94,7 +93,6 @@
     (state/post-transition-state! post :live)
     ;; we also attatch an async loop to start counting down
     (attach-post-timer! post)))
-
 
 (defn post-investigate! [post]
   (state/update-post post :investigated? true)
@@ -159,26 +157,25 @@
     (notify :warning (str "You shared nonsense content, you lost " points " points"))
     (state/update-post post :points-result (- points))))
 
-
 (defn post-action! [action post]
   {:pre [(posts/is-game-post? post)
          (action #{:share :block})]}
-  (let [shared? (= action :share)
-        blocked? (= action :block)
+  (let [shared?                  (= action :share)
+        blocked?                 (= action :block)
         {fake-news? :fake-news?
          game-state :game-state} post
-        live-post? (= game-state :live)
-        dead-post? (not live-post?)
-        legit-news? (not fake-news?)]
+        live-post?               (= game-state :live)
+        dead-post?               (not live-post?)
+        legit-news?              (not fake-news?)]
     (cond
       ;; shared filler content:
-      (and dead-post? blocked?) (do-blocked-irrelevant)
-      (and dead-post? shared?) (do-shared-irrelevant)
-      (and live-post? blocked? fake-news?) (do-blocked-correctly post)
+      (and dead-post? blocked?)             (do-blocked-irrelevant)
+      (and dead-post? shared?)              (do-shared-irrelevant)
+      (and live-post? blocked? fake-news?)  (do-blocked-correctly post)
       (and live-post? blocked? legit-news?) (do-blocked-wrong post)
-      (and live-post? shared? fake-news?) (do-shared-wrong post)
-      (and live-post? shared? legit-news?) (do-shared-correctly post)
-      :else (log/debug "no matched cases for the post!"))
+      (and live-post? shared? fake-news?)   (do-shared-wrong post)
+      (and live-post? shared? legit-news?)  (do-shared-correctly post)
+      :else                                 (log/debug "no matched cases for the post!"))
     (stop-post-timer! post)
     (state/post-transition-state! post (if blocked? :blocked :shared))))
 
@@ -208,21 +205,21 @@
   ;; TODO should actually throw a variety of errors instead of true falsing
   ;; a message must have a type and a body
   (if-let [{:keys [type body]} msg]
-    (do 
+    (do
       ;; (log/debug "handling message" msg)
-        (case type
+      (case type
           ;; eventually, the following functions should all call local funcs
           ;; and not delegate to state functions
-          ::messages/user-init (state/set-users body)
-          ::messages/chat-new (state/add-chat body)
-          ::messages/user-new (state/add-user body)
-          ::messages/user-left (state/remove-user body)
-          ::messages/comment-new (state/add-post-comment body)
-          ::messages/post-new (add-post body)
+        ::messages/user-init (state/set-users body)
+        ::messages/chat-new (state/add-chat body)
+        ::messages/user-new (state/add-user body)
+        ::messages/user-left (state/remove-user body)
+        ::messages/comment-new (state/add-post-comment body)
+        ::messages/post-new (add-post body)
           ; default
-          (log/debug "could not handle the message"))
+        (log/debug "could not handle the message"))
         ;; not really true
-        true)
+      true)
     (do (log/warn "got a message we don't recognize as a message")
         false)))
 
@@ -232,8 +229,8 @@
       (do
         ;; or hide if (state/dev? true)
         ;; (log/debug "got new message!!!!!!!!!!")
-          (handle-message! msg)
-          (recur))
+        (handle-message! msg)
+        (recur))
       (log/debug "receive channel got bad message"))))
 
 (listen-to-receive-channel!)

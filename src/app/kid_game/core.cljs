@@ -27,19 +27,19 @@
 (defn <game> []
   (let [timeline-el (r/atom nil)]
     (fn []
-      (let [size {:active "active" :inactive "inactive"}
-            scrolltop (if @timeline-el (.-scrollTop @timeline-el) 300)
-            active-panel (state/get-panel)
+      (let [size             {:active "active" :inactive "inactive"}
+            scrolltop        (if @timeline-el (.-scrollTop @timeline-el) 300)
+            active-panel     (state/get-panel)
             timeline-active? (= active-panel :timeline)
-            hub-active? (not timeline-active?)]
+            hub-active?      (not timeline-active?)]
 
         (cond
-              ;; the story generator is paused whenever the user is investigating, or not currently
-              ;; scrolled to the top of the timeline
-              ;; TODO kinda hacky, think of a better way
-              (or hub-active?
-                  (>= scrolltop 40)) (when (not @gen/paused?) (gen/pause))
-              (and @gen/paused? (< scrolltop 40)) (gen/continue))
+          ;; the story generator is paused whenever the user is investigating, or not currently
+          ;; scrolled to the top of the timeline
+          ;; TODO kinda hacky, think of a better way
+          (or hub-active?
+              (>= scrolltop 40))              (when (not @gen/paused?) (gen/pause))
+          (and @gen/paused? (< scrolltop 40)) (gen/continue))
 
         [:div {:class "game-container mt-0 ml-0"}
          [notifications/<notifications>]
@@ -51,21 +51,20 @@
             [:div {:class "game-panel dev-panel"}
              [<meta>/<meta>]])
 
-          [:div {:id "timeline"
-                 :ref (fn [el] (reset! timeline-el el))
-                 :class ["game-panel"
-                         "game-timeline"
-                         (if timeline-active?
-                           (:active size)
-                           (:inactive size))]
-                 :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))
-                 }
+          [:div {:id       "timeline"
+                 :ref      (fn [el] (reset! timeline-el el))
+                 :class    ["game-panel"
+                            "game-timeline"
+                            (if timeline-active?
+                              (:active size)
+                              (:inactive size))]
+                 :on-click (fn [ev] (.stopPropagation ev) (state/open-timeline))}
            [<timeline>/<container>]]
 
-          [:div {:class ["game-panel"
-                         "game-verification-hub"
-                         (cond hub-active? (:active size)
-                               :else       (:inactive size))]
+          [:div {:class    ["game-panel"
+                            "game-verification-hub"
+                            (cond hub-active? (:active size)
+                                  :else       (:inactive size))]
                  :on-click (fn [ev] (.stopPropagation ev) (state/open-verification-hub))}
            [<verification-hub>/<container>]]]]))))
 

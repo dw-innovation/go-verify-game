@@ -20,14 +20,14 @@
                           d (-> (js/URLSearchParams. s) (.get "dev"))]
                       (= "true" d))))
 
-(defonce app-state (atom {:text "Hello world!"
+(defonce app-state (atom {:text         "Hello world!"
                           ;; either login, timeline, or verification-hub
                           :active-panel :login ; start on the login page
-                          :user {}}))
+                          :user         {}}))
 
 (defonce points (atom 0))
-(defonce stats (atom {:blocked-correctly 0
-                      :missed-deadlines 0
+(defonce stats (atom {:blocked-correctly  0
+                      :missed-deadlines   0
                       :misleading-reposts 0}))
 (defonce msg-list (atom []))
 (defonce notifications (atom []))
@@ -68,7 +68,7 @@
 
 (defn get-users [] @users)
 
-; prefer storage as a map
+                                        ; prefer storage as a map
 (defn set-users [user-list]
   (reset! users (user/col-to-map user-list)))
 
@@ -79,7 +79,7 @@
   (swap! users dissoc user-id))
 
 (defn add-chat [chat]
-  ; add the chat to the state
+                                        ; add the chat to the state
   (swap! msg-list conj chat))
 
 (defn seen! [chat]
@@ -124,6 +124,7 @@
 ;;      post :stop-timer! -> a lambda function, so the post can stop it's own timer
 ;;
 
+
 (defn posts [] @post-list)
 
 (defn get-post [post] ;; get a full post by something post-like (min of {:id 'something'})
@@ -136,7 +137,7 @@
 ;; of the fields, other than time-left will be left alone
 ;;   returns post
 (defn upsert-post [post]
-  (let [p (get-post post)
+  (let [p            (get-post post)
         updated-post (merge p post)]
     (->> (s/setval [(s/filterer #(= (:id %) (:id post))) s/FIRST]
                    updated-post @post-list)
@@ -172,7 +173,7 @@
     (reset! post-list posts)))
 
 (defn add-post-comment [comment]
-  (let [post (get-post {:id (:post-id comment)})
+  (let [post     (get-post {:id (:post-id comment)})
         comments (or (:comments post) [])]
     (if post
       (update-post post :comments (conj comments comment))
@@ -193,7 +194,7 @@
   (->> ;; use specter to update the post at the path where the ids are the same
    (s/setval [(s/filterer #(= (:time %) (:time n))) s/FIRST]
              n @notifications)
-        ;; update the post state
+   ;; update the post state
    (reset! notifications)))
 
 (defn disable-notification [n]
@@ -201,11 +202,11 @@
 
 (defn add-notification [{:as n, typ :type, text :text}]
   ;; create the norification, adding to it the internal tracking information we need
-  (let [new-n {:type typ
+  (let [new-n {:type   typ
                :active true ; the UI will show the notification as long as it is active
-               :text text
+               :text   text
                ;; add the timestamp on adding to state
-               :time (utils/timestamp-now)}]
+               :time   (utils/timestamp-now)}]
     ;; add the new notification to the state
     (swap! notifications conj new-n)
     ;; in 2 seconds, disable that newly created notification:
