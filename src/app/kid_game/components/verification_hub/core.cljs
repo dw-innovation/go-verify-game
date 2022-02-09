@@ -2,10 +2,12 @@
   (:require [kid-game.state :as state]
             [clojure.set :refer [union intersection]]
             [reagent.core                                         :as r]
+            [kid-game.components.verification-hub.activities.shared.components :as components]
             [kid-game.components.shared.icons :as icons]
             [kid-game.utils.core :as utils :refer [in? find-first]]
             [kid-game.components.timeline.core :as timeline]
-            [kid-game.components.verification-hub.activities.core :as activities]))
+            [kid-game.components.verification-hub.activities.core :as activities]
+            [kid-shared.data.blocks :as blocks]))
 
 (defn <header> []
   [:div {:class ["panel-header" "verification-hub-header"]}
@@ -32,76 +34,90 @@
 
 (defn <title> [] [:div {:class "columns is-centered mb-5"}
                   [:div {:class "column is-6  has-text-centered"}
-                   [:h3.title.is-4 "This is Thomas"]
-                   [:h5.subtitle "He's your verification compagnon, a kind of personal tutor. Oh, he's also a duck."]]])
+                   [:h5.subtitle "Pick a verification action:"]]])
 
 (defn <thomas> [] [:div.thomas.columns.is-centered.pt-6
                    [:div.column.is-3
                     [:div.thomas-icon
+                     {:title "This is Izzy, a verification specialist – ready to help you analyze dubious content!"}
                      [icons/thomas]]]])
 
-(defn <hub-icon> [{icon       :icon
-                   title      :title
-                   available? :available?
-                   on-click!  :fn}]
-  ^{:key title}
-  [:a.hub-icon {:on-click on-click!
-                :style    {:opacity (if available? 1 0.3)}}
-   [icon]
-   [:div.has-text-centered.has-text-black title]])
+(defn <hub-icon> [{icon          :icon
+                   title         :title
+                   available?    :available?
+                   modal-content :modal-content
+                   tooltip       :tooltip
+                   on-click!     :fn}]
+  (let [[<icon> <modal>] (if modal-content
+                           (components/<modal-icon> modal-content)
+                           [components/<empty> components/<empty>])]
+    ^{:key title}
+    [:<>
+     [:a.hub-icon {:on-click on-click!
+                   :title    tooltip
+                   :style    {:opacity (if available? 1 0.3)}}
+      [icon]
+      [:div.has-text-centered.has-text-black title]]
+     [<modal>]
+     [:div {:style {:margin-left "-.8rem"}}
+      [<icon>]]]))
 
 (defn <hub-icons> [[{icon       :icon
                      title      :title
                      available? :available?
                      on-click!  :fn} & rest :as actions]]
   [:div.has-text-centered
-   [:h4.title.is-4 "Thomas recommends you try one of the following"]
-   [:p.subtitle "Click on one of the options to start the corresponding activity"]
    [:div.icons.columns.mt-5
     (map <hub-icon> actions)]])
 
 (defn <hub-home> [{post          :post
                    change-panel! :change-panel!}]
-  (let [post-activities                      (:activities post)
-        available-activities                 (map :type post-activities)
-        in-game?                             (= :live (:game-state post))
+  (let [post-activities                        (:activities post)
+        available-activities                   (map :type post-activities)
+        in-game?                               (= :live (:game-state post))
         ;; given a list of activities, return only those available
-        available                            (fn [& activity-types] (intersection (set activity-types)
-                                                                                  (set available-activities)))
-        available?                           (fn [& activity-types] (not (empty? (apply available activity-types))))
-        choose-activity!                     (fn [& chosen-activity-typs]
-                                               (fn []
-                                                 (if (not post)
-                                                   (state/add-notification {:type :warning
-                                                                            :text "Choose a post first"})
-                                                   (if (not in-game?)
+        available                              (fn [& activity-types] (intersection (set activity-types)
+                                                                                    (set available-activities)))
+        available?                             (fn [& activity-types] (not (empty? (apply available activity-types))))
+        choose-activity!                       (fn [& chosen-activity-typs]
+                                                 (fn []
+                                                   (if (not post)
                                                      (state/add-notification {:type :warning
-                                                                              :text "Out of time"})
-                                                     (let [hits (apply available chosen-activity-typs)]
-                                                       (if (empty? hits)
-                                                         (state/add-notification {:type :warning
-                                                                                  :text "Choose a different activity"})
-                                                         (change-panel! (first hits))))))))
-        points                               @state/points
+                                                                              :text "Choose a post first"})
+                                                     (if (not in-game?)
+                                                       (state/add-notification {:type :warning
+                                                                                :text "Out of time"})
+                                                       (let [hits (apply available chosen-activity-typs)]
+                                                         (if (empty? hits)
+                                                           (state/add-notification {:type :warning
+                                                                                    :text "Choose a different activity"})
+                                                           (change-panel! (first hits))))))))
+        points                                 @state/points
         {blocked-correctly  :blocked-correctly
          misleading-reposts :misleading-reposts
          missed-deadlines   :missed-deadlines} @state/stats
-        actions                              [{:icon       icons/browser-search
-                                               :title      "Web Search"
-                                               :available? (available? :web-search)
-                                               :fn         (choose-activity! :web-search)}
-                                              {:icon       icons/recycle-search
-                                               :title      "Reverse image search"
-                                               :available? (available? :reverse-image-crop :reverse-image-simple :reverse-image-flip)
-                                               :fn         (choose-activity! :reverse-image-crop :reverse-image-simple :reverse-image-flip)}
-                                              {:icon       icons/image-analysis
-                                               :title      "Image analysis"
-                                               :available? (available? :polygon-search)
-                                               :fn         (choose-activity! :polygon-search)}
-                                              {:icon       icons/geolocation
-                                               :title      "Geolocation"
-                                               :available? (available? :geolocation)
-                                               :fn         (choose-activity! :geolocation)}]]
+        actions                                [{:icon          icons/browser-search
+                                                 :title         "Web Search"
+                                                 :tooltip       "Perform a keyword search on the web, using Boolean operators."                                                 
+                                                 :modal-content blocks/web-search-explanation
+                                                 :available?    (available? :web-search)
+                                                 :fn            (choose-activity! :web-search)}
+                                                {:icon          icons/recycle-search
+                                                 :title         "Reverse image search"
+                                                 :tooltip       "Search the web for copies of this image with a reverse image search"
+                                                 :modal-content blocks/ris-explanation
+                                                 :available?    (available? :reverse-image-crop :reverse-image-simple :reverse-image-flip)
+                                                 :fn            (choose-activity! :reverse-image-crop :reverse-image-simple :reverse-image-flip)}
+                                                {:icon          icons/image-analysis
+                                                 :title         "Image analysis"
+                                                 :tooltip       "Has this image been altered? Take a closer look to find potential clues."
+                                                 :modal-content blocks/image-analysis-explanation
+                                                 :available?    (available? :polygon-search)
+                                                 :fn            (choose-activity! :polygon-search)}
+                                                {:icon       icons/geolocation
+                                                 :title      "Geolocation"
+                                                 :available? (available? :geolocation)
+                                                 :fn         (choose-activity! :geolocation)}]]
     [:div
      [:div.contain-section-width.center-section
       [<thomas>]
@@ -139,9 +155,11 @@
                    ;; go back to the hub if you switch posts
                    (change-panel! :hub))))
     (fn []
-      (let [post     (state/get-post (:post @state/verification-hub-state))
-            in-game? (= :live (:game-state post))
-            points   @state/points]
+      (let [post       (state/get-post (:post @state/verification-hub-state))
+            time-left? (> (:time-left post) 0)
+            in-game?   (= :live (:game-state post))
+            <home>     [<hub-home> {:post          (dissoc post :time-left) ; dissoc to not trigger a rerender every time it changes
+                                    :change-panel! change-panel!}]]
         [:div
          [<header>]
 
@@ -153,14 +171,16 @@
             [:div {:class "tag is-light is-info is-family-monospace"} "post is: " (:game-state post)]])
 
          [:div.m-3.hub-progress
+          {:title "Quick! Verify this post – then decide whether to share or block it, before it goes viral!"}
           [timeline/<post-progress> post]]
 
          [timeline/<post-overlay> post]
 
          [:div.hub-container
           (cond
-            (not in-game?)         [<hub-home> {:post post :change-panel! change-panel!}]
-            (= @active-panel :hub) [<hub-home> {:post post :change-panel! change-panel!}]
+            (not time-left?)       components/<empty>
+            (not in-game?)         <home> 
+            (= @active-panel :hub) <home> 
             :else                  [<investigate-post> {:post          post
                                                         :activity-type @active-panel
                                                         :back!         back-to-hub!}])]]))))
