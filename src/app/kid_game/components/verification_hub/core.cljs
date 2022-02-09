@@ -158,7 +158,7 @@
       (let [post       (state/get-post (:post @state/verification-hub-state))
             time-left? (> (:time-left post) 0)
             in-game?   (= :live (:game-state post))
-            <home>     [<hub-home> {:post          (dissoc post :time-left)
+            <home>     [<hub-home> {:post          (dissoc post :time-left) ; dissoc to not trigger a rerender every time it changes
                                     :change-panel! change-panel!}]]
         [:div
          [<header>]
