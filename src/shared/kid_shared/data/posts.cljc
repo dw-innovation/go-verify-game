@@ -435,11 +435,18 @@ When you swore to be true / Our bed was belief / But alternative facts snuck in 
 "
                            :by authors/OSINT_FTW})
 
-(def filler-bowie-boat {:type :post-text
-                        :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/bowie_boat.jpg"
-                        :id "filler-bowie-boat"
+(def filler-bowie-boat {:type        :post-text
+                        :image       "https://kid-game-resources.s3.eu-central-1.amazonaws.com/bowie_boat.jpg"
+                        :id          "filler-bowie-boat"
                         :description "Join us on the MS Hunky Dory: bbsm.org/membership"
-                        :by authors/bbsm})
+                        :by          authors/bbsm})
+
+(def filler-vintage-red-army {:type        :post-text
+                              :id          "filler-vintage-red-army"
+                              :description "Vintage verification @vintage_verification -- In the olden days, verification was a long, cumbersome process that involved a lot of analogue research. Take this classic photo of the Red Army liberating Berlin. It's a great, iconic photo that documents a very real event, but it's also partly fake (and propagandastic). Do you know the story behind it?
+https://www.vox.com/videos/2018/10/2/17928052/soviets-doctored-wwii-photo-reichstag-iwo-jima-world-war-ii"
+                              :by          authors/vintage_verification})
+
 
 (def all-activity-posts [p1-climate-refugees-copenhagen?
                          p3-financiel-gdp?

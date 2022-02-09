@@ -28,6 +28,8 @@
 
    7 posts/filler-bowie-boat
 
+   7 posts/filler-vintage-red-army
+
    6 posts/filler-mil-tutorials
 
    12 posts/p11-megacorp-prisons?-story
