@@ -5,17 +5,19 @@
             [kid-game.components.modal             :as modal]
             [kid-game.state :as state]))
 
+(defn <empty> [] [:<>])
+
 (defn <modal-icon>
   ([modal-content] (<modal-icon> "" modal-content))
   ([subtext modal-content] ; a [:div]
    (let [[toggle-modal close-modal <modal>] (modal/make-modal)]
      [;return the mofal icon
       (fn []
-        [:a {:class "has-text-grey is-small"
+        [:a {:class    "has-text-grey is-small"
              :on-click #(toggle-modal)}
          subtext
          [:i {:class "fa fa-info-circle mr-1"}]])
-     ; and the modal itself
+                                        ; and the modal itself
       (fn [] [<modal> (fn [] modal-content)])])))
 
 (defn <header> [^js/SVG icon

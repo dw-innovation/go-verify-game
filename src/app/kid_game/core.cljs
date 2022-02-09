@@ -12,7 +12,7 @@
             [kid-game.components.notifications                    :as notifications]
             [kid-game.components.verification-hub.core            :as <verification-hub>]
             [kid-game.components.verification-hub.activities.core :as activities]
-            [kid-game.components.shared.icons :as icons]
+            [kid-game.components.shared.icons   :as icons]
             ;; these NS are imported here for dev hot-reloading.  for some reason it does not work without
             ;; them imported at the top of the tree
             [kid-game.components.verification-hub.activities.websearch]
@@ -21,7 +21,7 @@
             [kid-game.components.verification-hub.activities.ris-flip]
             [kid-shared.ticks :as ticks]
             [kid-shared.generator :as gen]
-            ; end weird import
+                                        ; end weird import
             [moment]))
 
 (defn <game> []
@@ -84,15 +84,15 @@
 
 (defn <routes> []
   ;; decide what to render in our app.  This is some junk hand-made routing
-  (let [s js/window.location.search ; get the ?var=val&var2=val2 from the url
-        post-id    (-> (js/URLSearchParams. s) (.get "post"))
-        uikit?     (-> (js/URLSearchParams. s) (.get "uikit"))]
+  (let [s       js/window.location.search ; get the ?var=val&var2=val2 from the url
+        post-id (-> (js/URLSearchParams. s) (.get "post"))
+        uikit?  (-> (js/URLSearchParams. s) (.get "uikit"))]
     (when (and @state/dev?
                (not (state/has-player?))) (business/new-session! "dev-user"))
     (cond
-      uikit? [uikit/<main-view>]
+      uikit?  [uikit/<main-view>]
       post-id [<one-post> post-id]
-      :else [<app>])))
+      :else   [<app>])))
 
 ; render the html component, if it exists
 (defn maybe-bind-element [div-id <component>]
