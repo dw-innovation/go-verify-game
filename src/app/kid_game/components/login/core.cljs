@@ -1,9 +1,7 @@
 (ns kid-game.components.login.core
   (:require [reagent.core                          :as r]
-            [kid-game.state                        :as state]
             [kid-game.business                     :as business]
             [kid-shared.data.blocks                :as blocks]
-            [kid-game.components.modal             :as modal]
             [kid-game.components.shared.icons      :as icons]))
 
 (defn modal-content []
@@ -29,39 +27,33 @@
    [:h5 {:class "subtitle mb-6"}
     "You've heard about that whole \"fake news\" thing,"
     [:br] "haven't you?"
-    [:a {:class "is-text-hub-primary"
-         :on-click #(modal/toggle-modal)}
-     [:span {:class "pl-1 is-small"}
-      [:i {:class "fa fa-info-circle mr-1"}]]]]])
+    ]
+   [:p.mb3 "We've created this little game to teach you the basics of verification."]])
 
 (defn <form> []
-  (let [v      (r/atom nil)
-        u      (state/get-player)
-        log-in #(business/new-session! @v)]
+  (let [name   (r/atom nil)
+        log-in (fn [] (business/on-logged-in @name))]
     (fn []
       [:div {:class "hero is-fullheight is-align-content-center is-justify-content-center has-background-light"}
-       [modal/<modal> modal-content]
        [:div {:class "columns is-justify-content-center contain-section-width center-section has-background-white p-6 br-2"}
         [:div {:class "column is-12 has-text-centered"}
          (<login-title>)
          (<thomas-icon>)
-
          [:form
           {:on-submit (fn [x] (.preventDefault x) (log-in))
            :class     "br-2"
            :style     {:overflow "hidden"
                        :position "relative"
                        :z-index  1}} ;; for the border radius
-
           [:div {:class "has-background-hub-primary p-6"}
            ;; input field
            [:div.field.pt-4
             [:div {:class "control has-icons-left has-icons-right"}
              [:input {:class       "input"
                       :type        "text"
-                      :value       @v
-                      :placeholder "Pick a username"
-                      :on-change   #(reset! v (-> % .-target .-value))}]
+                      :value       @name
+                      :placeholder "Pick a user name"
+                      :on-change   #(reset! name (-> % .-target .-value))}]
              [:span {:class "icon is-small is-left"}
               [:i {:class "fa fa-user"}]]]]]
           [:div {:class "has-background-hub-secondary p-3"}

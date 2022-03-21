@@ -25,13 +25,17 @@
         :role    :investigator}
        (state/set-player)))
 
-(defn new-session! [player-name]
+(defn start-game! []
   (ticks/start!)
   (state/open-game)
-  (use-new-player! :name player-name)
-  ;; TODO only start all stories if websocket fails
-  ;; (socket/setup-socket! (state/get-player))
   (when (not @state/dev?) (start-all-stories!)))
+
+(defn on-logged-in [player-name]
+  (use-new-player! :name player-name)
+  (state/open-tutorial))
+
+(defn on-tutorial-finished []
+  (start-game!))
 
 (defn logout []
   (reset! state/dev? false)
@@ -66,24 +70,24 @@
                                   (state/post-transition-state! p :timed-out)))
         cancel!        (fn [] (do (ticks/cancel ticks-dec-key)
                                   (ticks/cancel ticks-stop-key)))]
-    (state/update-post p :stop-timer! cancel!)
-    (ticks/for-ticks time-limit ticks-dec-key decrease-time!)
-    (ticks/after time-limit ticks-stop-key time-out!)))
+  (state/update-post p :stop-timer! cancel!)
+  (ticks/for-ticks time-limit ticks-dec-key decrease-time!)
+  (ticks/after time-limit ticks-stop-key time-out!)))
 
 ;; only works if the timer has already been attatched
 (defn stop-post-timer! [post]
   (let [p (state/get-post post)]
-    (if (fn? (:stop-timer! p)) ; is there a function at the expected key?
-      ((:stop-timer! p)) ; then run it!
-      (log/warn "post does not have a stopping function!"))))
+  (if (fn? (:stop-timer! p)) ; is there a function at the expected key?
+    ((:stop-timer! p)) ; then run it!
+    (log/warn "post does not have a stopping function!"))))
 
 (defn add-post [post]
-  ;; remove the post timer from below if it's already there
+;; remove the post timer from below if it's already there
   (let [p (state/get-post post)] ; get the current live version of the post
-    (when p (stop-post-timer! p))) ; if it's there, stop the timer
-  ;; TODO validate that it's an actual valid post
-  (state/add-post post)
-  ;; add the live game post states
+  (when p (stop-post-timer! p))) ; if it's there, stop the timer
+;; TODO validate that it's an actual valid post
+(state/add-post post)
+;; add the live game post states
   (state/update-post post :game-state nil
                      :investigated? false)
   ;; attatch a time decreaser to the post, but only if time limiet
@@ -99,7 +103,7 @@
   (state/open-verification-hub post)
   (.scrollIntoView (js/document.getElementById (:id post)) (clj->js {"behavior" "smooth"
                                                                      "block"    "center"
-                                                                     "inline"     "center"})))
+                                                                     "inline"   "center"})))
 
 (defn notify [typ text]
   (state/add-notification {:type typ :text text}))
@@ -185,7 +189,7 @@
 (defn post-block! [post]
   (post-action! :block post))
 
-; user, string -> state update
+                                        ; user, string -> state update
 (defn chat-send! [& {:keys [to content]}]
   (messaging/send (chat/create :from (state/get-player)
                                :to to
@@ -208,17 +212,17 @@
     (do
       ;; (log/debug "handling message" msg)
       (case type
-          ;; eventually, the following functions should all call local funcs
-          ;; and not delegate to state functions
-        ::messages/user-init (state/set-users body)
-        ::messages/chat-new (state/add-chat body)
-        ::messages/user-new (state/add-user body)
-        ::messages/user-left (state/remove-user body)
+        ;; eventually, the following functions should all call local funcs
+        ;; and not delegate to state functions
+        ::messages/user-init   (state/set-users body)
+        ::messages/chat-new    (state/add-chat body)
+        ::messages/user-new    (state/add-user body)
+        ::messages/user-left   (state/remove-user body)
         ::messages/comment-new (state/add-post-comment body)
-        ::messages/post-new (add-post body)
-          ; default
+        ::messages/post-new    (add-post body)
+                                        ; default
         (log/debug "could not handle the message"))
-        ;; not really true
+      ;; not really true
       true)
     (do (log/warn "got a message we don't recognize as a message")
         false)))

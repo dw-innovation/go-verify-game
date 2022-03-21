@@ -34,7 +34,7 @@
            ;;   the nrepl, which you can run with
            ;;     `clj -M:nrepl` -> this starts up an nrepl that you can connect to with cider!
            ;;       you will see the output in the terminal where you started it
-           :repl {:extra-deps {nrepl/nrepl {:mvn/version "0.8.3"}}
+           :repl {:extra-deps {nrepl/nrepl {:mvn/version "0.9.0"}}
                    ;; when you start the repl, load the DEV/user.clj file, which will start the application
                    ;; this happens because clojure automatically drops you in the 'user' namespace, and
                    ;; anything from there get's excecuted
