@@ -94,12 +94,10 @@
       post-id [<one-post> post-id]
       :else   [<app>])))
 
-; render the html component, if it exists
-(defn maybe-bind-element [div-id <component>]
-  (if-let [el (. js/document (getElementById div-id))]
-    (do
-      (log/debug "mounting component on #" div-id)
-      (rd/render [<component>] el))
-    (log/warn "#" div-id "not found, skipping")))
 
-(maybe-bind-element "app" <routes>)
+(def dom-root (. js/document (getElementById "app")))
+
+(rd/render [<routes>] dom-root)
+
+(defn ^:dev/after-load start []
+  (rd/render [<routes>] dom-root))
