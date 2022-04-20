@@ -38,7 +38,7 @@
    [:p "Try re-inverting the image"]
    [:p "Repeat the search"]])
 
-(def game-tagline-title "Welcome to the KID Game")
+(def game-tagline-title "Welcome to Go Verify!")
 
 (def game-tagline-welcome "You've heard about that whole \"fake news\" thing, haven't you?")
 
