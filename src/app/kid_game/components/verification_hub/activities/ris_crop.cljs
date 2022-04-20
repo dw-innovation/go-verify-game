@@ -56,46 +56,52 @@
                            crop-hit-box   :crop-hit-box}
                           succeed!
                           fail!]
-  (let [point-first         (r/atom nil) ; save an [x y] position where we started the crop
-        correct-first?      (r/atom false)
-        point-intermediate  (r/atom nil) ; save our current hovering point
-        point-second        (r/atom nil) ; save a [x y] position where we stopped the crop
-        correct-second?     (r/atom false)
-        svg                 (r/atom nil) ; will be a ref to the svg element
-        hit-box             (r/atom nil) ; will be a ref to the svg element
-        correct-crop?       (r/atom false)
+  (let [point-first        (r/atom nil) ; save an [x y] position where we started the crop
+        correct-first?     (r/atom false)
+        point-intermediate (r/atom nil) ; save our current hovering point
+        point-second       (r/atom nil) ; save a [x y] position where we stopped the crop
+        correct-second?    (r/atom false)
+        svg                (r/atom nil) ; will be a ref to the svg element
+        hit-box            (r/atom nil) ; will be a ref to the svg element
+        correct-crop?      (r/atom false)
                                         ; handle a click:
-        mousedown!          (fn [evt] (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
-                                        (reset! point-second nil)
-                                        (reset! point-first [x y])))
-        mouseup!            (fn [evt] (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
-                                        (reset! point-second [x y])
-                                        (if @correct-second?
-                                          (when succeed! (succeed!) (reset! correct-crop? true))
-                                          (when fail! (fail!) (reset! correct-crop? false)))))
-        mousemove!          (fn [evt] (when (and @svg @point-first (not @point-second))
-                                        (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
-                                          (reset! point-intermediate [x y]))))
-        ;; the following controls the switches for when the user did things correctly
-        ;; testing to see if the points are in the fills of the path is too hard and janky
-        ;; so we have a little hack here.  first correct click logs a true,
-        ;; then the second can act on that.  the evaluation happens in the mouseup! above, where the state
-        ;; of the switches is checked.
-        first-success!      (fn [evt]
-                              (reset! correct-second? false)
-                              (reset! correct-first? true))
-        second-success!     (fn [evt]
-                              (if @correct-first?
-                                (do (reset! correct-second? true)
-                                    (reset! correct-first? false))
-                                (do (reset! correct-first? false)
-                                    (reset! correct-second? false))))
+        mousedown-fail!    (fn [evt] (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
+                                       (print "fail mousedown")
+                                       (reset! point-second nil)
+                                       (reset! point-first [x y])
+                                       (reset! correct-first? false)
+                                       (reset! correct-crop? false)))
+        mouseup-fail!      (fn [evt] (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
+                                       (print "fail mouseup")
+                                       (reset! point-second [x y])
+                                       (reset! correct-crop? false)
+                                       (reset! correct-second? false)
+                                       (fail!)))
+        mousemove!         (fn [evt] (when (and @svg @point-first (not @point-second))
+                                       (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
+                                         (reset! point-intermediate [x y]))))
+        mousedown-success! (fn [evt] (.stopPropagation evt)
+                             (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
+                               (print "correct mousedown")
+                               (reset! point-second nil)
+                               (reset! point-first [x y])
+                               (reset! correct-crop? false)
+                               (reset! correct-first? true)))
+        mouseup-success!   (fn [evt] (.stopPropagation evt)
+                             (let [[x y] (svg-utils/get-svg-coordinates @svg evt)]
+                               (print "correct mouseup")
+                               (reset! point-second [x y])
+                               (reset! correct-second? true)
+                               (when (and @correct-first? @correct-second?)
+                                 (reset! correct-crop? true)
+                                 (succeed!))))
+
         <cropper-component> (fn []
                               [:div.cropper
                                [:svg {:ref           #(reset! svg %)
                                       :viewBox       (str "0 0 " width " " height)
-                                      :on-mouse-down mousedown!
-                                      :on-mouse-up   mouseup!
+                                      :on-mouse-down mousedown-fail!
+                                      :on-mouse-up   mouseup-fail!
                                       :on-mouse-move mousemove!}
                                         ; first our backroung image to span across the back of the svg
                                 [:image {:width width :heigh height :href url}]
@@ -107,11 +113,11 @@
                                   [:g.drag-region
                                    [<rectangle> @point-first @point-intermediate]])
                                 [:g.hit-box {:ref           #(reset! hit-box %)
-                                             :style         {:stroke       (if @state/dev? "red" "transparent")
+                                             :style         {:stroke      "red"
                                                              :fill         "transparent"
                                                              :stroke-width 2}
-                                             :on-mouse-down first-success!
-                                             :on-mouse-up   second-success!}
+                                             :on-mouse-down mousedown-success!
+                                             :on-mouse-up   mouseup-success!}
                                  crop-hit-box]]])
         <cropped-svg>       (fn []
                               (if (and @point-first @point-second)

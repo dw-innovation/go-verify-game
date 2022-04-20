@@ -40,7 +40,7 @@
           :dimensions [1112 625]
           :result-search []
           :crop-hit-box [:path {:d "M9 600V9H609V600H9Z"
-                                 :transform "translate(497,18)"}]
+                                 :transform "translate(497,-200)"}]
           :result-search-after-crop [{:url "gizmodo.com"
                                       :title "Article about Frankfurt, Germany"
                                       :text "Subtext about Frankfurt, Germany which is some random article, but shows the s"
