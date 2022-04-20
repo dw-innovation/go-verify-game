@@ -102,9 +102,9 @@
     [:div {:style {:width "100px" :float "left"}}
      [icons/blooble-logo]]
     [:div {:style {:width "100px" :float "left"}}
-     [icons/thomas]]
+     [icons/izzy]]
     [:div {:style {:width "100px" :float "left"}}
-     [icons/thomas-with-speech!?-bubble]]
+     [icons/izzy-with-speech!?-bubble]]
     [:div {:style {:width "100px" :float "left"}}
      [icons/image-analysis]]
     [:div {:style {:width "100px" :float "left"}}
@@ -157,7 +157,7 @@
 
 (defn modal-content []
   [:div [:div {:style {:width "100px" :float "center"}}
-         [icons/thomas]]
+         [icons/izzy]]
    [:h4.title.is-4 "What's all this then?"]
    [:p [:b "I am but a modal window and don't do much."] " I support all kinds of components passed into me."]
    [:p.mt-2 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
@@ -173,7 +173,7 @@
     [:div {:class "column is-full"}
      [:hr]
      [:h2.title.is-2 "End of Content Message"]
-     [timeline/<thomas-says-we-are-done>]
+     [timeline/<izzy-says-we-are-done>]
      [:hr]
      [:h2.title.is-2 "Notifications"]
      [<notifications>]
@@ -188,9 +188,9 @@
      [:h4.title.is-4 "Buttons"]
      [post-buttons]
      [:hr]
-    ;;  [:h4.title.is-4 "Inline results"]
-    ;;  [<overlays>]
-    ;;  [:hr]
+     ;;  [:h4.title.is-4 "Inline results"]
+     ;;  [<overlays>]
+     ;;  [:hr]
      [:h4.title.is-4 "Progress bar"]
      [<progress-bars>]
      [:hr]

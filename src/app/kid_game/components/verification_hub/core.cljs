@@ -36,11 +36,11 @@
                   [:div {:class "column is-6  has-text-centered"}
                    [:h5.subtitle "Pick a verification action:"]]])
 
-(defn <thomas> [] [:div.thomas.columns.is-centered.pt-6
-                   [:div.column.is-3
-                    [:div.thomas-icon
-                     {:title "This is Izzy, a verification specialist – ready to help you analyze dubious content!"}
-                     [icons/thomas]]]])
+(defn <izzy> [] [:div.izzy.columns.is-centered.pt-6
+                 [:div.column.is-3
+                  [:div.izzy-icon
+                   {:title "This is Izzy, a verification specialist – ready to help you analyze dubious content!"}
+                   [icons/izzy]]]])
 
 (defn <hub-icon> [{icon          :icon
                    title         :title
@@ -120,7 +120,7 @@
                                                  :fn         (choose-activity! :geolocation)}]]
     [:div
      [:div.contain-section-width.center-section
-      [<thomas>]
+      [<izzy>]
       [<title>]
       [:hr]
       [<hub-icons> actions]]

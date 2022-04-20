@@ -47,7 +47,7 @@
    [:p "We've created this little browser game to teach you the basics of verification. That's just a fancy term for thoroughly checking news items and social media messages that may contain false information – or worse."]
    [:p "Now as soon as you've entered your name and clicked on the \"login\" button, you'll be taken to \"Bleeper\". That's a fictitious social network in a not so distant future which might be more realistic than you like."]
    [:p "On the platform, you'll see a lot of posts sliding in and out of your timeline. In this demo, you can read all of them, and you’re free to interact with some of them -- hopefully after you've taken a closer look."]
-   [:p "You'll get the hang of this soon. And if you don't, feel free to ask your friend Thomas: the duck!"]])
+   [:p "You'll get the hang of this soon. And if you don't, feel free to ask your friend Izzy: the duck!"]])
 
 (def tutorial-slide-1
   [:div.columns.ml-0.mr-0
@@ -69,7 +69,7 @@
 (def tutorial-slide-3
   [:div.columns.ml-0.mr-0
    [:div.column.is-half.p4
-    [icons/thomas-with-speech!?-bubble]]
+    [icons/izzy-with-speech!?-bubble]]
    [:div.column.is-half.pl-4
     [:p.mb-4 "As you play along, a lot of posts will appear in your timeline.  You can read all of them, and you'll be able to interact with some of them."]
     [:p.mb-4 "Whenever Izzy – the duck – appears, you should take a closer look. Izzy will offer a choice of verification actions and also explain what they're about."]

@@ -147,22 +147,22 @@
       [<comment> comment]])])
 
 (defn <peeking-duck> [investigate!]
-  [:div {:style {:position "absolute" ; note - this relies on the post having position:relative
-                 :right "0"
-                 :top "25px"
-                 :animation "peek-out-animation 1s ease-in-out"
+  [:div {:style {:position            "absolute" ; note - this relies on the post having position:relative
+                 :right               "0"
+                 :top                 "25px"
+                 :animation           "peek-out-animation 1s ease-in-out"
                  :animation-fill-mode "forwards"
-                 :animation-delay "1s"
-                 :width "150px"}}
+                 :animation-delay     "1s"
+                 :width               "150px"}}
    [:div {:on-click (fn [ev] ;; stop propagation because there is a global
-                        ;; click to open panel, and we are specifically opening the other one
+                      ;; click to open panel, and we are specifically opening the other one
                       (println "clicked investigate")
                       (.stopPropagation ev)
                       (investigate!))
-          :style {:animation "bounce-animation 10s ease-in-out infinite"
-                  :cursor "pointer"
-                  :position "relative"}}
-    [icons/thomas-with-speech!?-bubble]]])
+          :style    {:animation "bounce-animation 10s ease-in-out infinite"
+                     :cursor    "pointer"
+                     :position  "relative"}}
+    [icons/izzy-with-speech!?-bubble]]])
 
 (defn <type-text> [;; destructure the post
                    {:as p
@@ -235,7 +235,7 @@
    [:h5 {:class "title is-5 has-text-white pl-5"}
     "BLEEPER | Home: " (-> @state/app-state :user :name)]])
 
-(defn <thomas-says-we-are-done> []
+(defn <izzy-says-we-are-done> []
   (let [[toggle close <modal>] (modal/make-modal)
         modal-content          (fn [] [:div
                                        [:p.mb-3 "Quack, quack! You've reached the end of this demo. I hope you enjoyed playing it. You can find your final score and stats at the bottom of the verification hub page."]
@@ -266,7 +266,7 @@
                                      " this questionnaire "] "(so we can improve the game)"]
 
          [:p.mb-4 "Btw, we've also put together " [:a {:target "_blank" :src "https://tinyurl.com/kid-verification-toolbox"}
-                                                  "a nice verification toolbox"] " for you."]
+                                                   "a nice verification toolbox"] " for you."]
          [:p.mb-4 "That's it for now. Have good one. And never forget: Facts matter!"]
          [:button {:on-click (business/logout)} "Play Again"]
          [:br]
@@ -294,11 +294,11 @@
 (defn <container> []
   [:div.timeline-container
    [<header>]
-    ;; see css for functionality
+   ;; see css for functionality
    ;; documentation for css transition group seems kind of tricky but is here:
    ;; https://reactcommunity.org/react-transition-group/
    [:div.posts-list
     (if (> (count @gen/active-generators) 0)
       [:div.loader]
-      [<thomas-says-we-are-done>])
+      [<izzy-says-we-are-done>])
     [<posts>]]])

@@ -6,10 +6,10 @@
 
 (defn modal-content []
   [:div [:div {:style {:width "100px" :float "center"}}
-         [icons/thomas]]
+         [icons/izzy]]
    [:div.mt-2 blocks/game-explanation]])
 
-(defn <thomas-icon> []
+(defn <izzy-icon> []
   [:div {:class "has-border-hub-primary has-background-white"
          :style {:width            "100px"
                  :background-color "red"
@@ -19,7 +19,7 @@
                  :overflow         "hidden"
                  :position         "relative"
                  :z-index          2}}
-   [icons/thomas]])
+   [icons/izzy]])
 
 (defn <login-title> []
   [:<>
@@ -38,7 +38,7 @@
        [:div {:class "columns is-justify-content-center contain-section-width center-section has-background-white p-6 br-2"}
         [:div {:class "column is-12 has-text-centered"}
          (<login-title>)
-         (<thomas-icon>)
+         (<izzy-icon>)
          [:form
           {:on-submit (fn [x] (.preventDefault x) (log-in))
            :class     "br-2"

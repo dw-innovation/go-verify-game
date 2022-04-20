@@ -69,7 +69,7 @@
    ;; 15 posts/p3-financiel-gdp-repost-2
    3 posts/p9-flooding-dams?
    5 posts/filler-mil-kidz
-   8 ;; wait time before thomas
+   8 ;; wait time before izzy
    ])
 
 (def all-stories [["game-story (all)" global-story]])
