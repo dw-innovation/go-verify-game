@@ -9,19 +9,18 @@
             [kid-game.business                                    :as business]
             [kid-game.components.meta                             :as <meta>]
             [kid-game.components.timeline.core                    :as <timeline>]
+            [kid-game.components.tutorial.core                    :as tutorial]
             [kid-game.components.notifications                    :as notifications]
             [kid-game.components.verification-hub.core            :as <verification-hub>]
             [kid-game.components.verification-hub.activities.core :as activities]
-            [kid-game.components.shared.icons   :as icons]
             ;; these NS are imported here for dev hot-reloading.  for some reason it does not work without
             ;; them imported at the top of the tree
             [kid-game.components.verification-hub.activities.websearch]
             [kid-game.components.verification-hub.activities.polygon-search]
             [kid-game.components.verification-hub.activities.ris-crop]
             [kid-game.components.verification-hub.activities.ris-flip]
-            [kid-shared.ticks :as ticks]
+            ;; end weird import
             [kid-shared.generator :as gen]
-                                        ; end weird import
             [moment]))
 
 (defn <game> []
@@ -69,7 +68,8 @@
            [<verification-hub>/<container>]]]]))))
 
 (defn <one-post> [post-id]
-  (let [post (-> (filter (fn [p] (= post-id (:id p))) posts-data/all-activity-posts) (first))]
+  (let [post (-> (filter (fn [p] (= post-id (:id p))) posts-data/all-activity-posts)
+                 (first))]
     (when post [:div.testing-environment
                 [:div.post-in-list
                  [<timeline>/<post> (assoc post :game-state :live)]]
@@ -78,9 +78,11 @@
                        [activities/get-activity activity]) (:activities post))])))
 
 (defn <app> []
-  (cond
-    (state/has-player?) [<game>]
-    :else [<login>/<form>]))
+  (case (@state/app-state :active-panel)
+    :verification-hub [<game>]
+    :timeline         [<game>]
+    :tutorial         [tutorial/<tutorial> business/on-tutorial-finished business/on-tutorial-cancelled]
+    :login            [<login>/<form>]))
 
 (defn <routes> []
   ;; decide what to render in our app.  This is some junk hand-made routing
@@ -88,18 +90,19 @@
         post-id (-> (js/URLSearchParams. s) (.get "post"))
         uikit?  (-> (js/URLSearchParams. s) (.get "uikit"))]
     (when (and @state/dev?
-               (not (state/has-player?))) (business/new-session! "dev-user"))
+               (not (state/has-player?)))
+      (business/on-logged-in "dev-user")
+      (business/on-tutorial-finished))
     (cond
       uikit?  [uikit/<main-view>]
       post-id [<one-post> post-id]
       :else   [<app>])))
 
-; render the html component, if it exists
-(defn maybe-bind-element [div-id <component>]
-  (if-let [el (. js/document (getElementById div-id))]
-    (do
-      (log/debug "mounting component on #" div-id)
-      (rd/render [<component>] el))
-    (log/warn "#" div-id "not found, skipping")))
 
-(maybe-bind-element "app" <routes>)
+(def dom-root (. js/document (getElementById "app")))
+
+(rd/render [<routes>] dom-root)
+
+(defn ^:dev/after-load start []
+  (js/console.log "reload")
+  (rd/render [<routes>] dom-root))

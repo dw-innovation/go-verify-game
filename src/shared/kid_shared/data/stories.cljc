@@ -7,7 +7,6 @@
 ;; new message is created.  another vector is considered a sub-story, and
 ;; recursively calls this function.
 
-
 (def global-story
   [1 posts/p17-megacorp-food-fan-story
    6 posts/p13-megacorp-buying-spree-story

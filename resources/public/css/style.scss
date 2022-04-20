@@ -335,6 +335,10 @@ button { background-color: transparent;
          border-radius: var(--spacing);
          cursor: pointer; }
 
+button.is-grey { border: 2px solid var(--color-grey-dark);
+                 color: var(--color-grey-dark); }
+
+
 .hub-post { background-color: var(--color-grey); }
 .hub-post > .post { transform: scale(.5)
                                translate(-25%,-25%); }

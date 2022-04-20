@@ -43,6 +43,10 @@
   (log/debug "opening the timeline")
   (swap! app-state assoc :active-panel :timeline))
 
+(defn open-tutorial []
+  (log/debug "opening the tutorial")
+  (swap! app-state assoc :active-panel :tutorial))
+
 (defn open-verification-hub
   ([post]
    (log/debug "opening verification hub")

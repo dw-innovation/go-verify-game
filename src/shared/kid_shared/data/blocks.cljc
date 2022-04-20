@@ -1,4 +1,5 @@
-(ns kid-shared.data.blocks)
+(ns kid-shared.data.blocks
+  (:require [kid-game.components.shared.icons      :as icons]))
 
 (def web-search-explanation
   [:<>
@@ -47,3 +48,31 @@
    [:p "Now as soon as you've entered your name and clicked on the \"login\" button, you'll be taken to \"Bleeper\". That's a fictitious social network in a not so distant future which might be more realistic than you like."]
    [:p "On the platform, you'll see a lot of posts sliding in and out of your timeline. In this demo, you can read all of them, and you’re free to interact with some of them -- hopefully after you've taken a closer look."]
    [:p "You'll get the hang of this soon. And if you don't, feel free to ask your friend Thomas: the duck!"]])
+
+(def tutorial-slide-1
+  [:div.columns.ml-0.mr-0
+   [:div.column.is-half.p4
+    [:img {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/tutorial-slide-1.jpg"}]]
+   [:div.column.is-half.pl-4
+    [:p.mb-4 "Welcome to Bleeper, Europe's Nr. 1 social media platform – and welcome to the year 2032!"]
+    [:p "The EU has changed quite a bit, but it's still facing the same societal challenges. There's the climate crisis, economic injustice, nationalism, and weird people with even weirder ideas."]]
+   ])
+
+(def tutorial-slide-2
+  [:div.columns.ml-0.mr-0
+   [:div.column.is-half.p4
+    [:img {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/tutorial-slide-2.jpg"}]]
+   [:div.column.is-half.pl-4
+    [:p.mb-4 "You're right in the middle of this: Trying to keep up with the news, trying to keep friends and family well-informed, trying to keep sane in a social network full of disinfo and hate speech."]
+    ]])
+
+(def tutorial-slide-3
+  [:div.columns.ml-0.mr-0
+   [:div.column.is-half.p4
+    [icons/thomas-with-speech!?-bubble]]
+   [:div.column.is-half.pl-4
+    [:p.mb-4 "As you play along, a lot of posts will appear in your timeline.  You can read all of them, and you'll be able to interact with some of them."]
+    [:p.mb-4 "Whenever Izzy – the duck – appears, you should take a closer look. Izzy will offer a choice of verification actions and also explain what they're about."]
+    [:p.mb-4 "Once you've investigated a post, you can make a call: Share or block? Either decision can win or cost you points. "]
+    [:p.mb-4 "Don't spread disinfo. Don't ignore legit content. Don't fail your friends. And don't wait too long, or else that Bleeper post may just go viral..."]
+    ]])
