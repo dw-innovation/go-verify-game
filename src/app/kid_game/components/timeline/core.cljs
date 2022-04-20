@@ -237,27 +237,38 @@
 
 (defn <thomas-says-we-are-done> []
   (let [[toggle close <modal>] (modal/make-modal)
-        modal-content (fn [] [:div
-                              [:p.mb-3 "Quack, quack! You've reached the end of this demo. I hope you enjoyed playing it. You can find your final score and stats at the bottom of the verification hub page."]
-                              [:p.mb-3 "Still got a couple of minutes? Please fill out this feedback questionnaire (so the developers can improve the game): "]
-                              [:p.mb-3
-                               [:a {:href "https://tinyurl.com/kid-game-feedback"
-                                    :target "_blank"} "https://tinyurl.com/kid-game-feedback"]]
-                              [:p.mb-3 "Btw, we've also put together a nice verification toolbox/tutorial for you: "]
-                              [:p.mb-3
-                               [:a {:href "https://tinyurl.com/kid-verification-toolbox"
-                                    :target "_blank"} "https://tinyurl.com/kid-verification-toolbox"]]
-                              [:p.mb-3 "That's it for now. Have a good one. And never forget: Facts matter. Quack."]])]
+        modal-content          (fn [] [:div
+                                       [:p.mb-3 "Quack, quack! You've reached the end of this demo. I hope you enjoyed playing it. You can find your final score and stats at the bottom of the verification hub page."]
+                                       [:p.mb-3 "Still got a couple of minutes? Please fill out this feedback questionnaire (so the developers can improve the game): "]
+                                       [:p.mb-3
+                                        [:a {:href   "https://tinyurl.com/kid-game-feedback"
+                                             :target "_blank"} "https://tinyurl.com/kid-game-feedback"]]
+                                       [:p.mb-3 "Btw, we've also put together a nice verification toolbox/tutorial for you: "]
+                                       [:p.mb-3
+                                        [:a {:href   "https://tinyurl.com/kid-verification-toolbox"
+                                             :target "_blank"} "https://tinyurl.com/kid-verification-toolbox"]]
+                                       [:p.mb-3 "That's it for now. Have a good one. And never forget: Facts matter. Quack."]])]
     (fn []
       [:div.mb-5
        [<modal> modal-content]
        [:div.post-wrapper {:style {:position "relative"}}
         [<peeking-duck> toggle]
-        [:div.post.post-type-text.p-5.pl-5 {:style {:position "relative"
+        [:div.post.post-type-text.p-5.pl-5 {:style {:position         "relative"
                                                     :background-color "white"}}
          [:h4.is-4.title "You have reached the end of the demo."]
-         [:p "Thanks for playing!"]
-         [:p "Please click Thomas for further details ->"]
+         [:p.mb-4 "Thanks for playing! Here's your final score:"]
+         [:div.has-text-centered.ml-6.mr-6.mt-2.mb-4 {:style {:border        "2px solid teal"
+                                                              :border-radius "2rem"
+                                                              :font-size     "2rem"}} @state/points ]
+
+         [:p "Still got a couple of minutes?"]
+         [:p.mb-4 "Please fill out" [:a {:target "_blank" :src "https://tinyurl.com/kid-game-feedback"}
+                                     " this questionnaire "] "(so we can improve the game)"]
+
+         [:p.mb-4 "Btw, we've also put together " [:a {:target "_blank" :src "https://tinyurl.com/kid-verification-toolbox"}
+                                                  "a nice verification toolbox"] " for you."]
+         [:p.mb-4 "That's it for now. Have good one. And never forget: Facts matter!"]
+         [:button {:on-click (business/logout)} "Play Again"]
          [:br]
          [:br]]]])))
 
