@@ -41,6 +41,9 @@
   (reset! state/dev? false)
   (state/clear-player))
 
+(defn on-tutorial-cancelled []
+  (logout))
+
 (defn post-text-post! [& {:keys [title description fake-news?]}]
   (messaging/send {:type ::messages/post-new
                    :body {:type        :post-text

@@ -81,7 +81,7 @@
   (case (@state/app-state :active-panel)
     :verification-hub [<game>]
     :timeline         [<game>]
-    :tutorial         [tutorial/<tutorial>]
+    :tutorial         [tutorial/<tutorial> business/on-tutorial-finished business/on-tutorial-cancelled]
     :login            [<login>/<form>]))
 
 (defn <routes> []
@@ -104,4 +104,5 @@
 (rd/render [<routes>] dom-root)
 
 (defn ^:dev/after-load start []
+  (js/console.log "reload")
   (rd/render [<routes>] dom-root))
