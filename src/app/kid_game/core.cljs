@@ -2,6 +2,8 @@
   (:require [reagent.core                                         :as r]
             [reagent.dom :as rd]
             [kid-game.utils.log                                   :as log]
+            [kid-shared.data.blocks                :as blocks]
+            [kid-game.components.modal :as modal]
             [kid-game.uikit                                   :as uikit]
             [kid-shared.data.posts                               :as posts-data]
             [kid-game.components.login.core                       :as <login>]
@@ -77,12 +79,27 @@
                        ^{:key (:type activity)} ;; important to keep track of rendering
                        [activities/get-activity activity]) (:activities post))])))
 
+(defn <impressum-meta> []
+  (let [[toggle-credits! close-credits! <credits-modal>] (modal/make-modal)]
+    [:div {:style {:position   "fixed"
+                   :bottom     0
+                   :left       0
+                   :background "white"
+                   :z-index    9999999}}
+     [:a {:href     "#"
+          :on-click toggle-credits!} "Credits | Legal Notice"]
+     [<credits-modal> (fn [] blocks/credits)]
+     ]))
+
 (defn <app> []
-  (case (@state/app-state :active-panel)
-    :verification-hub [<game>]
-    :timeline         [<game>]
-    :tutorial         [tutorial/<tutorial> business/on-tutorial-finished business/on-tutorial-cancelled]
-    :login            [<login>/<form>]))
+  [:<>
+   (case (@state/app-state :active-panel)
+     :verification-hub [<game>]
+     :timeline         [<game>]
+     :tutorial         [tutorial/<tutorial> business/on-tutorial-finished business/on-tutorial-cancelled]
+     :login            [<login>/<form>])
+   [<impressum-meta>]
+   ])
 
 (defn <routes> []
   ;; decide what to render in our app.  This is some junk hand-made routing

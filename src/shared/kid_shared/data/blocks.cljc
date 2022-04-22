@@ -76,3 +76,20 @@
     [:p.mb-4 "Once you've investigated a post, you can make a call: Share or block? Either decision can win or cost you points. "]
     [:p.mb-4 "Don't spread disinfo. Don't ignore legit content. Don't fail your friends. And don't wait too long, or else that Bleeper post may just go viral..."]
     ]])
+
+(def credits
+  [:div
+   [:h3.mb-4 "Credits | Legal note"]
+   [:p.mb-4 "This game was created in the scope of the " [:a {:href   "https://innovation.dw.com/"
+                                                             :target "_blank"} "DW Innovation project"]]
+   [:p.mb-4 [:b "K"] "ünstliche " [:b "I"] "ntelligenz gegen " [:b "D"] "esinformation (KID)."]
+
+   [:p.mb-4 "Concept & Development: DW Innovation"]
+   [:p.mb-4 "Graphic design: Andreas Leibe"]
+   [:p.mb-4 "Funding: " [:a {:href   "https://www.bundesregierung.de/breg-de/bundesregierung/staatsministerin-fuer-kultur-und-medien"
+                             :target "_blank"} "Bundesbeauftage für Kultur und Medien"]]
+
+   [:p.mb-4 "Legal Note: " [:a {:href   "https://www.dw.com/en/legal-notice/a-15718492"
+                             :target "_blank"} "https://www.dw.com/en/legal-notice/a-15718492"]]
+
+   ])
