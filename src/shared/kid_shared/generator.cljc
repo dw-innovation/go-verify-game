@@ -29,6 +29,8 @@
   (log/debug "resuming generator")
   (reset! paused? false))
 
+(defn add-timestamp [o] (merge o {:timestamp @ticks/ticks}))
+
 ;; takes a story, defined as [num, post, comment, [story], num, comment, post, num, post]
 ;; and plays it to a channel, waiting on each num, and then
 ;; posting each post
@@ -71,10 +73,10 @@
                                                            (async/<! (ticks/wait-chan story-item)))
                          (posts/post? story-item)      (do (log/debug "story item is a post")
                                                            (async/>! send-channel {:type ::messages/post-new
-                                                                                   :body story-item}))
+                                                                                   :body (add-timestamp story-item)}))
                          (comment/comment? story-item) (do (log/debug "story item is a comment")
                                                            (async/>! send-channel {:type ::messages/comment-new
-                                                                                   :body story-item}))
+                                                                                   :body (add-timestamp story-item)}))
                          (vector? story-item)          (do (log/debug "story item is another story, starting generator")
                                                            (gen-run-story send-channel story-item))
                          :else                         (log/warn "we don't recognize this as a story item: " story-item))

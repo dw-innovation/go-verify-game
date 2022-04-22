@@ -116,25 +116,35 @@
                        game-state    :game-state
                        points-result :points-result}]
   (case game-state
-    :live nil
+    :live      nil
     :timed-out [<action-info-content> :timeout "Too late. This post has already gone viral."]
-    :shared (if fake-news?
-              [<action-info-content> :lost "You shared nonsense content" points-result]
-              [<action-info-content> :won "You shared legit content" points-result])
-    :blocked (if fake-news?
-               [<action-info-content> :won "You blocked nonsense content" points-result]
-               [<action-info-content> :lost "You blocked legit content" points-result])
+    :shared    (if fake-news?
+                 [<action-info-content> :lost "You shared nonsense content" points-result]
+                 [<action-info-content> :won "You shared legit content" points-result])
+    :blocked   (if fake-news?
+                 [<action-info-content> :won "You blocked nonsense content" points-result]
+                 [<action-info-content> :lost "You blocked legit content" points-result])
     nil))
 
-(defn <comment> [{:as comment
-                  text :text
-                  author :by}]
+(defn <timestamp> [timestamp]
+  (let [original-date    (js/Date. (js/Date.parse "3/12/2030 14:32"))
+        timestamped-date (if timestamp
+                           (js/Date.  (+ (.getTime original-date) (* 60000 timestamp)))
+                           original-date)
+        timestamp-str    (.toLocaleString timestamped-date)]
+    [:div.has-text-grey-light {:style {:font-size ".8rem"}} timestamp-str]))
+
+(defn <comment> [{:as       comment
+                  text      :text
+                  timestamp :timestamp
+                  author    :by}]
   [:div.comment
    [:div.comment-inner
     [:div.comment-inner-left
      [<author-image> author]]
     [:div.comment-inner-right
      [:div.comment-author (:name author) [:span.comment-handle (:handle author)]]
+     [:div.comment-timestamp [<timestamp> timestamp]]
      [:div.comment-text text]]]])
 
 (defn <post-comments> [comments]
@@ -164,20 +174,22 @@
                      :position  "relative"}}
     [icons/izzy-with-speech!?-bubble]]])
 
+
 (defn <type-text> [;; destructure the post
-                   {:as p
+                   {:as         p
                     description :description
-                    game-state :game-state ; either :live, :shared, :blocked, or :timed-out
-                    author :by
-                    comments :comments}]
+                    game-state  :game-state ; either :live, :shared, :blocked, or :timed-out
+                    author      :by
+                    timestamp   :timestamp
+                    comments    :comments}]
   (let [investigate! (fn [] (business/post-investigate! p))]
     [:div.post-wrapper {:style {:position "relative"}}
 
      (when (= :live game-state) [<peeking-duck> investigate!])
 
      [:div {:class ["post" "post-type-text" game-state]
-            :style {:position "relative" ; for the duck in <peeking-duck> to be position:absoluted correctly
-                    :background-color "white" ; lazy for now
+            :style {:position         "relative" ; for the duck in <peeking-duck> to be position:absoluted correctly
+                    :background-color "white"    ; lazy for now
                     }}
       [<debug-tags> p]
       (case game-state
@@ -190,6 +202,7 @@
        [:div.authorcolumn [<author-image> author]]
        [:div.infocolumn
         [<author-name> author]
+        [<timestamp> timestamp]
         [<post-text> description]
         (when (:image p) [<post-media> (:image p)])
         (when (= game-state :live) [<post-actions> p])
