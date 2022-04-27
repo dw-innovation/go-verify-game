@@ -443,7 +443,7 @@ When you swore to be true / Our bed was belief / But alternative facts snuck in 
 
 (def filler-vintage-red-army {:type        :post-text
                               :id          "filler-vintage-red-army"
-                              :description "Vintage verification @vintage_verification -- In the olden days, verification was a long, cumbersome process that involved a lot of analogue research. Take this classic photo of the Red Army liberating Berlin. It's a great, iconic photo that documents a very real event, but it's also partly fake (and propagandastic). Do you know the story behind it?
+                              :description "In the olden days, verification was a long, cumbersome process that involved a lot of analogue research. Take this classic photo of the Red Army liberating Berlin. It's a great, iconic photo that documents a very real event, but it's also partly fake (and propagandastic). Do you know the story behind it?
 https://www.vox.com/videos/2018/10/2/17928052/soviets-doctored-wwii-photo-reichstag-iwo-jima-world-war-ii"
                               :by          authors/vintage_verification})
 
