@@ -113,7 +113,7 @@
                                   [:g.drag-region
                                    [<rectangle> @point-first @point-intermediate]])
                                 [:g.hit-box {:ref           #(reset! hit-box %)
-                                             :style         {:stroke      "red"
+                                             :style         {:stroke      "transparent"
                                                              :fill         "transparent"
                                                              :stroke-width 2}
                                              :on-mouse-down mousedown-success!
