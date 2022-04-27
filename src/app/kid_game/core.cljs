@@ -87,7 +87,7 @@
                    :background "white"
                    :z-index    9999999}}
      [:a {:href     "#"
-          :on-click toggle-credits!} "Credits | Legal Notice"]
+          :on-click toggle-credits!} "Credits | Legal Note"]
      [<credits-modal> (fn [] blocks/credits)]
      ]))
 
