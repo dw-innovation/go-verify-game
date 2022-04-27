@@ -428,10 +428,10 @@ When you swore to be true / Our bed was belief / But alternative facts snuck in 
 (def filler-osint-funding {:type :post-text
                            :id "filler-osint-funding"
                            :description "#followerpower: Megacorp offered to sponsor one of our upcoming research projects. What are your thoughts?
-
-* Honni soit qui mal y pense. *
-* No strings attached? At least consider the option. *
-* Shut up and take the money! *
+\n
+-> Honni soit qui mal y pense. \n
+-> No strings attached? At least consider the option. \n
+-> Shut up and take the money!
 "
                            :by authors/OSINT_FTW})
 
