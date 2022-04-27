@@ -9,6 +9,18 @@
 ;;
 (defn timestamp-now [] (.getTime (js/Date.)))
 
+(defn date->string [date]
+  (str (.getUTCHours date)
+       ":"
+       (.getUTCMinutes date)
+       " "
+       (.getUTCDate date)
+       "."
+       (+ 1 (.getUTCMonth date))
+       "."
+       (.getUTCFullYear date)
+       ))
+
 (defn new-uuid [] (str (random-uuid)))
 
 ;; app only utils

@@ -7,6 +7,7 @@
             [kid-game.state           :as state]
             [kid-game.business        :as business]
             [kid-game.utils.log       :as log]
+            [kid-game.utils.core       :as utils]
             [kid-game.components.modal :as modal]
             [kid-shared.types.post    :as posts]
             (kid-shared.types.comment :as comment)
@@ -131,7 +132,7 @@
         timestamped-date (if timestamp
                            (js/Date.  (+ (.getTime original-date) (* 60000 timestamp)))
                            original-date)
-        timestamp-str    (.toLocaleString timestamped-date)]
+        timestamp-str    (utils/date->string timestamped-date)]
     [:div.has-text-grey-light {:style {:font-size ".8rem"}} timestamp-str]))
 
 (defn <comment> [{:as       comment
@@ -209,9 +210,10 @@
         (when (= game-state :live) [<post-progress> p])
         [<post-comments> comments]]]]]))
 
-(defn <type-re-post> [{:as p
-                       author :by
-                       comment :comment
+(defn <type-re-post> [{:as           p
+                       author        :by
+                       comment       :comment
+                       timestamp     :timestamp
                        original-post :post}]
   [:div.post-wrapper
    [:div {:class ["post" "post-type-re-post"]}
@@ -220,6 +222,7 @@
      [:div.authorcolumn [<author-image> author]]
      [:div.infocolumn
       [<author-name> author]
+      [<timestamp> timestamp]
       [<post-text> comment]
       [:div {:class "post-sub-post"} (<post> original-post)]]]]])
 
