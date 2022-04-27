@@ -275,13 +275,13 @@
                                                               :font-size     "2rem"}} @state/points ]
 
          [:p "Still got a couple of minutes?"]
-         [:p.mb-4 "Please fill out" [:a {:target "_blank" :src "https://tinyurl.com/kid-game-feedback"}
+         [:p.mb-4 "Please fill out" [:a {:target "_blank" :href "https://tinyurl.com/kid-game-feedback"}
                                      " this questionnaire "] "(so we can improve the game)"]
 
-         [:p.mb-4 "Btw, we've also put together " [:a {:target "_blank" :src "https://tinyurl.com/kid-verification-toolbox"}
+         [:p.mb-4 "Btw, we've also put together " [:a {:target "_blank" :href "https://tinyurl.com/kid-verification-toolbox"}
                                                    "a nice verification toolbox"] " for you."]
          [:p.mb-4 "That's it for now. Have good one. And never forget: Facts matter!"]
-         [:button {:on-click (business/logout)} "Play Again"]
+         [:button {:on-click business/logout} "Play Again"]
          [:br]
          [:br]]]])))
 
