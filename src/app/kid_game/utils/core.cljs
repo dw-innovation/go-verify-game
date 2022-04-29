@@ -9,17 +9,26 @@
 ;;
 (defn timestamp-now [] (.getTime (js/Date.)))
 
+(defn zp
+  "Zero Pad numbers - takes a number and the length to pad to as arguments"
+  [n c]
+  (.padStart
+   (js/String n)
+   c
+   "0"))
+
 (defn date->string [date]
-  (str (.getUTCHours date)
-       ":"
-       (.getUTCMinutes date)
-       " "
-       (.getUTCDate date)
-       "."
-       (+ 1 (.getUTCMonth date))
-       "."
-       (.getUTCFullYear date)
-       ))
+  (let [months ["January" "February" "March" "April" "May" "June" "July" "August" "September" "October" "November" "December"]]
+    (str (months (.getUTCMonth date))
+         " "
+         (.getUTCDate date)
+         " "
+         (.getUTCFullYear date)
+         ", "
+         (.getUTCHours date)
+         ":"
+         (zp (.getUTCMinutes date) 2)
+         )))
 
 (defn new-uuid [] (str (random-uuid)))
 
