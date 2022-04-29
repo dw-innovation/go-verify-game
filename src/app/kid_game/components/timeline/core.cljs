@@ -265,7 +265,7 @@
                                              :target "_blank"} "https://tinyurl.com/kid-verification-toolbox"]]
                                        [:p.mb-3 "That's it for now. Have a good one. And never forget: Facts matter. Quack."]])]
     (fn []
-      [:div.mb-5
+      [:div.mb-5.mt-5
        [<modal> modal-content]
        [:div.post-wrapper {:style {:position "relative"}}
         [<peeking-duck> toggle]
