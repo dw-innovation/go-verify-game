@@ -417,7 +417,8 @@ When you swore to be true / Our bed was belief / But alternative facts snuck in 
 (def filler-mil-kidz {:type :post-text
                       :image "https://static.dw.com/image/55963768_401.jpg"
                       :id "filler-mil-kids"
-                      :description "Hey there! Remember the five core competencies of media and information literacy (MIL)? --> Access. Analyze. Reflect. Create. Act. <--"
+                      :description "Hey there! Remember the five core competencies of media and information literacy (MIL)? \n
+--> Access. Analyze. Reflect. Create. Act. <--"
                       :by authors/MIL_kids})
 
 (def filler-osint-tool {:type :post-text
