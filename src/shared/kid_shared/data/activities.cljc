@@ -276,22 +276,53 @@
 
 (def eu-commission-ris
   {:type :reverse-image-simple
-   :data {:main-image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p21-eu-commission-hearing/main.jpg"
+   :data {:main-image    "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p21-eu-commission-hearing/main.jpg"
           :result-search [
-                          {:url "nnyt.com"
-                           :title "On this day in 1974: Ford justifies decision to pardon Nixon before House Judiciary Committee."
+                          {:url         "nnyt.com"
+                           :title       "On this day in 1974: Ford justifies decision to pardon Nixon before House Judiciary Committee."
                            :description "In what is still considered an unwise and unjust act by many critics, Gerald Ford, 38th President of the United States..."
-                           :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p21-eu-commission-hearing/main.jpg"
-                           :date "4 years ago"}
-                          {:url "historybuff.net"
-                           :title "The Pardon of Richard Nixon: Corrupt bargain or wise act of reconciliation? "
+                           :img-src     "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p21-eu-commission-hearing/main.jpg"
+                           :date        "4 years ago"}
+                          {:url         "historybuff.net"
+                           :title       "The Pardon of Richard Nixon: Corrupt bargain or wise act of reconciliation? "
                            :description "Remember Nixon? Remember Watergate? Remember how President Ford eventually decided to let his predecessor off the hook? Let's start at...
 "
                            :img-src
-"https://kid-game-resources.s3.eu-central-1.amazonaws.com/p21-eu-commission-hearing/main.jpg"
-                           :date "3 months ago"}
+                           "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p21-eu-commission-hearing/main.jpg"
+                           :date        "3 months ago"}
                           ]
           }})
+
+(def damascus-ris
+  {:type :reverse-image-simple
+   :data {:main-image    "https://kid-game-resources.s3.eu-central-1.amazonaws.com/damascus.jpg"
+          :result-search [
+                          {:url     "fuzzbeat.com"
+                           :title   "25 Totally Fake Photos That Went Viral"
+                           :img-src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/damascus.jpg"
+                           :date    "3 weeks ago"}
+                          ]
+          }})
+
+
+(def damascus-polygons
+  {:type :polygon-search
+   :data {:main-image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/damascus.jpg"
+          :dimensions [1348 760]
+          :polygons   [
+                       {:shape   [:rect {:width "503" :height "760"}]
+                        :message "Don't know where to click?"}
+
+                       {:shape   [:rect {:width "485" :height "760" :transform "translate(503,0)"}]
+                        :message "Well, the whole picture seems off."}
+
+
+                       {:shape   [:rect {:width "360" :height "760" :transform "translate(988,0)"}]
+                        :message "The lighting, the objects, the people in it. So weird."}
+
+                       ]}})
+
+
 
 
 

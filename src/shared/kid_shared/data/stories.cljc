@@ -8,7 +8,8 @@
 ;; recursively calls this function.
 
 (def global-story
-  [1 posts/p17-megacorp-food-fan-story
+  [
+   1 posts/p17-megacorp-food-fan-story
    6 posts/p13-megacorp-buying-spree-story
    12 posts/p16-satellite-image?-story
    5 posts/filler-new-beachfronts
@@ -45,6 +46,7 @@
    6 posts/filler-quote-wet-rag
    13 posts/p19-chinese-minister-of-finance?
    9 posts/filler-bowie-quote
+   1 posts/p22-damascus?
 
    10 posts/p1-climate-refugees-copenhagen-with-comments
 

@@ -53,22 +53,23 @@
    :by authors/european_liberal})
 
 (def p3-financiel-gdp?
-  {:type :post-text
-   :id "p3-financiel-gdp"
-   :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p3-financiel-gdp/chart_migrants.jpeg"
-   :fake-news? true
-   :time-limit 90
-   :by authors/financiel_times
+  {:type        :post-text
+   :id          "p3-financiel-gdp"
+   :image       "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p3-financiel-gdp/chart_migrants.jpeg"
+   :fake-news?  true
+   :time-limit  90
+   :by          authors/financiel_times
    :description "Central Europe faces severe economic problems due to large-scale arrival of lazy and criminal \"climate refugees\"."
-   :activities [activities/financiel-web-search]})
+   :activities  [activities/financiel-web-search]})
+
 (def p3-financiel-gdp?-story
   [p3-financiel-gdp?
    3 {:post-id (:id p3-financiel-gdp?)
-      :by authors/patriot88
-      :text "Not a surprise if you ask me. Bloody Baltic bastards. #NotAllWelcome"}
+      :by      authors/patriot88
+      :text    "Not a surprise if you ask me. Bloody Baltic bastards. #NotAllWelcome"}
    4 {:post-id (:id p3-financiel-gdp?)
-      :by authors/groceries4you
-      :text "Met two of them at my store yesterday. Guy #1 pretended to apply for a job while guy #2 apparently shoved a two dozen chocolate bars into his fancy backpack. Goddamn thieves is what they are."}])
+      :by      authors/groceries4you
+      :text    "Met two of them at my store yesterday. Guy #1 pretended to apply for a job while guy #2 apparently shoved a two dozen chocolate bars into his fancy backpack. Goddamn thieves is what they are."}])
 
 (def p3-financiel-gdp-repost-1
   {:type :re-post
@@ -139,22 +140,23 @@
    :activities [activities/danes-crossing-ris]})
 
 (def p8-megacorp-traffic?
-  {:type :post-text
-   :id "p8-megacorp-traffic"
-   :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p8-megacorp-traffic/main.jpg"
+  {:type        :post-text
+   :id          "p8-megacorp-traffic"
+   :image       "https://kid-game-resources.s3.eu-central-1.amazonaws.com/p8-megacorp-traffic/main.jpg"
    :description "The whole “Megacorp is saving us, cut them some slack” argument is wrong. We gave up so much public space, health and wellbeing so they could “help us”. Result? Cities paralysed by traffic jams, caused by that massive fleet of white delivery vans. Just look at the sheer number of them serving Germany only yesterday evening. https://pic.bleeper.com/h9HXt1"
-   :by authors/stop_the_corp
-   :time-limit 130
-   :fake-news? true
-   :activities [activities/megacorp-traffic-ris]})
+   :by          authors/stop_the_corp
+   :time-limit  130
+   :fake-news?  true
+   :activities  [activities/megacorp-traffic-ris]})
+
 (def p8-megacorp-traffic?-story
   [p8-megacorp-traffic?
    4 {:post-id "p8-megacorp-traffic"
-      :by authors/lightningtangerine
-      :text "This is the crux: We're so dependent on Megacorp, we can't set boundaries anymore. It's all helpful and harmful at the same time."}
+      :by      authors/lightningtangerine
+      :text    "This is the crux: We're so dependent on Megacorp, we can't set boundaries anymore. It's all helpful and harmful at the same time."}
    4 {:post-id "p8-megacorp-traffic"
-      :by authors/j_louis
-      :text "This is fake. And another case of \"activists\" doing the public a disservice. City is clearly US, map data cannot be real. More on Megacorp’s delivery infrastructure (yes, the largest in the world and certainly not a sustainable one) in my story from earlier this year: https://in.bbc.co.uk..."}])
+      :by      authors/j_louis
+      :text    "This is fake. And another case of \"activists\" doing the public a disservice. City is clearly US, map data cannot be real. More on Megacorp’s delivery infrastructure (yes, the largest in the world and certainly not a sustainable one) in my story from earlier this year: https://in.bbc.co.uk..."}])
 
 (def p9-flooding-dams?
   {:type :post-text
@@ -450,6 +452,18 @@ When you swore to be true / Our bed was belief / But alternative facts snuck in 
                               :by          authors/vintage_verification})
 
 
+(def p22-damascus?
+  {:type        :post-text
+   :id          "p22-damascus"
+   :image       "https://kid-game-resources.s3.eu-central-1.amazonaws.com/damascus.jpg"
+   :description "EU Minister of Foreign Affairs arrives in Damascus to discuss Syria's candidacy as a new member state."
+   :by          authors/brussels_post
+   :time-limit  130
+   :fake-news?  true
+   :activities  [activities/damascus-ris activities/damascus-polygons]})
+
+
+
 (def all-activity-posts [p1-climate-refugees-copenhagen?
                          p3-financiel-gdp?
                          p4-minister-in-city?
@@ -463,4 +477,5 @@ When you swore to be true / Our bed was belief / But alternative facts snuck in 
                          p16-satellite-image?
                          p19-chinese-minister-of-finance?
                          p20-river-thames-estuary?
-                         p21-eu-commission-hearing?])
+                         p21-eu-commission-hearing?
+                         p22-damascus?])

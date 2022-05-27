@@ -386,6 +386,13 @@
                 :image  "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/%40bbsm.jpg"
                 :handle "@bbsm"}))
 
+
+(def brussels_post
+  (user/create {:name   "Brussels Post"
+                :image  "https://kid-game-resources.s3.eu-central-1.amazonaws.com/avatars/brussles_post.jpg"
+                :handle "@bbsm"}))
+
+
 (def posters [deutsche-welle
               reuters
               zeit
