@@ -5,7 +5,7 @@ This repository contains the code to run multiple versions of Go Verify!.
 
 Go Verify! is a social media simulation game (demo) that tries to teach journalists, content creators, and media trainers the basics of verification. I.e.: Players will learn how to go about scrutinizing (user generated) content and claims found on the web.
 
-The game created in the scope of the DW Innovation project Künstliche Intelligenz gegen Desinformation (KID), which translates to: Artificial Intelligence against Disinformation.
+The game has been created in the scope of the DW Innovation project Künstliche Intelligenz gegen Desinformation (KID), which translates to: Artificial Intelligence against Disinformation.
 
 Concept & Development: DW Innovation
 Graphic design: Andreas Leibe
