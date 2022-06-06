@@ -1,11 +1,17 @@
 
-# KID - sharpen your disinformation skills
+# Go Verify! Game (KID project)
 
-> KID: in German, “Künstliche Intelligenz gegen Desinformation” (Artificial Intelligence against Mis-/Disinformation) and is funded by the BKM (Beauftragte der Bundesregierung für Kultur und Medien = the German Government’s Commissioner for Culture and Media)
+This repository contains the code to run multiple versions of Go Verify!.
 
-This repository contains the code to run multiple versions of the KID game – a social media simulation game encouraging the verification of odd-looking posts.
+Go Verify! is a social media simulation game (demo) that tries to teach journalists, content creators, and media trainers the basics of verification. I.e.: Players will learn how to go about scrutinizing (user generated) content and claims found on the web.
 
-The game is a standalone ClojureScript frontend application, that _can_ (but doesn't have to) connect to a Clojure/Jar backend to enable chat and mutiplayer.
+The game created in the scope of the DW Innovation project Künstliche Intelligenz gegen Desinformation (KID), which translates to: Artificial Intelligence against Disinformation.
+
+Concept & Development: DW Innovation
+Graphic design: Andreas Leibe
+Funding: Bundesbeauftage für Kultur und Medien
+
+Go Verify! is a standalone ClojureScript frontend application, that _can_ (but doesn't have to) connect to a Clojure/Jar backend to enable chat and mutiplayer.
 
 # Quickstart
 
