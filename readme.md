@@ -7,8 +7,8 @@ Go Verify! is a social media simulation game (demo) that tries to teach journali
 
 The game has been created in the scope of the DW Innovation project Künstliche Intelligenz gegen Desinformation (KID), which translates to: Artificial Intelligence against Disinformation.
 
-Concept & Development: DW Innovation
-Graphic design: Andreas Leibe
+Concept & Development: DW Innovation 
+Graphic design: Andreas Leibe 
 Funding: Bundesbeauftage für Kultur und Medien
 
 Go Verify! is a standalone ClojureScript frontend application, that _can_ (but doesn't have to) connect to a Clojure/Jar backend to enable chat and mutiplayer.
