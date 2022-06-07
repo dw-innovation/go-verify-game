@@ -404,10 +404,11 @@ Cried so much his face was wet / Then I knew he was not lying\". Bowie wrote tha
                                 :description "Media and Information Literacy (MIL) is defined as \"the ability to access, analyze, create and reflect on media\". It is a prerequisite for citizens to claim their rights to freedom of information and expression."
                                 :by authors/MIL_Academy})
 
-(def filler-apple-banana {:type :post-text
-                          :id "filler-apple-banana"
+(def filler-apple-banana {:type        :post-text
+                          :id          "filler-apple-banana"
+                          :image "https://kid-game-resources.s3.eu-central-1.amazonaws.com/apple-video.jpg"
                           :description "Remember this campaign? Not a banana, peepz! https://pic.blpr/628ci7"
-                          :by authors/rooted_in_reality})
+                          :by          authors/rooted_in_reality})
 
 (def filler-pop-quiz {:type :post-text
                       :id "filler-pop-quiz"
