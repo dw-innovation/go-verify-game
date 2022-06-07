@@ -50,6 +50,7 @@ The server will then serve the frontend package on `localhost:3449`, which is co
 Note: in this case, the backend also _serves_ the bundled js frontend
 
 ### Deployment
+
 The `master` branch, tags, and open pull requests get deployed through Github Actions to AWS S3.
 
 Results are available at: https://kid-game.s3.eu-central-1.amazonaws.com/master/index.html
@@ -57,6 +58,7 @@ Results are available at: https://kid-game.s3.eu-central-1.amazonaws.com/master/
 Note: only the frontend version of the game will be seen at this url.  to run a realtime server, you're on your own :)
 
 ## Development
+
 This application relies on two separate parts, the `app` (a clojurescript project) that is the frontend of the website, and the `server`, which is a clojure project.  `cljc` files, which can be shared between the app and the server, are stored in the shared directory
 
 #### Frontend
@@ -69,4 +71,4 @@ The `app` is hosted and compiled by `shadow-cljs`, where you can see the configu
 
 ---
 
-KID is a project led by [Deutsche Welle Innocation](https://innovation.dw.com/)
+KID is a project led by [Deutsche Welle Innovation](https://innovation.dw.com/)
