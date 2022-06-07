@@ -51,9 +51,9 @@ Note: in this case, the backend also _serves_ the bundled js frontend
 
 ### Deployment
 
-The `master` branch, tags, and open pull requests get deployed through Github Actions to AWS S3.
+The `main` branch, tags, and open pull requests get deployed through Github Actions to AWS S3.
 
-Results are available at: https://kid-game.s3.eu-central-1.amazonaws.com/master/index.html
+Results are available at: https://kid-game.s3.eu-central-1.amazonaws.com/main/index.html
 
 Note: only the frontend version of the game will be seen at this url.  to run a realtime server, you're on your own :)
 
