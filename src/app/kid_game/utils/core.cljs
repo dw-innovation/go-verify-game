@@ -74,7 +74,7 @@
       (str/split #"LLL")
       ;; ;; Step 3: convert this to a hiccup form
       ((fn [matches]
-         [:span.parsed-string {:white-space "pre-line"}
+         [:span.parsed-string {:style {:white-space "pre-line"}}
           (map (fn [a]
                  (if (url? a)
                    ^{:key a} [:span.link a]
