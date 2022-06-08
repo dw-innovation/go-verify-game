@@ -88,7 +88,7 @@
    [:p.mb-4 "Graphic design: Andreas Leibe"]
    [:p.mb-4 "Funding: " [:a {:href   "https://www.bundesregierung.de/breg-de/bundesregierung/staatsministerin-fuer-kultur-und-medien"
                              :target "_blank"} "Bundesbeauftage für Kultur und Medien"]]
-   [:p.mb-4 [:img {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/bkm_logo.png"}]]
+   [:p.mb-4 [:img {:src "https://kid-game-resources.s3.eu-central-1.amazonaws.com/bkm_logo.png" :style {:max-width "500px"}}]]
 
    [:p.mb-4 "Legal Note: " [:a {:href   "https://www.dw.com/en/legal-notice/a-15718492"
                                 :target "_blank"} "https://www.dw.com/en/legal-notice/a-15718492"]]
