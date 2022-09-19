@@ -10,6 +10,7 @@
 (def global-story
   [
    1 posts/p17-megacorp-food-fan-story
+   4 posts/p17-megacorp-food-fan-story
    6 posts/p13-megacorp-buying-spree-story
    12 posts/p16-satellite-image?-story
    5 posts/filler-new-beachfronts
